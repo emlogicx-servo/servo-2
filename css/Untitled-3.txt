@@ -1,0 +1,124 @@
+select *, SUM(order_item_quantity * order_item_price) as AMOUNT
+
+from servo_order_items
+
+left join 
+servo_orders on (servo_order_items.servo_orders_order_id = servo_orders.order_id)
+
+WHERE servo_user_user_id LIKE ? 
+and servo_orders.order_time >= ? and servo_orders.order_time <= ?
+and servo_service_service_id LIKE ?
+and order_status = 'Paid' or 'Credit'
+group by servo_orders.order_time
+
+
+<main>
+                            <div class="container mt-auto" id="receiptBody">
+
+
+
+
+                                <div class="row">
+                                    <div class="col d-flex justify-content-end" id="receiptTotal1"></div>
+                                </div>
+                                <div class="row justify-content-start">
+                                    <div class="col">
+                                        <div class="row justify-content-xxl-start">
+        <div class="col me-2 d-flex col-xxl">
+                <h6 class="me-1">{{trans.data.timeOrdered[lang.value]}}:</h6>
+                    <h6 class="me-1" dmx-text="read_item_order.data.query.order_time"></h6>
+                                            </div>
+                        </div>
+        <div class="row justify-content-xxl-start">
+        <div class="col me-2 d-flex col-xxl">
+                <h6 class="me-1">{{trans.data.timePrinted[lang.value]}}:</h6>
+                    <h6 class="me-1" dmx-text="var1.datetime"></h6>
+                                            </div>
+                                        </div>
+                    <div class="row justify-content-xxl-start">
+                    <div class="col me-2 d-flex col-xxl">
+                <h6 class="me-1">{{trans.data.order[lang.value]}}:</h6>
+                    <h6 class="me-1" dmx-text="'#'+read_item_order.data.query.order_id"></h6>
+                                            </div>
+                    <div class="col me-2 d-flex col-xxl">
+                        <h6 class="me-1">{{trans.data.table[lang.value]}}:</h6>
+                            <h6 class="me-1" dmx-text="list_order_items.data.query[0].table_name"></h6>
+                                            </div>
+                                        </div>
+                    <div class="row justify-content-xxl-start">
+                    <div class="col me-2 d-flex col-xxl">
+                    <h6     class="me-1">{{trans.data.cashier[lang.value]}}:</h6>
+            <h6 class="me-1" dmx-text="session_variables.data.current_user"></h6>
+                                            </div>
+                <div class="col me-2 d-flex col-xxl">
+                <h6 class="me-1">{{trans.data.waiter[lang.value]}}:</h6>
+                    <h6 class="me-1" dmx-text="read_item_order.data.query.user_username"></h6>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+                                <div class="row" id="receipt" style="height: 450px; overflow: scroll;">
+                                    <div class="col">
+
+
+        <div class="row">
+                <div class="col">
+                <div class="table-responsive" id="order_details_table">
+                                                    <table class="table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>{{trans.data.product[lang.value]}}</th>
+                                                                <th>{{trans.data.qty[lang.value]}}</th>
+                                                                <th>{{trans.data.price[lang.value]}}</th>
+                                                                <th>{{trans.data.total[lang.value]}}</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="list_order_items.data.query" id="tableRepeat4">
+                                                            <tr>
+                                                                <td dmx-text="product_name"></td>
+                                                                <td dmx-text="order_item_quantity"></td>
+                                                                <td dmx-text="order_item_price"></td>
+                                                                <td dmx-text="(order_item_quantity * order_item_price)"></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+            </div>
+                                            </div>
+
+                                        </div>
+            <div class="row mb-5 pb-5" id="receiptbottom">
+                <div class="col d-flex justify-content-end" id="receiptTotal3">
+                    <h2 class="fw-bold text-end" id="ordertotal">{{trans.data.total[lang.value]}}:{{(list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`)).formatNumber('0', ',', ',')}}</h2>
+                        </div>
+                    <div class="col" id="paymentnumbers">
+                            <div class="d-block ms-2">
+                                                    <h3 dmx-text="loadCompanyInfo.data.query.company_payment_numbers" class="text-center"></h3>
+            </div>
+                </div>
+                    <div class="col" id="companymessage">
+                    <div class="d-block ms-2">
+                                                    <h3 dmx-text="loadCompanyInfo.data.query.company_message" class="text-center"></h3>
+        </div>
+            </div>
+                <div class="col" id="servosignature">
+                <div class="d-block ms-2">
+                                                    <h3 class="text-center">Powered by SERVO www.emlogicx.com</h3>
+        </div>
+            </div>
+                <div class="col">
+                    <div class="d-block ms-2">
+                        </div>
+                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                            </div>
+                            </div>
+                            </div>
+    </main>

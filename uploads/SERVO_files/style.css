@@ -1,0 +1,451 @@
+@font-face {
+    font-family: "Josefin-Sans";
+    src: url("/servo/css/fonts/josefin-sans/fonts/josefin-sans-300/josefin-sans-300.woff2");
+}
+
+@font-face {
+    font-family: "Open-Sans-Condensed";
+    src: url("/servo/css/fonts/open-sans-condensed/fonts/open-sans-condensed-300/open-sans-condensed-300.woff2");
+}
+
+@media print
+{
+    *, body 
+        {
+            background: white !important;
+            background-color: white !important;
+            color: black !important;
+        }   
+}
+
+h1, h2, h3, h4, h5, h6, button
+{
+    font-family: 'Josefin-Sans' !important;
+}
+form input, form select
+{
+    width: auto !important;
+}
+#paymentnumbers, #companymessage, #servosignature, #companyaddress, #companyname
+{
+    display: none;
+
+}
+
+#customerInvoiceContent *
+{
+    color: black !important;
+}
+
+.main-group-product
+{
+    background-color: rgb(83, 83, 83) !important;    
+}
+ .accessory-product
+ {
+    background-color: rgb(56, 56, 56) !important;    
+
+ }
+
+ .page-link
+ {
+     background: #4a4a4a  !important;
+     color: #adb5bd  !important;
+     margin-right: 2px !important;
+ }
+
+
+.top-badge
+
+{
+    font-size: 25px !important;
+}
+
+select
+{
+    color: #bcbcbc !important;
+    background-color: #444 !important;
+    border: none !important;
+}
+
+.button-repeat
+{
+    margin-right: 1px !important;
+    margin-top: 1px !important;
+}
+
+#headerbuttons *
+{
+    font-size: 20px !important;
+}
+
+.sup-text
+{
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.order-paid, .greenlight
+{
+    
+    color: #00bc8c !important;
+    font-weight: bold;
+
+}
+
+.green
+
+{
+    background: #264238 !important;
+}
+
+.ordered 
+{
+        color: #f34e4e !important;
+
+}
+.pending 
+{
+        color: #fdd90f !important;
+
+}
+
+.paid 
+{
+        color: #59c55e !important;
+
+}
+.order-ordered, .yellowlight
+{
+    color: #f39c12 !important;
+    font-weight: bold;
+
+}
+
+.order-credit, .redlight
+{
+    color: #e74c3c !important;
+    font-weight: bold;
+
+}
+
+.show-print
+{
+    display:contents !important;
+}
+
+.hidethis
+{
+    display: none !important;
+}
+
+.showthis
+{
+    display: contents !important;
+}
+.inline-edit
+{
+    width: -webkit-fit-content !important;
+    width: -moz-fit-content !important;
+    width: fit-content !important;
+}
+
+.list, .scrollable {
+    max-height: 95vh;
+    overflow-y: scroll;
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+#pagebuttons *
+{
+}
+/* hide modal backdrop artificially as it bugs */
+
+
+.modal-backdrop
+{
+    display:none !important;
+}
+
+
+textarea {
+    background: #4a4a4a !important;
+    color: white !important;
+    border: 1px solid #6c6c6c !important;
+}
+.add-item-button
+{
+    float:right;
+}
+
+.detail-heading {
+     color: #f39c12;
+
+}
+
+input {
+    background: #4a4a4a !important;
+    color: white !important;
+    border: 1px solid #6c6c6c !important;
+}
+
+.modal-body, tbody 
+{
+    max-height: 95vh;
+    overflow-y: scroll;
+}
+
+*::-webkit-scrollbar {
+  width: 0.5px;
+  height: 0.5px;
+  background-color: rgb(85, 85, 85); /* or add it to the track */
+}
+
+*::-webkit-scrollbar-thumb{
+  background: rgb(161, 161, 161);
+}
+
+
+label
+{
+    font-family: 'Josefin-Sans';
+    font-size: 21px;
+}
+
+ .servo-heading {
+    font-family: 'Josefin-sans';
+    font-size: 50px !important;
+}
+
+thead {
+    font-family: Josefin-Sans;
+    color: white;
+    font-size: 17px;
+    background: rgba(116, 116, 116, 0.2) !important;
+}
+
+.tablestyle
+{
+    height: 450px;
+    overflow: scroll;
+    background: #2c2c2c;
+    padding: 12px;
+}
+
+.table-responsive
+{
+    background: #303030;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.servo-shadow
+{
+        -webkit-box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.25)!important;
+            box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.25)!important;
+}
+
+.sorter
+{
+    background: #303030;
+    padding: 25px 10px 10px 0px;
+    margin-bottom: 5px;
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+    border-radius: 10px;
+    -webkit-box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.25)!important;
+            box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.25)!important;
+}
+
+input, select
+{
+    border-radius: 10px !important;
+}
+
+
+.scrollable-table
+{
+    height: 450px !important;
+    overflow: scroll !important;
+}
+
+header{
+    background: #2a2a2a;
+    padding: 10px 42px;
+    margin-top: 2px;
+}
+
+.top-bar
+{
+    background: #262626;
+    padding: 10px;
+}
+
+.general-body
+{    
+    background: #234044;
+}
+
+tbody
+{
+    font-family: 'Open-sans-condensed';
+    font-size: 16px;
+}
+
+.servo-page-heading
+{
+    font-family: 'Josefin-Sans';
+    font-size: 30px !important;
+}
+
+.open {
+    color: #afff18 !important;
+}
+
+.page-heading
+{
+    padding: 0px !important;
+}
+.nav-item
+{
+    font-family: 'josefin-sans' !important;
+    font-size: 16px !important;
+}
+
+.add-button 
+{
+    /*background: #444444 !important;*/
+    color: #189aff !important;
+    float: right !important;
+}
+
+.nav-link
+{
+    background: transparent !important;
+    border: none !important;
+}
+
+.nav-link.active, .page-item.active
+{
+    border-bottom: 2px solid #189aff !important;
+
+}
+
+.group-main
+{
+    background: #30524a;
+    color: #b7ebde;
+}
+
+.group-accessory
+{
+    background: #3e695f;
+    color: #b7ebde;
+}
+
+.servo-page-heading, tbody
+{
+    color: #adb5bd !important;
+}
+
+.style1 {
+    text-align: left;
+    border-width: 0px 0px 4px 
+}
+
+:active {
+    margin-top: 0px 
+}
+.style2 {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px 
+}
+.style3 {
+    margin-top: 0px;
+    display: block 
+}
+.style4 {
+    margin-top: 0px;
+    margin-right: 0px 
+}
+.style5 {
+    margin-top: 0px 
+}
+.style6 {
+    margin-top: 0px 
+}
+.style7 {
+    margin-top: 0px 
+}
+.style8 { 
+}
+.style8:active {
+    margin-top: 0px 
+}
+.style9 {
+    margin-top: 0px 
+}
+#index {  
+}
+.style10 {
+    margin-top: 20px 
+}
+.style11 {
+    margin-top: 20px 
+}
+.style12 {
+    position: static;
+    float: right 
+}
+@media (min-width: 1400px) {
+.style12 {
+        position: relative 
+    }
+.style13 {
+        float: right 
+    } 
+}
+
+.style18 {
+    float: right;
+    color: #8ec97e;
+}
+.style19 {
+    float: right;
+}
+.style20 {
+    float: right;
+}
+.style21 {
+    float: right;
+}
+.style22 {
+    float: right;
+}
+.style23 {
+    float: right;
+}
+.style24 { 
+}
+
+.style15 {
+    color: #888;
+}
+.style16 {
+    color: #888;
+}
+#ServoReports {
+}
+
+a :hover
+{
+    color: grey !important;
+}
+
+tr :hover
+{
+    margin-left: 3px solid #189aff !important;
+}

@@ -1,0 +1,612 @@
+@font-face {
+    font-family: "Josefin-Sans";
+    src: url("/servo/css/fonts/josefin-sans/fonts/josefin-sans-regular/josefin-sans-regular.woff2");
+}
+
+@font-face {
+    font-family: "Open-Sans-Condensed";
+    src: url("/servo/css/fonts/open-sans-condensed/fonts/open-sans-condensed-300/open-sans-condensed-300.woff2");
+}
+
+@font-face{
+  font-family: "Roboto Condensed";
+  src: url("/servo/css/fonts/roboto_condensed/robotocondensed-regular.ttf") format("truetype");
+}
+
+
+@media print
+{
+    *, body 
+        {
+            background: white !important;
+            background-color: white !important;
+            color: black !important;
+        }
+
+        body, #customerInvoiceContentdialog, #invoice, .modal
+        {
+            border: none !important;
+        }
+
+        #invoiceHead
+        {
+            display: none !important;
+        }
+
+        @page
+        {
+            size: A4;
+            size: portrait;
+        }
+
+        .modal-content
+        {
+            height: auto !important;
+
+        }
+
+
+       
+}
+
+.receipt-footer
+{
+    position: fixed !important;
+    top: 97% !important;
+}
+
+h1, h2, h3, h4, h5, h6, button
+{
+    font-family: 'Josefin-Sans' !important;
+}
+ form select
+{
+    width: auto !important;
+}
+
+select option
+{
+    background: transparent !important;
+    color: black !important;
+}
+#paymentnumbers, #companymessage, #servosignature, #companyaddress, #companyname
+{
+    display: none;
+
+}
+
+#customerInvoiceContent *
+{
+    color: black !important;
+}
+
+
+ .page-link
+ {
+     background: transparent  !important;
+     border: none !important;
+     margin-right: 2px !important;
+     color: grey !important;
+ }
+
+ .close-button
+{
+    background: none !important;
+    border: none !important;
+}
+
+
+
+.top-badge
+
+{
+    font-size: 25px !important;
+}
+
+select
+{
+    background-color: transparent !important;
+}
+
+
+.button-repeat
+{
+    margin-right: 1px !important;
+    margin-top: 1px !important;
+}
+
+#headerbuttons *
+{
+    /* font-size: 20px !important */
+}
+
+.sup-text
+{
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.order-paid, .greenlight
+{
+    
+    color: #82c782 !important;
+    font-weight: bold;
+
+}
+
+button,
+button:active,
+button:focus {
+  outline: none !important;
+}
+
+.green
+
+{
+    background: #264238 !important;
+}
+
+.ordered 
+{
+        color: #ffb0b0 !important;
+
+}
+.pending 
+{
+        color: #dfdf00 !important;
+
+}
+
+.paid 
+{
+        color: #82c782 !important;
+
+}
+.order-ordered, .yellowlight
+{
+    color: #ffff76 !important;
+    font-weight: bold;
+
+}
+
+.order-credit, .redlight
+{
+    color: #ffb0b0 !important;
+    font-weight: bold;
+
+}
+
+.red-state
+{
+    background: #ffe0e0 !important;
+    color: #c11313;
+    border-radius: 13px;
+}
+
+
+.green-state
+{
+
+background: #88ff6ac7 !important /*#2084ff*/;
+    color: #000000;
+    border-radius: 13px;
+}
+
+ /*  
+   background: #3bffd2 !important;
+    color: #000000;
+    border-radius: 13px;
+   */
+    /*background:  #1c8bd6 !important #2084ff;
+    color: #ffffff;
+    border-radius: 13px;
+/*
+
+    background: #2084ff;
+    color: #ffffff;
+    border-radius: 13px;
+*/
+
+
+.yellow-state
+{
+
+    background:#e6ff9a !important /* #cdcdcd*/;
+    border-radius: 13px;
+    color: #262b00;
+
+   /* background: #e6ff16 /* #cdcdcd;
+    border-radius: 13px;
+    color: #202020;
+
+/*    background: #e6ff5c2e;
+    color: #fcff33;
+    border-radius: 13px;
+*/
+}
+
+.grey-state
+{
+    background: #c7c7c7;
+    color: #353535;
+    border-radius: 13px; 
+}
+
+.show-print
+{
+    display:contents !important;
+}
+
+#preloader
+{
+
+   
+}
+
+.hidethis
+{
+    display: none !important;
+}
+
+.showthis
+{
+    display: contents !important;
+}
+/*
+.inline-edit
+{
+    width: -webkit-fit-content !important;
+    width: -moz-fit-content !important;
+    width: fit-content !important;
+}
+*/
+.list, .scrollable {
+    max-height: 95vh;
+    overflow-y: scroll;
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+.y-scroll
+{
+    overflow-y: scroll !important;
+}
+
+#pagebuttons *
+{
+}
+/* hide modal backdrop artificially as it bugs */
+
+
+.modal-backdrop
+{
+    display:none !important;
+}
+
+.modal-header
+{
+    border: none !important;
+    
+}
+
+textarea, select, input {
+    background: transparent !important;
+}
+.add-item-button
+{
+    float:right;
+}
+
+.detail-heading {
+     color: #fdff93;
+
+}
+
+input {
+
+    width: auto !important;
+    max-width: 350px !important;
+}
+
+table input{
+    width: auto !important;
+    max-width: 120px !important;
+}
+
+input[type='datetime-local']
+{
+    width: 210px !important;
+}
+
+.modal-body, tbody 
+{
+    max-height: 95vh;
+    overflow-y: scroll;
+}
+
+*::-webkit-scrollbar {
+  width: 0.5px;
+  height: 0.5px;
+  background-color: rgb(85, 85, 85); /* or add it to the track */
+}
+
+*::-webkit-scrollbar-thumb{
+  background: rgb(161, 161, 161);
+}
+
+
+label
+{
+    font-family: 'Josefin-Sans';
+    font-size: 21px;
+}
+
+ .servo-heading {
+    font-family: 'Josefin-sans';
+    font-size: 50px !important;
+}
+
+thead {
+    font-family: Josefin-Sans;
+    font-size: 17px;
+}
+
+.tablestyle
+{
+    height: 450px;
+    overflow: scroll;
+    background: #2c2c2c;
+    padding: 12px;
+}
+
+.table-responsive
+{
+    background: ;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.servo-shadow
+{
+      /*  -webkit-box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.25)!important;
+            box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.25)!important; */
+}
+
+.sorter
+{
+    background: #303030;
+    padding: 25px 10px 10px 0px;
+    margin-bottom: 5px;
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+    border-radius: 10px;
+
+}
+
+
+.scrollable-table
+{
+    height: 450px !important;
+    overflow: scroll !important;
+}
+
+.scrollable-y
+{
+    
+    overflow-y: scroll !important;
+}
+
+header{
+    background: #2a2a2a;
+    padding: 10px 42px;
+    margin-top: 2px;
+}
+
+
+
+.general-body
+{    
+    background: #234044;
+}
+
+tbody
+{
+    font-family: 'Roboto Condensed';
+    font-size: 14px;
+    border-top: none !important;
+}
+
+.servo-page-heading
+{
+    font-family: 'Josefin-Sans';
+    /* font-size: 30px !important */
+}
+
+#top-bar
+{
+    margin-top: 10px !important;
+    padding-top: 5px !important;
+    margin-left: 10px !important;
+    margin-right: 10px !important;
+
+}
+
+.gm-style-iw-t
+{
+    color: black !important;
+    font-size: 12px !important;
+}
+
+.open {
+    /* color: #afff18 !important */
+}
+
+.page-heading
+{
+    padding: 0px !important;
+}
+.nav-item
+{
+    font-family: 'josefin-sans' !important;
+    font-size: 16px !important;
+}
+
+.nav-tabs
+{
+    border-bottom: #9999991a !important;
+}
+
+.add-button 
+{
+    /*background: #444444 !important;*/
+    color: #189aff !important;
+    float: right !important;
+}
+
+.nav-link
+{
+    background: transparent !important;
+    border: none !important;
+}
+
+.nav-link.active, .page-item.active
+{
+    border-bottom: 2px solid #189aff !important;
+
+}
+
+.group-main
+{
+    background: #30524a;
+    color: #b7ebde;
+}
+
+.group-accessory
+{
+    background: #3e695f;
+    color: #b7ebde;
+}
+
+
+.style1 {
+    text-align: left;
+    border-width: 0px 0px 4px 
+}
+
+:active {
+    margin-top: 0px 
+}
+.style2 {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px 
+}
+.style3 {
+    margin-top: 0px;
+    display: block 
+}
+.style4 {
+    margin-top: 0px;
+    margin-right: 0px 
+}
+.style5 {
+    margin-top: 0px 
+}
+.style6 {
+    margin-top: 0px 
+}
+.style7 {
+    margin-top: 0px 
+}
+.style8 { 
+}
+.style8:active {
+    margin-top: 0px 
+}
+.style9 {
+    margin-top: 0px 
+}
+#index {  
+}
+.style10 {
+    margin-top: 20px 
+}
+.style11 {
+    margin-top: 20px 
+}
+.style12 {
+    position: static;
+    float: right 
+}
+@media (min-width: 1400px) {
+.style12 {
+        position: relative 
+    }
+.style13 {
+        float: right 
+    } 
+}
+
+.style18 {
+    float: right;
+    color: #8ec97e;
+}
+.style19 {
+    float: right;
+}
+.style20 {
+    float: right;
+}
+.style21 {
+    float: right;
+}
+.style22 {
+    float: right;
+}
+.style23 {
+    float: right;
+}
+.style24 { 
+}
+
+.style15 {
+    color: #888;
+}
+.style16 {
+    color: #888;
+}
+#ServoReports {
+}
+
+a :hover
+{
+    color: grey !important;
+}
+
+tr :hover
+{
+    margin-left: 3px solid #189aff !important;
+}
+
+.small-table-header
+{
+    font-size: 13px !important;
+}
+
+.text-danger
+{
+    color:#ff8175 !important;
+}
+
+
+
+.main-group-product
+{
+    background-color:  #203b3f !important; 
+}
+ .accessory-product
+ {
+    background-color:  #335e64 !important; 
+
+ }

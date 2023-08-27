@@ -1,0 +1,2248 @@
+
+{
+
+    "salesMonitor": 
+            {
+                "en-US": "Real Time Sales",
+                "fr-FR": "Ventes en Temps Réel"
+            },
+    "reason": 
+            {
+                "en-US": "Reason",
+                "fr-FR": "Raison"
+            },
+    "Source": 
+            {
+                "en-US": "Source",
+                "fr-FR": "Source"
+            },
+    "newExpense": 
+            {
+                "en-US": "New Expense",
+                "fr-FR": "Nouvelle Dépense"
+            },
+    "coordinates": 
+            {
+                "en-US": "Coordinates",
+                "fr-FR": "Coordonnées"
+            },
+    "repInfo": 
+            {
+                "en-US": "Representative Information",
+                "fr-FR": "Informations sur Mandataire"
+            },
+    "out": 
+            {
+                "en-US": "Out",
+                "fr-FR": "Sorties"
+            },
+    "send": 
+            {
+                "en-US": "Send",
+                "fr-FR": "Envoyer"
+            },
+    "in": 
+            {
+                "en-US": "In",
+                "fr-FR": "Entrées"
+            },
+    "source": 
+            {
+                "en-US": "Source",
+                "fr-FR": "Source"
+            },
+    "idCardNumber": 
+            {
+                "en-US": "NID N°",
+                "fr-FR": "N° CNI"
+            },
+    "taxPayerNumber": 
+            {
+                "en-US": "Tax Payer Number",
+                "fr-FR": "Numero de Contribuable"
+            },
+    "legalStatus": 
+            {
+                "en-US": "Legal Status",
+                "fr-FR": "Status Legale"
+            },
+    "source": 
+            {
+                "en-US": "Source",
+                "fr-FR": "Source"
+            },
+    "all": 
+            {
+                "en-US": "All",
+                "fr-FR": "Tout"
+            },
+    "customerSupport": 
+            {
+                "en-US": "Customer Support",
+                "fr-FR": "Service Client"
+            },
+    "ingredient": 
+            {
+                "en-US": "Ingredient",
+                "fr-FR": "Ingrédient"
+            },
+    "Support": 
+            {
+                "en-US": "Customer Support",
+                "fr-FR": "Service Client"
+            },
+    "incoming": 
+            {
+                "en-US": "Incoming",
+                "fr-FR": "Entrées"
+            },
+    "outgoing": 
+            {
+                "en-US": "Outgoing",
+                "fr-FR": "Sorties"
+            },
+    "payFromDeposit": 
+            {
+                "en-US": "Pay From Account",
+                "fr-FR": "Reglér a Partir du Compte"
+            },
+    "account": 
+            {
+                "en-US": "Account",
+                "fr-FR": "Compte"
+            },
+    "owing": 
+            {
+                "en-US": "Owing",
+                "fr-FR": "Dette"
+            },
+    "Completed": 
+            {
+                "en-US": "Completed",
+                "fr-FR": "Complétée"
+            },
+    "finance": 
+            {
+                "en-US": "Finance",
+                "fr-FR": "Finances"
+            },
+    "wallet": 
+            {
+                "en-US": "Wallet",
+                "fr-FR": "Porte Monnaie"
+            },
+    "wallets": 
+            {
+                "en-US": "Wallets",
+                "fr-FR": "Porte Monnaie"
+            },
+    "newWallet": 
+            {
+                "en-US": "Create New Wallet",
+                "fr-FR": "Nouvelle Porte Monnaie"
+            },
+    "internal": 
+            {
+                "en-US": "Internal",
+                "fr-FR": "Interne"
+            },
+    "external": 
+            {
+                "en-US": "External",
+                "fr-FR": "Externe"
+            },
+    "currency": 
+            {
+                "en-US": "Currency",
+                "fr-FR": "Devise"
+            },
+    "format": 
+            {
+                "en-US": "Format",
+                "fr-FR": "Format"
+            },
+    "owing": 
+            {
+                "en-US": "Owing",
+                "fr-FR": "Dette"
+            },
+    "asset": 
+            {
+                "en-US": "Asset",
+                "fr-FR": "Asset"
+            },
+    "execution": 
+            {
+                "en-US": "Execution",
+                "fr-FR": "Execution"
+            },
+    "expenses": 
+            {
+                "en-US": "Expenses",
+                "fr-FR": "Dépenses"
+            },
+    "proFormaInvoice": 
+            {
+                "en-US": "Pro-Forma Invoice",
+                "fr-FR": "Devis Pro-Forma"
+            },
+    "invoice": 
+            {
+                "en-US": "Invoice",
+                "fr-FR": "Devis"
+            },
+    "totalOrders": 
+            {
+                "en-US": "Total Orders",
+                "fr-FR": "Commandes"
+            },
+    "totalPayments": 
+            {
+                "en-US": "Total Payments",
+                "fr-FR": "Paiements Total"
+            },
+    "totalDeposits": 
+            {
+                "en-US": "Total Deposits",
+                "fr-FR": "Dépots Total"
+            },
+    "totalPending": 
+            {
+                "en-US": "Total Pending Payments",
+                "fr-FR": "Paiements Total Attendues"
+            },
+    "totalDebt": 
+            {
+                "en-US": "Total Debt",
+                "fr-FR": "Dette Total"
+            },
+    "totalSettlements": 
+            {
+                "en-US": "Total Settled",
+                "fr-FR": "Total Reglé"
+            },
+    "standard": 
+            {
+                "en-US": "Standard",
+                "fr-FR": "Standard"
+            },
+    "settings": 
+            {
+                "en-US": "Settings",
+                "fr-FR": "Paramètres"
+            },
+    "receipt": 
+            {
+                "en-US": "Receipt",
+                "fr-FR": "Reçu de Caisse"
+            },
+    "special": 
+            {
+                "en-US": "Special",
+                "fr-FR": "Special"
+            },
+    "dob": 
+            {
+                "en-US": "Date Of Birth",
+                "fr-FR": "Date de Naissance"
+            },
+    "dataFields": 
+            {
+                "en-US": "Data Fields",
+                "fr-FR": "Champs de Données"
+            },
+    "newDataField": 
+            {
+                "en-US": "New Data Field",
+                "fr-FR": "Nouveau Champ"
+            },
+    "data": 
+            {
+                "en-US": "Data",
+                "fr-FR": "Données"
+            },
+    "dataCollection": 
+            {
+                "en-US": "Data Collection",
+                "fr-FR": "Prise de Données"
+            },
+    "value": 
+            {
+                "en-US": "Value",
+                "fr-FR": "Valeur"
+            },
+    "sex": 
+            {
+                "en-US": "Sex",
+                "fr-FR": "Sexe"
+            },
+    "class": 
+            {
+                "en-US": "Class",
+                "fr-FR": "Classification"
+            },
+    "createProject": 
+            {
+                "en-US": "Create Project",
+                "fr-FR": "Créer Projet"
+            },
+    "home": 
+            {
+                "en-US": "Home",
+                "fr-FR": "Appercu"
+            },
+    "documents": 
+            {
+                "en-US": "Documents",
+                "fr-FR": "Documents"
+            },
+    "files": 
+            {
+                "en-US": "Files",
+                "fr-FR": "Fichiers"
+            },
+    "constructionProjectDashboard": 
+            {
+                "en-US": "Construction Project",
+                "fr-FR": "Projet De Construction"
+            },
+    "latitude": 
+            {
+                "en-US": "Latitude",
+                "fr-FR": "Latitude"
+            },
+    "longitude": 
+            {
+                "en-US": "Longitude",
+                "fr-FR": "Longitude"
+            },
+    "newOption": 
+            {
+                "en-US": "Input New Option",
+                "fr-FR": "Nouvelle Option"
+            },
+    "option": 
+            {
+                "en-US": "Option",
+                "fr-FR": "Option"
+            },
+    "options": 
+            {
+                "en-US": "Options",
+                "fr-FR": "Options"
+            },
+    "newCustomer": 
+            {
+                "en-US": "New Customer",
+                "fr-FR": "Nouveau Client"
+            },
+    "totalCreditSales": 
+            {
+                "en-US": "Credit Sales",
+                "fr-FR": "Ventes à Credit"
+            },
+    "totalCreditSalesVolume": 
+            {
+                "en-US": "Credit Sales Volume",
+                "fr-FR": "Volume de Ventes à Credit"
+            },
+    "businessSetup": 
+            {
+                "en-US": "Organisational Setup",
+                "fr-FR": "Structure de l'Organisation"
+            },
+    "totalSales": 
+            {
+                "en-US": "Total Sales",
+                "fr-FR": "Ventes Total"
+            },
+    "overview": 
+            {
+                "en-US": "Overview",
+                "fr-FR": "Appercu"
+            },
+    "Settlement": 
+            {
+                "en-US": "Settlement",
+                "fr-FR": "Reglement"
+            },
+    "Coverage Settlement": 
+            {
+                "en-US": "Coverage Settlement",
+                "fr-FR": "Reglement de Couvrage"
+            },
+    "totalSalesVolume": 
+            {
+                "en-US": "Total Sales Volume",
+                "fr-FR": "Volume de Ventes Total"
+            },
+    "totalPurchases": 
+            {
+                "en-US": "Total Purchases",
+                "fr-FR": "Achats Total"
+            },
+    "purchasing": 
+            {
+                "en-US": "Purchasing",
+                "fr-FR": "Approvisionnement"
+            },
+    "totalPurchaseVolume": 
+            {
+                "en-US": "Total Sales Volume",
+                "fr-FR": "Volume d'Achats Total"
+            },
+    "totalCreditPurchases": 
+            {
+                "en-US": "Credit Purchases",
+                "fr-FR": "Volume d'Achats à Crédit"
+            },
+    "totalCreditPurchasesVolume": 
+            {
+                "en-US": "Credit Purchase Volume",
+                "fr-FR": "Volume d'Achats à Crédit"
+            },
+    "totalOrdered": 
+            {
+                "en-US": "Total Ordered",
+                "fr-FR": "Total Commandes"
+            },
+    "totalVolumeOrdered": 
+            {
+                "en-US": "Volume Ordered",
+                "fr-FR": "Volume Commandes"
+            },
+    "totalRequested": 
+            {
+                "en-US": "Total Requested",
+                "fr-FR": "Total Demandes"
+            },
+    "Requested": 
+            {
+                "en-US": "Requested",
+                "fr-FR": "Demandée"
+            },
+    "Approved": 
+            {
+                "en-US": "Approved",
+                "fr-FR": "Approuvée"
+            },
+
+    "Received": 
+            {
+                "en-US": "Received",
+                "fr-FR": "Réceptionnée"
+            },
+    "receive": 
+            {
+                "en-US": "Receive",
+                "fr-FR": "Réceptionnér"
+            },
+    "Ordered": 
+            {
+                "en-US": "Ordered",
+                "fr-FR": "Commandée"
+            },
+    "Paid": 
+            {
+                "en-US": "Paid",
+                "fr-FR": "Payée"
+            },
+    "Processing": 
+            {
+                "en-US": "Processing",
+                "fr-FR": "En Preparation"
+            },
+    "Partner": 
+            {
+                "en-US": "Partner",
+                "fr-FR": "Partenaire"
+            },
+    "Percentage": 
+            {
+                "en-US": "Percentage",
+                "fr-FR": "Pourcentage"
+            },
+    "deliveryNote": 
+            {
+                "en-US": "Delivery Note",
+                "fr-FR": "Bordereaux de Livraison"
+            },
+    "delivery": 
+            {
+                "en-US": "Delivery",
+                "fr-FR": "Livraison"
+            },
+    "cordo": 
+            {
+                "en-US": "Coordinator",
+                "fr-FR": "Coordonateur"
+            },
+    "reception": 
+            {
+                "en-US": "Reception",
+                "fr-FR": "Réception"
+            },
+    "personnel": 
+            {
+                "en-US": "Staff Member",
+                "fr-FR": "Personnel"
+            },
+    "gugr-cordo": 
+            {
+                "en-US": "Coordinator",
+                "fr-FR": "Coordonnateur"
+            },
+    "gugr-reception": 
+            {
+                "en-US": "Reception",
+                "fr-FR": "Réception"
+            },
+    "gugr-personnel": 
+            {
+                "en-US": "Staff Member",
+                "fr-FR": "Personnel"
+            },
+    "query": 
+            {
+                "en-US": "Query",
+                "fr-FR": "Requête"
+            },
+    "createQuery": 
+            {
+                "en-US": "Create New Query",
+                "fr-FR": "Nouvelle Requête"
+            },
+    "history": 
+            {
+                "en-US": "History",
+                "fr-FR": "Historique"
+            },
+    "origin": 
+            {
+                "en-US": "Origin",
+                "fr-FR": "Origine"
+            },
+    "destination": 
+            {
+                "en-US": "Destination",
+                "fr-FR": "Destination"
+            },
+    "deleted": 
+            {
+                "en-US": "Deleted",
+                "fr-FR": "Supprimées"
+            },
+    "bin": 
+            {
+                "en-US": "Bin",
+                "fr-FR": "Corbeille"
+            },
+    "queries": 
+            {
+                "en-US": "Queries",
+                "fr-FR": "Requêtes"
+            },
+    "myAssignments": 
+            {
+                "en-US": "My Assignments",
+                "fr-FR": "Mes Assignements"
+            },
+    "allAssignments": 
+            {
+                "en-US": "All Assignments",
+                "fr-FR": "Toutes Assignements"
+            },
+    "queryManagement": 
+            {
+                "en-US": "Query Management",
+                "fr-FR": "Gestion des Requêtes"
+            },
+    "expeditor": 
+            {
+                "en-US": "Expeditor",
+                "fr-FR": "Expéditeur"
+            },
+    "code": 
+            {
+                "en-US": "Code",
+                "fr-FR": "Code"
+            },
+    "dateDue": 
+            {
+                "en-US": "Date Due",
+                "fr-FR": "Date D'Echéance"
+            },
+    "dateCreated": 
+            {
+                "en-US": "Date Created",
+                "fr-FR": "Date de Création"
+            },
+    "leaveMessage": 
+            {
+                "en-US": "Leave a Message",
+                "fr-FR": "Saisir Message"
+            },
+    "register": 
+            {
+                "en-US": "Register",
+                "fr-FR": "Enrégistrer"
+            },
+    "voucher": 
+            {
+                "en-US": "Payment Voucher",
+                "fr-FR": "Bon de Paiement"
+            },
+    "installServoData": 
+            {
+                "en-US": "Install Servo Default Data",
+                "fr-FR": "Installéz les Données Par Défaut de Servo"
+            },
+    "Ready": 
+            {
+                "en-US": "Ready",
+                "fr-FR": "Prèt"
+            },
+    "reserved": 
+            {
+                "en-US": "Reserved",
+                "fr-FR": "Reservé"
+            },
+    "Delivered": 
+            {
+                "en-US": "Delivered",
+                "fr-FR": "Livrée"
+            },
+    "Group": 
+            {
+                "en-US": "Group",
+                "fr-FR": "Groupée"
+            },
+    "Simple": 
+            {
+                "en-US": "Simple",
+                "fr-FR": "Simple"
+            },
+    "totalVolumeRequested": 
+            {
+                "en-US": "Volume Requested",
+                "fr-FR": "Volume Demandes"
+            },
+    "volume": 
+            {
+                "en-US": "Volume",
+                "fr-FR": "Volume"
+            },
+    "Active": 
+            {
+                "en-US": "Active",
+                "fr-FR": "Actif"
+            },
+    "Pending": 
+            {
+                "en-US": "Pending",
+                "fr-FR": "En Attente"
+            },
+    "transactions": 
+            {
+                "en-US": "Transactions",
+                "fr-FR": "Transactions"
+            },
+    "transaction": 
+            {
+                "en-US": "Transaction",
+                "fr-FR": "Transaction"
+            },
+    "newTransaction": 
+            {
+                "en-US": "New Transaction",
+                "fr-FR": "Nouvelle Transaction"
+            },
+    "Store": 
+            {
+                "en-US": "Salable Product",
+                "fr-FR": "Produit Vendable"
+            },
+    "Stock": 
+            {
+                "en-US": "Stock",
+                "fr-FR": "Stock"
+            },
+    "minStock": 
+            {
+                "en-US": "Minimum in Stock",
+                "fr-FR": "Minimum en Stock"
+            },
+    "lowStock": 
+            {
+                "en-US": "Low Stock",
+                "fr-FR": "Low Stock"
+            },
+    "vendors": 
+            {
+                "en-US": "Vendors",
+                "fr-FR": "Fournisseurs"
+            },
+    "vendor": 
+            {
+                "en-US": "Vendor",
+                "fr-FR": "Fournisseur"
+            },
+    "address": 
+            {
+                "en-US": "Address",
+                "fr-FR": "Adresse"
+            },
+    "male": 
+            {
+                "en-US": "Male",
+                "fr-FR": "Male"
+            },
+    "female": 
+            {
+                "en-US": "Female",
+                "fr-FR": "Female"
+            },
+    "age": 
+            {
+                "en-US": "Age",
+                "fr-FR": "Age"
+            },
+    "salesPoints": 
+            {
+                "en-US": "Sales Points",
+                "fr-FR": "Points De Vente"
+            },
+    "serviceCategoryDepartments": 
+            {
+                "en-US": "Categories/Departments",
+                "fr-FR": "Catégories/Départements"
+            },
+    "salesPoint": 
+            {
+                "en-US": "Sales Point",
+                "fr-FR": "Point De Vente"
+            },
+    "Deposit": 
+            {
+                "en-US": "Deposit",
+                "fr-FR": "Dépôt"
+            },
+    "Main": 
+            {
+                "en-US": "Main",
+                "fr-FR": "Principale"
+            },
+    "Accessory": 
+            {
+                "en-US": "Accessory",
+                "fr-FR": "Accessoire"
+            },
+    "accessories": 
+            {
+                "en-US": "Accessories",
+                "fr-FR": "Accessoires"
+            },
+    "skip": 
+            {
+                "en-US": "Skip",
+                "fr-FR": "Continuez"
+            },
+    "stockAdjustment": 
+            {
+                "en-US": "Stock Adjustment",
+                "fr-FR": "Adjustement de Stock"
+            },
+    "adjustments": 
+            {
+                "en-US": "Adjustments",
+                "fr-FR": "Adjustements"
+            },
+    "averagePurchasePrice": 
+            {
+                "en-US": "Average Price",
+                "fr-FR": "Prix Moyen"
+            },
+    "unitMargin": 
+            {
+                "en-US": "Unit Margin",
+                "fr-FR": "Marge Unitaire"
+            },
+    "unit": 
+            {
+                "en-US": "Unit",
+                "fr-FR": "Unité de Mésure"
+            },
+    "averageSalesPrice": 
+            {
+                "en-US": "Average Price",
+                "fr-FR": "Prix Moyen"
+            },
+    "adjusted": 
+            {
+                "en-US": "Adjusted",
+                "fr-FR": "Adjusté"
+            },
+    
+    "payments": 
+            {
+                "en-US":"Payments", 
+                "fr-FR":"Paiements"
+            },
+    "payment": 
+            {
+                "en-US":"Payment", 
+                "fr-FR":"Paiement"
+            },
+    "totalPayout": 
+            {
+                "en-US":"Total Payouts", 
+                "fr-FR":"Paiements Aux Client"
+            },
+    "Payment": 
+            {
+                "en-US":"Payment", 
+                "fr-FR":"Paiement"
+            },
+    "performance": 
+            {
+                "en-US":"Performance", 
+                "fr-FR":"Performance"
+            },
+    "sales": 
+            {
+                "en-US":"Sales", 
+                "fr-FR":"Ventes"
+            },
+    "history": 
+            {
+                "en-US":"History", 
+                "fr-FR":"Historique"
+            },   
+    "shiftReport": 
+            {
+                "en-US":"Shift Report", 
+                "fr-FR":"Rapport du Quart"
+            },
+    "deliveryReport": 
+            {
+                "en-US":"Shift Delivery Report", 
+                "fr-FR":"Rapport des Livraisons du Quart"
+            },
+    "download": 
+            {
+                "en-US":"Download", 
+                "fr-FR":"Télécharger"
+            },
+
+    "contact": 
+            {
+                "en-US":"Contact", 
+                "fr-FR":"Contact"
+            },
+
+    "credit": 
+            {
+                "en-US":"Credit", 
+                "fr-FR":"Crédit"
+            },
+    "Credit": 
+            {
+                "en-US":"Credit", 
+                "fr-FR":"Crédit"
+            },
+    "debit": 
+            {
+                "en-US":"Debit", 
+                "fr-FR":"Débit"
+            },
+    "pending": 
+            {
+                "en-US":"Pending", 
+                "fr-FR":"En Attente"
+            },
+    "approveCredit": 
+            {
+                "en-US":"Approve Credit", 
+                "fr-FR":"Approuvéz Crédit"
+            },
+    "message": 
+            {
+                "en-US":"Message", 
+                "fr-FR":"Message"
+            },
+    "manager": 
+            {
+                "en-US":"Manager", 
+                "fr-FR":"Gérant"
+            },
+
+    "sold": 
+            {
+                "en-US":"Sold", 
+                "fr-FR":"Vendu"
+            },
+
+    "inStock": 
+            {
+                "en-US":"In Stock", 
+                "fr-FR":"En Stock"
+            },
+    "stock": 
+            {
+                "en-US":"Stock", 
+                "fr-FR":"Stock"
+            },
+    "currentStock": 
+            {
+                "en-US":"Curent Stock", 
+                "fr-FR":"Stock Courant"
+            },
+    "stocklevels": 
+            {
+                "en-US":"Stock Levels per Department", 
+                "fr-FR":"Niveaux de Stock par Département"
+            },
+    "purchaseOrders": 
+            {
+                "en-US":"Purchase Orders", 
+                "fr-FR":"Bons D'Achats"
+            },
+    "transferOrders": 
+            {
+                "en-US":"Transfer Orders", 
+                "fr-FR":"Bons De Transferts"
+            },
+    "transferred": 
+            {
+                "en-US":"Transferred", 
+                "fr-FR":"Transférés"
+            },
+    "transferOrder": 
+            {
+                "en-US":"Stock Transfer Order", 
+                "fr-FR":"Bon De Transfert de Stock"
+            },
+    "wireTransfer": 
+            {
+                "en-US":"Transfer", 
+                "fr-FR":"Transfert"
+            },
+    "purchased": 
+            {
+                "en-US":"Purchased", 
+                "fr-FR":"Achetée"
+            },
+    "purchases": 
+            {
+                "en-US":"Purchases", 
+                "fr-FR":"Achats"
+            },
+    "profit": 
+            {
+                "en-US":"Profits", 
+                "fr-FR":"Bénéfices"
+            },
+    "message": 
+            {
+                "en-US":"Message", 
+                "fr-FR":"Message"
+            },
+    "companyInformation": 
+            {
+                "en-US":"Company Information", 
+                "fr-FR":"Infos sur Societé"
+            },
+    "companyName": 
+            {
+                "en-US":"Company Name", 
+                "fr-FR":"Nom de Societé"
+            },
+    "companyAddress": 
+            {
+                "en-US":"Company Address", 
+                "fr-FR":"Adresse"
+            },
+    "companyPhone": 
+            {
+                "en-US":"Phone Number", 
+                "fr-FR":"Téléphone"
+            },
+    "companyPaymentNumbers": 
+            {
+                "en-US":"Payment Numbers", 
+                "fr-FR":"Numéros de Paiements"
+            },
+        
+    "waiter": 
+            {
+                "en-US":"Served By", 
+                "fr-FR":"Servi Par"
+            },
+    "service": 
+            {
+                "en-US":"Service", 
+                "fr-FR":"Service"
+            },
+    "services": 
+            {
+                "en-US":"Services", 
+                "fr-FR":"Services"
+            },
+    "cashRegister": 
+            {
+                "en-US":"Cash Register", 
+                "fr-FR":"Caisse"
+            },
+    "simple": 
+            {
+                "en-US":"Simple", 
+                "fr-FR":"Simples"
+            },
+    "grouped": 
+            {
+                "en-US":"Grouped", 
+                "fr-FR":"Groupés"
+            },
+    "price": 
+            {
+                "en-US":"Price", 
+                "fr-FR":"Prix"
+            }, 
+    "prices": 
+            {
+                "en-US":"Prices", 
+                "fr-FR":"Prix"
+            },
+     "setPrice": 
+            {
+                "en-US":"Set Price For A Given Service (Do Not Repeat if Already Set!)", 
+                "fr-FR":"Etablir les Prix pour les Services (Ne pas répeter si déja etabit!)"
+            },
+    "order": 
+            {
+                "en-US": "Order",
+                "fr-FR": "Commande"
+            },
+    "orders": 
+            {
+                "en-US": "Orders",
+                "fr-FR": "Commandes"
+            },
+    "destination": 
+            {
+                "en-US": "Destination",
+                "fr-FR": "Destination"
+            },
+    "status": 
+            {
+                "en-US": "Status",
+                "fr-FR": "Statut"
+            },
+    "dateNeeded": 
+            {
+                "en-US": "Delivery Deadline",
+                "fr-FR": "Delai de Livraison"
+            },
+    "dateTime": 
+            {
+                "en-US": "Date-Time",
+                "fr-FR": "Date-Heure"
+            },
+    "orderId": 
+            {
+                "en-US": "Order ID",
+                "fr-FR": "Num De Commande"
+            },
+    "selectTable": 
+            {
+                "en-US": "Select Table",
+                "fr-FR": "Sélection De Table"
+            },
+    "tables": 
+            {
+                "en-US": "Tables",
+                "fr-FR": "Tables"
+            },
+    "note": 
+            {
+                "en-US": "Note",
+                "fr-FR": "Note"
+            },
+    "quantity": 
+            {
+                "en-US": "Quantity",
+                "fr-FR": "Quantité"
+            },
+    "qty": 
+            {
+                "en-US": "Qty",
+                "fr-FR": "Qté"
+            },
+    "product": 
+            {
+                "en-US": "Product",
+                "fr-FR": "Produit"
+            },
+    "products": 
+            {
+                "en-US": "Products",
+                "fr-FR": "Produits"
+            },
+    "closeOrder": 
+            {
+                "en-US": "Close Order",
+                "fr-FR": "Fermer Commande"
+            },
+    "print": 
+            {
+                "en-US": "Print",
+                "fr-FR": "Imprimer"
+            },
+    "newProduct": 
+            {
+                "en-US": "New Product",
+                "fr-FR": "Créer Produit"
+            },
+    "group": 
+            {
+                "en-US": "Group",
+                "fr-FR": "Groupe"
+            },
+    "groups": 
+            {
+                "en-US": "Groups",
+                "fr-FR": "Groupes"
+            },
+    "table": 
+            {
+                "en-US": "Table",
+                "fr-FR": "Table"
+            },
+    "createOrder": 
+            {
+                "en-US": "Create Order",
+                "fr-FR": "Créer Commande"
+            },
+    "create": 
+            {
+                "en-US": "Create",
+                "fr-FR": "Créer"
+            },
+    "attention": 
+            {
+                "en-US": "Attention",
+                "fr-FR": "Concernée"
+            },
+    "add": 
+            {
+                "en-US": "Add",
+                "fr-FR": "Ajoutez"
+            },
+   "addToWallet": 
+            {
+                "en-US": "Add User To Wallet",
+                "fr-FR": "Ajoutez Utilisateur"
+            },
+    "treatmente": 
+            {
+                "en-US": "Treatment",
+                "fr-FR": "Traitement"
+            },
+    "addProducts": 
+            {
+                "en-US": "Add Products",
+                "fr-FR": "Ajoutéz des Produits"
+            },
+    "timeOrdered": 
+            {
+                "en-US": "Time Ordered",
+                "fr-FR": "Date-Heure de Commande"
+            },
+    "timePrinted": 
+            {
+                "en-US": "Time Printed",
+                "fr-FR": "Date-Heure d'Impression"
+            },
+    "cashier": 
+            {
+                "en-US": "Cashier",
+                "fr-FR": "Encaissé Par"
+            },
+    "total": 
+            {
+                "en-US": "Total",
+                "fr-FR": "Total"
+            },
+    "customerTotal": 
+            {
+                "en-US": "Customer Total",
+                "fr-FR": "Total Client"
+            },
+    "coverageTotal": 
+            {
+                "en-US": "Coverage Total",
+                "fr-FR": "Total Couvrage"
+            },
+    "coveragePaid": 
+            {
+                "en-US": "Coverage Paid",
+                "fr-FR": "Couvrage Payé"
+            },
+    "coverageOwing": 
+            {
+                "en-US": "Coverage Owing",
+                "fr-FR": "Dette Couvrage"
+            },
+    "totalToPay": 
+            {
+                "en-US": "Total To Pay",
+                "fr-FR": "Total à Payer"
+            },
+    "coverage": 
+            {
+                "en-US": "Coverage",
+                "fr-FR": "Couvrage"
+            },
+    "totalCoverage": 
+            {
+                "en-US": "Total Coverage",
+                "fr-FR": "Total Couvrage"
+            },
+    "coverageStatus": 
+            {
+                "en-US": "Coverage Status",
+                "fr-FR": "Status Couvrage"
+            },
+    "coveredOrders": 
+            {
+                "en-US": "Covered Orders",
+                "fr-FR": "Couvrages"
+            },
+    "coverageOrder": 
+            {
+                "en-US": "Coverage Order",
+                "fr-FR": "Couvrage"
+            },
+    "totalCovered": 
+            {
+                "en-US": "Total Covered",
+                "fr-FR": "Couvrage Total"
+            },
+    "amount": 
+            {
+                "en-US": "Amount",
+                "fr-FR": "Montant"
+            },
+    "amountTendered": 
+            {
+                "en-US": "Amount Tendered",
+                "fr-FR": "Montant Reçu"
+            },
+    "balance": 
+            {
+                "en-US": "Balance",
+                "fr-FR": "Reliquat"
+            },
+    "ok": 
+            {
+                "en-US": "OK",
+                "fr-FR": "OK"
+            },
+    "search": 
+            {
+                "en-US": "Search",
+                "fr-FR": "Récherche"
+            },
+    "brandName": 
+            {
+                "en-US": "Brand",
+                "fr-FR": "Marque"
+            },
+    "assignment": 
+            {
+                "en-US": "Assignment",
+                "fr-FR": "Assignement"
+            },
+    "dateCreated": 
+            {
+                "en-US": "Date Created",
+                "fr-FR": "Date de Creation"
+            },
+    "newQuery": 
+            {
+                "en-US": "New Query",
+                "fr-FR": "Nouvelle Requette"
+            },
+    "creator": 
+            {
+                "en-US": "Creator",
+                "fr-FR": "Créateur"
+            },
+    "brands": 
+            {
+                "en-US": "Brands",
+                "fr-FR": "Marques"
+            },
+    "createBrand": 
+            {
+                "en-US": "New Brand",
+                "fr-FR": "Nouvelle Marque"
+            },
+    "brandInfo": 
+            {
+                "en-US": "Brand Details",
+                "fr-FR": "Infos sur Marque"
+            },
+    "update": 
+            {
+                "en-US": "Update",
+                "fr-FR": "Mettre A Jour"
+            },
+    "status": 
+            {
+                "en-US": "Status",
+                "fr-FR": "Statut"
+            },
+    "departmentPage": 
+            {
+                "en-US": "Departments",
+                "fr-FR": "Gestion des Départements"
+            },
+    "departmentName": 
+            {
+                "en-US": "Department Name",
+                "fr-FR": "Nom de Département"
+            },
+    "createDepartment": 
+            {
+                "en-US": "Create New Department",
+                "fr-FR": "Créer Département"
+            },
+    "departmentDetails": 
+            {
+                "en-US": "Department Details",
+                "fr-FR": "Configuration Département"
+            },
+    "departments": 
+            {
+                "en-US": "Departments",
+                "fr-FR": "Départements"
+            },
+    "userPrivileges": 
+            {
+                "en-US": "Privileges",
+                "fr-FR": "Privilèges"
+            },
+    "category": 
+            {
+                "en-US": "Category",
+                "fr-FR": "Catégorie"
+            },
+    "categories": 
+            {
+                "en-US": "Categories",
+                "fr-FR": "Catégories"
+            },
+    "subCategories": 
+            {
+                "en-US": "Sub-Categories",
+                "fr-FR": "Sous-Catégories"
+            },
+    "subCategory": 
+            {
+                "en-US": "Sub-Category",
+                "fr-FR": "Sous-Catégorie"
+            },
+    "link": 
+            {
+                "en-US": "Link",
+                "fr-FR": "Connectéz"
+            },
+    "users": 
+            {
+                "en-US": "Users",
+                "fr-FR": "Utilisateurs"
+            },
+    "profiles": 
+            {
+                "en-US": "Profiles",
+                "fr-FR": "Profiles"
+            },
+    "User": 
+            {
+                "en-US": "User",
+                "fr-FR": "Utilisateur"
+            },
+    "Manager": 
+            {
+                "en-US": "Supervisor",
+                "fr-FR": "Gérant"
+            },
+    "Smanager": 
+            {
+                "en-US": "Senior Manager",
+                "fr-FR": "Gérant Supérieur"
+            },
+    "Jmanager": 
+            {
+                "en-US": "Junior Manager",
+                "fr-FR": "Gérant Assistant"
+            },
+    "Pmanager": 
+            {
+                "en-US": "Procurement Manager",
+                "fr-FR": "Gestionnaire des Achats"
+            },
+    "Fmanager": 
+            {
+                "en-US": "Finance Manager",
+                "fr-FR": "Gestionnaire des Finances"
+            },
+    "Admin": 
+            {
+                "en-US": "Administrator",
+                "fr-FR": "Administrateur"
+            },
+    "Waiter": 
+            {
+                "en-US": "Service",
+                "fr-FR": "Service"
+            },
+    "Cashier": 
+            {
+                "en-US": "Cashier",
+                "fr-FR": "Caisse"
+            },
+    "cash": 
+            {
+                "en-US": "Cash",
+                "fr-FR": "Cash"
+            },
+    "Active": 
+            {
+                "en-US": "Active",
+                "fr-FR": "Actif"
+            },
+    "Closed": 
+            {
+                "en-US": "Closed",
+                "fr-FR": "Fermée"
+            },
+    "Service": 
+            {
+                "en-US": "Execution",
+                "fr-FR": "Exécution"
+            },
+    "branches": 
+            {
+                "en-US": "Branches",
+                "fr-FR": "Succursales"
+            },
+    "shift": 
+            {
+                "en-US": "Shift",
+                "fr-FR": "Quart"
+            },
+    "shifts": 
+            {
+                "en-US": "Shifts",
+                "fr-FR": "Quarts"
+            },
+    "procurement": 
+            {
+                "en-US": "Procurement",
+                "fr-FR": "Achats"
+            },
+    "reports": 
+            {
+                "en-US": "Reporting",
+                "fr-FR": "Rapports"
+            },
+    "report": 
+            {
+                "en-US": "Report",
+                "fr-FR": "Rapport"
+            },
+    "menu": 
+            {
+                "en-US": "Menu",
+                "fr-FR": "Ménu"
+            },
+    "login": 
+            {
+                "en-US": "Login To SERVO",
+                "fr-FR": "Connection à SERVO"
+            },
+    "logout": 
+            {
+                "en-US": "Logout",
+                "fr-FR": "Déconnection"
+            },
+    "logo": 
+            {
+                "en-US": "Logo",
+                "fr-FR": "Logo"
+            },
+    "procurement": 
+            {
+                "en-US": "Procurement",
+                "fr-FR": "Aprovissionnement"
+            },
+    "timeOrdered": 
+            {
+                "en-US": "Time Ordered",
+                "fr-FR": "Date-Heure Commandé"
+            },
+    "newPurchaseOrder": 
+            {
+                "en-US": "Create New Purchase Request",
+                "fr-FR": "Créer Nouvelle Demande de Commande"
+            },
+    "purchaseOrder": 
+            {
+                "en-US": "Purchase Order",
+                "fr-FR": "Bon de Commande"
+            },
+    "email": 
+            {
+                "en-US": "Email",
+                "fr-FR": "Email"
+            },
+    "unitPrice": 
+            {
+                "en-US": "Unit Price",
+                "fr-FR": "Prix Unitaire"
+            },
+    "paymentMethod": 
+            {
+                "en-US": "Payment Method",
+                "fr-FR": "Moyen De Paiement"
+            },
+    "paymentType": 
+            {
+                "en-US": "Payment Type",
+                "fr-FR": "Type De Paiement"
+            },
+    "reference": 
+            {
+                "en-US": "Reference",
+                "fr-FR": "Réference"
+            },
+     "type": 
+            {
+                "en-US": "Type",
+                "fr-FR": "Type"
+            },           
+    "payments": 
+            {
+                "en-US": "Payment Methods",
+                "fr-FR": "Moyens De Paiement"
+            },
+    "signatureClient": 
+            {
+                "en-US": "Signature Client",
+                "fr-FR": "Signature Client/e"
+            },
+    "signatureCashier": 
+            {
+                "en-US": "Signature Cashier",
+                "fr-FR": "Signature Caissier/ère"
+            },
+    "categoryName": 
+            {
+                "en-US": "Category Name",
+                "fr-FR": "Nom de Catégorie"
+            },
+    "newCategory": 
+            {
+                "en-US": "New Category",
+                "fr-FR": "Nouvelle Catégorie"
+            },
+    "assets": 
+            {
+                "en-US": "Assets",
+                "fr-FR": "Actifs"
+            },
+    "assetUpdated": 
+            {
+                "en-US": "Asset Updated",
+                "fr-FR": "Actif Mis A Jour"
+            },
+    "currentLocation": 
+            {
+                "en-US": "Current Location",
+                "fr-FR": "Geolocalisation Actuel"
+            },
+    "asset": 
+            {
+                "en-US": "Asset",
+                "fr-FR": "Actif"
+            },
+    "paymentStatus": 
+            {
+                "en-US": "Payment Status",
+                "fr-FR": "Statut de Paiement"
+            },
+    "projectStatus": 
+            {
+                "en-US": "Project Status",
+                "fr-FR": "Statut du Projet"
+            },
+    "projectAlertStatus": 
+            {
+                "en-US": "Alerted",
+                "fr-FR": "Signalée"
+            },
+    "titleDeedNumber": 
+            {
+                "en-US": "Title Deed Number",
+                "fr-FR": "N° Titre Foncier"
+            },
+    "plotNumber": 
+            {
+                "en-US": "Plot Number",
+                "fr-FR": "Numero de Lot"
+            },
+    "blockNumber": 
+            {
+                "en-US": "Block Number",
+                "fr-FR": "Numero de Bloc"
+            },
+    "surfaceArea": 
+            {
+                "en-US": "Surface Area(m2)",
+                "fr-FR": "Superficie(m2)"
+            },
+    "commentaireSurD": 
+            {
+                "en-US": "Commentary on Offset",
+                "fr-FR": "Commentaire Sur Decallage"
+            },
+    "secteurOperationel": 
+            {
+                "en-US": "Operational Sector",
+                "fr-FR": "Secteur Operationnel"
+            },
+    "servitudePublique": 
+            {
+                "en-US": "Public Servitude",
+                "fr-FR": "Servitude Publique"
+            },
+    "servitudePrivee": 
+            {
+                "en-US": "Private Servitude",
+                "fr-FR": "Servitude Privée"
+            },
+    "projectEntitlement": 
+            {
+                "en-US": "Project Entitlement (R+)",
+                "fr-FR": "Intitulé du Project( R+)"
+            },
+    "empriseDuSol": 
+            {
+                "en-US": "Land Footprint (m2)",
+                "fr-FR": "Emprise Du Sol (m2)"
+            },
+    "cumulDePlancees": 
+            {
+                "en-US": "Cumul De Plancees (m2)",
+                "fr-FR": "Cumul De Plancees (m2)"
+            },
+    "observations": 
+            {
+                "en-US": "Observations",
+                "fr-FR": "Observations"
+            },
+    "permitNumber": 
+            {
+                "en-US": "Permit Number",
+                "fr-FR": "Numéro de Permis"
+            },
+    "maitreDoeuvre": 
+            {
+                "en-US": "Project Manager",
+                "fr-FR": "Maitre D'Oeuvre"
+            },
+    "maitreDouvrage": 
+            {
+                "en-US": "Contractor",
+                "fr-FR": "Maitre d'Ouvrage"
+            },
+    "constructionType": 
+            {
+                "en-US": "Construction Type",
+                "fr-FR": "Type De Construction"
+            },
+    "district": 
+            {
+                "en-US": "District",
+                "fr-FR": "Arrondissement"
+            },
+    "neighborhood": 
+            {
+                "en-US": "Neighborhood",
+                "fr-FR": "Quartier"
+            },
+    "neighborhoodLocalName": 
+            {
+                "en-US": "Local Name",
+                "fr-FR": "Quartier(Lieu Dit)"
+            },
+    "streetName": 
+            {
+                "en-US": "Street Name or Number",
+                "fr-FR": "Numero ou Nom de la Rue"
+            },
+    "projectPurpose": 
+            {
+                "en-US": "Project Purpose",
+                "fr-FR": "Destination"
+            },
+    "projectId": 
+            {
+                "en-US": "Project ID",
+                "fr-FR": "ID du Projet"
+            },
+    "technicalInformation": 
+            {
+                "en-US": "Techical Data",
+                "fr-FR": "Données Techniques"
+            },
+    "plaqueInformation": 
+            {
+                "en-US": "Plaque Data",
+                "fr-FR": "Données Sur Plaque"
+            },
+    "assetGeolocation": 
+            {
+                "en-US": "Asset Geolocation",
+                "fr-FR": "Géolocalisation"
+            },
+    "description": 
+            {
+                "en-US": "Description",
+                "fr-FR": "Description"
+            },
+    "name": 
+            {
+                "en-US": "Name",
+                "fr-FR": "Nom"
+            },
+    "customers": 
+            {
+                "en-US": "Customers",
+                "fr-FR": "Clients"
+            },
+    "projects": 
+            {
+                "en-US": "Projects",
+                "fr-FR": "Projets"
+            },
+    "project": 
+            {
+                "en-US": "Project",
+                "fr-FR": "Projet"
+            },
+    "newOperator": 
+            {
+                "en-US": "New Operator",
+                "fr-FR": "Nouveau Operateur"
+            },
+    "newProject": 
+            {
+                "en-US": "New Project",
+                "fr-FR": "Nouveau Projet"
+            },
+    "project": 
+            {
+                "en-US": "Project",
+                "fr-FR": "Projet"
+            },
+    "propertyCertificate": 
+            {
+                "en-US": "Property Certificate",
+                "fr-FR": "Certificat De Proprieté"
+            },
+    "urbanismCertificate": 
+            {
+                "en-US": "Urbanism Certificate",
+                "fr-FR": "Certificat D'Urbaisme"
+            },
+    "planDeMasse": 
+            {
+                "en-US": "Plan De Masse",
+                "fr-FR": "Plan De Masse"
+            },
+    "combinedSurfaceArea": 
+            {
+                "en-US": "Combined Surface Area (m2)",
+                "fr-FR": "Surface Cumulée (m2)"
+            },
+    "permitApplication": 
+            {
+                "en-US": "Permit Application",
+                "fr-FR": "Demande de Permis"
+            },
+    "derogation": 
+            {
+                "en-US": "Dérogation",
+                "fr-FR": "Dérogation"
+            },
+    "other": 
+            {
+                "en-US": "Other",
+                "fr-FR": "Autre"
+            },
+    "fileType": 
+            {
+                "en-US": "File Type",
+                "fr-FR": "Type de Fichier"
+            },
+    "file": 
+            {
+                "en-US": "File",
+                "fr-FR": "Fichier"
+            },
+    "fileDescription": 
+            {
+                "en-US": "File Description",
+                "fr-FR": "Déscription du Fichier"
+            },
+    "fileStatus": 
+            {
+                "en-US": "File Status",
+                "fr-FR": "Statut du Fichier"
+            },
+    "operators": 
+            {
+                "en-US": "Operators",
+                "fr-FR": "Promoteurs"
+            },
+    "customer": 
+            {
+                "en-US": "Customer",
+                "fr-FR": "Clients"
+            },
+    "discount": 
+            {
+                "en-US": "Discount",
+                "fr-FR": "Réduction"
+            },
+    "picture": 
+            {
+                "en-US": "Picture",
+                "fr-FR": "Photo"
+            },
+    "uploadFile": 
+            {
+                "en-US": "Upload File",
+                "fr-FR": "Téléverser Fichier"
+            },
+    "phoneNumber": 
+            {
+                "en-US": "Phone N°",
+                "fr-FR": "N° De Tel."
+            },
+
+    "item": 
+            {
+                "en-US": "Item",
+                "fr-FR": "Produit"
+            },
+    "orderDetails": 
+            {
+                "en-US": "Order Details",
+                "fr-FR": "Détails de Commande"
+            },
+    "shift": 
+            {
+                "en-US": "Shift",
+                "fr-FR": "Quart"
+            },
+    "start": 
+            {
+                "en-US": "Start",
+                "fr-FR": "Début"
+            },
+    "stop": 
+            {
+                "en-US": "End",
+                "fr-FR": "Fin"
+            },
+    "shiftManagement": 
+            {
+                "en-US": "Shift Management",
+                "fr-FR": "Géstion des Quarts"
+            },
+    "branch": 
+            {
+                "en-US": "Branch",
+                "fr-FR": "Succursale"
+            },
+    "createShift": 
+            {
+                "en-US": "Create New Shift",
+                "fr-FR": "Créér Nouveau Quart"
+            },
+    "shifts": 
+            {
+                "en-US": "Shifts",
+                "fr-FR": "Quarts"
+            },
+    "staff": 
+            {
+                "en-US": "Staff",
+                "fr-FR": "Personnel"
+            },
+    "activeStaff": 
+            {
+                "en-US": "Active Staff",
+                "fr-FR": "Personnel Actif"
+            },
+    "inactiveStaff": 
+            {
+                "en-US": "Inactive Staff",
+                "fr-FR": "Personnel Inactif"
+            },
+    "info": 
+            {
+                "en-US": "Information",
+                "fr-FR": "Information"
+            },
+    "surname": 
+            {
+                "en-US": "Surname",
+                "fr-FR": "Prenom"
+            },
+    "transferto": 
+            {
+                "en-US": "Transfer Here",
+                "fr-FR": "Peut Transferer Ici"
+            },
+    "user": 
+            {
+                "en-US": "User",
+                "fr-FR": "Utilisateur"
+            },
+    "checkin": 
+            {
+                "en-US": "Check-In",
+                "fr-FR": "Enregistrement"
+            },
+    "checkout": 
+            {
+                "en-US": "Check-Out",
+                "fr-FR": "Sortie"
+            },
+    "newTable": 
+            {
+                "en-US": "Create New Table",
+                "fr-FR": "Créer Nouvelle Table"
+            },
+    "details": 
+            {
+                "en-US": "Details",
+                "fr-FR": "Details"
+            },
+    "userProfiles": 
+            {
+                "en-US": "User Profiles",
+                "fr-FR": "Profils d'Utilisateurs"
+            },
+    "newUserProfile": 
+            {
+                "en-US": "New User Profile",
+                "fr-FR": "Nouveau Profil"
+            },
+    "username": 
+            {
+                "en-US": "User Name",
+                "fr-FR": "Nom d'Utilisateur"
+            },
+    "password": 
+            {
+                "en-US": "Password",
+                "fr-FR": "Mot De Passe"
+            },
+    "department": 
+            {
+                "en-US": "Department",
+                "fr-FR": "Départment"
+            },
+    "profile": 
+            {
+                "en-US": "Profile",
+                "fr-FR": "Profil"
+            },
+    "newUser": 
+            {
+                "en-US": "New User",
+                "fr-FR": "Nouveau Utilisateur"
+            },
+    "status": 
+            {
+                "en-US": "Status",
+                "fr-FR": "Statut"
+            },
+    "status": 
+            {
+                "en-US": "Status",
+                "fr-FR": "Statut"
+            },
+    "status": 
+            {
+                "en-US": "Status",
+                "fr-FR": "Statut"
+            },
+    "status": 
+            {
+                "en-US": "Status",
+                "fr-FR": "Statut"
+            },
+    "status": 
+            {
+                "en-US": "Status",
+                "fr-FR": "Statut"
+            },
+    "status": 
+            {
+                "en-US": "Status",
+                "fr-FR": "Statut"
+            },
+    "createPO": 
+            {
+                "en-US": "Create PO",
+                "fr-FR": "Créer Bon d'Achat"
+            },
+    "deletePO": 
+            {
+                "en-US": "Delete PO",
+                "fr-FR": "Supprimer Bon d'Achat"
+            },
+    "editPOItemQuantity": 
+            {
+                "en-US": "Edit PO Quantity",
+                "fr-FR": "Modifier Quantité Bon d'Achat"
+            },
+    "editPOItemPrice": 
+            {
+                "en-US": "Edit PO Price",
+                "fr-FR": "Modifier Prix Bon d'Achat"
+            },
+    
+    "createOrder": 
+            {
+                "en-US": "Create Order",
+                "fr-FR": "Créer Commande"
+            },
+    "deleteOrder": 
+            {
+                "en-US": "Delete Order",
+                "fr-FR": "Supprimer Commande"
+            },
+    "editOrderItemQuantity": 
+            {
+                "en-US": "Edit Order Quantity",
+                "fr-FR": "Modifier Quantité Commande"
+            },
+    "editOrderItemPrice": 
+            {
+                "en-US": "Edit Order Price",
+                "fr-FR": "Modifier Prix Commande"
+            },
+    "deleteOrderItem": 
+            {
+                "en-US": "Delete Order Item",
+                "fr-FR": "Supprimer Objet Commande"
+            },
+    "editOrderDetails": 
+            {
+                "en-US": "Edit Order Details",
+                "fr-FR": "Modifier Commande"
+            },
+    "deletePOItem": 
+            {
+                "en-US": "Delete PO Item",
+                "fr-FR": "Supprimer Objet de Bon d'Achat"
+            },
+    "deleteAOItem": 
+            {
+                "en-US": "Delete AO Item",
+                "fr-FR": "Supprimer Objet Bon d'Adjustement"
+            },
+    "object": 
+            {
+                "en-US": "Object",
+                "fr-FR": "Object"
+            },
+    "old": 
+            {
+                "en-US": "Old",
+                "fr-FR": "Ancien"
+            },
+    "new": 
+            {
+                "en-US": "New",
+                "fr-FR": "Nouveau"
+            },
+    "edit": 
+            {
+                "en-US": "Edit",
+                "fr-FR": "Modifiér"
+            },
+    "editAOItemQ": 
+            {
+                "en-US": "Edit AO Item Quantity",
+                "fr-FR": "Modifier Quantité Object Bon d'Adjustement"
+            },
+    "createAO": 
+            {
+                "en-US": "Create AO",
+                "fr-FR": "Créer Bon d'Adjustement"
+            },
+    "deleteAO": 
+            {
+                "en-US": "Delete AO",
+                "fr-FR": "Supprimer Bon d'Adjustement"
+            },
+    "editAOItemQuantity": 
+            {
+                "en-US": "Edit AO Item Quantity",
+                "fr-FR": "Modifier Quantité Bon d'Adjustement"
+            },
+    "createCustomer": 
+            {
+                "en-US": "Create Customer",
+                "fr-FR": "Créer Client"
+            },
+    "deleteCustomer": 
+            {
+                "en-US": "Delete Customer",
+                "fr-FR": "Supprimer Client"
+            },
+    "today": 
+            {
+                "en-US": "Today",
+                "fr-FR": "Aujourdhui"
+            },
+    "lastWeek": 
+            {
+                "en-US": "Last Week",
+                "fr-FR": "Semaine Dernière"
+            },
+    "lastMonth": 
+            {
+                "en-US": "Last Month",
+                "fr-FR": "Mois Dernière"
+            },
+    "thisMonth": 
+            {
+                "en-US": "This Month",
+                "fr-FR": "Ce Mois"
+            },
+    "thisWeek": 
+            {
+                "en-US": "This Week",
+                "fr-FR": "Cette Semaine"
+            },
+    "lastWeek": 
+            {
+                "en-US": "Last Week",
+                "fr-FR": "Semaine Dernière"
+            },
+    "yesterday": 
+            {
+                "en-US": "Yesterday",
+                "fr-FR": "Journée d'Hier"
+            },
+    "lastThreeMonths": 
+            {
+                "en-US": "Last 3 Months",
+                "fr-FR": "Dernières 3 Mois"
+            },
+    "editCustomer": 
+            {
+                "en-US": "Edit Customer",
+                "fr-FR": "Modifier Client"
+            },
+    "approvePO": 
+            {
+                "en-US": "Approve PO",
+                "fr-FR": "Approuvé Bon d'Achat"
+            },
+    "approve": 
+            {
+                "en-US": "Approve",
+                "fr-FR": "Approuvé"
+            },
+    "editUser": 
+            {
+                "en-US": "Edit User",
+                "fr-FR": "Modifier Utilisateur"
+            },
+    "createUser": 
+            {
+                "en-US": "Create User",
+                "fr-FR": "Créer Utilisateur"
+            },
+    "yes": 
+            {
+                "en-US": "Yes",
+                "fr-FR": "Oui"
+            },
+    "no": 
+            {
+                "en-US": "No",
+                "fr-FR": "Non"
+            },
+    "delivered": 
+            {
+                "en-US": "Delivered",
+                "fr-FR": "Livrée"
+            },
+    "notDelivered": 
+            {
+                "en-US": "Not Delivered",
+                "fr-FR": "Non Livrée"
+            },
+    "deleteUser": 
+            {
+                "en-US": "Delete User",
+                "fr-FR": "Supprimer Utilisateur"
+            },
+    "guichetUnique": 
+            {
+                "en-US": "Single Counter",
+                "fr-FR": "Guichet Unique"
+            },
+    "policeMunicipale": 
+            {
+                "en-US": "Municipal Police",
+                "fr-FR": "Police Municipale"
+            },
+    "recettesMunicipales": 
+            {
+                "en-US": "Muncipal Finance",
+                "fr-FR": "Recettes Municipales"
+            },
+    "cc-gu": 
+            {
+                "en-US": "Single Counter",
+                "fr-FR": "Guichet Unique"
+            },
+    "cc-pm": 
+            {
+                "en-US": "Municipal Police",
+                "fr-FR": "Police Muncipale"
+            },
+    "cc-rm": 
+            {
+                "en-US": "Muncipal Finance",
+                "fr-FR": "Recettes Municipales"
+            },
+    "cc-admin": 
+            {
+                "en-US": "Administrator",
+                "fr-FR": "Adminsitrateur"
+            }
+}
