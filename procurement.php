@@ -533,10 +533,10 @@ JSON
                   <h6 class="fw-bold ms-2 pt-2 pb-2 ps-3 pe-3 rounded bg-opacity-10 text-info bg-info"><i class="fas fa-cash-register fa-sm" style="margin-right:10px"></i>
                     {{poTotal.value}}
                   </h6>
-                  <h6 class="fw-bold ms-2 pt-2 pb-2 ps-3 pe-3 rounded bg-opacity-10 text-success bg-success"><i class="fas fa-arrow-circle-down fa-sm" style="margin-right:10px"></i>{{poTotalPaid.value}}
+                  <h6 class="fw-bold ms-2 pt-2 pb-2 ps-3 pe-3 rounded bg-opacity-10 text-success bg-success"><i class="fas fa-arrow-circle-up fa-sm" style="margin-right:10px"></i>{{poTotalPaid.value}}
 
                   </h6>
-                  <h6 class="fw-bold text-danger ms-2 pt-2 pb-2 ps-3 pe-3 rounded bg-danger bg-opacity-10"><i class="fas fa-arrow-circle-up fa-sm" style="margin-right:10px"></i>
+                  <h6 class="fw-bold text-danger ms-2 pt-2 pb-2 ps-3 pe-3 rounded bg-danger bg-opacity-10"><i class="fas fa-arrow-circle-down fa-sm" style="margin-right:10px"></i>
                     {{poTotalOwing.value}}
                   </h6>
                 </div>
@@ -1062,7 +1062,7 @@ JSON
             <div class="row">
               <div class="d-flex col justify-content-start">
                 <div class="d-block">
-                  <h3 class="text-warning">{{trans.data.stockAdjustment[lang.value]}}</h3>
+                  <h5>{{trans.data.stockAdjustment[lang.value]}}</h5>
                 </div>
                 <div class="d-block">
                   <h3>#</h3>
