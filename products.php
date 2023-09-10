@@ -336,7 +336,7 @@ JSON
 
                           <div class="col text-xxl-center text-center">
                             <div class="row mt-2">
-                              <form id="replaceProductPicture" class="d-flex" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_products/replace_product_picture.php" dmx-on:success="notifies1.success('Success!');read_item_product.load({product_id: read_item_product.data.query_read_product.product_id})"><input id="text4" name="product_picture" type="text" class="form-control visually-hidden">
+                              <form id="replaceProductPicture" class="d-flex" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_products/replace_product_picture.php" dmx-on:success="notifies1.success('Success!');read_item_product.load({product_id: read_item_product.data.query_read_product.product_id});replaceProductPicture.reset()"><input id="text4" name="product_picture" type="text" class="form-control visually-hidden">
                                 <input id="text5" name="product_id" type="text" class="form-control visually-hidden" dmx-bind:value="read_item_product.data.query_read_product.product_id"><input name="product_picture_file" type="file" class="form-control" required="" data-rule-maxfiles="1" accept=".jpg, .png">
                                 <button id="btn7" class="btn ms-xxl-2 ms-xl-2 ms-lg-2 ms-md-2 ms-sm-2 ms-2 text-white bg-info" type="submit" dmx-show="replaceProductPicture.product_picture_file.value+'!='+null">
                                   <i class="fas fa-upload"></i>
