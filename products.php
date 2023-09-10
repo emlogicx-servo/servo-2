@@ -108,7 +108,7 @@ JSON
   <dmx-serverconnect id="product_adjustment_single" url="dmxConnect/api/servo_reporting/product_adjustment_single.php" dmx-param:product_id="read_item_product.data.query_read_product.product_id" dmx-param:date_start="formfilter.date_start.value" dmx-param:date_end="formfilter.date_end.value"></dmx-serverconnect>
   <dmx-serverconnect id="product_purchases_received_single" url="dmxConnect/api/servo_reporting/product_purchases_received_single.php" dmx-param:product_id="" dmx-param:date_start="formfilter.date_start.value" dmx-param:date_end=""></dmx-serverconnect>
   <div is="dmx-browser" id="browser1"></div>
-  <dmx-notifications id="notifies1"></dmx-notifications>
+  <dmx-notifications id="notifies1" position="bottom" timeout="50" extended-timeout="10"></dmx-notifications>
   <?php require 'header.php'; ?><main class="mt-4">
     <div class="modal readitem" id="readProductGroupModal" is="dmx-bs5-modal" tabindex="-1">
       <div class="modal-dialog modal-xl" role="document">
@@ -349,7 +349,7 @@ JSON
                         </div>
                       </div>
                       <div class="bg-secondary rounded mt-2 ms-2 me-2 pt-3 pb-3 ps-3 pe-3 col-12 col-lg-6 col-md-7">
-                        <form is="dmx-serverconnect-form" id="readitem" method="post" action="dmxConnect/api/servo_products/update_product.php" dmx-generator="bootstrap5" dmx-form-type="horizontal" dmx-populate="read_item_product.data.query_delete_product" dmx-on:success="notifies1.success('Success');list_item_products.load()">
+                        <form is="dmx-serverconnect-form" id="readitem" method="post" action="dmxConnect/api/servo_products/update_product.php" dmx-generator="bootstrap5" dmx-form-type="horizontal" dmx-populate="read_item_product.data.query_delete_product" dmx-on:success="notifies1.success('Success');list_item_products.load();read_item_product.load({product_id: read_item_product.data.query_read_product.product_id})">
                           <div class="mb-3 row">
                             <label for="inp_product_id" class="col-sm-2 col-form-label">&nbsp;#</label>
                             <div class="col-sm-10">
@@ -474,15 +474,12 @@ JSON
                                 <td dmx-text="product_price_date"></td>
                                 <td dmx-text="service_name"></td>
                                 <td>
-                                  <form id="productPriceSet1" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_product_prices/update_product_price.php" dmx-on:success="productPriceSet.reset();notifies1.success('Success!');load_product_prices.load({});load_departments.load({})">
+                                  <form id="productPriceSet1" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_product_prices/update_product_price.php" dmx-on:success="productPriceSet.reset();notifies1.success('Success!');load_product_prices.load({});load_departments.load({})" class="d-flex">
                                     <div class="row">
-                                      <div class="col">
+                                      <div class="col d-flex">
                                         <input id="productPriceUpdate" name="product_price" type="number" class="form-control" dmx-bind:value="product_price">
                                         <input id="productPriceDate2" name="product_price_date" type="datetime-local" class="form-control visually-hidden" dmx-bind:value="dateTime.datetime">
-                                        <input id="productPriceId" name="product_price_id" type="text" class="form-control visually-hidden" dmx-bind:value="product_price_id">
-                                      </div>
-                                      <div class="col">
-                                        <button id="btn7" class="btn text-success" type="submit">
+                                        <input id="productPriceId" name="product_price_id" type="text" class="form-control visually-hidden" dmx-bind:value="product_price_id"><button id="btn7" class="btn text-success ms-2" type="submit">
                                           <i class="fas fa-check"></i>
                                         </button>
                                       </div>
@@ -493,10 +490,7 @@ JSON
                                   <form id="deletePrice" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_product_prices/delete_product_price.php" dmx-on:success="productPriceSet.reset();notifies1.success('Success!');load_product_prices.load({});load_departments.load({})">
                                     <div class="row">
                                       <div class="col">
-                                        <input id="productPriceId1" name="product_price_id" type="text" class="form-control visually-hidden" dmx-bind:value="product_price_id">
-                                      </div>
-                                      <div class="col">
-                                        <button id="btn8" class="btn text-muted" type="submit">
+                                        <input id="productPriceId1" name="product_price_id" type="text" class="form-control visually-hidden" dmx-bind:value="product_price_id"><button id="btn8" class="btn text-muted ms-2" type="submit">
                                           <i class="far fa-trash-alt fa-sm"></i>
                                         </button>
                                       </div>
@@ -806,7 +800,7 @@ JSON
           <button id="btn1" class="btn style12 fw-light bg-info text-white btn-sm rounded" data-bs-toggle="modal" data-bs-target="#createItemModal" style="float: right;"><i class="fas fa-plus style14"></i></button>
         </div>
       </div>
-      <ul class="nav nav-tabs" id="navTabs1_tabs" role="tablist">
+      <ul class="nav nav-tabs nav-justified" id="navTabs1_tabs" role="tablist">
         <li class="nav-item">
           <a class="nav-link active fw-bold" id="navTabs1_1_tab" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_11" role="tab" aria-controls="navTabs1_1" aria-selected="true">{{trans.data.products[lang.value]}}</a>
         </li>
