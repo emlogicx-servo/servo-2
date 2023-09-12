@@ -552,13 +552,13 @@ JSON
                             <input id="searchProductCategories2" name="text2" type="text" class="form-control mb-1 form-control-lg visually-hidden" dmx-bind:value="searchProductCategories.value" dmx-on:changed="load_products.load({service_id: list_user_shift_info.data.query_list_user_shift[0].servo_service_service_id, search: searchProducts1.value, product_category: searchProductCategories.value})">
 
                           </div>
-                          <div class="d-flex justify-content-start col-auto"><button id="btn4" class="btn ms-1 me-2 btn-info text-white" dmx-on:click="AddProductsToOrderOffCanvas.searchProducts2.setValue(null);AddProductsToOrderOffCanvas.searchProductCategories2.setValue(null);load_products.load({service_id: list_user_shift_info.data.query_list_user_shift[0].servo_service_service_id})">
+                          <div class="d-flex justify-content-start col-auto"><button id="btn4" class="btn ms-1 me-2 text-primary lh-1 bg-primary bg-opacity-10" dmx-on:click="AddProductsToOrderOffCanvas.searchProducts2.setValue(null);AddProductsToOrderOffCanvas.searchProductCategories2.setValue(null);load_products.load({service_id: list_user_shift_info.data.query_list_user_shift[0].servo_service_service_id})">
                               <i class="fas fa-backspace fa-sm"></i>
                             </button>
-                            <button id="btn18" class="btn ms-2 me-2 text-white btn-info" dmx-on:click="AddProductsToOrderOffCanvas.btn18.toggleCategorySelect.toggle()">
+                            <button id="btn18" class="btn ms-2 me-2 bg-primary bg-opacity-10 text-primary" dmx-on:click="AddProductsToOrderOffCanvas.btn18.toggleCategorySelect.toggle()">
                               <dmx-toggle id="toggleCategorySelect"></dmx-toggle><i class="fas fa-chevron-down fa-sm"></i>
                             </button>
-                            <button id="toggleProductPic2" class="btn ms-2 me-2 btn-info text-white" dmx-on:click="AddProductsToOrderOffCanvas.toggleProductPic2.toggleProductPictures2.toggle()">
+                            <button id="toggleProductPic2" class="btn ms-2 me-2 text-primary bg-primary bg-opacity-10" dmx-on:click="AddProductsToOrderOffCanvas.toggleProductPic2.toggleProductPictures2.toggle()">
                               <dmx-toggle id="toggleProductPictures2" checked="true"></dmx-toggle><i class="far fa-images fa-sm"></i>
                             </button>
                           </div>
@@ -569,9 +569,9 @@ JSON
 
                           </div>
                         </div>
-                        <div class="row mt-2 ms-1 me-1 mt-sm-1 ms-sm-1 me-sm-1 mt-md-1 ms-md-1 me-md-1 mt-lg-1 ms-lg-1 me-lg-1 mt-xxl-1 ms-xxl-1 me-xxl-1 mt-xl-1 me-xl-1">
+                        <div class="row mt-2 ms-1 me-1 mt-sm-1 ms-sm-1 me-sm-1 mt-md-1 ms-md-1 me-md-1 mt-lg-1 ms-lg-1 me-lg-1 mt-xxl-1 ms-xxl-1 me-xxl-1 mt-xl-1 me-xl-1 row-cols-xxl-12 row-cols-lg-10 row-cols-xl-12 row-cols-md-3">
 
-                          <div class="flex-md-wrap flex-md-row justify-content-md-center align-content-center offset-md-1 col-12 col-sm-5 col-xxl-1 bg-secondary col-md-5 border-dark col-lg-3 mb-2 ms-1 me-1 pt-3 pb-3 ps-3 pe-3 rounded-bottom d-flex justify-content-xxl-start flex-xxl-nowrap flex-xl-nowrap" dmx-repeat:repeatproducts="load_products.data.repeat" style="padding-top: 0px !important;">
+                          <div class="border-dark mb-2 ms-1 me-1 pt-3 pb-3 ps-3 pe-3 rounded-bottom col-xxl-auto bg-primary bg-opacity-10 col-auto offset-md-0 col-md-12 col-sm-auto col-lg-auto col-xl-3" dmx-repeat:repeatproducts="load_products.data.repeat" style="padding-top: 0px !important;">
                             <form id="addItem2" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_order_items/create_order_item.php" dmx-on:success="addItem2.reset();list_order_items.load({order_id: session_variables.data.current_order});notifies1.success('Success:'+product_name+' Added to Order')">
                               <div class="row" style="padding: 0px !important;" id="productPic2" dmx-hide="toggleProductPic2.toggleProductPictures2.checked">
                                 <div class="col text-center" style="padding: 0px !important; height: 200px;" dmx-hide="product_picture==null">
@@ -593,13 +593,13 @@ JSON
 
                               <div class="row justify-content-between mb-2 text-center justify-content-xxl-between">
                                 <div class="col-4">
-                                  <button id="btn161" class="btn btn-lg text-body" dmx-on:click="addItem2.inp_order_item_quantity2.setValue((addItem2.inp_order_item_quantity2.value.toNumber()-1))"><i class="fas fa-minus"></i>
+                                  <button id="btn161" class="btn btn-lg text-body" dmx-on:click="addItem2.inp_order_item_quantity2.setValue((addItem2.inp_order_item_quantity2.value.toNumber()-1))" dmx-bind:disabled="additem2.inp_order_item_quantity2.value=1"><i class="fas fa-minus"></i>
                                   </button>
                                 </div>
 
-                                <div class="col-4 text-center" style="padding: 0px !important;"><input id="inp_order_item_quantity2" name="order_item_quantity" type="number" class="form-control mb-sm-1 mb-2 form-control-lg" placeholder="1" min="" data-rule-min="1" data-msg-min="Min. 1" style="width: 100% !important;" dmx-bind:value="1"></div>
+                                <div class="col-4 text-center" style="padding: 0px !important;"><input id="inp_order_item_quantity2" name="order_item_quantity" type="number" class="form-control mb-sm-1 mb-2 form-control-lg" min="" data-rule-min="1" data-msg-min="Min. 1" style="width: 100% !important;" dmx-bind:value="1" dmx-bind:min="1" required="" data-msg-required="!"></div>
                                 <div class="col-4">
-                                  <button id="btn161" class="btn btn-lg text-body" dmx-on:click="addItem2.inp_order_item_quantity2.setValue((addItem2.inp_order_item_quantity2.value.toNumber()+1))"><i class="fas fa-plus"></i>
+                                  <button id="btn162" class="btn btn-lg text-body" dmx-on:click="addItem2.inp_order_item_quantity2.setValue((addItem2.inp_order_item_quantity2.value.toNumber()+1))"><i class="fas fa-plus"></i>
                                   </button>
                                 </div>
                               </div>
@@ -895,7 +895,7 @@ JSON
           <button id="btn31" class="btn style12 fw-light bg-success rounded ms-2 bg-opacity-10 text-success" data-bs-toggle="modal" data-bs-target="#SelectTableModal" style="float: right;"><i class="fas fa-plus style14 fa-sm"></i></button>
         </div>
       </div>
-      <div class="row numbers bg-light rounded mt-2 ms-0 me-0 pt-3 pb-2 ps-2 pe-2">
+      <div class="row numbers rounded mt-2 ms-0 me-0 pt-3 pb-2 ps-2 pe-2 bg-light">
         <div class="col d-flex justify-content-start">
           <h2 class="text-danger"><i class="fas fa-arrow-alt-circle-up"></i></h2>
           <h3 class="ms-2 text-danger fw-bolder">{{(total_sales_per_waiter_out_per_shift.data.query.sum(`(order_item_price * order_item_quantity)`)).formatNumber('0', ',', ',')}}</h3>
