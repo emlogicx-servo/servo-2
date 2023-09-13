@@ -571,7 +571,7 @@ JSON
                         </div>
                         <div class="row mt-2 ms-1 me-1 mt-sm-1 ms-sm-1 me-sm-1 mt-md-1 ms-md-1 me-md-1 mt-lg-1 ms-lg-1 me-lg-1 mt-xxl-1 ms-xxl-1 me-xxl-1 mt-xl-1 me-xl-1 row-cols-xxl-12 row-cols-lg-10 row-cols-xl-12 row-cols-md-3">
 
-                          <div class="border-dark mb-2 ms-1 me-1 pt-3 pb-3 ps-3 pe-3 rounded-bottom col-xxl-auto bg-primary bg-opacity-10 col-auto offset-md-0 col-md-12 col-sm-auto col-lg-auto col-xl-3" dmx-repeat:repeatproducts="load_products.data.repeat" style="padding-top: 0px !important;">
+                          <div class="border-dark mb-2 ms-1 me-1 pt-3 pb-3 ps-3 pe-3 rounded-bottom col-xxl-auto bg-primary bg-opacity-10 col-auto offset-md-0 col-sm-auto col-lg-auto col-xl-auto col-md-auto" dmx-repeat:repeatproducts="load_products.data.repeat" style="padding-top: 0px !important;">
                             <form id="addItem2" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_order_items/create_order_item.php" dmx-on:success="addItem2.reset();list_order_items.load({order_id: session_variables.data.current_order});notifies1.success('Success:'+product_name+' Added to Order')">
                               <div class="row" style="padding: 0px !important;" id="productPic2" dmx-hide="toggleProductPic2.toggleProductPictures2.checked">
                                 <div class="col text-center" style="padding: 0px !important; height: 200px;" dmx-hide="product_picture==null">
@@ -592,20 +592,16 @@ JSON
                               </div>
 
                               <div class="row justify-content-between mb-2 text-center justify-content-xxl-between">
-                                <div class="col-4">
-                                  <button id="btn161" class="btn btn-lg text-body" dmx-on:click="addItem2.inp_order_item_quantity2.setValue((addItem2.inp_order_item_quantity2.value.toNumber()-1))" dmx-bind:disabled="additem2.inp_order_item_quantity2.value=1"><i class="fas fa-minus"></i>
+                                <div class="d-flex justify-content-between justify-content-xl-between justify-content-sm-between justify-content-md-between justify-content-lg-between justify-content-xxl-between col-12 col-sm-12 col-lg-12 col-xxl-12">
+                                  <button id="btn161" class="btn btn-lg text-body" dmx-on:click="addItem2.inp_order_item_quantity2.setValue((addItem2.inp_order_item_quantity2.value.toNumber()-1))"><i class="fas fa-minus"></i>
+                                  </button><input id="inp_order_item_quantity2" name="order_item_quantity" type="number" class="form-control mb-sm-1 mb-2 form-control-lg" min="" data-rule-min="1" data-msg-min="Min. 1" style="width: 100% !important;" dmx-bind:value="1" dmx-bind:min="1" required="" data-msg-required="!"><button id="btn162" class="btn btn-lg text-body" dmx-on:click="addItem2.inp_order_item_quantity2.setValue((addItem2.inp_order_item_quantity2.value.toNumber()+1))"><i class="fas fa-plus"></i>
                                   </button>
                                 </div>
 
-                                <div class="col-4 text-center" style="padding: 0px !important;"><input id="inp_order_item_quantity2" name="order_item_quantity" type="number" class="form-control mb-sm-1 mb-2 form-control-lg" min="" data-rule-min="1" data-msg-min="Min. 1" style="width: 100% !important;" dmx-bind:value="1" dmx-bind:min="1" required="" data-msg-required="!"></div>
-                                <div class="col-4">
-                                  <button id="btn162" class="btn btn-lg text-body" dmx-on:click="addItem2.inp_order_item_quantity2.setValue((addItem2.inp_order_item_quantity2.value.toNumber()+1))"><i class="fas fa-plus"></i>
-                                  </button>
-                                </div>
                               </div>
 
-                              <input id="inp_order_time_ordered2" name="order_time_ordered" class="form-control mb-sm-1 mb-2 visually-hidden" type="datetime-local" dmx-bind:value="var1.datetime"><input id="inp_order_item_status2" name="order_item_status" class="form-control mb-sm-1 mb-2 visually-hidden" value="Pending"><input id="inp_order_id2" name="servo_orders_order_id" type="number" class="form-control mb-sm-1 mb-2 visually-hidden" dmx-bind:value="session_variables.data.current_order"><input id="inp_order_product_id2" name="servo_products_product_id" type="number" class="form-control mb-sm-1 mb-2 visually-hidden" placeholder="1" dmx-bind:value="product_id"><input id="inp_order_item_price2" name="order_item_price" type="number" class="form-control mb-sm-1 mb-2 visually-hidden" placeholder="1" dmx-bind:value="product_price">
-                              <input id="inp_order_item_type1" name="order_item_type" class="form-control mb-sm-1 mb-2 visually-hidden" placeholder="1" dmx-bind:value="'Simple'">
+                              <input id="inp_order_time_ordered2" name="order_time_ordered" class="form-control mb-sm-1 mb-2 visually-hidden" type="datetime-local" dmx-bind:value="var1.datetime"><input id="inp_order_item_status2" name="order_item_status" class="form-control mb-sm-1 mb-2 visually-hidden" value="Pending"><input id="inp_order_id2" name="servo_orders_order_id" type="number" class="form-control mb-sm-1 mb-2 visually-hidden" dmx-bind:value="session_variables.data.current_order"><input id="inp_order_item_type1" name="order_item_type" class="form-control mb-sm-1 mb-2 visually-hidden" placeholder="1" dmx-bind:value="'Simple'"><input id="inp_order_product_id2" name="servo_products_product_id" type="number" class="form-control mb-sm-1 mb-2 visually-hidden" placeholder="1" dmx-bind:value="product_id"><input id="inp_order_item_price2" name="order_item_price" type="number" class="form-control mb-sm-1 mb-2 visually-hidden" placeholder="1" dmx-bind:value="product_price">
+
                               <input id="inp_order_item_user_ordered1" name="servo_users_user_ordered" class="form-control mb-sm-1 mb-2 visually-hidden" placeholder="1" dmx-bind:value="session_variables.data.user_id" type="number"><input id="orderitemDepartment1" name="servo_departments_department_id" class="form-control mb-sm-1 mb-2 visually-hidden" placeholder="1" dmx-bind:value="sdc_department_id" type="number">
                               <textarea id="inp_order_notes2" class="form-control" name="order_item_notes"></textarea>
                               <div class="row row-cols-xxl-7 mt-lg-2 mt-2 mt-sm-2 mt-md-2 mt-xl-2 mt-xxl-2 row-cols-12 justify-content-xxl-start justify-content-xl-start justify-content-lg-start" id="optionsrow1" style="">
@@ -892,7 +888,7 @@ JSON
 
 
 
-          <button id="btn31" class="btn style12 fw-light bg-success rounded ms-2 bg-opacity-10 text-success" data-bs-toggle="modal" data-bs-target="#SelectTableModal" style="float: right;"><i class="fas fa-plus style14 fa-sm"></i></button>
+          <button id="btn31" class="btn style12 fw-light bg-success rounded ms-2 bg-opacity-10 text-success" data-bs-toggle="modal" data-bs-target="#SelectTableModal" style="float: right;"><i class="fas fa-plus style14 fa-lg"></i></button>
         </div>
       </div>
       <div class="row numbers rounded mt-2 ms-0 me-0 pt-3 pb-2 ps-2 pe-2 bg-light">
@@ -906,7 +902,7 @@ JSON
         </div>
       </div>
       <div class="row ms-0 me-0" style="height: 450px; overflow: scroll;">
-        <div class="col-12 bg-light rounded mt-2 pt-2">
+        <div class="col-12 bg-light rounded mt-2 pt-2 order-md-3">
 
 
           <div class="table-responsive">
@@ -932,7 +928,7 @@ JSON
                     <h6 dmx-text="trans.data.getValueOrKey(order_status)[lang.value]" dmx-class:yellow-state="(order_status == 'Ordered')" dmx-class:green-state="(order_status == 'Paid')" dmx-class:grey-state="(order_status == 'Pending')" dmx-class:red-state="(order_status == 'Credit')" class="text-center pt-1 pb-1 ps-2 pe-2 fw-bold"></h6>
                   </td>
                   <td>
-                    <button class="btn btn-outline-link text-body" data-bs-target="#productInfo" dmx-on:click="session_variables.remove('current_order');session_variables.set('current_order',order_id);readItemModal.show();read_item_order.load({order_id: order_id});list_order_items_current.load({order_id: order_id});list_order_items.load({order_id: order_id})" dmx-bind:value="list_orders.data.query[0].order_id"><i class="fas fa-pencil-alt fa-lg"><br></i></button>
+                    <button class="btn btn-outline-link text-danger bg-danger bg-opacity-10" data-bs-target="#productInfo" dmx-on:click="session_variables.remove('current_order');session_variables.set('current_order',order_id);readItemModal.show();read_item_order.load({order_id: order_id});list_order_items_current.load({order_id: order_id});list_order_items.load({order_id: order_id})" dmx-bind:value="list_orders.data.query[0].order_id"><i class="fas fa-pencil-alt fa-sm"><br></i></button>
                   </td>
                 </tr>
               </tbody>

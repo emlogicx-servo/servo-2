@@ -477,7 +477,7 @@ JSON
                       <i class="fas fa-backspace"></i>
                     </button></div>
                 </div>
-                <div class="row row-cols-7 justify-content-xxl-center me-2">
+                <div class="row justify-content-xxl-center me-2 row-cols-12 row-cols-xl-10">
                   <div class="flex-md-wrap flex-md-row justify-content-md-center align-content-center offset-md-1 col-12 col-sm-5 col-xxl-1 col-md-5 col-lg-2 bg-light rounded-bottom mt-2 mb-2 ms-1 me-0 pt-3 pb-3 ps-3 pe-3" id="repeatProducts" style="margin-top: 0px !important; padding-top: 0px !important; /* position: relative */ /* height: auto */" dmx-repeat:repeatproducts="load_products.data.repeat">
 
                     <div class="row mt-2">
@@ -485,22 +485,27 @@ JSON
                         <img dmx-bind:src="'/servo/uploads/product_pictures/'+product_picture" width="100%" height="95%" loading="lazy" style="object-fit: cover;">
                       </div>
                     </div>
+
                     <h6 class="text-center text-body">{{product_name}}</h6>
                     <h6 class="text-center bg-secondary">{{product_price}}</h6>
-                    <form id="add_products_to_purchase_order_form" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_purchase_order_items/add_item_to_po.php" dmx-on:success="add_products_to_purchase_order_form.reset();list_purchase_order_items.load();notifies1.success('Success:'+product_name+' Added to Order')">
-                      <input id="poItemQuantity" name="po_item_quantity" type="number" class="form-control mb-sm-1 mb-2" required="" data-msg-required="Required!" min="" data-rule-min="1" data-msg-min="Min 1" dmx-bind:placeholder="trans.data.quantity[lang.value]">
-                      <input id="poId" name="po_id" type="number" class="form-control mb-sm-1 mb-2 visually-hidden" dmx-bind:value="read_purchase_order.data.query.po_id">
-                      <input id="productId" name="po_product_id" type="number" class="form-control mb-sm-1 mb-2 visually-hidden" placeholder="1" dmx-bind:value="product_id">
-                      <input id="poItemPrice" name="po_item_price" type="number" class="form-control mb-sm-1 mb-2" dmx-bind:value="0" required="" data-msg-required="Required!" min="" data-rule-min="0" data-msg-min="Minimum 0" dmx-bind:placeholder="trans.data.price[lang.value]" dmx-bind:hidden="(read_purchase_order.data.query.po_type == 'Transfer')">
-                      <textarea id="poItemNotes" class="form-control" name="po_item_notes" dmx-bind:placeholder="trans.data.note[lang.value]"></textarea>
+                    <div class="row">
+                      <div class="col align-self-lg-stretch">
+                        <form id="add_products_to_purchase_order_form" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_purchase_order_items/add_item_to_po.php" dmx-on:success="add_products_to_purchase_order_form.reset();list_purchase_order_items.load();notifies1.success('Success:'+product_name+' Added to Order')">
+                          <input id="poItemQuantity" name="po_item_quantity" type="number" class="form-control mb-sm-1 mb-2" style="width:100% !important;" required="" data-msg-required="Required!" min="" data-rule-min="1" data-msg-min="Min 1" dmx-bind:placeholder="trans.data.quantity[lang.value]">
+                          <input id="poId" name="po_id" type="number" class="form-control mb-sm-1 mb-2 visually-hidden" dmx-bind:value="read_purchase_order.data.query.po_id">
+                          <input id="productId" name="po_product_id" type="number" class="form-control mb-sm-1 mb-2 visually-hidden" placeholder="1" dmx-bind:value="product_id">
+                          <input id="poItemPrice" name="po_item_price" type="number" class="form-control mb-sm-1 mb-2" style="width:100% !important;" dmx-bind:value="0" required="" data-msg-required="Required!" min="" data-rule-min="0" data-msg-min="Minimum 0" dmx-bind:placeholder="trans.data.price[lang.value]" dmx-bind:hidden="(read_purchase_order.data.query.po_type == 'Transfer')">
+                          <textarea id="poItemNotes" class="form-control" name="po_item_notes" dmx-bind:placeholder="trans.data.note[lang.value]"></textarea>
 
-                      <div class="row align-items-sm-end">
-                        <div class="col mb-sm-2" style="/* position: absolute */ /* bottom: 0px */"><button id="btn31" class="add-item-button btn mt-2 align-self-end btn-lg w-100 text-white bg-success" type="submit">
+                          <div class="row align-items-sm-end">
+                            <div class="col mb-sm-2" style="/* position: absolute */ /* bottom: 0px */"><button id="btn31" class="add-item-button btn mt-2 align-self-end btn-lg w-100 text-white bg-success" type="submit">
 
-                            <i class="fas fa-cart-plus"></i>: {{query_list_product_stock[0].TotalStock}}
-                          </button></div>
+                                <i class="fas fa-cart-plus"></i>: {{query_list_product_stock[0].TotalStock}}
+                              </button></div>
+                          </div>
+                        </form>
                       </div>
-                    </form>
+                    </div>
                   </div>
 
                 </div>
