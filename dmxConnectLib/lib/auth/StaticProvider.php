@@ -27,7 +27,7 @@ class StaticProvider
 
 	public function permissions($identity, $permissions) {
 		foreach ($permissions as $permission) {
-			if (!in_array($identity, $this->permissions->$permission)) {
+			if (!in_array($identity, $this->perms->$permission)) {
 				return FALSE;
 			}
 		}

@@ -315,7 +315,7 @@ class SqlBuilder
             $suffix .= ')';
         }
 
-        if (!empty($this->joins) && isset($column->table)) {
+        if (!empty($this->joins) && isset($column->table) && !isset($column->isAlias)) {
             if (isset($column->schema)) {
                 $prefix .= $this->quote($column->schema) . '.' . $this->quote($column->table) . '.';
             } else {

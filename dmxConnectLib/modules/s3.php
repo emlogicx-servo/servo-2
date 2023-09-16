@@ -2,7 +2,9 @@
 
 namespace modules;
 
-require(__DIR__ . '/../aws/aws-autoloader.php');
+if (file_exists(__DIR__ . '/../aws/aws-autoloader.php')) {
+    require(__DIR__ . '/../aws/aws-autoloader.php');
+}
 
 use \lib\core\Module;
 use \lib\core\Path;

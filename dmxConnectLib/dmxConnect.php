@@ -26,6 +26,11 @@ if (!CONFIG('DEBUG')) {
 	error_reporting($errorlevel & ~(E_WARNING | E_NOTICE | E_STRICT | E_DEPRECATED));
 }
 
+$composer_path = BASE_URL . '/../vendor/autoload.php';
+if (is_readable($composer_path)) {
+	require $composer_path;
+}
+
 function fatal_handler() {
 	$error = error_get_last();
 

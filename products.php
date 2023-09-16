@@ -67,6 +67,7 @@ JSON
 </head>
 
 <body id="products" is="dmx-app">
+  <dmx-value id="pageName" dmx-bind:value="trans.data.products[lang.value]"></dmx-value>
   <dmx-query-manager id="list_products"></dmx-query-manager>
   <dmx-query-manager id="list_products_for_group"></dmx-query-manager>
   <dmx-query-manager id="list_groups"></dmx-query-manager>
@@ -109,7 +110,182 @@ JSON
   <dmx-serverconnect id="product_purchases_received_single" url="dmxConnect/api/servo_reporting/product_purchases_received_single.php" dmx-param:product_id="" dmx-param:date_start="formfilter.date_start.value" dmx-param:date_end=""></dmx-serverconnect>
   <div is="dmx-browser" id="browser1"></div>
   <dmx-notifications id="notifies1" position="bottom" timeout="50" extended-timeout="10"></dmx-notifications>
-  <?php require 'header.php'; ?><main class="mt-4">
+  <?php require 'header.php'; ?><main class="bg-light rounded mt-2 ms-2 me-2 pt-3 pb-3 ps-2 pe-2" id="MainBody">
+    <div class="mt-auto ms-3 me-3">
+
+
+
+
+      <div class="row servo-page-header">
+
+        <div class="col style13 page-button" id="pagebuttons">
+          <button id="btn1" class="btn style12 fw-light bg-info rounded text-info bg-opacity-10" data-bs-toggle="modal" data-bs-target="#createItemModal" style="float: right;"><i class="fas fa-plus style14"></i></button>
+        </div>
+      </div>
+      <ul class="nav nav-tabs nav-justified" id="navTabs1_tabs" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link active fw-bold" id="navTabs1_1_tab" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_11" role="tab" aria-controls="navTabs1_1" aria-selected="true">{{trans.data.products[lang.value]}}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link fw-bold" id="navTabs1_2_tab" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_21" role="tab" aria-controls="navTabs1_2" aria-selected="false">{{trans.data.groups[lang.value]}}</a>
+        </li>
+      </ul>
+      <div class="tab-content" id="navTabs1_content">
+
+        <div class="tab-pane fade show active mt-3 ms-1 me-1 scrollable" id="navTabs1_11" role="tabpanel">
+
+          <div class="row justify-content-between justify-content-sm-between justify-content-md-between justify-content-lg-between justify-content-xl-between justify-content-xxl-between sorter shadow-none rounded bg-light row-cols-12">
+            <div class="col-lg-3 col-12 col-sm-12"><input id="productSearch" name="text13" type="text" class="form-control mb-2 form-control-sm" dmx-bind:placeholder="trans.data.search[lang.value]+'  '"></div>
+
+            <div class="d-flex flex-wrap flex-sm-wrap flex-md-wrap col-lg-6 flex-lg-wrap col-xl-7 justify-content-lg-end justify-content-xl-end justify-content-xxl-end col-sm-auto col-md-auto col">
+              <ul class="pagination flex-wrap" dmx-populate="list_item_products.data.query_list_products" dmx-state="list_products" dmx-offset="offset" dmx-generator="bs5paging">
+                <li class="page-item" dmx-class:disabled="list_item_products.data.query_list_products.page.current == 1" aria-label="First">
+                  <a href="javascript:void(0)" class="page-link" dmx-on:click="list_products.set('offset',list_item_products.data.query_list_products.page.offset.first)" wappler-command="editContent"><span aria-hidden="true">‹‹</span></a>
+                </li>
+                <li class="page-item" dmx-class:disabled="list_item_products.data.query_list_products.page.current == 1" aria-label="Previous">
+                  <a href="javascript:void(0)" class="page-link" dmx-on:click="list_products.set('offset',list_item_products.data.query_list_products.page.offset.prev)" wappler-command="editContent"><span aria-hidden="true">‹</span></a>
+                </li>
+                <li class="page-item" dmx-class:active="title == list_item_products.data.query_list_products.page.current" dmx-class:disabled="!active" dmx-repeat="list_item_products.data.query_list_products.getServerConnectPagination(2,1,'...')">
+                  <a href="javascript:void(0)" class="page-link" dmx-on:click="list_products.set('offset',(page-1)*list_item_products.data.query_list_products.limit)" wappler-command="editContent">{{title}}</a>
+                </li>
+                <li class="page-item" dmx-class:disabled="list_item_products.data.query_list_products.page.current ==  list_item_products.data.query_list_products.page.total" aria-label="Next">
+                  <a href="javascript:void(0)" class="page-link" dmx-on:click="list_products.set('offset',list_item_products.data.query_list_products.page.offset.next)" wappler-command="editContent"><span aria-hidden="true">›</span></a>
+                </li>
+                <li class="page-item" dmx-class:disabled="list_item_products.data.query_list_products.page.current ==  list_item_products.data.query_list_products.page.total" aria-label="Last">
+                  <a href="javascript:void(0)" class="page-link" dmx-on:click="list_products.set('offset',list_item_products.data.query_list_products.page.offset.last)" wappler-command="editContent"><span aria-hidden="true">››</span></a>
+                </li>
+              </ul>
+            </div>
+            <div class="col-lg-1 col-xl-1 col-md-2 col-sm-2 col-3 offset-lg-1 offset-xl-1 offset-md-2"><select id="product_sort_limit" class="form-select" name="product_category_sort_limit">
+                <option value="5">5</option>
+                <option selected="" value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+              </select></div>
+          </div>
+          <div class="row">
+
+            <div class="col">
+
+              <h5>{{trans.data.total[lang.value]}} : {{list_item_products.data.query_list_products.total}}&nbsp;</h5>
+            </div>
+          </div>
+
+          <div class="row ms-0">
+            <div class="col bg-light rounded mt-2 ms-0 me-2">
+
+
+              <div class="table-responsive servo-shadow shadow-none">
+                <table class="table table-hover table-sm table-borderless">
+                  <thead>
+                    <tr>
+                      <th class="text-start">#</th>
+                      <th class="text-center">{{trans.data.name[lang.value]}}</th>
+                      <th class="text-center">{{trans.data.category[lang.value]}}</th>
+                      <th class="text-center">{{trans.data.subCategory[lang.value]}}</th>
+
+                      <th class="text-center">{{trans.data.brandName[lang.value]}}</th>
+                      <th class="text-end"></th>
+                    </tr>
+                  </thead>
+                  <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="list_item_products.data.query_list_products.data" id="tableRepeat2">
+                    <tr>
+                      <td dmx-text="product_id" class="text-start"></td>
+                      <td dmx-text="product_name" class="text-center"></td>
+                      <td dmx-text="product_category_name" class="text-center"></td>
+                      <td dmx-text="product_sub_category_name" class="text-center"></td>
+                      <td dmx-text="product_brand_name" class="text-center"></td>
+                      <td class="text-end"><button id="btn2" class="btn  open" data-bs-target="#readItemModal" dmx-on:click="readItemModal.show();read_item_product.load({product_id: product_id});product_sales_single.load({product_id: product_id});getStockValuesProduct.load({product_id: read_item_product.data.query_read_product.product_id})" dmx-bind:value="product_id" wappler-empty="Editable" wappler-command="editContent"><i class="far fa-edit fa-sm"><br></i></button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane fade mt-3 scrollable" id="navTabs1_21" role="tabpanel">
+          <div class="row justify-content-between justify-content-sm-between justify-content-md-between justify-content-lg-between justify-content-xl-between justify-content-xxl-between mb-xl-2 mb-2 sorter bg-light rounded">
+            <div class="col-xxl-3 col-12 col-sm-12 col-lg-3"><input id="groupFilter" name="text13" type="text" class="form-control mb-2 form-control-sm" dmx-bind:placeholder="trans.data.search[lang.value]+'  '"></div>
+
+            <div class="col-xl-4 col-xxl-4 col-sm d-flex flex-sm-wrap col-md flex-md-wrap flex-lg-wrap col-lg col-lg-3 flex-wrap col" style="">
+              <ul class="pagination" dmx-populate="list_product_groups.data.list_product_groups" dmx-state="list_groups" dmx-offset="offset_groups" dmx-generator="bs5paging">
+                <li class="page-item" dmx-class:disabled="list_product_groups.data.list_product_groups.page.current == 1" aria-label="First">
+                  <a href="javascript:void(0)" class="page-link" dmx-on:click="list_groups.set('offset_groups',list_product_groups.data.list_product_groups.page.offset.first)"><span aria-hidden="true">&lsaquo;&lsaquo;</span></a>
+                </li>
+                <li class="page-item" dmx-class:disabled="list_product_groups.data.list_product_groups.page.current == 1" aria-label="Previous">
+                  <a href="javascript:void(0)" class="page-link" dmx-on:click="list_groups.set('offset_groups',list_product_groups.data.list_product_groups.page.offset.prev)"><span aria-hidden="true">&lsaquo;</span></a>
+                </li>
+                <li class="page-item" dmx-class:active="title == list_product_groups.data.list_product_groups.page.current" dmx-class:disabled="!active" dmx-repeat="list_product_groups.data.list_product_groups.getServerConnectPagination(2,1,'...')">
+                  <a href="javascript:void(0)" class="page-link" dmx-on:click="list_groups.set('offset_groups',(page-1)*list_product_groups.data.list_product_groups.limit)">{{title}}</a>
+                </li>
+                <li class="page-item" dmx-class:disabled="list_product_groups.data.list_product_groups.page.current ==  list_product_groups.data.list_product_groups.page.total" aria-label="Next">
+                  <a href="javascript:void(0)" class="page-link" dmx-on:click="list_groups.set('offset_groups',list_product_groups.data.list_product_groups.page.offset.next)"><span aria-hidden="true">&rsaquo;</span></a>
+                </li>
+                <li class="page-item" dmx-class:disabled="list_product_groups.data.list_product_groups.page.current ==  list_product_groups.data.list_product_groups.page.total" aria-label="Last">
+                  <a href="javascript:void(0)" class="page-link" dmx-on:click="list_groups.set('offset_groups',list_product_groups.data.list_product_groups.page.offset.last)"><span aria-hidden="true">&rsaquo;&rsaquo;</span></a>
+                </li>
+              </ul>
+            </div>
+            <div class="col-lg-1 col-xl-1 col-md-2 col-sm-2 col-3 offset-sm-5 offset-md-6 offset-lg-1"><select id="group_sort_limit" class="form-select" name="product_category_sort_limit">
+                <option value="5">5</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+                <option value="''">{{trans.data.all[lang.value]}}</option>
+              </select></div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="table-responsive">
+                <table class="table table-hover table-sm table-borderless">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>{{trans.data.name[lang.value]}} | {{trans.data.department[lang.value]}}</th>
+                      <th></th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="list_product_groups.data.list_product_groups.data" id="tableRepeat4">
+                    <tr>
+                      <td dmx-text="product_group_id"></td>
+                      <td>
+                        <form id="form3" is="dmx-serverconnect-form" method="post" action="dmxConnect/api/servo_product_groups/update_product_group.php" class="d-flex" dmx-on:success="list_product_groups.load({groupfilter: groupFilter.value, offset: list_groups.data.offset, limit: group_sort_limit.value})">
+                          <input id="text3" name="product_group_name" type="text" class="form-control" dmx-bind:value="product_group_name">
+                          <select id="select8" class="form-select ms-2" dmx-bind:options="list_departments.data.query_list_departments" optiontext="department_name" optionvalue="department_id" name="group_product_department" dmx-bind:value="group_product_department">
+                            <option value="">---</option>
+                          </select>
+                          <input id="text4" name="product_group_id" type="text" class="form-control visually-hidden" dmx-bind:value="product_group_id">
+                          <button id="btn3" class="btn text-success" type="submit">
+                            <i class="fas fa-check"></i>
+                          </button>
+                        </form>
+                      </td>
+                      <td>
+                        <button class="btn open" data-bs-target="#readProductGroupModal" dmx-on:click="readProductGroupModal.show();read_item_product_group.load({product_group_id: product_group_id})" dmx-bind:value="list_product_groups.data.list_product_groups[0].product_group_id" data-bs-toggle="modal"><i class="far fa-edit fa-sm"><br></i></button>
+                      </td>
+                      <td>
+
+                        <form id="deleteProductGroup" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_product_groups/delete_product_group.php" dmx-on:success="notifies1.success('Success');list_product_groups.load({groupfilter: groupFilter.value, offset: list_groups.data.offset, limit: group_sort_limit.value})" dmx-on:error="notifies1.warning('Error')"><input id="productGroupId" name="product_group_id" type="text" class="form-control visually-hidden" dmx-bind:value="product_group_id"><button class="btn text-body" data-bs-target="#productInfo" type="submit"><i class="far fa-trash-alt fa-sm"><br></i></button></form>
+
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane" id="tabPane1" role="tabpanel">
+          <div class="row">
+            <div class="col"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+  <main class="mt-4">
     <div class="modal readitem" id="readProductGroupModal" is="dmx-bs5-modal" tabindex="-1">
       <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
@@ -782,187 +958,7 @@ JSON
 
 
   </main>
-  <main>
-    <div class="mt-auto ms-3 me-3">
 
-
-
-
-      <div class="row servo-page-header">
-        <div class="col-auto " dmx-animate-enter="slideInLeft">
-          <i class="fas fa-barcode fa-lg"></i>
-        </div>
-        <div class="col-auto page-heading">
-          <h5 class="servo-page-heading fw-lighter">{{trans.data.products[lang.value]}}</h5>
-        </div>
-
-        <div class="col style13 page-button" id="pagebuttons">
-          <button id="btn1" class="btn style12 fw-light bg-info text-white btn-sm rounded" data-bs-toggle="modal" data-bs-target="#createItemModal" style="float: right;"><i class="fas fa-plus style14"></i></button>
-        </div>
-      </div>
-      <ul class="nav nav-tabs nav-justified" id="navTabs1_tabs" role="tablist">
-        <li class="nav-item">
-          <a class="nav-link active fw-bold" id="navTabs1_1_tab" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_11" role="tab" aria-controls="navTabs1_1" aria-selected="true">{{trans.data.products[lang.value]}}</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link fw-bold" id="navTabs1_2_tab" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_21" role="tab" aria-controls="navTabs1_2" aria-selected="false">{{trans.data.groups[lang.value]}}</a>
-        </li>
-      </ul>
-      <div class="tab-content" id="navTabs1_content">
-
-        <div class="tab-pane fade show active mt-3 ms-1 me-1" id="navTabs1_11" role="tabpanel">
-
-          <div class="row justify-content-between justify-content-sm-between justify-content-md-between justify-content-lg-between justify-content-xl-between justify-content-xxl-between sorter shadow-none rounded bg-light row-cols-12">
-            <div class="col-lg-3 col-12 col-sm-12"><input id="productSearch" name="text13" type="text" class="form-control mb-2 form-control-sm" dmx-bind:placeholder="trans.data.search[lang.value]+'  '"></div>
-
-            <div class="d-flex flex-wrap flex-sm-wrap flex-md-wrap col-lg-6 flex-lg-wrap col-xl-7 justify-content-lg-end justify-content-xl-end justify-content-xxl-end col-sm-auto col-md-auto col">
-              <ul class="pagination flex-wrap" dmx-populate="list_item_products.data.query_list_products" dmx-state="list_products" dmx-offset="offset" dmx-generator="bs5paging">
-                <li class="page-item" dmx-class:disabled="list_item_products.data.query_list_products.page.current == 1" aria-label="First">
-                  <a href="javascript:void(0)" class="page-link" dmx-on:click="list_products.set('offset',list_item_products.data.query_list_products.page.offset.first)" wappler-command="editContent"><span aria-hidden="true">‹‹</span></a>
-                </li>
-                <li class="page-item" dmx-class:disabled="list_item_products.data.query_list_products.page.current == 1" aria-label="Previous">
-                  <a href="javascript:void(0)" class="page-link" dmx-on:click="list_products.set('offset',list_item_products.data.query_list_products.page.offset.prev)" wappler-command="editContent"><span aria-hidden="true">‹</span></a>
-                </li>
-                <li class="page-item" dmx-class:active="title == list_item_products.data.query_list_products.page.current" dmx-class:disabled="!active" dmx-repeat="list_item_products.data.query_list_products.getServerConnectPagination(2,1,'...')">
-                  <a href="javascript:void(0)" class="page-link" dmx-on:click="list_products.set('offset',(page-1)*list_item_products.data.query_list_products.limit)" wappler-command="editContent">{{title}}</a>
-                </li>
-                <li class="page-item" dmx-class:disabled="list_item_products.data.query_list_products.page.current ==  list_item_products.data.query_list_products.page.total" aria-label="Next">
-                  <a href="javascript:void(0)" class="page-link" dmx-on:click="list_products.set('offset',list_item_products.data.query_list_products.page.offset.next)" wappler-command="editContent"><span aria-hidden="true">›</span></a>
-                </li>
-                <li class="page-item" dmx-class:disabled="list_item_products.data.query_list_products.page.current ==  list_item_products.data.query_list_products.page.total" aria-label="Last">
-                  <a href="javascript:void(0)" class="page-link" dmx-on:click="list_products.set('offset',list_item_products.data.query_list_products.page.offset.last)" wappler-command="editContent"><span aria-hidden="true">››</span></a>
-                </li>
-              </ul>
-            </div>
-            <div class="col-lg-1 col-xl-1 col-md-2 col-sm-2 col-3 offset-lg-1 offset-xl-1 offset-md-2"><select id="product_sort_limit" class="form-select" name="product_category_sort_limit">
-                <option value="5">5</option>
-                <option selected="" value="25">25</option>
-                <option value="50">50</option>
-                <option value="100">100</option>
-              </select></div>
-          </div>
-          <div class="row">
-
-            <div class="col">
-
-              <h5>{{trans.data.total[lang.value]}} : {{list_item_products.data.query_list_products.total}}&nbsp;</h5>
-            </div>
-          </div>
-
-          <div class="row ms-0">
-            <div class="col bg-light rounded mt-2 ms-0 me-2">
-
-
-              <div class="table-responsive servo-shadow shadow-none">
-                <table class="table table-hover table-sm table-borderless">
-                  <thead>
-                    <tr>
-                      <th class="text-start">#</th>
-                      <th class="text-center">{{trans.data.name[lang.value]}}</th>
-                      <th class="text-center">{{trans.data.category[lang.value]}}</th>
-                      <th class="text-center">{{trans.data.subCategory[lang.value]}}</th>
-
-                      <th class="text-center">{{trans.data.brandName[lang.value]}}</th>
-                      <th class="text-end"></th>
-                    </tr>
-                  </thead>
-                  <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="list_item_products.data.query_list_products.data" id="tableRepeat2">
-                    <tr>
-                      <td dmx-text="product_id" class="text-start"></td>
-                      <td dmx-text="product_name" class="text-center"></td>
-                      <td dmx-text="product_category_name" class="text-center"></td>
-                      <td dmx-text="product_sub_category_name" class="text-center"></td>
-                      <td dmx-text="product_brand_name" class="text-center"></td>
-                      <td class="text-end"><button id="btn2" class="btn  open" data-bs-target="#readItemModal" dmx-on:click="readItemModal.show();read_item_product.load({product_id: product_id});product_sales_single.load({product_id: product_id});getStockValuesProduct.load({product_id: read_item_product.data.query_read_product.product_id})" dmx-bind:value="product_id" wappler-empty="Editable" wappler-command="editContent"><i class="far fa-edit fa-sm"><br></i></button></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="tab-pane fade mt-3 scrollable" id="navTabs1_21" role="tabpanel">
-          <div class="row justify-content-between justify-content-sm-between justify-content-md-between justify-content-lg-between justify-content-xl-between justify-content-xxl-between mb-xl-2 mb-2 sorter bg-light rounded">
-            <div class="col-xxl-3 col-12 col-sm-12 col-lg-3"><input id="groupFilter" name="text13" type="text" class="form-control mb-2 form-control-sm" dmx-bind:placeholder="trans.data.search[lang.value]+'  '"></div>
-
-            <div class="col-xl-4 col-xxl-4 col-sm d-flex flex-sm-wrap col-md flex-md-wrap flex-lg-wrap col-lg col-lg-3 flex-wrap col" style="">
-              <ul class="pagination" dmx-populate="list_product_groups.data.list_product_groups" dmx-state="list_groups" dmx-offset="offset_groups" dmx-generator="bs5paging">
-                <li class="page-item" dmx-class:disabled="list_product_groups.data.list_product_groups.page.current == 1" aria-label="First">
-                  <a href="javascript:void(0)" class="page-link" dmx-on:click="list_groups.set('offset_groups',list_product_groups.data.list_product_groups.page.offset.first)"><span aria-hidden="true">&lsaquo;&lsaquo;</span></a>
-                </li>
-                <li class="page-item" dmx-class:disabled="list_product_groups.data.list_product_groups.page.current == 1" aria-label="Previous">
-                  <a href="javascript:void(0)" class="page-link" dmx-on:click="list_groups.set('offset_groups',list_product_groups.data.list_product_groups.page.offset.prev)"><span aria-hidden="true">&lsaquo;</span></a>
-                </li>
-                <li class="page-item" dmx-class:active="title == list_product_groups.data.list_product_groups.page.current" dmx-class:disabled="!active" dmx-repeat="list_product_groups.data.list_product_groups.getServerConnectPagination(2,1,'...')">
-                  <a href="javascript:void(0)" class="page-link" dmx-on:click="list_groups.set('offset_groups',(page-1)*list_product_groups.data.list_product_groups.limit)">{{title}}</a>
-                </li>
-                <li class="page-item" dmx-class:disabled="list_product_groups.data.list_product_groups.page.current ==  list_product_groups.data.list_product_groups.page.total" aria-label="Next">
-                  <a href="javascript:void(0)" class="page-link" dmx-on:click="list_groups.set('offset_groups',list_product_groups.data.list_product_groups.page.offset.next)"><span aria-hidden="true">&rsaquo;</span></a>
-                </li>
-                <li class="page-item" dmx-class:disabled="list_product_groups.data.list_product_groups.page.current ==  list_product_groups.data.list_product_groups.page.total" aria-label="Last">
-                  <a href="javascript:void(0)" class="page-link" dmx-on:click="list_groups.set('offset_groups',list_product_groups.data.list_product_groups.page.offset.last)"><span aria-hidden="true">&rsaquo;&rsaquo;</span></a>
-                </li>
-              </ul>
-            </div>
-            <div class="col-lg-1 col-xl-1 col-md-2 col-sm-2 col-3 offset-sm-5 offset-md-6 offset-lg-1"><select id="group_sort_limit" class="form-select" name="product_category_sort_limit">
-                <option value="5">5</option>
-                <option value="25">25</option>
-                <option value="50">50</option>
-                <option value="100">100</option>
-                <option value="''">{{trans.data.all[lang.value]}}</option>
-              </select></div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <div class="table-responsive">
-                <table class="table table-hover table-sm table-borderless">
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                      <th>{{trans.data.name[lang.value]}} | {{trans.data.department[lang.value]}}</th>
-                      <th></th>
-                      <th></th>
-                    </tr>
-                  </thead>
-                  <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="list_product_groups.data.list_product_groups.data" id="tableRepeat4">
-                    <tr>
-                      <td dmx-text="product_group_id"></td>
-                      <td>
-                        <form id="form3" is="dmx-serverconnect-form" method="post" action="dmxConnect/api/servo_product_groups/update_product_group.php" class="d-flex" dmx-on:success="list_product_groups.load({groupfilter: groupFilter.value, offset: list_groups.data.offset, limit: group_sort_limit.value})">
-                          <input id="text3" name="product_group_name" type="text" class="form-control" dmx-bind:value="product_group_name">
-                          <select id="select8" class="form-select ms-2" dmx-bind:options="list_departments.data.query_list_departments" optiontext="department_name" optionvalue="department_id" name="group_product_department" dmx-bind:value="group_product_department">
-                            <option value="">---</option>
-                          </select>
-                          <input id="text4" name="product_group_id" type="text" class="form-control visually-hidden" dmx-bind:value="product_group_id">
-                          <button id="btn3" class="btn text-success" type="submit">
-                            <i class="fas fa-check"></i>
-                          </button>
-                        </form>
-                      </td>
-                      <td>
-                        <button class="btn open" data-bs-target="#readProductGroupModal" dmx-on:click="readProductGroupModal.show();read_item_product_group.load({product_group_id: product_group_id})" dmx-bind:value="list_product_groups.data.list_product_groups[0].product_group_id" data-bs-toggle="modal"><i class="far fa-edit fa-sm"><br></i></button>
-                      </td>
-                      <td>
-
-                        <form id="deleteProductGroup" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_product_groups/delete_product_group.php" dmx-on:success="notifies1.success('Success');list_product_groups.load({groupfilter: groupFilter.value, offset: list_groups.data.offset, limit: group_sort_limit.value})" dmx-on:error="notifies1.warning('Error')"><input id="productGroupId" name="product_group_id" type="text" class="form-control visually-hidden" dmx-bind:value="product_group_id"><button class="btn text-body" data-bs-target="#productInfo" type="submit"><i class="far fa-trash-alt fa-sm"><br></i></button></form>
-
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="tab-pane" id="tabPane1" role="tabpanel">
-          <div class="row">
-            <div class="col"></div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </main>
   <script src="bootstrap/5/js/bootstrap.min.js"></script>
 </body>
 

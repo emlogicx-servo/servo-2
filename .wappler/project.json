@@ -1,0 +1,47 @@
+{
+  "routingHandler": "apache",
+  "designFramework": "bootstrap5",
+  "projectServerModel": "PHP",
+  "useRouting": true,
+  "addBase": true,
+  "projectName": "SERVO DEV",
+  "styleFile": "/css/style.css",
+  "assetsFolder": "/assets",
+  "targets": [
+    {
+      "name": "Development",
+      "remoteURL": "http://localhost/servo",
+      "access": "local",
+      "databaseConnectionType": "custom",
+      "db_host": "localhost",
+      "db_port": "3306",
+      "db_user": "root",
+      "db_password": "root",
+      "db_database": "servodb"
+    }
+  ],
+  "frameworks": [
+    {
+      "name": "appConnect",
+      "type": "local"
+    },
+    {
+      "name": "bootstrap5",
+      "type": "custom"
+    },
+    {
+      "name": "jquery_slim_35",
+      "type": "local"
+    },
+    {
+      "name": "fontawesome_6",
+      "type": "local"
+    },
+    {
+      "name": "bootstrap_icons",
+      "type": "local"
+    }
+  ],
+  "extensions": [],
+  "activeTarget": "Development"
+}

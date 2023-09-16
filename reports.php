@@ -172,7 +172,7 @@ JSON
 
 
 
-      <div class="row servo-page-header rounded mt-1 ms-2 me-2 pt-1 ps-2 pe-2">
+      <div class="row servo-page-header rounded bg-light mt-2 ms-2 me-2 pt-1 ps-2 pe-2">
         <ul class="nav nav-tabs nav-fill" id="navTabs1_tabs" role="tablist">
           <li class="nav-item text-truncate">
             <a class="nav-link active text-body text-break fw-bold" id="navTabs1_1_tab" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_1" role="tab" aria-controls="navTabs1_1" aria-selected="true"><i class="fas fa-cash-register" style="margin-right: 5px;"></i>{{trans.data.sales[lang.value]}}</a>
@@ -252,7 +252,7 @@ JSON
 
             <div class="row rounded shadow-none bg-light">
               <div class="scrollable col-12 rounded shadow-none">
-                <div class="row justify-content-md-between justify-content-xxl-between g-0 row-cols-12 rounded mt-0 pt-3 pb-3 shadow-none" id="row2">
+                <div class="row justify-content-md-between justify-content-xxl-between g-0 row-cols-12 rounded shadow-none bg-opacity-10 bg-primary mt-0 pt-3 pb-3 ps-2 pe-2" id="row2">
 
                   <div class="col-12 col-lg-4 align-self-center shadow-none">
                     <div class="row justify-content-center shadow-none">

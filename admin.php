@@ -166,13 +166,12 @@ JSON
     <script src="dmxAppConnect/dmxCharts/Chart.min.js" defer=""></script>
     <script src="dmxAppConnect/dmxCharts/dmxCharts.js" defer=""></script>
     <link rel="stylesheet" href="fontawesome5/css/all.min.css" />
-    <link rel="stylesheet" href="bootstrap/5/servodark/bootstrap.min.css" />
 
     <link rel="stylesheet" href="dmxAppConnect/dmxPreloader/dmxPreloader.css" />
     <script src="dmxAppConnect/dmxPreloader/dmxPreloader.js" defer></script>
 
-    <link rel="stylesheet" href="bootstrap/5/css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/bootstrap-icons.css" />
+    <link rel="stylesheet" href="bootstrap/5/css/bootstrap.min.css" />
 </head>
 
 <body is="dmx-app" id="ServoCashier" dmx-on:ready="preloader.hide();readItemModal.hide()">
@@ -750,7 +749,7 @@ JSON
                                                         <h6 dmx-text="trans.data.getValueOrKey(order_status)[lang.value]" dmx-class:grey-state="(order_status == 'Pending')" dmx-class:red-state="(order_status == 'Credit')" class="text-center pt-1 pb-1 ps-2 pe-2 bg-light rounded fw-bold" dmx-class:text-warning="(order_status == 'Ordered')" dmx-class:text-success="(order_status == 'Paid')">Fancy display heading</h6>
                                                     </td>
                                                     <td class="text-center">
-                                                        <button id="btn22" class="btn" data-bs-target="#productInfo" dmx-on:click="session_variables.remove('current_order');session_variables.set('current_order',order_id);read_item_order.load({order_id: order_id});list_order_items.load({order_id: order_id})" dmx-bind:value="list_orders.data.query[0].order_id" style="/* color: #ff84ff !important */"><i class="far fa-edit fa-sm"><br></i></button>
+                                                        <button id="btn22" class="btn text-info bg-info bg-opacity-10 opacity-50" data-bs-target="#productInfo" dmx-on:click="session_variables.remove('current_order');session_variables.set('current_order',order_id);read_item_order.load({order_id: order_id});list_order_items.load({order_id: order_id})" dmx-bind:value="list_orders.data.query[0].order_id" style="/* color: #ff84ff !important */"><i class="far fa-edit fa-sm"><br></i></button>
                                                     </td>
                                                 </tr>
                                             </tbody>

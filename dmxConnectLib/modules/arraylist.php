@@ -115,8 +115,13 @@ class arraylist extends Module
     $desc = $options->desc;
 
     usort($this->app->arrays[$options->ref], function($a, $b) use ($prop, $desc) {
-      if ($a[$prop] == $b[$prop]) return 0;
-      if ($a[$prop] < $b[$prop]) return $desc ? 1 : -1;
+      if ($prop == '') {
+        if ($a == $b) return 0;
+        if ($a < $b) return $desc ? 1 : -1;
+        return $desc ? -1 : 1;
+      }
+      if ($a->$prop == $b->$prop) return 0;
+      if ($a->$prop < $b->$prop) return $desc ? 1 : -1;
       return $desc ? -1 : 1;
     });
   }
