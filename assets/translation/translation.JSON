@@ -587,6 +587,11 @@
                 "en-US": "Register",
                 "fr-FR": "Enrégistrer"
             },
+    "hello": 
+            {
+                "en-US": "Hello",
+                "fr-FR": "Salut"
+            },
     "voucher": 
             {
                 "en-US": "Payment Voucher",

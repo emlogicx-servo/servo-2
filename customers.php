@@ -82,6 +82,7 @@
   <link rel="stylesheet" href="dmxAppConnect/dmxPreloader/dmxPreloader.css" />
   <script src="dmxAppConnect/dmxPreloader/dmxPreloader.js" defer></script>
   <link rel="stylesheet" href="bootstrap/5/servodark/bootstrap.min.css" />
+  <link rel="stylesheet" href="bootstrap/5/css/bootstrap.min.css" />
 </head>
 
 <body is="dmx-app" dmx-on:ready="preloader.hide();customerOrderModal.preloader1.hide()">
@@ -153,10 +154,6 @@
 
 
       <div class="row servo-page-header">
-        <div class="col-auto text-primary" dmx-animate-enter="slideInLeft">
-        </div>
-        <div class="col-auto page-heading">
-        </div>
         <div class="col style13 page-button d-flex justify-content-end" id="pagebuttons">
           <button id="btn11" class="btn pill me-1 bg-opacity-10 text-info bg-info" data-bs-toggle="modal" data-bs-target="#expenseModal">
             <i class="fas fa-cash-register fa-sm"></i>
@@ -708,77 +705,57 @@
       <div class="modal-dialog modal-xl" role="document" style="margin: 0px !important; width: 100% !important; height: 99% !important; max-width: 100% !important; max-height: 99% !important;">
         <div class="modal-content" style="max-height: 100% !important; height: 100% !important;">
           <div class="modal-header " style="align-items: flex-start !important;">
-            <div class="d-block d-flex justify-content-start">
-              <div class="d-block w-auto ">
-
-
-                <div class="d-flex justify-content-start flex-lg-wrap justify-content-lg-start mw-100" style="width: 40px; height: 40px;">
+            <div class="d-block d-flex w-100 align-items-center flex-wrap" style="width: 40px; height: 40px;">
 
 
 
 
-                  <img dmx-bind:src="'/servo/uploads/customer_pictures/'+read_customer.data.query_read_customer.customer_picture" class="rounded-circle shadow-none mt-2 me-2" width="100%" dmx-hide="(read_customer.data.query_read_customer.customer_picture == null)" loading="lazy" style="object-fit: cover;" height="100%">
+              <img dmx-bind:src="'/servo/uploads/customer_pictures/'+read_customer.data.query_read_customer.customer_picture" class="rounded-circle shadow-none mt-2 me-2 img-thumbnail" width="50" dmx-hide="(read_customer.data.query_read_customer.customer_picture == null)" loading="lazy" style="object-fit: cover;" height="50">
 
-                  <img class="rounded-circle img-fluid" width="100%" src="uploads/servo_no_image.jpg" dmx-show="(read_customer.data.query_read_customer.customer_picture == null)" height="100%">
+              <img class="rounded-circle" width="50" src="uploads/servo_no_image.jpg" dmx-show="(read_customer.data.query_read_customer.customer_picture == null)" height="50">
+              <h6 class="text-body mt-2 ms-2 me-2">{{read_customer.data.query_read_customer.customer_first_name+' '+read_customer.data.query_read_customer.customer_last_name}}</h6>
+              <form is="dmx-serverconnect-form" id="create_order_form" method="post" action="dmxConnect/api/servo_orders/create_order.php" dmx-on:success="notifies1.success('Order #'+create_order_form.data.custom[0]['last_insert_id()']+' Created');readCustomerOrder.load({order_id: create_order_form.data.custom[0]['last_insert_id()']});list_order_items.load({order_id: create_order_form.data.custom[0]['last_insert_id()']});session_variables.set('current_order',create_order_form.data.custom[0]['last_insert_id()']);list_customer_orders.load({customer_id: session_variables.data.current_customer, offset: listCustomerOrders.data.offset, limit: c_order_sort_limit.value});create_order_form.reset();customerOrderModal.show();list_customer_transactions_order.load({order_id: create_order_form.data.custom[0]['last_insert_id()']});list_order_items_deleted.load({order_id: create_order_form.data.custom[0]['last_insert_id()']});list_customer_transactions_order_totals.load({order_id: last_insert_id()})">
+                <input id="order_time" name="order_time" type="datetime-local" class="form-control visually-hidden" dmx-bind:value="dateTime.datetime">
+                <input id="orderCustomer" name="order_customer" class="form-control visually-hidden" dmx-bind:value="session_variables.data.current_customer">
+                <input id="order_discount" name="order_discount" type="hidden" class="form-control visually-hidden" dmx-bind:value="0">
+                <input id="order_status" name="order_status" type="hidden" class="form-control visually-hidden" dmx-bind:value="'Ordered'">
+                <input id="user_id" name="servo_user_user_id" type="hidden" class="form-control visually-hidden" dmx-bind:value="session_variables.data.user_id">
+                <input id="shift_id" name="servo_shift_shift_id" type="hidden" class="form-control visually-hidden" dmx-bind:value="session1.data.current_shift">
+                <input id="serviceId" name="servo_service_service_id" type="hidden" class="form-control visually-hidden" dmx-bind:value="list_user_shift_info.data.query_list_user_shift[0].servo_service_service_id">
 
+                <button id="btn7" class="btn fw-bold  bg-opacity-10 text-light mt-2 mb-2 me-2" style="background: #02b843 !important; border: none;" dmx-on:click="run({'bootbox.confirm':{message:'Confirm',then:{steps:{run:{action:`create_order_form.submit()`,outputType:'text'}}}}})">
+                  <i class="fas fa-plus-circle" style="margin-right: 5px;"></i>{{trans.data.createOrder[lang.value]}}
+                </button>
+              </form>
+              <form is="dmx-serverconnect-form" id="create_data_reading_session" method="post" action="dmxConnect/api/servo_data_reading_session/create_data_reading_sesssion.php" dmx-on:success="notifies1.success('Order #'+create_order_form.data.custom[0]['last_insert_id()']+' Created');create_data_reading_session.reset();session_variables.set('current_data_reading_session',create_order_form.data.custom[0]['last_insert_id()']);customerDataReadingSessionModal.show();list_customer_data_reading_sessions.load({customer_id: session_variables.data.current_customer});read_customer_data_reading_sessions.load({data_reading_session_id: create_data_reading_session.data.custom[0]['last_insert_id()']});list_customer_data_field_readings.load({})" class="d-flex">
+                <input id="drs_date" name="data_reading_session_date" type="datetime-local" class="form-control visually-hidden" dmx-bind:value="dateTime.datetime">
+                <input id="drs_user" name="data_reading_session_user" class="form-control visually-hidden" dmx-bind:value="session_variables.data.user_id">
+                <input id="drs_customer" name="data_reading_session_customer" type="hidden" class="form-control visually-hidden" dmx-bind:value="session_variables.data.current_customer">
+                <input id="drs_notes" name="data_reading_session_notes" type="hidden" class="form-control visually-hidden">
 
-
-
-
-
-
-
-                </div>
-              </div>
-              <div class="d-block">
-                <h5 class="modal-title text-body ms-2 me-2">{{read_customer.data.query_read_customer.customer_first_name+' '+read_customer.data.query_read_customer.customer_last_name}}</h5>
-              </div>
-              <div class="d-block ">
-                <div class="d-flex justify-content-start justify-content-lg-start flex-lg-wrap flex-wrap">
-                  <form is="dmx-serverconnect-form" id="create_order_form" method="post" action="dmxConnect/api/servo_orders/create_order.php" dmx-on:success="notifies1.success('Order #'+create_order_form.data.custom[0]['last_insert_id()']+' Created');readCustomerOrder.load({order_id: create_order_form.data.custom[0]['last_insert_id()']});list_order_items.load({order_id: create_order_form.data.custom[0]['last_insert_id()']});session_variables.set('current_order',create_order_form.data.custom[0]['last_insert_id()']);list_customer_orders.load({customer_id: session_variables.data.current_customer, offset: listCustomerOrders.data.offset, limit: c_order_sort_limit.value});create_order_form.reset();customerOrderModal.show();list_customer_transactions_order.load({order_id: create_order_form.data.custom[0]['last_insert_id()']});list_order_items_deleted.load({order_id: create_order_form.data.custom[0]['last_insert_id()']});list_customer_transactions_order_totals.load({order_id: last_insert_id()})">
-                    <input id="order_time" name="order_time" type="datetime-local" class="form-control visually-hidden" dmx-bind:value="dateTime.datetime">
-                    <input id="orderCustomer" name="order_customer" class="form-control visually-hidden" dmx-bind:value="session_variables.data.current_customer">
-                    <input id="order_discount" name="order_discount" type="hidden" class="form-control visually-hidden" dmx-bind:value="0">
-                    <input id="order_status" name="order_status" type="hidden" class="form-control visually-hidden" dmx-bind:value="'Ordered'">
-                    <input id="user_id" name="servo_user_user_id" type="hidden" class="form-control visually-hidden" dmx-bind:value="session_variables.data.user_id">
-                    <input id="shift_id" name="servo_shift_shift_id" type="hidden" class="form-control visually-hidden" dmx-bind:value="session1.data.current_shift">
-                    <input id="serviceId" name="servo_service_service_id" type="hidden" class="form-control visually-hidden" dmx-bind:value="list_user_shift_info.data.query_list_user_shift[0].servo_service_service_id">
-
-                    <div class="row row-cols-1 me-2">
-                      <div class="d-flex border-warning col ms-sm-3 ms-md-3 ms-lg-3 ms-3 me-2">
-                        <button id="btn7" class="btn btn-success fw-bold text-white mb-2" style="background: #02b843 !important; border: none;" dmx-on:click="run({'bootbox.confirm':{message:'Confirm',then:{steps:{run:{action:`create_order_form.submit()`,outputType:'text'}}}}})">
-                          <i class="fas fa-plus-circle" style="margin-right: 5px;"></i>{{trans.data.createOrder[lang.value]}}
-                        </button>
-                      </div>
-                    </div>
-                  </form>
-                  <form is="dmx-serverconnect-form" id="create_data_reading_session" method="post" action="dmxConnect/api/servo_data_reading_session/create_data_reading_sesssion.php" dmx-on:success="notifies1.success('Order #'+create_order_form.data.custom[0]['last_insert_id()']+' Created');create_data_reading_session.reset();session_variables.set('current_data_reading_session',create_order_form.data.custom[0]['last_insert_id()']);customerDataReadingSessionModal.show();list_customer_data_reading_sessions.load({customer_id: session_variables.data.current_customer});read_customer_data_reading_sessions.load({data_reading_session_id: create_data_reading_session.data.custom[0]['last_insert_id()']});list_customer_data_field_readings.load({})">
-                    <input id="drs_date" name="data_reading_session_date" type="datetime-local" class="form-control visually-hidden" dmx-bind:value="dateTime.datetime">
-                    <input id="drs_user" name="data_reading_session_user" class="form-control visually-hidden" dmx-bind:value="session_variables.data.user_id">
-                    <input id="drs_customer" name="data_reading_session_customer" type="hidden" class="form-control visually-hidden" dmx-bind:value="session_variables.data.current_customer">
-                    <input id="drs_notes" name="data_reading_session_notes" type="hidden" class="form-control visually-hidden">
-
-                    <div class="row row-cols-1">
-                      <div class="d-flex border-warning col ms-3 ms-sm-3 ms-md-3 ms-lg-3 ms-xl-3 ms-xxl-3">
-                        <button id="btn19" class="btn fw-bold btn-info text-white" style="border: none;" type="submit">
-                          <i class="fas fa-clipboard-list"></i>
-                        </button>
-                      </div>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
+                <button id="btn19" class="btn text-primary bg-opacity-10 bg-primary" style="border: none;" type="submit">
+                  <i class="fas fa-clipboard-list"></i>
+                </button>
+              </form>
 
 
 
 
 
 
-            <div class="d-block"><button class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div>
+
+
+            </div><button class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+
+
+
+
+
+
           </div>
           <div class="modal-body">
-            <div class="row">
+            <div class="row mt-2">
               <div class="col-12">
                 <ul class="nav nav-tabs nav-fill flex-nowrap scrollable align-items-end" id="navTabs1_tabs" role="tablist">
                   <li class="nav-item">
@@ -979,17 +956,9 @@
                   <div class="tab-pane fade" id="navTabs1_1" role="tabpanel">
                     <div class="row mt-2 ms-0 me-0">
                       <div class="col rounded bg-secondary">
-                        <div class="row justify-content-sm-between justify-content-md-between justify-content-lg-between justify-content-xl-between justify-content-xxl-between mt-2 justify-content-between">
-                          <div class="col-lg-3 d-flex flex-sm-wrap col-6 col-md-auto col-sm-6 col-xl-auto"><input id="customerorderfilter" name="customerorderfilter" type="text" class="form-control mb-2 form-control-sm" dmx-bind:placeholder="trans.data.search[lang.value]+'  '"></div>
-                          <div class="d-flex flex-sm-wrap col-md-auto col-5 col-sm-6 col-xl-auto col-lg-auto">
-                            <button id="btn37" class="btn fw-bold me-md-1 bg-light text-danger">{{trans.data.Ordered[lang.value]}}: {{list_customer_orders.data.customer_order_stats[0].Ordered}}</button>
-                            <button id="btn38" class="btn fw-bold me-md-2 text-success bg-light">{{trans.data.Paid[lang.value]}}: {{list_customer_orders.data.customer_order_stats[0].Paid}}</button>
-                            <button id="btn39" class="btn fw-bold me-md-2 bg-light text-muted">{{trans.data.pending[lang.value]}}: {{list_customer_orders.data.customer_order_stats[0].Pending}}</button>
-                          </div>
-
-
-                          <div class="d-flex flex-sm-wrap col-md-5 justify-content-lg-end justify-content-xl-end justify-content-xxl-end flex-wrap col-sm flex-lg-wrap flex-xl-wrap flex-xxl-wrap col-auto col-lg-auto col-xl-auto">
-                            <ul class="pagination" dmx-populate="list_customer_orders.data.query_list_customer_orders" dmx-state="listCustomerOrders" dmx-offset="customerOrdersOffset" dmx-generator="bs5paging">
+                        <div class="row justify-content-sm-between justify-content-md-between justify-content-lg-between justify-content-xl-between justify-content-xxl-between mt-2 justify-content-between d-flex">
+                          <div class="d-flex flex-sm-wrap col-md-auto col-xl-auto flex-wrap col-auto col-sm-auto flex-lg-wrap justify-content-lg-start col-lg-auto"><input id="customerorderfilter" name="customerorderfilter" type="text" class="form-control form-control-sm mt-1 mb-2 me-2" dmx-bind:placeholder="trans.data.search[lang.value]+'  '"><button id="btn37" class="btn fw-bold me-md-1 bg-light text-danger mt-1 me-2">{{trans.data.Ordered[lang.value]}}: {{list_customer_orders.data.customer_order_stats[0].Ordered}}</button><button id="btn38" class="btn fw-bold me-md-2 text-success bg-light mt-1 me-2">{{trans.data.Paid[lang.value]}}: {{list_customer_orders.data.customer_order_stats[0].Paid}}</button><button id="btn39" class="btn fw-bold me-md-2 bg-light text-muted mt-1 me-2">{{trans.data.pending[lang.value]}}: {{list_customer_orders.data.customer_order_stats[0].Pending}}</button>
+                            <ul class="pagination mt-1 me-2" dmx-populate="list_customer_orders.data.query_list_customer_orders" dmx-state="listCustomerOrders" dmx-offset="customerOrdersOffset" dmx-generator="bs5paging">
                               <li class="page-item" dmx-class:disabled="list_customer_orders.data.query_list_customer_orders.page.current == 1" aria-label="First">
                                 <a href="javascript:void(0)" class="page-link" dmx-on:click="listCustomerOrders.set('customerOrdersOffset',list_customer_orders.data.query_list_customer_orders.page.offset.first)"><span aria-hidden="true">&lsaquo;&lsaquo;</span></a>
                               </li>
@@ -1005,15 +974,16 @@
                               <li class="page-item" dmx-class:disabled="list_customer_orders.data.query_list_customer_orders.page.current ==  list_customer_orders.data.query_list_customer_orders.page.total" aria-label="Last">
                                 <a href="javascript:void(0)" class="page-link" dmx-on:click="listCustomerOrders.set('customerOrdersOffset',list_customer_orders.data.query_list_customer_orders.page.offset.last)"><span aria-hidden="true">&rsaquo;&rsaquo;</span></a>
                               </li>
-                            </ul>
-                          </div>
-                          <div class="col-md-2 col-sm-2 offset-lg-1 col-auto col-lg-auto col-xl-auto"><select id="c_order_sort_limit" class="form-select" name="c_order_sort_limit" dmx-on:updated="list_customer_orders.load({customer_id: session_variables.data.current_customer, offset: listCustomerOrders.data.customerOrdersOffset, limit: c_order_sort_limit.value})">
+                            </ul><select id="c_order_sort_limit" class="form-select mt-1" style="width: 150px" name="c_order_sort_limit" dmx-on:updated="list_customer_orders.load({customer_id: session_variables.data.current_customer, offset: listCustomerOrders.data.customerOrdersOffset, limit: c_order_sort_limit.value})">
                               <option value="5">5</option>
                               <option selected="" value="25">25</option>
                               <option value="50">50</option>
                               <option value="100">100</option>
                               <option value="''">{{trans.data.all[lang.value]}}</option>
-                            </select></div>
+                            </select>
+                          </div>
+
+
                         </div>
                         <div class="row">
                           <div class="col scrollable">
@@ -1048,7 +1018,7 @@
                                     <td class="text-center " dmx-text="order_notes">
                                     </td>
                                     <td>
-                                      <button id="btn8" class="btn text-body" data-bs-target="#customerOrderModal" dmx-on:click="session_variables.set('current_order',order_id);list_order_items.load({order_id: order_id});readCustomerOrder.load({order_id: order_id});list_customer_transactions_order.load({order_id: order_id});list_customer_transactions_order_totals.load({order_id: order_id});list_order_items_deleted.load({order_id: order_id})" dmx-bind:value="order_id" data-bs-toggle="modal"><i class="far fa-edit"></i>
+                                      <button id="btn8" class="btn bg-opacity-10 bg-primary text-primary" data-bs-target="#customerOrderModal" dmx-on:click="session_variables.set('current_order',order_id);list_order_items.load({order_id: order_id});readCustomerOrder.load({order_id: order_id});list_customer_transactions_order.load({order_id: order_id});list_customer_transactions_order_totals.load({order_id: order_id});list_order_items_deleted.load({order_id: order_id})" dmx-bind:value="order_id" data-bs-toggle="modal"><i class="far fa-edit fa-sm"></i>
                                       </button>
                                     </td>
                                   </tr>

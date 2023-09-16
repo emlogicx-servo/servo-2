@@ -1052,7 +1052,7 @@ JSON
             </div>
             <div class="row me-2" id="poModal">
               <div class="col">
-                <ul class="nav nav-tabs nav-fill" id="navTabs1_tabs" role="tablist">
+                <ul class="nav nav-tabs flex-nowrap scrollable nav-fill align-items-end" id="navTabs1_tabs" role="tablist">
                   <li class="nav-item" id="poOverview"><a class="nav-link active" id="navTabs1_1_tab" data-bs-toggle="tab" href="#" data-bs-target="#poOverview_1" role="tab" aria-controls="navTabs1_1" aria-selected="true"><i class="far fa-eye" style="margin-right: 3px;"></i>{{trans.data.overview[lang.value]}}
 
                     </a></li>
