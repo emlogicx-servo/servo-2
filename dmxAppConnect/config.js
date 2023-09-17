@@ -2928,5 +2928,13 @@ dmx.config({
         "name": "current_customer"
       }
     ]
+  },
+  "Customers": {
+    "query": [
+      {
+        "type": "text",
+        "name": "customerTransactionsOffset"
+      }
+    ]
   }
 });

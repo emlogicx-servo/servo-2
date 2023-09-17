@@ -1,0 +1,498 @@
+{
+  "schema": {
+    "tables": {
+      "servo_assets": {
+        "db": {}
+      },
+      "servo_asset_files": {
+        "db": {}
+      },
+      "servo_asset_special_fields_municipality": {
+        "db": {}
+      },
+      "servo_branches": {
+        "db": {}
+      },
+      "servo_changes_updates": {
+        "db": {}
+      },
+      "servo_company_info": {
+        "db": {}
+      },
+      "servo_currencies": {
+        "db": {}
+      },
+      "servo_customers": {
+        "db": {}
+      },
+      "servo_customer_cash_transaction": {
+        "db": {},
+        "columns": {
+          "customer_transaction_id": {
+            "db": {
+              "type": "integer",
+              "primary": true
+            }
+          },
+          "customer_id": {
+            "db": {
+              "type": "integer",
+              "default": "",
+              "nullable": true
+            }
+          },
+          "transaction_amount": {
+            "db": {
+              "type": "integer"
+            }
+          },
+          "transaction_type": {
+            "db": {
+              "type": "text"
+            }
+          },
+          "user_approved_id": {
+            "db": {
+              "type": "integer"
+            }
+          },
+          "transaction_date": {
+            "db": {
+              "type": "datetime",
+              "default": "",
+              "nullable": true
+            }
+          },
+          "transaction_payment_method": {
+            "db": {
+              "type": "integer"
+            }
+          },
+          "transaction_status": {
+            "db": {
+              "type": "text",
+              "default": "",
+              "nullable": true
+            }
+          },
+          "transaction_note": {
+            "db": {
+              "type": "text",
+              "default": "",
+              "nullable": true
+            }
+          },
+          "transaction_order": {
+            "db": {
+              "type": "integer",
+              "default": "",
+              "nullable": true
+            }
+          },
+          "transaction_balance": {
+            "db": {
+              "type": "integer",
+              "default": "",
+              "nullable": true
+            }
+          },
+          "transaction_amount_tendered": {
+            "db": {
+              "type": "integer",
+              "default": "",
+              "nullable": true
+            }
+          },
+          "transaction_user_received": {
+            "db": {
+              "type": "integer",
+              "default": "",
+              "nullable": true
+            }
+          },
+          "transaction_department_received": {
+            "db": {
+              "type": "integer",
+              "default": "",
+              "nullable": true
+            }
+          }
+        }
+      },
+      "servo_customer_table": {
+        "db": {},
+        "columns": {
+          "table_id": {
+            "db": {
+              "type": "integer",
+              "primary": true
+            }
+          },
+          "table_name": {
+            "db": {
+              "type": "string",
+              "default": "",
+              "nullable": true
+            }
+          }
+        }
+      },
+      "servo_data_fields": {
+        "db": {}
+      },
+      "servo_data_field_readings": {
+        "db": {}
+      },
+      "servo_data_reading_session": {
+        "db": {}
+      },
+      "servo_department": {
+        "db": {}
+      },
+      "servo_department_categories": {
+        "db": {}
+      },
+      "servo_expenses": {
+        "db": {}
+      },
+      "servo_files": {
+        "db": {}
+      },
+      "servo_login_session": {
+        "db": {}
+      },
+      "servo_orders": {
+        "db": {},
+        "columns": {
+          "order_id": {
+            "db": {
+              "type": "integer",
+              "primary": true
+            }
+          },
+          "order_time": {
+            "db": {
+              "type": "datetime",
+              "default": "",
+              "nullable": true
+            }
+          },
+          "order_customer": {
+            "db": {
+              "type": "integer",
+              "default": "",
+              "nullable": true
+            }
+          },
+          "order_discount": {
+            "db": {
+              "type": "integer",
+              "default": "0"
+            }
+          },
+          "order_status": {
+            "db": {
+              "type": "enum",
+              "default": "",
+              "nullable": true
+            }
+          },
+          "servo_user_user_id": {
+            "db": {
+              "type": "integer",
+              "default": "",
+              "nullable": true
+            }
+          },
+          "servo_customer_table_table_id": {
+            "db": {
+              "type": "integer",
+              "default": "",
+              "nullable": true
+            }
+          },
+          "order_notes": {
+            "db": {
+              "type": "text",
+              "default": "",
+              "nullable": true
+            }
+          },
+          "servo_shift_shift_id": {
+            "db": {
+              "type": "integer",
+              "default": "",
+              "nullable": true
+            }
+          },
+          "order_amount_tendered": {
+            "db": {
+              "type": "integer",
+              "default": "",
+              "nullable": true
+            }
+          },
+          "order_balance": {
+            "db": {
+              "type": "integer",
+              "default": "",
+              "nullable": true
+            }
+          },
+          "servo_users_cashier_id": {
+            "db": {
+              "type": "integer",
+              "default": "",
+              "nullable": true
+            }
+          },
+          "servo_payment_methods_payment_method": {
+            "db": {
+              "type": "integer",
+              "default": "",
+              "nullable": true
+            }
+          },
+          "servo_departments_department_id": {
+            "db": {
+              "type": "integer",
+              "default": "",
+              "nullable": true
+            }
+          },
+          "servo_service_service_id": {
+            "db": {
+              "type": "integer",
+              "default": "",
+              "nullable": true
+            }
+          },
+          "coverage_percentage": {
+            "db": {
+              "type": "integer",
+              "default": "0",
+              "nullable": true
+            }
+          },
+          "coverage_partner": {
+            "db": {
+              "type": "integer",
+              "default": "",
+              "nullable": true
+            }
+          },
+          "coverage_payment_status": {
+            "db": {
+              "type": "text",
+              "default": "",
+              "nullable": true
+            }
+          },
+          "order_time_paid": {
+            "db": {
+              "type": "datetime",
+              "default": "",
+              "nullable": true
+            }
+          },
+          "order_extra_info": {
+            "db": {
+              "type": "text",
+              "default": "",
+              "nullable": true
+            }
+          }
+        }
+      },
+      "servo_order_items": {
+        "db": {}
+      },
+      "servo_order_item_deletes": {
+        "db": {}
+      },
+      "servo_payment_methods": {
+        "db": {},
+        "columns": {
+          "payment_method_id": {
+            "db": {
+              "type": "integer",
+              "primary": true
+            }
+          },
+          "payment_method_name": {
+            "db": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "servo_products": {
+        "db": {}
+      },
+      "servo_products_has_servo_product_categories": {
+        "db": {}
+      },
+      "servo_product_brands": {
+        "db": {}
+      },
+      "servo_product_categories": {
+        "db": {}
+      },
+      "servo_product_category_options": {
+        "db": {}
+      },
+      "servo_product_discount": {
+        "db": {}
+      },
+      "servo_product_groups": {
+        "db": {}
+      },
+      "servo_product_group_items": {
+        "db": {}
+      },
+      "servo_product_price": {
+        "db": {}
+      },
+      "servo_product_sub_category": {
+        "db": {}
+      },
+      "servo_profile_settings": {
+        "db": {}
+      },
+      "servo_projects": {
+        "db": {}
+      },
+      "servo_project_files": {
+        "db": {}
+      },
+      "servo_project_notes": {
+        "db": {}
+      },
+      "servo_project_step": {
+        "db": {}
+      },
+      "servo_project_tasks": {
+        "db": {}
+      },
+      "servo_purchase_orders": {
+        "db": {}
+      },
+      "servo_purchase_order_items": {
+        "db": {}
+      },
+      "servo_purchase_order_item_deletes": {
+        "db": {}
+      },
+      "servo_sales_point": {
+        "db": {}
+      },
+      "servo_sales_point_departments": {
+        "db": {}
+      },
+      "servo_services": {
+        "db": {},
+        "columns": {
+          "service_id": {
+            "db": {
+              "type": "integer",
+              "primary": true
+            }
+          },
+          "service_name": {
+            "db": {
+              "type": "string"
+            }
+          },
+          "servo_service_sales_point": {
+            "db": {
+              "type": "integer",
+              "default": "",
+              "nullable": true
+            }
+          }
+        }
+      },
+      "servo_service_department_category": {
+        "db": {}
+      },
+      "servo_shifts": {
+        "db": {}
+      },
+      "servo_stock_movement": {
+        "db": {}
+      },
+      "servo_user": {
+        "db": {},
+        "columns": {
+          "user_id": {
+            "db": {
+              "type": "integer",
+              "primary": true
+            }
+          },
+          "user_fname": {
+            "db": {
+              "type": "string",
+              "default": "",
+              "nullable": true
+            }
+          },
+          "user_lname": {
+            "db": {
+              "type": "string",
+              "default": "",
+              "nullable": true
+            }
+          },
+          "user_username": {
+            "db": {
+              "type": "string"
+            }
+          },
+          "password": {
+            "db": {
+              "type": "string"
+            }
+          },
+          "servo_user_departments_department_id": {
+            "db": {
+              "type": "integer",
+              "default": "",
+              "nullable": true
+            }
+          },
+          "user_profile": {
+            "db": {
+              "type": "enum"
+            }
+          }
+        }
+      },
+      "servo_user_profile": {
+        "db": {}
+      },
+      "servo_user_shifts": {
+        "db": {}
+      },
+      "servo_user_tenure": {
+        "db": {}
+      },
+      "servo_vendors": {
+        "db": {}
+      },
+      "servo_vendor_cash_transaction": {
+        "db": {}
+      },
+      "servo_wallets": {
+        "db": {}
+      },
+      "servo_wallet_privileges": {
+        "db": {}
+      },
+      "servo_wallet_transactions": {
+        "db": {}
+      }
+    },
+    "views": {}
+  }
+}

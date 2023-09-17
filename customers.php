@@ -85,7 +85,7 @@
   <link rel="stylesheet" href="bootstrap/5/css/bootstrap.min.css" />
 </head>
 
-<body is="dmx-app" dmx-on:ready="preloader.hide();customerOrderModal.preloader1.hide()">
+<body is="dmx-app" dmx-on:ready="preloader.hide();customerOrderModal.preloader1.hide()" id="Customers">
   <dmx-value id="pageName" dmx-bind:value="trans.data.customers[lang.value]"></dmx-value>
 
 
@@ -97,6 +97,7 @@
 
   <dmx-query-manager id="listCustomerCoveredOrders"></dmx-query-manager>
   <dmx-query-manager id="listcustomers"></dmx-query-manager>
+  <dmx-query-manager id="listCustomerTransactionsQuery"></dmx-query-manager>
 
   <dmx-value id="currentCustomer"></dmx-value>
   <dmx-session-manager id="session_variables"></dmx-session-manager>
@@ -113,7 +114,7 @@
   <dmx-serverconnect id="read_customer_data_reading_sessions" url="dmxConnect/api/servo_data_reading_session/read_data_reading_session.php" dmx-param:id="id" noload="" dmx-param:customer_id="session_variables.data.current_customer" dmx-param:offset="listCustomerOrders.data.offset" dmx-param:limit="c_order_sort_limit.value" dmx-param:data_reading_session_id="data_reading_session_id"></dmx-serverconnect>
   <dmx-serverconnect id="companyInfo" url="dmxConnect/api/servo_company_information/read_company_information.php" dmx-param:id="id" dmx-param:item_id="" dmx-param:user_id="" dmx-param:customer_id="session_variables.data.current_customer" dmx-param:offset="listCustomerOrders.data.offset" dmx-param:limit="c_order_sort_limit.value" dmx-param:company_info_id="1"></dmx-serverconnect>
   <dmx-serverconnect id="payment_methods" url="dmxConnect/api/servo_payment_methods/list_payment_methods.php" dmx-param:id="id" dmx-param:item_id="" dmx-param:user_id="" dmx-param:customer_id="session_variables.data.current_customer" dmx-param:offset="listCustomerOrders.data.offset" dmx-param:limit="c_order_sort_limit.value"></dmx-serverconnect>
-  <dmx-serverconnect id="list_customer_transactions" url="dmxConnect/api/servo_customer_cash_transactions/list_transactions_customer.php" dmx-param:id="id" noload="" dmx-param:item_id="" dmx-param:user_id="" dmx-param:customer_id="session_variables.data.current_customer"></dmx-serverconnect>
+  <dmx-serverconnect id="list_customer_transactions" url="dmxConnect/api/servo_customer_cash_transactions/list_transactions_customer.php" dmx-param:customer_id="session_variables.data.current_customer" dmx-param:offset="listCustomerTransactionsQuery.data.customerTransactionsOffset" dmx-param:limit="readItemModal.customerTransactionSortLimit.selectedValue"></dmx-serverconnect>
   <dmx-serverconnect id="list_expenses" url="dmxConnect/api/servo_expenses/list_expenses_paged.php" dmx-param:id="id" dmx-param:item_id="" dmx-param:user_id="" dmx-param:customer_id="session_variables.data.current_customer"></dmx-serverconnect>
   <dmx-serverconnect id="list_customer_transactions_amounts" url="dmxConnect/api/servo_customer_cash_transactions/list_transactions_customer_amounts.php" dmx-param:id="id" noload="" dmx-param:item_id="" dmx-param:user_id="" dmx-param:customer_id="session_variables.data.current_customer" dmx-on:start="preloader.show()" dmx-on:done="preloader.hide();readItemModal.show()"></dmx-serverconnect>
   <dmx-serverconnect id="list_customer_orders_totals" url="dmxConnect/api/servo_customer_cash_transactions/list_customer_orders_totals.php" dmx-param:id="id" noload="" dmx-param:item_id="" dmx-param:user_id="" dmx-param:customer_id="session_variables.data.current_customer"></dmx-serverconnect>
@@ -759,33 +760,33 @@
               <div class="col-12">
                 <ul class="nav nav-tabs nav-fill flex-nowrap scrollable align-items-end" id="navTabs1_tabs" role="tablist">
                   <li class="nav-item">
-                    <a class="nav-link active flex-grow-1 fw-bold" id="navTabs1_1_tab1" data-bs-toggle="tab" href="#" data-bs-target="#tabPane1" role="tab" aria-controls="navTabs1_1" aria-selected="true" dmx-on:click="list_customer_transactions_amounts.load({customer_id: session_variables.data.current_customer});list_customer_orders_totals.load({customer_id: session_variables.data.current_customer})"><i class="far fa-eye fa-sm" style="margin-right: 5px;"></i>
+                    <a class="nav-link active flex-grow-1 fw-bold" id="customerOverviewTab" data-bs-toggle="tab" href="#" data-bs-target="#tabPane1" role="tab" aria-controls="navTabs1_1" aria-selected="true" dmx-on:click="list_customer_transactions_amounts.load({customer_id: session_variables.data.current_customer});list_customer_orders_totals.load({customer_id: session_variables.data.current_customer})"><i class="far fa-eye fa-sm" style="margin-right: 5px;"></i>
 
                       {{trans.data.overview[lang.value]}}</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link fw-bold" id="navTabs1_1_tab" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_1" role="tab" aria-controls="navTabs1_1" aria-selected="true"><i class="fas fa-list fa-sm" style="margin-right: 5px;"></i>
+                    <a class="nav-link fw-bold" id="customerOrdersTab" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_1" role="tab" aria-controls="navTabs1_1" aria-selected="true"><i class="fas fa-list fa-sm" style="margin-right: 5px;"></i>
                       {{trans.data.orders[lang.value]}}
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link text-warning" id="navTabs1_1_tab2" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_8" role="tab" aria-controls="navTabs1_1" aria-selected="true" dmx-hide="(read_customer.data.query_read_customer.customer_class == 'standard')"><i class="fas fa-people-arrows fa-sm"></i></a>
+                    <a class="nav-link text-warning" id="customerCoverageTab" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_8" role="tab" aria-controls="navTabs1_1" aria-selected="true" dmx-hide="(read_customer.data.query_read_customer.customer_class == 'standard')"><i class="fas fa-people-arrows fa-sm"></i></a>
 
                   </li>
 
                   <li class="nav-item">
-                    <a class="nav-link fw-bold" id="navTabs1_2_tab" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_2" role="tab" aria-controls="navTabs1_2" aria-selected="false"><i class="fas fa-coins fa-sm" style="margin-right: 5px;"></i>
+                    <a class="nav-link fw-bold" id="customerTransactionsTab" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_2" role="tab" aria-controls="navTabs1_2" aria-selected="false"><i class="fas fa-coins fa-sm" style="margin-right: 5px;"></i>
                       {{trans.data.transactions[lang.value]}}</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link fw-bold" id="navTabs1_2_tab1" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_6" role="tab" aria-controls="navTabs1_2" aria-selected="false"><i class="fas fa-clipboard-list fa-sm" style="margin-right: 5px;"></i>
+                    <a class="nav-link fw-bold" id="customerDataTab" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_6" role="tab" aria-controls="navTabs1_2" aria-selected="false"><i class="fas fa-clipboard-list fa-sm" style="margin-right: 5px;"></i>
                       {{trans.data.data[lang.value]}}</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link fw-bold" id="navTabs1_3_tab" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_3" role="tab" aria-controls="navTabs1_3" aria-selected="false"><i class="fas fa-user-edit fa-sm" style="margin-right: 5px;"></i>{{trans.data.info[lang.value]}}</a>
+                    <a class="nav-link fw-bold" id="customerInformationTab" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_3_2" role="tab" aria-controls="navTabs1_3" aria-selected="false"><i class="fas fa-user-edit fa-sm" style="margin-right: 5px;"></i>{{trans.data.info[lang.value]}}</a>
                   </li>
                 </ul>
-                <div class="tab-content" id="navTabs1_content">
+                <div class="tab-content" id="navTabs1_content_1">
                   <div class="tab-pane fade show active" id="tabPane1" role="tabpanel">
                     <dmx-value id="variableTotalCustomerDebt" dmx-bind:value="variableTotalCustomerDebtVariable.value.toNumber()"></dmx-value>
                     <dmx-value id="variableTotalCustomerTransactions" dmx-bind:value="list_customer_transactions_amounts.data.custom_list_transaction_amounts[0].Settlements.toNumber()"></dmx-value>
@@ -1129,13 +1130,35 @@
                             </button></div>
                         </div>
 
-
-
-
-
-
-
                       </form>
+                    </div>
+                    <div class="row justify-content-sm-between justify-content-md-between justify-content-lg-between justify-content-xl-between justify-content-xxl-between mt-2 row-cols-12">
+                      <div class="d-flex justify-content-start col-auto"><input id="customerTransactionFilter" name="customerTransactionFilter" type="text" class="form-control mb-2 form-control-sm" dmx-bind:placeholder="trans.data.search[lang.value]+'  '">
+                        <ul class="pagination" dmx-populate="list_customer_transactions.data.query" dmx-state="listCustomerTransactionsQuery" dmx-offset="customerTransactionsOffset" dmx-generator="bs5paging">
+                          <li class="page-item" dmx-class:disabled="list_customer_transactions.data.query.page.current == 1" aria-label="First">
+                            <a href="javascript:void(0)" class="page-link" dmx-on:click="listCustomerTransactionsQuery.set('customerTransactionsOffset',list_customer_transactions.data.query.page.offset.first)"><span aria-hidden="true">&lsaquo;&lsaquo;</span></a>
+                          </li>
+                          <li class="page-item" dmx-class:disabled="list_customer_transactions.data.query.page.current == 1" aria-label="Previous">
+                            <a href="javascript:void(0)" class="page-link" dmx-on:click="listCustomerTransactionsQuery.set('customerTransactionsOffset',list_customer_transactions.data.query.page.offset.prev)"><span aria-hidden="true">&lsaquo;</span></a>
+                          </li>
+                          <li class="page-item" dmx-class:active="title == list_customer_transactions.data.query.page.current" dmx-class:disabled="!active" dmx-repeat="list_customer_transactions.data.query.getServerConnectPagination(2,1,'...')">
+                            <a href="javascript:void(0)" class="page-link" dmx-on:click="listCustomerTransactionsQuery.set('customerTransactionsOffset',(page-1)*list_customer_transactions.data.query.limit)">{{title}}</a>
+                          </li>
+                          <li class="page-item" dmx-class:disabled="list_customer_transactions.data.query.page.current ==  list_customer_transactions.data.query.page.total" aria-label="Next">
+                            <a href="javascript:void(0)" class="page-link" dmx-on:click="listCustomerTransactionsQuery.set('customerTransactionsOffset',list_customer_transactions.data.query.page.offset.next)"><span aria-hidden="true">&rsaquo;</span></a>
+                          </li>
+                          <li class="page-item" dmx-class:disabled="list_customer_transactions.data.query.page.current ==  list_customer_transactions.data.query.page.total" aria-label="Last">
+                            <a href="javascript:void(0)" class="page-link" dmx-on:click="listCustomerTransactionsQuery.set('customerTransactionsOffset',list_customer_transactions.data.query.page.offset.last)"><span aria-hidden="true">&rsaquo;&rsaquo;</span></a>
+                          </li>
+                        </ul><select id="customerTransactionSortLimit" class="form-select" name="transactionFilterSort" dmx-on:updated="list_customer_transactions.load({limit: readItemModal.customerTransactionSortLimit.selectedValue, offset: listCustomerTransactionsQuery.data.customerTransactionsOffset, customer_id: read_customer.data.query_read_customer.customer_id})">
+                          <option value="5">5</option>
+                          <option selected="" value="25">25</option>
+                          <option value="50">50</option>
+                          <option value="100">100</option>
+                          <option value="''">{{trans.data.all[lang.value]}}</option>
+                        </select>
+                      </div>
+
                     </div>
                     <div class="row mt-lg-2 mt-2">
                       <div class="col">
@@ -1155,7 +1178,7 @@
                                 <th>{{trans.data.date[lang.value]}}</th>
                               </tr>
                             </thead>
-                            <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="list_customer_transactions.data.query" id="tableRepeat2">
+                            <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="list_customer_transactions.data.query.data" id="tableRepeat2">
                               <tr>
                                 <td dmx-text="customer_transaction_id"></td>
                                 <td dmx-text="transaction_amount.formatNumber('0', ',', ',')"></td>
@@ -1220,6 +1243,7 @@
                               <option value="''">{{trans.data.all[lang.value]}}</option>
                             </select></div>
                         </div>
+
                         <div class="table-responsive">
                           <table class="table table-hover table-sm">
                             <thead>
@@ -1248,7 +1272,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="tab-pane fade" id="navTabs1_3" role="tabpanel" aria-labelledby="navTabs1_3_tab">
+                  <div class="tab-pane fade" id="navTabs1_3_2" role="tabpanel" aria-labelledby="navTabs1_3_tab">
                     <div class="row">
                       <div class="col">
                         <h1 class="text-warning">{{read_item_user.data.query.user_username}}</h1>
@@ -1855,32 +1879,27 @@
       <dmx-value id="netDeposit" dmx-bind:value="list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`)"></dmx-value>
       <div class="modal-dialog modal-xl" role="document" style="margin: 0px !important; width: 100% !important; height: 99% !important; max-width: 100% !important; max-height: 99% !important;">
         <div class="modal-content">
-          <div class="modal-header mt-0 mb-0 pb-0">
-            <div class="d-block d-flex ">
-              <div class="d-block">
-                <h5 class="fw-bold text-white rounded me-1 pt-2 pb-2 ps-3 pe-3" dmx-class:bg-danger="readCustomerOrder.data.query.order_status!=='Paid'" dmx-class:bg-success="readCustomerOrder.data.query.order_status=='Paid'">{{trans.data.order[lang.value]}} : {{readCustomerOrder.data.query.order_id}}</h5>
-              </div>
-              <div class="d-block">
-                <button id="btn13" class="btn rounded me-1 text-body bg-light" data-bs-target="#printInvoiceModal" dmx-on:click="printReceipt.show()" dmx-animate-enter.duration:20000.delay:100="pulse" dmx-class:show-print-2="(readCustomerOrder.data.query.order_status == 'Paid')" data-bs-toggle="modal" dmx-bs-tooltip="trans.data.print[lang.value]" data-bs-placement="bottom" data-bs-trigger="hover">
-                  <i class="fas fa-print"></i>
-                </button><button id="btn10" class="btn rounded me-3 bg-success text-success bg-opacity-10" data-bs-toggle="offcanvas" data-bs-target="#AddProductsToOrderOffCanvas" dmx-hide="(readCustomerOrder.data.query.order_status == 'Paid')" style="/*color: #ffec66 !important;*/" dmx-bs-tooltip="trans.data.addProducts[lang.value]" data-bs-trigger="hover" data-bs-placement="bottom">
-                  <i class="fas fa-cart-plus"></i>
-                </button>
-              </div>
-              <form id="close_order" is="dmx-serverconnect-form" method="post" action="dmxConnect/api/servo_orders/close_customer_order.php" dmx-on:success="notifies1.success('Success!');list_customer_orders.load({customer_id: session_variables.data.current_customer, offset: listCustomerOrders.data.offset, limit: c_order_sort_limit.value});list_order_items.load({order_id: session_variables.data.current_order});readCustomerOrder.load({order_id: session_variables.data.current_order})">
+          <div class="modal-header">
+            <div class="d-block d-flex w-auto flex-wrap align-items-baseline justify-content-start">
+              <h5 class="fw-bold text-white rounded me-1 pt-2 pb-2 ps-3 pe-3" dmx-class:bg-danger="readCustomerOrder.data.query.order_status!=='Paid'" dmx-class:bg-success="readCustomerOrder.data.query.order_status=='Paid'">{{trans.data.order[lang.value]}} : {{readCustomerOrder.data.query.order_id}}</h5><button id="btn13" class="btn text-primary bg-opacity-10 bg-primary me-3" data-bs-target="#printInvoiceModal" dmx-on:click="printReceipt.show()" dmx-animate-enter.duration:20000.delay:100="pulse" dmx-class:show-print-2="(readCustomerOrder.data.query.order_status == 'Paid')" data-bs-toggle="modal" dmx-bs-tooltip="trans.data.print[lang.value]" data-bs-placement="bottom" data-bs-trigger="hover">
+                <i class="fas fa-print fa-sm"></i>
+              </button><button id="btn10" class="btn bg-opacity-10 me-3 text-info bg-info" data-bs-toggle="offcanvas" data-bs-target="#AddProductsToOrderOffCanvas" dmx-hide="(readCustomerOrder.data.query.order_status == 'Paid')" style="/*color: #ffec66 !important;*/" dmx-bs-tooltip="trans.data.addProducts[lang.value]" data-bs-trigger="hover" data-bs-placement="bottom">
+                <i class="fas fa-cart-plus fa-sm"></i>
+              </button>
+              <form id="close_order" is="dmx-serverconnect-form" method="post" action="dmxConnect/api/servo_orders/close_customer_order.php" dmx-on:success="notifies1.success('Success!');list_customer_orders.load({customer_id: session_variables.data.current_customer, offset: listCustomerOrders.data.offset, limit: c_order_sort_limit.value});list_order_items.load({order_id: session_variables.data.current_order});readCustomerOrder.load({order_id: session_variables.data.current_order})" class="d-flex">
                 <input id="update_order_order_id" name="order_id" type="text" class="form-control visually-hidden" dmx-bind:value="session_variables.data.current_order">
                 <input id="update_order_user_id" name="servo_users_cashier_id" type="text" class="form-control visually-hidden" dmx-bind:value="session_variables.data.user_id">
                 <input id="update_order_status" name="order_status" type="text" class="form-control visually-hidden" dmx-bind:value="'Paid'">
                 <input id="update_order_time_paid" name="order_time_paid" type="datetime-local" class="form-control visually-hidden" dmx-bind:value="dateTime.datetime">
-                <button id="btn18" class="btn float-right text-danger mt-1" data-bs-target="#AddProductsToOrderOffCanvas" dmx-show="(variableCustomerTotalToPay.value =='0')&amp;&amp;(OrderTotal.value !== '0')" style="color: #9bff66 !important;" type="submit" dmx-bind:hidden="(readCustomerOrder.data.query.order_status == 'Paid')" dmx-bs-tooltip="trans.data.edit[lang.value]" data-bs-placement="bottom" data-bs-trigger="hover">
-                  <i class="fas fa-lock"></i>
+                <button id="btn18" class="btn bg-success bg-opacity-10 text-success" data-bs-target="#AddProductsToOrderOffCanvas" dmx-show="(variableCustomerTotalToPay.value =='0')&amp;&amp;(OrderTotal.value !== '0')" type="submit" dmx-bind:hidden="(readCustomerOrder.data.query.order_status == 'Paid')" dmx-bs-tooltip="trans.data.edit[lang.value]" data-bs-placement="bottom" data-bs-trigger="hover">
+                  <i class="fas fa-lock fa-sm"></i>
                 </button>
               </form>
-              <form id="reopen_order" is="dmx-serverconnect-form" method="post" action="dmxConnect/api/servo_orders/update_order_paid_ordered.php" dmx-on:success="notifies1.success('Success!');list_customer_orders.load({customer_id: session_variables.data.current_customer, offset: listCustomerOrders.data.offset, limit: c_order_sort_limit.value});list_order_items.load({order_id: session_variables.data.current_order});readCustomerOrder.load({order_id: session_variables.data.current_order})">
+              <form id="reopen_order" is="dmx-serverconnect-form" method="post" action="dmxConnect/api/servo_orders/update_order_paid_ordered.php" dmx-on:success="notifies1.success('Success!');list_customer_orders.load({customer_id: session_variables.data.current_customer, offset: listCustomerOrders.data.offset, limit: c_order_sort_limit.value});list_order_items.load({order_id: session_variables.data.current_order});readCustomerOrder.load({order_id: session_variables.data.current_order})" class="d-flex">
                 <input id="update_order_order_id1" name="order_id" type="text" class="form-control visually-hidden" dmx-bind:value="session_variables.data.current_order">
                 <input id="update_order_user_id1" name="servo_users_cashier_id" type="text" class="form-control visually-hidden" dmx-bind:value="session_variables.data.user_id">
                 <input id="update_order_status1" name="order_status" type="text" class="form-control visually-hidden" dmx-bind:value="'Ordered'">
-                <button id="btn36" class="btn float-right text-danger mt-1" data-bs-target="#AddProductsToOrderOffCanvas" dmx-show="(readCustomerOrder.data.query.order_status == 'Paid')" type="submit" dmx-bs-tooltip="trans.data.edit[lang.value]" data-bs-placement="bottom" data-bs-trigger="hover">
+                <button id="btn36" class="btn float-right text-danger bg-danger bg-opacity-10" data-bs-target="#AddProductsToOrderOffCanvas" dmx-show="(readCustomerOrder.data.query.order_status == 'Paid')" type="submit" dmx-bs-tooltip="trans.data.edit[lang.value]" data-bs-placement="bottom" data-bs-trigger="hover">
                   <i class="fas fa-lock-open"></i>
                 </button>
               </form>
@@ -2151,7 +2170,7 @@
 
             <div class="row mt-4">
               <div class="col">
-                <ul class="nav nav-tabs nav-fill" id="navTabs1_tabs" role="tablist">
+                <ul class="nav nav-tabs nav-fill flex-nowrap scrollable align-items-end" id="navTabs1_tabs" role="tablist">
                   <li class="nav-item">
                     <a class="nav-link active" id="navTabs1_13_tab" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_13" role="tab" aria-controls="navTabs1_1" aria-selected="true" dmx-bs-tooltip="trans.data.overview[lang.value]" data-bs-trigger="hover" data-bs-placement="bottom">
                       <i class="fas fa-eye fa-lg"></i>

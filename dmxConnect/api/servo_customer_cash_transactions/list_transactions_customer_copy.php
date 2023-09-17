@@ -11,22 +11,6 @@ $app->define(<<<'JSON'
       {
         "type": "text",
         "name": "customer_id"
-      },
-      {
-        "type": "text",
-        "name": "sort"
-      },
-      {
-        "type": "text",
-        "name": "dir"
-      },
-      {
-        "type": "text",
-        "name": "offset"
-      },
-      {
-        "type": "text",
-        "name": "limit"
       }
     ]
   },
@@ -34,7 +18,7 @@ $app->define(<<<'JSON'
     "steps": {
       "name": "query",
       "module": "dbconnector",
-      "action": "paged",
+      "action": "select",
       "options": {
         "connection": "servodb",
         "sql": {
@@ -218,138 +202,84 @@ $app->define(<<<'JSON'
       "output": true,
       "meta": [
         {
-          "name": "offset",
-          "type": "number"
+          "type": "number",
+          "name": "customer_transaction_id"
         },
         {
-          "name": "limit",
-          "type": "number"
+          "type": "number",
+          "name": "customer_id"
         },
         {
-          "name": "total",
-          "type": "number"
+          "type": "number",
+          "name": "transaction_amount"
         },
         {
-          "name": "page",
-          "type": "object",
-          "sub": [
-            {
-              "name": "offset",
-              "type": "object",
-              "sub": [
-                {
-                  "name": "first",
-                  "type": "number"
-                },
-                {
-                  "name": "prev",
-                  "type": "number"
-                },
-                {
-                  "name": "next",
-                  "type": "number"
-                },
-                {
-                  "name": "last",
-                  "type": "number"
-                }
-              ]
-            },
-            {
-              "name": "current",
-              "type": "number"
-            },
-            {
-              "name": "total",
-              "type": "number"
-            }
-          ]
+          "type": "text",
+          "name": "transaction_type"
         },
         {
-          "name": "data",
-          "type": "array",
-          "sub": [
-            {
-              "type": "number",
-              "name": "customer_transaction_id"
-            },
-            {
-              "type": "number",
-              "name": "customer_id"
-            },
-            {
-              "type": "number",
-              "name": "transaction_amount"
-            },
-            {
-              "type": "text",
-              "name": "transaction_type"
-            },
-            {
-              "type": "number",
-              "name": "user_approved_id"
-            },
-            {
-              "type": "datetime",
-              "name": "transaction_date"
-            },
-            {
-              "type": "number",
-              "name": "transaction_payment_method"
-            },
-            {
-              "type": "text",
-              "name": "transaction_status"
-            },
-            {
-              "type": "text",
-              "name": "transaction_note"
-            },
-            {
-              "type": "number",
-              "name": "transaction_order"
-            },
-            {
-              "type": "number",
-              "name": "transaction_balance"
-            },
-            {
-              "type": "number",
-              "name": "transaction_amount_tendered"
-            },
-            {
-              "type": "number",
-              "name": "user_id"
-            },
-            {
-              "type": "text",
-              "name": "user_fname"
-            },
-            {
-              "type": "text",
-              "name": "user_lname"
-            },
-            {
-              "type": "text",
-              "name": "user_username"
-            },
-            {
-              "type": "number",
-              "name": "servo_user_departments_department_id"
-            },
-            {
-              "type": "text",
-              "name": "user_profile"
-            },
-            {
-              "type": "text",
-              "name": "payment_method_name"
-            }
-          ]
+          "type": "number",
+          "name": "user_approved_id"
+        },
+        {
+          "type": "datetime",
+          "name": "transaction_date"
+        },
+        {
+          "type": "number",
+          "name": "transaction_payment_method"
+        },
+        {
+          "type": "text",
+          "name": "transaction_status"
+        },
+        {
+          "type": "text",
+          "name": "transaction_note"
+        },
+        {
+          "type": "number",
+          "name": "transaction_order"
+        },
+        {
+          "type": "number",
+          "name": "transaction_balance"
+        },
+        {
+          "type": "number",
+          "name": "transaction_amount_tendered"
+        },
+        {
+          "type": "number",
+          "name": "user_id"
+        },
+        {
+          "type": "text",
+          "name": "user_fname"
+        },
+        {
+          "type": "text",
+          "name": "user_lname"
+        },
+        {
+          "type": "text",
+          "name": "user_username"
+        },
+        {
+          "type": "number",
+          "name": "servo_user_departments_department_id"
+        },
+        {
+          "type": "text",
+          "name": "user_profile"
+        },
+        {
+          "type": "text",
+          "name": "payment_method_name"
         }
       ],
-      "outputType": "object",
-      "type": "dbconnector_paged_select"
+      "outputType": "array",
+      "type": "dbconnector_select"
     }
   }
 }
