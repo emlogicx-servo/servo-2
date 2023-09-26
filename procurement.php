@@ -137,10 +137,10 @@ JSON
         </div>
       </div>
     </div>
-    <ul class="nav nav-tabs nav-fill text-primary scrollable flex-nowrap align-items-end" id="navTabs1_tabs" role="tablist">
+    <ul class="nav nav-tabs nav-fill scrollable flex-nowrap align-items-end fw-bold" id="navTabs1_tabs" role="tablist">
 
       <li class="nav-item">
-        <a class="nav-link active text-body" id="navTabs1_2_tab" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_2" role="tab" aria-controls="navTabs1_2" aria-selected="false" dmx-on:click="procurement_information.load();procurement_information_products.load()">
+        <a class="nav-link active" id="navTabs1_2_tab" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_2" role="tab" aria-controls="navTabs1_2" aria-selected="false" dmx-on:click="procurement_information.load();procurement_information_products.load()">
 
           {{trans.data.overview[lang.value]}}<i class="far fa-eye" style="margin-left: 5px;"></i></a>
       </li>
@@ -149,15 +149,15 @@ JSON
           {{trans.data.purchaseOrders[lang.value]}}<i class="fas fa-cart-arrow-down" style="margin-left: 5px;"></i></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link text-body" id="navTabs1_2_tab3" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_5" role="tab" aria-controls="navTabs1_2" aria-selected="false">
+        <a class="nav-link" id="navTabs1_2_tab3" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_5" role="tab" aria-controls="navTabs1_2" aria-selected="false">
           {{trans.data.transferOrders[lang.value]}}<i class="fas fa-exchange-alt" style="margin-left: 5px;"></i></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link text-body" id="navTabs1_2_tab1" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_3" role="tab" aria-controls="navTabs1_2" aria-selected="false">
+        <a class="nav-link" id="navTabs1_2_tab1" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_3" role="tab" aria-controls="navTabs1_2" aria-selected="false">
           {{trans.data.stockAdjustment[lang.value]}}<i class="far fa-minus-square" style="margin-left: 5px;"></i></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link text-body" id="navTabs1_1_tab" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_1" role="tab" aria-controls="navTabs1_1" aria-selected="true" dmx-on:click="productstockvalues.load({})">{{trans.data.stock[lang.value]}}<i class="fas fa-boxes" style="margin-left: 5px;"></i></a>
+        <a class="nav-link" id="navTabs1_1_tab" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_1" role="tab" aria-controls="navTabs1_1" aria-selected="true" dmx-on:click="productstockvalues.load({})">{{trans.data.stock[lang.value]}}<i class="fas fa-boxes" style="margin-left: 5px;"></i></a>
       </li>
     </ul>
     <div class="tab-content" id="navTabs1_content">
@@ -265,17 +265,11 @@ JSON
         </div>
       </div>
       <div class="tab-pane fade" id="navTabs1_4" role="tabpanel">
-        <div class="row justify-content-sm-between justify-content-md-between justify-content-lg-between justify-content-xl-between justify-content-xxl-between justify-content-between sorter mt-2 mb-2 ms-0 me-0 bg-secondary">
-          <div class="col-sm-9 col-lg-3 d-flex col-xxl col-auto"><input id="poFilter" name="poFilter" type="text" class="form-control mb-2 search form-control-sm" placeholder="ID">
-          </div>
-          <div class="col-sm-2 col-lg-1 col-auto">
-            <button id="btn299" class="btn align-self-lg-start btn-outline-secondary btn-sm" dmx-on:click="poFilter.setValue(NULL)">
+        <div class="row justify-content-sm-between justify-content-md-between justify-content-lg-between justify-content-xl-between justify-content-xxl-between justify-content-between sorter mt-2 mb-2 ms-0 me-0 bg-secondary rounded">
+          <div class="d-flex col-auto flex-wrap col-sm-auto col-md-auto col-lg-auto col-xxl-auto col-xl-auto align-items-baseline"><input id="poFilter" name="poFilter" type="text" class="form-control search form-control-sm mb-2 me-2" placeholder="ID"><button id="btn299" class="btn align-self-lg-start btn-outline-secondary btn-sm text-primary bg-opacity-10 me-2" dmx-on:click="poFilter.setValue(NULL)">
               <i class="fas fa-backspace"></i>
             </button>
-          </div>
-
-          <div class="d-flex flex-sm-wrap col-md-5 justify-content-lg-end col-xl-6 justify-content-xl-end justify-content-xxl-end col-auto flex-wrap col-sm-auto col-lg-6">
-            <ul class="pagination" dmx-populate="list_purchase_orders.data.list_purchase_orders_paged" dmx-state="listPurchaseOrders" dmx-offset="offset_po" dmx-generator="bs5paging">
+            <ul class="pagination me-2 bg-dark bg-opacity-10 rounded d-flex flex-wrap" dmx-populate="list_purchase_orders.data.list_purchase_orders_paged" dmx-state="listPurchaseOrders" dmx-offset="offset_po" dmx-generator="bs5paging">
               <li class="page-item" dmx-class:disabled="list_purchase_orders.data.list_purchase_orders_paged.page.current == 1" aria-label="First">
                 <a href="javascript:void(0)" class="page-link" dmx-on:click="listPurchaseOrders.set('offset_po',list_purchase_orders.data.list_purchase_orders_paged.page.offset.first)"><span aria-hidden="true">&lsaquo;&lsaquo;</span></a>
               </li>
@@ -291,16 +285,17 @@ JSON
               <li class="page-item" dmx-class:disabled="list_purchase_orders.data.list_purchase_orders_paged.page.current ==  list_purchase_orders.data.list_purchase_orders_paged.page.total" aria-label="Last">
                 <a href="javascript:void(0)" class="page-link" dmx-on:click="listPurchaseOrders.set('offset_po',list_purchase_orders.data.list_purchase_orders_paged.page.offset.last)"><span aria-hidden="true">&rsaquo;&rsaquo;</span></a>
               </li>
-            </ul>
-          </div>
-          <div class="col-xl-1 col-md-2 col-sm-2 col-3 offset-lg-1 col-lg col-lg-1"><select id="poSortLimit" class="form-select" name="po_sort_limit">
+            </ul><select id="poSortLimit" class="form-select" name="po_sort_limit" style="width: 150px !important">
               <option value="5">5</option>
               <option selected="" value="25">25</option>
               <option value="50">50</option>
               <option value="100">100</option>
               <option value="'250">250</option>
               <option value="500">500</option>
-            </select></div>
+            </select>
+          </div>
+
+
         </div>
         <div class="row mt-1" id="orders_table1" style="height: 450px; overflow: scroll;">
           <div class="col">

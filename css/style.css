@@ -178,8 +178,8 @@ button:focus {
 
 .red-state
 {
-    background: #ffe0e0 !important;
-    color: #c11313;
+    background: #ff00000c !important;
+    color: #ff0000;
     border-radius: 13px;
 }
 
@@ -187,8 +187,8 @@ button:focus {
 .green-state
 {
 
-background: #88ff6ac7 !important /*#2084ff*/;
-    color: #000000;
+background: #11d3bc1c  !important;
+    color: #11d3bc !important;
     border-radius: 13px;
 }
 

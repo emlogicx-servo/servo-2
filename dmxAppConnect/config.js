@@ -37,7 +37,13 @@ dmx.config({
     "currentUser": {
       "meta": null,
       "outputType": "number"
-    }
+    },
+    "query": [
+      {
+        "type": "text",
+        "name": "listShiftsOffset"
+      }
+    ]
   },
   "service": {
     "repeat1": {
