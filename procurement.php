@@ -346,10 +346,10 @@ JSON
         </div>
         <div class="row" id="transferOrdersIn" dmx-show="(transferOrderDirection.value == 'In')">
           <div class="col">
-            <div class="row justify-content-sm-between justify-content-md-between justify-content-lg-between justify-content-xl-between justify-content-xxl-between justify-content-between sorter mt-2 mb-2 ms-0 me-0 bg-secondary">
-              <div class="col-auto col-9 col-sm-9 col-lg-3 d-flex col-xxl">
+            <div class="row justify-content-sm-between justify-content-md-between justify-content-lg-between justify-content-xl-between justify-content-xxl-between justify-content-between sorter mt-2 mb-2 ms-0 me-0 bg-secondary rounded">
+              <div class="col-auto col-9 col-sm-9 col-lg-3 d-flex col-xxl align-items-baseline">
 
-                <input id="toFilterIn" name="toFilterIn" type="text" class="form-control mb-2 search form-control-sm" placeholder="ID"><button id="btn26" class="btn align-self-lg-start btn-outline-secondary btn-sm ms-xxl-1 ms-1 bg-info text-white" dmx-on:click="poFilter.setValue(NULL)">
+                <input id="toFilterIn" name="toFilterIn" type="text" class="form-control search form-control-sm mb-2 me-2" placeholder="ID"><button id="btn26" class="btn align-self-lg-start btn-outline-secondary btn-sm ms-xxl-1 bg-info text-white me-2" dmx-on:click="poFilter.setValue(NULL)">
                   <i class="fas fa-backspace"></i>
 
 
@@ -357,10 +357,7 @@ JSON
 
 
                 </button>
-              </div>
-
-              <div class="flex-sm-wrap col-md-5 justify-content-lg-end col-xl-6 justify-content-xl-end justify-content-xxl-end col-auto col-sm-auto col-xxl col-lg-3">
-                <ul class="pagination bg-transparent" dmx-populate="list_transfer_orders_in.data.list_purchase_orders_paged" dmx-generator="bs5paging">
+                <ul class="pagination me-2 rounded bg-dark bg-opacity-10 flex-wrap" dmx-populate="list_transfer_orders_in.data.list_purchase_orders_paged" dmx-generator="bs5paging">
                   <li class="page-item" dmx-class:disabled="list_transfer_orders_in.data.list_purchase_orders_paged.page.current == 1" aria-label="First">
                     <a href="javascript:void(0)" class="page-link" dmx-on:click="list_transfer_orders_in.load({offset: list_transfer_orders_in.data.list_purchase_orders_paged.page.offset.first})"><span aria-hidden="true">&lsaquo;&lsaquo;</span></a>
                   </li>
@@ -376,17 +373,17 @@ JSON
                   <li class="page-item" dmx-class:disabled="list_transfer_orders_in.data.list_purchase_orders_paged.page.current ==  list_transfer_orders_in.data.list_purchase_orders_paged.page.total" aria-label="Last">
                     <a href="javascript:void(0)" class="page-link" dmx-on:click="list_transfer_orders_in.load({offset: list_transfer_orders_in.data.list_purchase_orders_paged.page.offset.last})"><span aria-hidden="true">&rsaquo;&rsaquo;</span></a>
                   </li>
-                </ul>
-              </div>
-
-              <div class="col-xl-1 col-md-2 col-sm-2 col-3 col-lg col-lg-1"><select id="toSortLimitIn" class="form-select" name="to_sort_limit_in" dmx-on:updated="list_transfer_orders.load({limit: value, to_filter: toFilter.value, to_destination: transferDirection.value});listTransferOrders.set('offset_to',0)">
+                </ul><select id="toSortLimitIn" class="form-select" name="to_sort_limit_in" style="width: 150px !important" dmx-on:updated="list_transfer_orders.load({limit: value, to_filter: toFilter.value, to_destination: transferDirection.value});listTransferOrders.set('offset_to',0)">
                   <option value="5">5</option>
                   <option selected="" value="25">25</option>
                   <option value="50">50</option>
                   <option value="100">100</option>
                   <option value="'250">250</option>
                   <option value="500">500</option>
-                </select></div>
+                </select>
+              </div>
+
+
             </div>
             <div class="row mt-1" id="transfer_orders_table2" style="height: 450px; overflow: scroll;">
               <div class="col">
@@ -428,10 +425,10 @@ JSON
         </div>
         <div class="row" id="transferOrdersOut" dmx-show="(transferOrderDirection.value == 'Out')">
           <div class="col">
-            <div class="row justify-content-sm-between justify-content-md-between justify-content-lg-between justify-content-xl-between justify-content-xxl-between justify-content-between sorter mt-2 mb-2 ms-0 me-0 bg-secondary">
-              <div class="col-auto col-9 col-sm-9 col-lg-3 d-flex col-xxl">
+            <div class="row justify-content-sm-between justify-content-md-between justify-content-lg-between justify-content-xl-between justify-content-xxl-between justify-content-between sorter mt-2 mb-2 ms-0 me-0 bg-secondary rounded">
+              <div class="d-flex align-items-baseline col-auto col-sm-auto col-md-auto col-lg-auto col-xl-auto col-xxl-auto">
 
-                <input id="toFilterOut" name="toFilterOut" type="text" class="form-control mb-2 search form-control-sm" placeholder="ID"><button id="btn23" class="btn align-self-lg-start btn-sm ms-xxl-1 ms-1 bg-info text-white" dmx-on:click="poFilter.setValue(NULL)">
+                <input id="toFilterOut" name="toFilterOut" type="text" class="form-control search form-control-sm mb-2 me-2" placeholder="ID"><button id="btn23" class="btn align-self-lg-start btn-sm ms-xxl-1 bg-info text-white me-2" dmx-on:click="poFilter.setValue(NULL)">
                   <i class="fas fa-backspace"></i>
 
 
@@ -439,10 +436,7 @@ JSON
 
 
                 </button>
-              </div>
-
-              <div class="flex-sm-wrap col-md-5 justify-content-lg-end col-xl-6 justify-content-xl-end justify-content-xxl-end col-auto col-sm-auto col-xxl col-lg-3">
-                <ul class="pagination" dmx-populate="list_transfer_orders_out.data.list_purchase_orders_paged" dmx-generator="bs5paging">
+                <ul class="pagination me-2 rounded bg-dark bg-opacity-10 flex-wrap" dmx-populate="list_transfer_orders_out.data.list_purchase_orders_paged" dmx-generator="bs5paging">
                   <li class="page-item" dmx-class:disabled="list_transfer_orders_out.data.list_purchase_orders_paged.page.current == 1" aria-label="First">
                     <a href="javascript:void(0)" class="page-link" dmx-on:click="list_transfer_orders_out.load({offset: list_transfer_orders_out.data.list_purchase_orders_paged.page.offset.first})"><span aria-hidden="true">&lsaquo;&lsaquo;</span></a>
                   </li>
@@ -458,17 +452,17 @@ JSON
                   <li class="page-item" dmx-class:disabled="list_transfer_orders_out.data.list_purchase_orders_paged.page.current ==  list_transfer_orders_out.data.list_purchase_orders_paged.page.total" aria-label="Last">
                     <a href="javascript:void(0)" class="page-link" dmx-on:click="list_transfer_orders_out.load({offset: list_transfer_orders_out.data.list_purchase_orders_paged.page.offset.last})"><span aria-hidden="true">&rsaquo;&rsaquo;</span></a>
                   </li>
-                </ul>
-              </div>
-
-              <div class="col-xl-1 col-md-2 col-sm-2 col-3 col-lg col-lg-1"><select id="toSortLimitOut" class="form-select" name="to_sort_limit1_out" dmx-on:updated="list_transfer_orders.load({limit: value, to_filter: toFilter.value, to_destination: transferDirection.value});listTransferOrders.set('offset_to',0)">
+                </ul><select id="toSortLimitOut" class="form-select" name="to_sort_limit1_out" style="width: 150px !important" dmx-on:updated="list_transfer_orders.load({limit: value, to_filter: toFilter.value, to_destination: transferDirection.value});listTransferOrders.set('offset_to',0)">
                   <option value="5">5</option>
                   <option selected="" value="25">25</option>
                   <option value="50">50</option>
                   <option value="100">100</option>
                   <option value="'250">250</option>
                   <option value="500">500</option>
-                </select></div>
+                </select>
+              </div>
+
+
             </div>
             <div class="row mt-1" id="transfer_orders_table1" style="height: 450px; overflow: scroll;">
               <div class="col bg-secondary rounded">

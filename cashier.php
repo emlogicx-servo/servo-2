@@ -179,7 +179,6 @@
   <script src="dmxAppConnect/dmxBootbox5/dmxBootbox5.js" defer></script>
   <script src="dmxAppConnect/dmxBootstrap5Popovers/dmxBootstrap5Popovers.js" defer></script>
   <script src="dmxAppConnect/dmxBootstrap5Tooltips/dmxBootstrap5Tooltips.js" defer></script>
-  <link rel="stylesheet" href="bootstrap/5/servodark/bootstrap.min.css" />
 
   <link rel="stylesheet" href="dmxAppConnect/dmxPreloader/dmxPreloader.css" />
   <script src="dmxAppConnect/dmxPreloader/dmxPreloader.js" defer></script>
@@ -238,6 +237,396 @@
   <dmx-value id="totalDepositPayments" dmx-bind:value="list_customer_transactions_amounts.data.custom_list_transaction_amounts[0].DepositPayments.toNumber()"></dmx-value>
   <dmx-value id="totalDeposits" dmx-bind:value="list_customer_transactions_amounts.data.custom_list_transaction_amounts[0].Deposits.toNumber()"></dmx-value>
   <dmx-value id="netDeposits" dmx-bind:value="(totalDeposits.value-(totalDepositPayments.value + totalDepositSettlements.value))"></dmx-value>
+  <main class="mt-2 ms-2 me-2">
+    <div class="mt-auto ms-2 me-2">
+
+
+
+
+      <div class="d-block d-flex justify-content-between">
+        <div class="d-block">
+          <h5 class="modal-title text-primary bg-primary rounded bg-opacity-10 fw-bold me-2 pt-1 pb-1 ps-3 pe-3"><i class="fas fa-cash-register fa-sm" style="margin-right:6px"></i>
+            {{list_user_shift_info.data.query_list_user_shift[0].sales_point_name}}</h5>
+        </div>
+        <div class="d-block ">
+          <div class="d-flex justify-content-start justify-content-lg-start flex-lg-wrap flex-wrap">
+            <form is="dmx-serverconnect-form" id="create_order_form" method="post" action="dmxConnect/api/servo_orders/create_order.php" dmx-on:success="notifies1.success('Order #'+create_order_form.data.custom[0]['last_insert_id()']+' Created');readCustomerOrder.load({order_id: create_order_form.data.custom[0]['last_insert_id()']});list_order_items.load({order_id: create_order_form.data.custom[0]['last_insert_id()']});session_variables.set('current_order',create_order_form.data.custom[0]['last_insert_id()']);list_customer_orders.load({customer_id: session_variables.data.current_customer, offset: listCustomerOrders.data.offset, limit: c_order_sort_limit.value});create_order_form.reset();customerOrderModal.show();list_customer_transactions_order.load({order_id: create_order_form.data.custom[0]['last_insert_id()']});list_order_items_deleted.load({order_id: create_order_form.data.custom[0]['last_insert_id()']});list_customer_transactions_order_totals.load({order_id: last_insert_id()})">
+              <input id="order_time" name="order_time" type="datetime-local" class="form-control visually-hidden" dmx-bind:value="dateTime.datetime">
+              <input id="orderCustomer" name="order_customer" class="form-control visually-hidden" dmx-bind:value="list_user_shift_info.data.query_list_user_shift[0].customer_id">
+              <input id="order_discount" name="order_discount" type="hidden" class="form-control visually-hidden" dmx-bind:value="0">
+              <input id="order_status" name="order_status" type="hidden" class="form-control visually-hidden" dmx-bind:value="'Ordered'">
+              <input id="user_id" name="servo_user_user_id" type="hidden" class="form-control visually-hidden" dmx-bind:value="session_variables.data.user_id">
+              <input id="shift_id" name="servo_shift_shift_id" type="hidden" class="form-control visually-hidden" dmx-bind:value="session1.data.current_shift">
+              <input id="serviceId" name="servo_service_service_id" type="hidden" class="form-control visually-hidden" dmx-bind:value="list_user_shift_info.data.query_list_user_shift[0].servo_service_service_id">
+
+              <div class="row row-cols-1 justify-content-end">
+                <div class="d-flex border-warning col ms-sm-3 ms-md-3 ms-lg-3 justify-content-end" is="dmx-if" id="conditional1" dmx-bind:condition="profile_privileges.data.profile_privileges[0].create_order=='Yes'">
+                  <button id="btn7" class="btn btn-success fw-bold text-white mb-2" style="background: #02b843 !important; border: none;" dmx-on:click="run({'bootbox.confirm':{message:'Confirm',then:{steps:{run:{action:`create_order_form.submit()`,outputType:'text'}}}}})">
+                    <i class="fas fa-plus-circle" style="margin-right: 5px;"></i>{{trans.data.createOrder[lang.value]}}
+                  </button>
+                </div>
+              </div>
+            </form>
+            <form is="dmx-serverconnect-form" id="create_data_reading_session" method="post" action="dmxConnect/api/servo_data_reading_session/create_data_reading_sesssion.php" dmx-on:success="notifies1.success('Order #'+create_order_form.data.custom[0]['last_insert_id()']+' Created');create_data_reading_session.reset();session_variables.set('current_data_reading_session',create_order_form.data.custom[0]['last_insert_id()']);customerDataReadingSessionModal.show();list_customer_data_reading_sessions.load({customer_id: session_variables.data.current_customer});read_customer_data_reading_sessions.load({data_reading_session_id: create_data_reading_session.data.custom[0]['last_insert_id()']});list_customer_data_field_readings.load({})">
+              <input id="drs_date" name="data_reading_session_date" type="datetime-local" class="form-control visually-hidden" dmx-bind:value="dateTime.datetime">
+              <input id="drs_user" name="data_reading_session_user" class="form-control visually-hidden" dmx-bind:value="session_variables.data.user_id">
+              <input id="drs_customer" name="data_reading_session_customer" type="hidden" class="form-control visually-hidden" dmx-bind:value="session_variables.data.current_customer">
+              <input id="drs_notes" name="data_reading_session_notes" type="hidden" class="form-control visually-hidden">
+
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <ul class="nav nav-tabs nav-fill flex-nowrap scrollable align-items-end" id="navTabs1_tabs" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active flex-grow-1 fw-bold" id="navTabs1_1_tab1" data-bs-toggle="tab" href="#" data-bs-target="#tabPane1" role="tab" aria-controls="navTabs1_1" aria-selected="true" dmx-on:click="list_customer_transactions_amounts.load({customer_id: session_variables.data.current_customer});list_customer_orders_totals.load({customer_id: session_variables.data.current_customer})"><i class="far fa-eye fa-sm" style="margin-right: 5px;"></i>
+
+                {{trans.data.overview[lang.value]}}</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fw-bold" id="navTabs1_1_tab" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_1" role="tab" aria-controls="navTabs1_1" aria-selected="true"><i class="fas fa-list fa-sm" style="margin-right: 5px;"></i>
+                {{trans.data.orders[lang.value]}}
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link fw-bold" id="navTabs1_2_tab" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_2" role="tab" aria-controls="navTabs1_2" aria-selected="false"><i class="fas fa-coins fa-sm" style="margin-right: 5px;"></i>
+                {{trans.data.transactions[lang.value]}}</a>
+            </li>
+          </ul>
+          <div class="tab-content" id="navTabs1_content">
+            <div class="tab-pane fade show active" id="tabPane1" role="tabpanel">
+              <dmx-value id="variableTotalCustomerDebt" dmx-bind:value="variableTotalCustomerDebtVariable.value.toNumber()"></dmx-value>
+              <dmx-value id="variableTotalCustomerTransactions" dmx-bind:value="list_customer_transactions_amounts.data.custom_list_transaction_amounts[0].Settlements.toNumber()"></dmx-value>
+              <dmx-value id="variableTotalCustomerDebtVariable" dmx-bind:value="((list_customer_transactions_amounts.data.custom_list_transaction_amounts[0].Settlements).toNumber().default(0) -(list_customer_orders_totals.data.custom_list_customer_orders_totals[0]['Customer Orders Totals']).toNumber().default(0)).formatNumber('0',',',',')"></dmx-value>
+              <dmx-value id="variableTotalCustomerCoverageDebt" dmx-bind:value="((list_customer_transactions_amounts.data.custom_list_transaction_amounts[0].Settlements).toNumber().default(0) -(list_customer_orders_totals.data.custom_list_customer_orders_totals[0]['Customer Orders Totals']).toNumber().default(0)).formatNumber('0',',',',')"></dmx-value>
+              <dmx-value id="variableTotalCoverageDebt" dmx-bind:value="((list_customer_orders_totals.data.custom_list_customer_orders_totals[0]['Coverage Totals']).toNumber().default(0)).formatNumber('0',',',',')"></dmx-value>
+              <dmx-value id="variableTotalCovered" dmx-bind:value="((list_customer_orders_totals.data.custom_list_customer_orders_totals[0]['Total Covered']).toNumber().default(0)).formatNumber('0',',',',')"></dmx-value>
+              <div class="row">
+
+                <div class="col-12 col-lg-6">
+
+                  <div class="row mt-2 ms-0">
+
+                    <div id="totalDebt" class="text-center mt-2 me-2 pt-4 pb-4 ps-4 pe-4 rounded text-white bg-secondary col">
+                      <div class="row mt-2 row-cols-12 justify-content-center" dmx-hide="">
+                        <div class="d-flex flex-sm-wrap col-md-auto col-5 col-sm-6 col-xl-auto col-lg-auto justify-content-center">
+                          <button id="btn40" class="btn fw-bold me-md-1 bg-light text-danger mb-1 me-1">{{trans.data.Ordered[lang.value]}}: {{list_customer_orders_cashier_shift.data.customer_order_stats[0].Ordered}}</button>
+                          <button id="btn401" class="btn fw-bold me-md-2 text-success bg-light mb-1 me-1">{{trans.data.Paid[lang.value]}}: {{list_customer_orders_cashier_shift.data.customer_order_stats[0].Paid}}</button>
+                          <button id="btn40" class="btn fw-bold me-md-2 bg-light text-muted mb-1 me-1">{{trans.data.pending[lang.value]}}: {{list_customer_orders_cashier_shift.data.customer_order_stats[0].Pending}}</button>
+                        </div>
+                      </div>
+                    </div>
+                    <div id="totalDebt2" class="bg-info text-center mt-2 me-2 pt-4 pb-4 ps-4 pe-4 col rounded text-white" style="background: #ff2a5c !important;">
+                      <div class="row">
+                        <div class="col text-white">
+                          <i class="fas fa-arrow-circle-up fa-lg"></i>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col">
+                          <h1 dmx-text="variableTotalCustomerDebtVariable.value"></h1>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col">
+                          <h4 dmx-text="trans.data.totalDebt[lang.value]">{{trans.data.totalOrders[lang.value]}}</h4>
+                        </div>
+                      </div>
+                    </div>
+
+
+                    <div id="totalSettlements" class="bg-info text-center mt-2 me-2 pt-4 pb-4 ps-4 pe-4 col rounded text-white" style="background: #07b853 !important;">
+                      <div class="row">
+                        <div class="col text-white">
+                          <i class="fas fa-arrow-circle-down fa-lg"></i>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col">
+                          <h1 dmx-text="list_customer_transactions_amounts.data.custom_list_transaction_amounts[0].Settlements.toNumber().formatNumber('0', ',', ',').default(0)"></h1>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col">
+                          <h4>{{trans.data.totalSettlements[lang.value]}}</h4>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="bg-info text-center mt-2 me-2 pt-4 pb-4 ps-4 pe-4 col rounded text-white" id="totalDeposits" style="background: #ff2afa !important;">
+
+                      <div class="row">
+                        <div class="col text-white"><i class="fas fa-piggy-bank fa-lg"></i></div>
+                      </div>
+                      <div class="row">
+                        <div class="col">
+                          <h1 dmx-text="(totalDeposits.value-(totalDepositPayments.value + totalDepositSettlements.value)).formatNumber('0',',',',')"></h1>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col">
+
+                          <h4 dmx-text="trans.data.totalDeposits[lang.value]"></h4>
+                        </div>
+                      </div>
+                    </div>
+                    <div id="totalPayout" class="text-center mt-2 me-2 pt-4 pb-4 ps-4 pe-4 col rounded text-white" style="background: #b81f07 !important;">
+                      <div class="row">
+                        <div class="col text-white">
+                          <i class="fas fa-angle-up fa-lg"></i>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col">
+                          <h1 dmx-text="(list_customer_transactions.data.query.where(`transaction_type`, 'Payment', '==')).sum('transaction_amount').formatNumber('0',',',',').default('0')"></h1>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col">
+                          <h4>{{trans.data.totalPayout[lang.value]}}</h4>
+                        </div>
+                      </div>
+                    </div>
+                    <div id="totalOrders4" class="bg-info text-center mt-2 me-2 pt-4 pb-4 ps-4 pe-4 col rounded text-white" style="background: #606370 !important;">
+                      <div class="row">
+                        <div class="col text-white">
+                          <i class="fas fa-clipboard-list fa-lg"></i>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col">
+                          <h1 dmx-text="list_customer_orders.data.query_list_customer_orders.total.formatNumber('0',',',',').default(0)">{{trans.data.totalOrders[lang.value]}}</h1>
+                        </div>
+                      </div>
+                      <div class="row">
+
+                        <div class="col">
+
+                          <h4 dmx-text="trans.data.orders[lang.value]"></h4>
+                        </div>
+                      </div>
+                    </div>
+                    <div id="totalCoverageDebt" class="bg-info text-center mt-2 me-2 pt-4 pb-4 ps-4 pe-4 col rounded text-white" style="background: #ff8f2b !important;">
+                      <div class="row">
+                        <div class="col">
+                          <i class="fas fa-people-arrows fa-lg"></i>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col">
+                          <h1 dmx-text="variableTotalCoverageDebt.value.default(0)">{{trans.data.totalOrders[lang.value]}}</h1>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col">
+
+                          <h4 dmx-text="trans.data.totalCoverage[lang.value]"></h4>
+                        </div>
+                      </div>
+                    </div>
+                    <div id="totalCovered" class="text-center mt-2 me-2 pt-4 pb-4 ps-4 pe-4 col rounded text-white" style="background: #176de0 !important;" dmx-hide="(read_customer.data.query_read_customer.customer_class == 'standard')">
+                      <div class="row">
+                        <div class="col">
+                          <i class="fas fa-arrow-circle-up fa-lg"></i>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col">
+                          <h1 dmx-text="variableTotalCovered.value.default(0)">{{trans.data.totalOrders[lang.value]}}</h1>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col">
+
+                          <h4 dmx-text="trans.data.totalCovered[lang.value]"></h4>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="mt-3 col-lg-6">
+                  <div class="row">
+
+                    <div class="col bg-secondary rounded pt-5 pb-2 ps-2 pe-2">
+                      <dmx-chart id="chart1" responsive="true" dataset-1:value="Total" smooth="true" thickness="3" height="350" colors="colors9" point-size="" type="pie" dataset-1="" labels="payment_method_name+' '+Total.toNumber().formatNumber('0',',',',')" legend="top" dmx-bind:data="list_customer_transactions.data.transactions_shift_pos_payment_methods"></dmx-chart>
+                    </div>
+                  </div>
+                  <div class="row">
+
+                    <div class="col">
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="tab-pane fade" id="navTabs1_1" role="tabpanel">
+              <div class="row mt-2 ms-0 me-0">
+                <div class="col rounded bg-secondary">
+                  <div class="row justify-content-sm-between justify-content-md-between justify-content-lg-between justify-content-xl-between justify-content-xxl-between mt-2 justify-content-between">
+                    <div class="col-lg-3 d-flex flex-sm-wrap col-6 col-md-auto col-sm-6 col-xl-auto"><input id="customerorderfilter" name="customerorderfilter" type="text" class="form-control mb-2 form-control-sm" dmx-bind:placeholder="trans.data.search[lang.value]+'  '"></div>
+                    <div class="d-flex flex-sm-wrap col-md-auto col-5 col-sm-6 col-xl-auto col-lg-auto">
+                      <button id="btn37" class="btn fw-bold me-md-1 bg-light text-danger">{{trans.data.Ordered[lang.value]}}: {{list_customer_orders.data.customer_order_stats[0].Ordered}}</button>
+                      <button id="btn38" class="btn fw-bold me-md-2 text-success bg-light">{{trans.data.Paid[lang.value]}}: {{list_customer_orders.data.customer_order_stats[0].Paid}}</button>
+                      <button id="btn39" class="btn fw-bold me-md-2 bg-light text-muted">{{trans.data.pending[lang.value]}}: {{list_customer_orders.data.customer_order_stats[0].Pending}}</button>
+                    </div>
+
+
+                    <div class="d-flex flex-sm-wrap col-md-5 justify-content-lg-end justify-content-xl-end justify-content-xxl-end flex-wrap col-sm flex-lg-wrap flex-xl-wrap flex-xxl-wrap col-auto col-lg-auto col-xl-auto">
+                      <ul class="pagination" dmx-populate="list_customer_orders.data.query_list_customer_orders" dmx-state="listCustomerOrders" dmx-offset="customerOrdersOffset" dmx-generator="bs5paging">
+                        <li class="page-item" dmx-class:disabled="list_customer_orders.data.query_list_customer_orders.page.current == 1" aria-label="First">
+                          <a href="javascript:void(0)" class="page-link" dmx-on:click="listCustomerOrders.set('customerOrdersOffset',list_customer_orders.data.query_list_customer_orders.page.offset.first)"><span aria-hidden="true">&lsaquo;&lsaquo;</span></a>
+                        </li>
+                        <li class="page-item" dmx-class:disabled="list_customer_orders.data.query_list_customer_orders.page.current == 1" aria-label="Previous">
+                          <a href="javascript:void(0)" class="page-link" dmx-on:click="listCustomerOrders.set('customerOrdersOffset',list_customer_orders.data.query_list_customer_orders.page.offset.prev)"><span aria-hidden="true">&lsaquo;</span></a>
+                        </li>
+                        <li class="page-item" dmx-class:active="title == list_customer_orders.data.query_list_customer_orders.page.current" dmx-class:disabled="!active" dmx-repeat="list_customer_orders.data.query_list_customer_orders.getServerConnectPagination(2,1,'...')">
+                          <a href="javascript:void(0)" class="page-link" dmx-on:click="listCustomerOrders.set('customerOrdersOffset',(page-1)*list_customer_orders.data.query_list_customer_orders.limit)">{{title}}</a>
+                        </li>
+                        <li class="page-item" dmx-class:disabled="list_customer_orders.data.query_list_customer_orders.page.current ==  list_customer_orders.data.query_list_customer_orders.page.total" aria-label="Next">
+                          <a href="javascript:void(0)" class="page-link" dmx-on:click="listCustomerOrders.set('customerOrdersOffset',list_customer_orders.data.query_list_customer_orders.page.offset.next)"><span aria-hidden="true">&rsaquo;</span></a>
+                        </li>
+                        <li class="page-item" dmx-class:disabled="list_customer_orders.data.query_list_customer_orders.page.current ==  list_customer_orders.data.query_list_customer_orders.page.total" aria-label="Last">
+                          <a href="javascript:void(0)" class="page-link" dmx-on:click="listCustomerOrders.set('customerOrdersOffset',list_customer_orders.data.query_list_customer_orders.page.offset.last)"><span aria-hidden="true">&rsaquo;&rsaquo;</span></a>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="col-md-2 col-sm-2 offset-lg-1 col-auto col-lg-auto col-xl-auto"><select id="c_order_sort_limit" class="form-select" name="c_order_sort_limit" dmx-on:updated="list_customer_orders.load({customer_id: session_variables.data.current_customer, offset: listCustomerOrders.data.customerOrdersOffset, limit: c_order_sort_limit.value})">
+                        <option value="5">5</option>
+                        <option selected="" value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                        <option value="''">{{trans.data.all[lang.value]}}</option>
+                      </select></div>
+                  </div>
+                  <div class="row">
+                    <div class="col scrollable">
+                      <div class="table-responsive">
+                        <table class="table table-hover table-sm table-borderless">
+                          <thead>
+                            <tr>
+                              <th>#</th>
+                              <th>{{trans.data.dateTime[lang.value]}}</th>
+                              <th>{{trans.data.user[lang.value]}}</th>
+                              <th>{{trans.data.service[lang.value]}}</th>
+                              <th class="text-center">{{trans.data.status[lang.value]}}</th>
+                              <th class="text-center">{{trans.data.coverageStatus[lang.value]}}</th>
+                              <th class="text-center">{{trans.data.note[lang.value]}}</th>
+                              <th></th>
+                            </tr>
+                          </thead>
+                          <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="list_customer_orders.data.query_list_customer_orders.data" id="tableRepeat3">
+                            <tr>
+                              <td dmx-text="order_id"></td>
+                              <td dmx-text="order_time"></td>
+                              <td dmx-text="user_username"></td>
+                              <td dmx-text="service_name"></td>
+                              <td>
+                                <h6 dmx-text="trans.data.getValueOrKey(order_status)[lang.value]" class="text-center pt-1 pb-1 ps-2 pe-2 rounded bg-light" dmx-class:text-warning="(order_status == 'Ordered')" dmx-class:text-success="(order_status == 'Paid')" dmx-class:text-muted="(order_status == 'Pending')" dmx-class:text-danger="(order_status == 'Credit')"></h6>
+
+                              </td>
+
+                              <td class="text-center">
+                                <h6 dmx-text="trans.data.getValueOrKey(coverage_payment_status)[lang.value]" class="text-center pt-1 pb-1 ps-2 pe-2 rounded bg-light" dmx-class:text-warning="(coverage_payment_status == 'Ordered')" dmx-class:text-success="(coverage_payment_status == 'Paid')" dmx-class:text-muted="(coverage_payment_status == 'Pending')" dmx-class:text-danger="(coverage_payment_status == 'Credit')" dmx-hide="coverage_payment_status==null"></h6>
+                              </td>
+                              <td class="text-center " dmx-text="order_notes">
+                              </td>
+                              <td>
+                                <button id="btn81" class="btn btn-sm bg-opacity-10 bg-info text-info" data-bs-target="#customerOrderModal" dmx-on:click="session_variables.set('current_order',order_id);list_order_items.load({order_id: order_id});readCustomerOrder.load({order_id: order_id});list_customer_transactions_order.load({order_id: order_id});list_customer_transactions_order_totals.load({order_id: order_id});list_order_items_deleted.load({order_id: order_id})" dmx-bind:value="order_id" data-bs-toggle="modal"><i class="far fa-edit fa-sm"></i>
+                                </button>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-pane fade" id="navTabs1_2" role="tabpanel">
+              <div class="row rounded-2 border-secondary mt-2 ms-2 me-2 pt-3 pb-2 rounded bg-secondary visually-hidden">
+                <h4>{{trans.data.newTransaction[lang.value]}}</h4>
+                <form id="createCustomerTransaction" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_customer_cash_transactions/create_transaction.php" dmx-on:success="notifies1.success('Sucess!');createCustomerTransaction.reset();list_customer_transactions.load({customer_id: read_customer.data.query_read_customer.customer_id});list_customer_transactions_amounts.load({customer_id: session_variables.data.current_customer});list_customer_orders_totals.load({customer_id: session_variables.data.current_customer})" dmx-on:error="notifies1.danger('Error!')">
+                  <div class="row">
+                    <div class="col visually-hidden"><input id="customerId" name="customer_id" type="text" class="form-control visually-hidden" dmx-bind:value="read_customer.data.query_read_customer.customer_id"></div>
+                    <div class="col visually-hidden"><input id="userApproved" name="user_approved_id" type="text" class="form-control visually-hidden" dmx-bind:value="session_variables.data.user_id"></div>
+                    <div class="col-auto col-8 mb-2 col-sm-auto col-md-auto"><input id="transactionAmount1" name="transaction_amount" type="number" class="form-control" dmx-bind:placeholder="trans.data.amount[lang.value]" data-rule-number="" required="" data-msg-required="!" data-msg-number="!"></div>
+                    <div class="col-auto mb-2 col-sm-auto col-md-auto"><input id="transactionDate1" name="transaction_date" type="datetime-local" class="form-control" dmx-bind:value="dateTime.datetime"></div>
+                    <div class="col-auto mb-2 col-sm-auto col-md-auto col-9"><select id="transactionType1" class="form-select" name="transaction_type" required="" data-msg-required="!">
+                        <option value="Deposit">{{trans.data.Deposit[lang.value]}}</option>
+                        <option value="Payment">{{trans.data.payment[lang.value]}}</option>
+                      </select></div>
+                    <div class="col-auto mb-2 col-sm-auto col-md-auto"><select id="transactionPaymentMethod1" class="form-select" name="transaction_payment_method" dmx-bind:options="payment_methods.data.query" optiontext="payment_method_name" optionvalue="payment_method_id" required="" data-msg-required="!">
+                        <option value="">----</option>
+                      </select></div>
+                    <div class="col-auto col-sm-auto col-md-auto mb-2 pb-5">
+                      <textarea id="transactionNote" class="form-control" name="transaction_note" dmx-bind:placeholder="trans.data.note[lang.value]"></textarea>
+                    </div>
+                    <div class="mb-2 col-sm-auto col-md-auto col-auto offset-0"><button id="btn3" class="btn ms-2 btn-success" type="submit">
+                        <i class="fas fa-check"></i>
+                      </button></div>
+                  </div>
+
+
+
+
+
+
+
+                </form>
+              </div>
+              <div class="row mt-lg-2 mt-2">
+                <div class="col">
+                  <div class="table-responsive">
+                    <table class="table table-hover table-sm">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>{{trans.data.total[lang.value]}}</th>
+                          <th>{{trans.data.paymentMethod[lang.value]}}</th>
+                          <th>{{trans.data.transaction[lang.value]}}</th>
+                          <th>{{trans.data.order[lang.value]}}</th>
+                          <th>{{trans.data.dateTime[lang.value]}}</th>
+                          <th>{{trans.data.note[lang.value]}}</th>
+                          <th>{{trans.data.user[lang.value]}}</th>
+                          <th>{{trans.data.date[lang.value]}}</th>
+                        </tr>
+                      </thead>
+                      <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="list_customer_transactions.data.query" id="tableRepeat2">
+                        <tr>
+                          <td dmx-text="customer_transaction_id"></td>
+                          <td dmx-text="transaction_amount.formatNumber('0', ',', ',')"></td>
+                          <td dmx-text="payment_method_name"></td>
+                          <td dmx-text="trans.data.getValueOrKey(transaction_type)[lang.value]"></td>
+                          <td dmx-text="transaction_order"></td>
+                          <td dmx-text="transaction_date"></td>
+                          <td dmx-text="transaction_note"></td>
+                          <td dmx-text="user_username"></td>
+                          <td>
+                            <button id="btn32" class="btn" data-bs-toggle="modal" data-bs-target="#printTransactionReceiptModalGeneral" dmx-on:click="read_customer_transaction.load({customer_cash_transaction_id: customer_transaction_id})">
+                              <i class="fas fa-receipt fa-lg"></i></button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+
+    </div>
+  </main>
   <main id="createItem">
     <div class="modal create-modal" id="createItemModal" is="dmx-bs5-modal" tabindex="-1">
       <div class="modal-dialog modal-lg" role="document">
@@ -895,6 +1284,11 @@
                   <i class="fas fa-lock-open"></i>
                 </button>
               </form>
+              <form id="updateItemsToOrdered2" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_order_items/update_order_item_to_ordered.php">
+                <input id="orderId2" name="servo_orders_order_id" type="number" class="form-control visually-hidden" dmx-bind:value="session_variables.data.current_order">
+                <input id="orderItemStatus3" name="order_item_status" class="form-control visually-hidden" dmx-bind:value="'Ordered'">
+                <button id="sendOrderItems2" class="btn text-info" dmx-on:click="run({'bootbox.confirm':{message:'\n',buttons:{confirm:{label:'Confirm',className:'btn-primary'},cancel:{label:'Cancel',className:'btn-secondary'}},centerVertical:true,then:{steps:[{run:{action:`updateItemsToOrdered2.submit()`,outputType:'text'}},{run:{action:`list_order_items.load({order_id: readCustomerOrder.data.query.order_id})`,outputType:'text'}},{run:{action:`notifies1.success(\'Success!\')`,outputType:'text'}}]},name:'confirmOrders'}})" dmx-bs-tooltip="trans.data.send[lang.value]" data-bs-placement="bottom" data-bs-trigger="hover focus" dmx-hide="(list_order_items.data.query.where(`order_item_status`, 'Pending', '=='))==0"><i class="fas fa-paper-plane fa-2x"></i></button>
+              </form>
               <div class="d-block">
                 <h3 class="fw-bold mt-1 ms-2">{{(variableCustomerTotalToPay.value).formatNumber('0',',',',')}}</h3>
               </div>
@@ -991,7 +1385,7 @@
                                   <button id="btn16" class="btn btn-lg text-muted shadow-none" dmx-on:click="form3.inp_order_item_quantity.setValue((inp_order_item_quantity.value.toNumber()+1) )"><i class="fas fa-plus"></i>
                                   </button>
                                 </div>
-                              </div><input id="inp_order_time_ordered" name="order_time_ordered" class="form-control mb-sm-1 mb-2 visually-hidden" type="datetime-local" dmx-bind:value="dateTime.datetime"><input id="inp_order_item_status" name="order_item_status" class="form-control mb-sm-1 mb-2 visually-hidden" value="Ordered"><input id="inp_order_id" name="servo_orders_order_id" type="number" class="form-control mb-sm-1 mb-2 visually-hidden" dmx-bind:value="session_variables.data.current_order"><input id="inp_order_product_id" name="servo_products_product_id" type="number" class="form-control mb-sm-1 mb-2 visually-hidden" placeholder="1" dmx-bind:value="product_id"><input id="inp_order_item_price" name="order_item_price" type="number" class="form-control mb-sm-1 mb-2 visually-hidden" placeholder="1" dmx-bind:value="product_price">
+                              </div><input id="inp_order_time_ordered" name="order_time_ordered" class="form-control mb-sm-1 mb-2 visually-hidden" type="datetime-local" dmx-bind:value="dateTime.datetime"><input id="inp_order_item_status" name="order_item_status" class="form-control mb-sm-1 mb-2 visually-hidden" value="Pending"><input id="inp_order_id" name="servo_orders_order_id" type="number" class="form-control mb-sm-1 mb-2 visually-hidden" dmx-bind:value="session_variables.data.current_order"><input id="inp_order_product_id" name="servo_products_product_id" type="number" class="form-control mb-sm-1 mb-2 visually-hidden" placeholder="1" dmx-bind:value="product_id"><input id="inp_order_item_price" name="order_item_price" type="number" class="form-control mb-sm-1 mb-2 visually-hidden" placeholder="1" dmx-bind:value="product_price">
                               <input id="inp_order_item_type" name="order_item_type" class="form-control mb-sm-1 mb-2 visually-hidden" placeholder="1" dmx-bind:value="'Simple'">
                               <input id="inp_order_item_user_ordered2" name="servo_users_user_ordered" class="form-control mb-sm-1 mb-2 visually-hidden" placeholder="1" dmx-bind:value="session_variables.data.user_id" type="number">
 
@@ -1704,396 +2098,7 @@
       </div>
     </div>
   </main>
-  <main class="ms-2 me-2">
-    <div class="mt-auto ms-2 me-2">
 
-
-
-
-      <div class="d-block d-flex justify-content-between">
-        <div class="d-block">
-          <h5 class="modal-title text-primary bg-primary rounded bg-opacity-10 fw-bold me-2 pt-1 pb-1 ps-3 pe-3"><i class="fas fa-cash-register fa-sm" style="margin-right:6px"></i>
-            {{list_user_shift_info.data.query_list_user_shift[0].sales_point_name}}</h5>
-        </div>
-        <div class="d-block ">
-          <div class="d-flex justify-content-start justify-content-lg-start flex-lg-wrap flex-wrap">
-            <form is="dmx-serverconnect-form" id="create_order_form" method="post" action="dmxConnect/api/servo_orders/create_order.php" dmx-on:success="notifies1.success('Order #'+create_order_form.data.custom[0]['last_insert_id()']+' Created');readCustomerOrder.load({order_id: create_order_form.data.custom[0]['last_insert_id()']});list_order_items.load({order_id: create_order_form.data.custom[0]['last_insert_id()']});session_variables.set('current_order',create_order_form.data.custom[0]['last_insert_id()']);list_customer_orders.load({customer_id: session_variables.data.current_customer, offset: listCustomerOrders.data.offset, limit: c_order_sort_limit.value});create_order_form.reset();customerOrderModal.show();list_customer_transactions_order.load({order_id: create_order_form.data.custom[0]['last_insert_id()']});list_order_items_deleted.load({order_id: create_order_form.data.custom[0]['last_insert_id()']});list_customer_transactions_order_totals.load({order_id: last_insert_id()})">
-              <input id="order_time" name="order_time" type="datetime-local" class="form-control visually-hidden" dmx-bind:value="dateTime.datetime">
-              <input id="orderCustomer" name="order_customer" class="form-control visually-hidden" dmx-bind:value="list_user_shift_info.data.query_list_user_shift[0].customer_id">
-              <input id="order_discount" name="order_discount" type="hidden" class="form-control visually-hidden" dmx-bind:value="0">
-              <input id="order_status" name="order_status" type="hidden" class="form-control visually-hidden" dmx-bind:value="'Ordered'">
-              <input id="user_id" name="servo_user_user_id" type="hidden" class="form-control visually-hidden" dmx-bind:value="session_variables.data.user_id">
-              <input id="shift_id" name="servo_shift_shift_id" type="hidden" class="form-control visually-hidden" dmx-bind:value="session1.data.current_shift">
-              <input id="serviceId" name="servo_service_service_id" type="hidden" class="form-control visually-hidden" dmx-bind:value="list_user_shift_info.data.query_list_user_shift[0].servo_service_service_id">
-
-              <div class="row row-cols-1 justify-content-end">
-                <div class="d-flex border-warning col ms-sm-3 ms-md-3 ms-lg-3 justify-content-end" is="dmx-if" id="conditional1" dmx-bind:condition="profile_privileges.data.profile_privileges[0].create_order=='Yes'">
-                  <button id="btn7" class="btn btn-success fw-bold text-white mb-2" style="background: #02b843 !important; border: none;" dmx-on:click="run({'bootbox.confirm':{message:'Confirm',then:{steps:{run:{action:`create_order_form.submit()`,outputType:'text'}}}}})">
-                    <i class="fas fa-plus-circle" style="margin-right: 5px;"></i>{{trans.data.createOrder[lang.value]}}
-                  </button>
-                </div>
-              </div>
-            </form>
-            <form is="dmx-serverconnect-form" id="create_data_reading_session" method="post" action="dmxConnect/api/servo_data_reading_session/create_data_reading_sesssion.php" dmx-on:success="notifies1.success('Order #'+create_order_form.data.custom[0]['last_insert_id()']+' Created');create_data_reading_session.reset();session_variables.set('current_data_reading_session',create_order_form.data.custom[0]['last_insert_id()']);customerDataReadingSessionModal.show();list_customer_data_reading_sessions.load({customer_id: session_variables.data.current_customer});read_customer_data_reading_sessions.load({data_reading_session_id: create_data_reading_session.data.custom[0]['last_insert_id()']});list_customer_data_field_readings.load({})">
-              <input id="drs_date" name="data_reading_session_date" type="datetime-local" class="form-control visually-hidden" dmx-bind:value="dateTime.datetime">
-              <input id="drs_user" name="data_reading_session_user" class="form-control visually-hidden" dmx-bind:value="session_variables.data.user_id">
-              <input id="drs_customer" name="data_reading_session_customer" type="hidden" class="form-control visually-hidden" dmx-bind:value="session_variables.data.current_customer">
-              <input id="drs_notes" name="data_reading_session_notes" type="hidden" class="form-control visually-hidden">
-
-            </form>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-12">
-          <ul class="nav nav-tabs nav-fill flex-nowrap scrollable align-items-end" id="navTabs1_tabs" role="tablist">
-            <li class="nav-item">
-              <a class="nav-link active flex-grow-1 fw-bold" id="navTabs1_1_tab1" data-bs-toggle="tab" href="#" data-bs-target="#tabPane1" role="tab" aria-controls="navTabs1_1" aria-selected="true" dmx-on:click="list_customer_transactions_amounts.load({customer_id: session_variables.data.current_customer});list_customer_orders_totals.load({customer_id: session_variables.data.current_customer})"><i class="far fa-eye fa-sm" style="margin-right: 5px;"></i>
-
-                {{trans.data.overview[lang.value]}}</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link fw-bold" id="navTabs1_1_tab" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_1" role="tab" aria-controls="navTabs1_1" aria-selected="true"><i class="fas fa-list fa-sm" style="margin-right: 5px;"></i>
-                {{trans.data.orders[lang.value]}}
-              </a>
-            </li>
-
-            <li class="nav-item">
-              <a class="nav-link fw-bold" id="navTabs1_2_tab" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_2" role="tab" aria-controls="navTabs1_2" aria-selected="false"><i class="fas fa-coins fa-sm" style="margin-right: 5px;"></i>
-                {{trans.data.transactions[lang.value]}}</a>
-            </li>
-          </ul>
-          <div class="tab-content" id="navTabs1_content">
-            <div class="tab-pane fade show active" id="tabPane1" role="tabpanel">
-              <dmx-value id="variableTotalCustomerDebt" dmx-bind:value="variableTotalCustomerDebtVariable.value.toNumber()"></dmx-value>
-              <dmx-value id="variableTotalCustomerTransactions" dmx-bind:value="list_customer_transactions_amounts.data.custom_list_transaction_amounts[0].Settlements.toNumber()"></dmx-value>
-              <dmx-value id="variableTotalCustomerDebtVariable" dmx-bind:value="((list_customer_transactions_amounts.data.custom_list_transaction_amounts[0].Settlements).toNumber().default(0) -(list_customer_orders_totals.data.custom_list_customer_orders_totals[0]['Customer Orders Totals']).toNumber().default(0)).formatNumber('0',',',',')"></dmx-value>
-              <dmx-value id="variableTotalCustomerCoverageDebt" dmx-bind:value="((list_customer_transactions_amounts.data.custom_list_transaction_amounts[0].Settlements).toNumber().default(0) -(list_customer_orders_totals.data.custom_list_customer_orders_totals[0]['Customer Orders Totals']).toNumber().default(0)).formatNumber('0',',',',')"></dmx-value>
-              <dmx-value id="variableTotalCoverageDebt" dmx-bind:value="((list_customer_orders_totals.data.custom_list_customer_orders_totals[0]['Coverage Totals']).toNumber().default(0)).formatNumber('0',',',',')"></dmx-value>
-              <dmx-value id="variableTotalCovered" dmx-bind:value="((list_customer_orders_totals.data.custom_list_customer_orders_totals[0]['Total Covered']).toNumber().default(0)).formatNumber('0',',',',')"></dmx-value>
-              <div class="row">
-
-                <div class="col-12 col-lg-6">
-
-                  <div class="row mt-2 ms-0">
-
-                    <div id="totalDebt" class="text-center mt-2 me-2 pt-4 pb-4 ps-4 pe-4 rounded text-white bg-secondary col">
-                      <div class="row mt-2 row-cols-12 justify-content-center" dmx-hide="">
-                        <div class="d-flex flex-sm-wrap col-md-auto col-5 col-sm-6 col-xl-auto col-lg-auto justify-content-center">
-                          <button id="btn40" class="btn fw-bold me-md-1 bg-light text-danger mb-1 me-1">{{trans.data.Ordered[lang.value]}}: {{list_customer_orders_cashier_shift.data.customer_order_stats[0].Ordered}}</button>
-                          <button id="btn401" class="btn fw-bold me-md-2 text-success bg-light mb-1 me-1">{{trans.data.Paid[lang.value]}}: {{list_customer_orders_cashier_shift.data.customer_order_stats[0].Paid}}</button>
-                          <button id="btn40" class="btn fw-bold me-md-2 bg-light text-muted mb-1 me-1">{{trans.data.pending[lang.value]}}: {{list_customer_orders_cashier_shift.data.customer_order_stats[0].Pending}}</button>
-                        </div>
-                      </div>
-                    </div>
-                    <div id="totalDebt2" class="bg-info text-center mt-2 me-2 pt-4 pb-4 ps-4 pe-4 col rounded text-white" style="background: #ff2a5c !important;">
-                      <div class="row">
-                        <div class="col text-white">
-                          <i class="fas fa-arrow-circle-up fa-lg"></i>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col">
-                          <h1 dmx-text="variableTotalCustomerDebtVariable.value"></h1>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col">
-                          <h4 dmx-text="trans.data.totalDebt[lang.value]">{{trans.data.totalOrders[lang.value]}}</h4>
-                        </div>
-                      </div>
-                    </div>
-
-
-                    <div id="totalSettlements" class="bg-info text-center mt-2 me-2 pt-4 pb-4 ps-4 pe-4 col rounded text-white" style="background: #07b853 !important;">
-                      <div class="row">
-                        <div class="col text-white">
-                          <i class="fas fa-arrow-circle-down fa-lg"></i>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col">
-                          <h1 dmx-text="list_customer_transactions_amounts.data.custom_list_transaction_amounts[0].Settlements.toNumber().formatNumber('0', ',', ',').default(0)"></h1>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col">
-                          <h4>{{trans.data.totalSettlements[lang.value]}}</h4>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="bg-info text-center mt-2 me-2 pt-4 pb-4 ps-4 pe-4 col rounded text-white" id="totalDeposits" style="background: #ff2afa !important;">
-
-                      <div class="row">
-                        <div class="col text-white"><i class="fas fa-piggy-bank fa-lg"></i></div>
-                      </div>
-                      <div class="row">
-                        <div class="col">
-                          <h1 dmx-text="(totalDeposits.value-(totalDepositPayments.value + totalDepositSettlements.value)).formatNumber('0',',',',')"></h1>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col">
-
-                          <h4 dmx-text="trans.data.totalDeposits[lang.value]"></h4>
-                        </div>
-                      </div>
-                    </div>
-                    <div id="totalPayout" class="text-center mt-2 me-2 pt-4 pb-4 ps-4 pe-4 col rounded text-white" style="background: #b81f07 !important;">
-                      <div class="row">
-                        <div class="col text-white">
-                          <i class="fas fa-angle-up fa-lg"></i>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col">
-                          <h1 dmx-text="(list_customer_transactions.data.query.where(`transaction_type`, 'Payment', '==')).sum('transaction_amount').formatNumber('0',',',',').default('0')"></h1>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col">
-                          <h4>{{trans.data.totalPayout[lang.value]}}</h4>
-                        </div>
-                      </div>
-                    </div>
-                    <div id="totalOrders4" class="bg-info text-center mt-2 me-2 pt-4 pb-4 ps-4 pe-4 col rounded text-white" style="background: #606370 !important;">
-                      <div class="row">
-                        <div class="col text-white">
-                          <i class="fas fa-clipboard-list fa-lg"></i>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col">
-                          <h1 dmx-text="list_customer_orders.data.query_list_customer_orders.total.formatNumber('0',',',',').default(0)">{{trans.data.totalOrders[lang.value]}}</h1>
-                        </div>
-                      </div>
-                      <div class="row">
-
-                        <div class="col">
-
-                          <h4 dmx-text="trans.data.orders[lang.value]"></h4>
-                        </div>
-                      </div>
-                    </div>
-                    <div id="totalCoverageDebt" class="bg-info text-center mt-2 me-2 pt-4 pb-4 ps-4 pe-4 col rounded text-white" style="background: #ff8f2b !important;">
-                      <div class="row">
-                        <div class="col">
-                          <i class="fas fa-people-arrows fa-lg"></i>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col">
-                          <h1 dmx-text="variableTotalCoverageDebt.value.default(0)">{{trans.data.totalOrders[lang.value]}}</h1>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col">
-
-                          <h4 dmx-text="trans.data.totalCoverage[lang.value]"></h4>
-                        </div>
-                      </div>
-                    </div>
-                    <div id="totalCovered" class="text-center mt-2 me-2 pt-4 pb-4 ps-4 pe-4 col rounded text-white" style="background: #176de0 !important;" dmx-hide="(read_customer.data.query_read_customer.customer_class == 'standard')">
-                      <div class="row">
-                        <div class="col">
-                          <i class="fas fa-arrow-circle-up fa-lg"></i>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col">
-                          <h1 dmx-text="variableTotalCovered.value.default(0)">{{trans.data.totalOrders[lang.value]}}</h1>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col">
-
-                          <h4 dmx-text="trans.data.totalCovered[lang.value]"></h4>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="mt-3 col-lg-6">
-                  <div class="row">
-
-                    <div class="col bg-secondary rounded pt-5 pb-2 ps-2 pe-2">
-                      <dmx-chart id="chart1" responsive="true" dataset-1:value="Total" smooth="true" thickness="3" height="350" colors="colors9" point-size="" type="pie" dataset-1="" labels="payment_method_name+' '+Total.toNumber().formatNumber('0',',',',')" legend="top" dmx-bind:data="list_customer_transactions.data.transactions_shift_pos_payment_methods"></dmx-chart>
-                    </div>
-                  </div>
-                  <div class="row">
-
-                    <div class="col">
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-
-            <div class="tab-pane fade" id="navTabs1_1" role="tabpanel">
-              <div class="row mt-2 ms-0 me-0">
-                <div class="col rounded bg-secondary">
-                  <div class="row justify-content-sm-between justify-content-md-between justify-content-lg-between justify-content-xl-between justify-content-xxl-between mt-2 justify-content-between">
-                    <div class="col-lg-3 d-flex flex-sm-wrap col-6 col-md-auto col-sm-6 col-xl-auto"><input id="customerorderfilter" name="customerorderfilter" type="text" class="form-control mb-2 form-control-sm" dmx-bind:placeholder="trans.data.search[lang.value]+'  '"></div>
-                    <div class="d-flex flex-sm-wrap col-md-auto col-5 col-sm-6 col-xl-auto col-lg-auto">
-                      <button id="btn37" class="btn fw-bold me-md-1 bg-light text-danger">{{trans.data.Ordered[lang.value]}}: {{list_customer_orders.data.customer_order_stats[0].Ordered}}</button>
-                      <button id="btn38" class="btn fw-bold me-md-2 text-success bg-light">{{trans.data.Paid[lang.value]}}: {{list_customer_orders.data.customer_order_stats[0].Paid}}</button>
-                      <button id="btn39" class="btn fw-bold me-md-2 bg-light text-muted">{{trans.data.pending[lang.value]}}: {{list_customer_orders.data.customer_order_stats[0].Pending}}</button>
-                    </div>
-
-
-                    <div class="d-flex flex-sm-wrap col-md-5 justify-content-lg-end justify-content-xl-end justify-content-xxl-end flex-wrap col-sm flex-lg-wrap flex-xl-wrap flex-xxl-wrap col-auto col-lg-auto col-xl-auto">
-                      <ul class="pagination" dmx-populate="list_customer_orders.data.query_list_customer_orders" dmx-state="listCustomerOrders" dmx-offset="customerOrdersOffset" dmx-generator="bs5paging">
-                        <li class="page-item" dmx-class:disabled="list_customer_orders.data.query_list_customer_orders.page.current == 1" aria-label="First">
-                          <a href="javascript:void(0)" class="page-link" dmx-on:click="listCustomerOrders.set('customerOrdersOffset',list_customer_orders.data.query_list_customer_orders.page.offset.first)"><span aria-hidden="true">&lsaquo;&lsaquo;</span></a>
-                        </li>
-                        <li class="page-item" dmx-class:disabled="list_customer_orders.data.query_list_customer_orders.page.current == 1" aria-label="Previous">
-                          <a href="javascript:void(0)" class="page-link" dmx-on:click="listCustomerOrders.set('customerOrdersOffset',list_customer_orders.data.query_list_customer_orders.page.offset.prev)"><span aria-hidden="true">&lsaquo;</span></a>
-                        </li>
-                        <li class="page-item" dmx-class:active="title == list_customer_orders.data.query_list_customer_orders.page.current" dmx-class:disabled="!active" dmx-repeat="list_customer_orders.data.query_list_customer_orders.getServerConnectPagination(2,1,'...')">
-                          <a href="javascript:void(0)" class="page-link" dmx-on:click="listCustomerOrders.set('customerOrdersOffset',(page-1)*list_customer_orders.data.query_list_customer_orders.limit)">{{title}}</a>
-                        </li>
-                        <li class="page-item" dmx-class:disabled="list_customer_orders.data.query_list_customer_orders.page.current ==  list_customer_orders.data.query_list_customer_orders.page.total" aria-label="Next">
-                          <a href="javascript:void(0)" class="page-link" dmx-on:click="listCustomerOrders.set('customerOrdersOffset',list_customer_orders.data.query_list_customer_orders.page.offset.next)"><span aria-hidden="true">&rsaquo;</span></a>
-                        </li>
-                        <li class="page-item" dmx-class:disabled="list_customer_orders.data.query_list_customer_orders.page.current ==  list_customer_orders.data.query_list_customer_orders.page.total" aria-label="Last">
-                          <a href="javascript:void(0)" class="page-link" dmx-on:click="listCustomerOrders.set('customerOrdersOffset',list_customer_orders.data.query_list_customer_orders.page.offset.last)"><span aria-hidden="true">&rsaquo;&rsaquo;</span></a>
-                        </li>
-                      </ul>
-                    </div>
-                    <div class="col-md-2 col-sm-2 offset-lg-1 col-auto col-lg-auto col-xl-auto"><select id="c_order_sort_limit" class="form-select" name="c_order_sort_limit" dmx-on:updated="list_customer_orders.load({customer_id: session_variables.data.current_customer, offset: listCustomerOrders.data.customerOrdersOffset, limit: c_order_sort_limit.value})">
-                        <option value="5">5</option>
-                        <option selected="" value="25">25</option>
-                        <option value="50">50</option>
-                        <option value="100">100</option>
-                        <option value="''">{{trans.data.all[lang.value]}}</option>
-                      </select></div>
-                  </div>
-                  <div class="row">
-                    <div class="col scrollable">
-                      <div class="table-responsive">
-                        <table class="table table-hover table-sm table-borderless">
-                          <thead>
-                            <tr>
-                              <th>#</th>
-                              <th>{{trans.data.dateTime[lang.value]}}</th>
-                              <th>{{trans.data.user[lang.value]}}</th>
-                              <th>{{trans.data.service[lang.value]}}</th>
-                              <th class="text-center">{{trans.data.status[lang.value]}}</th>
-                              <th class="text-center">{{trans.data.coverageStatus[lang.value]}}</th>
-                              <th class="text-center">{{trans.data.note[lang.value]}}</th>
-                              <th></th>
-                            </tr>
-                          </thead>
-                          <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="list_customer_orders.data.query_list_customer_orders.data" id="tableRepeat3">
-                            <tr>
-                              <td dmx-text="order_id"></td>
-                              <td dmx-text="order_time"></td>
-                              <td dmx-text="user_username"></td>
-                              <td dmx-text="service_name"></td>
-                              <td>
-                                <h6 dmx-text="trans.data.getValueOrKey(order_status)[lang.value]" class="text-center pt-1 pb-1 ps-2 pe-2 rounded bg-light" dmx-class:text-warning="(order_status == 'Ordered')" dmx-class:text-success="(order_status == 'Paid')" dmx-class:text-muted="(order_status == 'Pending')" dmx-class:text-danger="(order_status == 'Credit')"></h6>
-
-                              </td>
-
-                              <td class="text-center">
-                                <h6 dmx-text="trans.data.getValueOrKey(coverage_payment_status)[lang.value]" class="text-center pt-1 pb-1 ps-2 pe-2 rounded bg-light" dmx-class:text-warning="(coverage_payment_status == 'Ordered')" dmx-class:text-success="(coverage_payment_status == 'Paid')" dmx-class:text-muted="(coverage_payment_status == 'Pending')" dmx-class:text-danger="(coverage_payment_status == 'Credit')" dmx-hide="coverage_payment_status==null"></h6>
-                              </td>
-                              <td class="text-center " dmx-text="order_notes">
-                              </td>
-                              <td>
-                                <button id="btn81" class="btn btn-sm bg-opacity-10 bg-info text-info" data-bs-target="#customerOrderModal" dmx-on:click="session_variables.set('current_order',order_id);list_order_items.load({order_id: order_id});readCustomerOrder.load({order_id: order_id});list_customer_transactions_order.load({order_id: order_id});list_customer_transactions_order_totals.load({order_id: order_id});list_order_items_deleted.load({order_id: order_id})" dmx-bind:value="order_id" data-bs-toggle="modal"><i class="far fa-edit fa-sm"></i>
-                                </button>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-            </div>
-
-            <div class="tab-pane fade" id="navTabs1_2" role="tabpanel">
-              <div class="row rounded-2 border-secondary mt-2 ms-2 me-2 pt-3 pb-2 rounded bg-secondary visually-hidden">
-                <h4>{{trans.data.newTransaction[lang.value]}}</h4>
-                <form id="createCustomerTransaction" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_customer_cash_transactions/create_transaction.php" dmx-on:success="notifies1.success('Sucess!');createCustomerTransaction.reset();list_customer_transactions.load({customer_id: read_customer.data.query_read_customer.customer_id});list_customer_transactions_amounts.load({customer_id: session_variables.data.current_customer});list_customer_orders_totals.load({customer_id: session_variables.data.current_customer})" dmx-on:error="notifies1.danger('Error!')">
-                  <div class="row">
-                    <div class="col visually-hidden"><input id="customerId" name="customer_id" type="text" class="form-control visually-hidden" dmx-bind:value="read_customer.data.query_read_customer.customer_id"></div>
-                    <div class="col visually-hidden"><input id="userApproved" name="user_approved_id" type="text" class="form-control visually-hidden" dmx-bind:value="session_variables.data.user_id"></div>
-                    <div class="col-auto col-8 mb-2 col-sm-auto col-md-auto"><input id="transactionAmount1" name="transaction_amount" type="number" class="form-control" dmx-bind:placeholder="trans.data.amount[lang.value]" data-rule-number="" required="" data-msg-required="!" data-msg-number="!"></div>
-                    <div class="col-auto mb-2 col-sm-auto col-md-auto"><input id="transactionDate1" name="transaction_date" type="datetime-local" class="form-control" dmx-bind:value="dateTime.datetime"></div>
-                    <div class="col-auto mb-2 col-sm-auto col-md-auto col-9"><select id="transactionType1" class="form-select" name="transaction_type" required="" data-msg-required="!">
-                        <option value="Deposit">{{trans.data.Deposit[lang.value]}}</option>
-                        <option value="Payment">{{trans.data.payment[lang.value]}}</option>
-                      </select></div>
-                    <div class="col-auto mb-2 col-sm-auto col-md-auto"><select id="transactionPaymentMethod1" class="form-select" name="transaction_payment_method" dmx-bind:options="payment_methods.data.query" optiontext="payment_method_name" optionvalue="payment_method_id" required="" data-msg-required="!">
-                        <option value="">----</option>
-                      </select></div>
-                    <div class="col-auto col-sm-auto col-md-auto mb-2 pb-5">
-                      <textarea id="transactionNote" class="form-control" name="transaction_note" dmx-bind:placeholder="trans.data.note[lang.value]"></textarea>
-                    </div>
-                    <div class="mb-2 col-sm-auto col-md-auto col-auto offset-0"><button id="btn3" class="btn ms-2 btn-success" type="submit">
-                        <i class="fas fa-check"></i>
-                      </button></div>
-                  </div>
-
-
-
-
-
-
-
-                </form>
-              </div>
-              <div class="row mt-lg-2 mt-2">
-                <div class="col">
-                  <div class="table-responsive">
-                    <table class="table table-hover table-sm">
-                      <thead>
-                        <tr>
-                          <th>#</th>
-                          <th>{{trans.data.total[lang.value]}}</th>
-                          <th>{{trans.data.paymentMethod[lang.value]}}</th>
-                          <th>{{trans.data.transaction[lang.value]}}</th>
-                          <th>{{trans.data.order[lang.value]}}</th>
-                          <th>{{trans.data.dateTime[lang.value]}}</th>
-                          <th>{{trans.data.note[lang.value]}}</th>
-                          <th>{{trans.data.user[lang.value]}}</th>
-                          <th>{{trans.data.date[lang.value]}}</th>
-                        </tr>
-                      </thead>
-                      <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="list_customer_transactions.data.query" id="tableRepeat2">
-                        <tr>
-                          <td dmx-text="customer_transaction_id"></td>
-                          <td dmx-text="transaction_amount.formatNumber('0', ',', ',')"></td>
-                          <td dmx-text="payment_method_name"></td>
-                          <td dmx-text="trans.data.getValueOrKey(transaction_type)[lang.value]"></td>
-                          <td dmx-text="transaction_order"></td>
-                          <td dmx-text="transaction_date"></td>
-                          <td dmx-text="transaction_note"></td>
-                          <td dmx-text="user_username"></td>
-                          <td>
-                            <button id="btn32" class="btn" data-bs-toggle="modal" data-bs-target="#printTransactionReceiptModalGeneral" dmx-on:click="read_customer_transaction.load({customer_cash_transaction_id: customer_transaction_id})">
-                              <i class="fas fa-receipt fa-lg"></i></button>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-
-        </div>
-      </div>
-
-    </div>
-  </main>
   <script src="bootstrap/5/js/bootstrap.min.js"></script>
 </body>
 
