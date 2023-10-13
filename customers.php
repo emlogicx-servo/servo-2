@@ -156,10 +156,10 @@
 
       <div class="row servo-page-header">
         <div class="col style13 page-button d-flex justify-content-end" id="pagebuttons">
-          <button id="btn11" class="btn pill me-1 bg-opacity-10 text-info bg-info" data-bs-toggle="modal" data-bs-target="#expenseModal">
+          <button id="btn11" class="btn pill me-1 bg-opacity-10 text-body bg-body" data-bs-toggle="modal" data-bs-target="#expenseModal">
             <i class="fas fa-cash-register fa-sm"></i>
           </button>
-          <div id="conditional1" is="dmx-if" dmx-bind:condition="(profile_privileges.data.profile_privileges[0].create_customer == 'Yes')"><button id="btn1" class="btn style12 add-button pill fw-bold bg-opacity-10 bg-info text-info" data-bs-toggle="modal" data-bs-target="#createItemModal" style="float: right;"><i class="fas fa-user-plus fa-sm"></i>
+          <div id="conditional1" is="dmx-if" dmx-bind:condition="(profile_privileges.data.profile_privileges[0].create_customer == 'Yes')"><button id="btn1" class="btn style12 add-button pill fw-bold bg-opacity-10 bg-body text-body" data-bs-toggle="modal" data-bs-target="#createItemModal" style="float: right;"><i class="fas fa-user-plus fa-sm"></i>
             </button></div>
 
         </div>

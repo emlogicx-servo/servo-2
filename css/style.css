@@ -192,37 +192,12 @@ background: #11d3bc1c  !important;
     border-radius: 13px;
 }
 
- /*  
-   background: #3bffd2 !important;
-    color: #000000;
-    border-radius: 13px;
-   */
-    /*background:  #1c8bd6 !important #2084ff;
-    color: #ffffff;
-    border-radius: 13px;
-/*
-
-    background: #2084ff;
-    color: #ffffff;
-    border-radius: 13px;
-*/
-
-
 .yellow-state
 {
 
     background:#e6ff9a !important /* #cdcdcd*/;
     border-radius: 13px;
     color: #262b00;
-
-   /* background: #e6ff16 /* #cdcdcd;
-    border-radius: 13px;
-    color: #202020;
-
-/*    background: #e6ff5c2e;
-    color: #fcff33;
-    border-radius: 13px;
-*/
 }
 
 .grey-state

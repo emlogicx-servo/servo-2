@@ -237,7 +237,7 @@
   <dmx-value id="totalDepositPayments" dmx-bind:value="list_customer_transactions_amounts.data.custom_list_transaction_amounts[0].DepositPayments.toNumber()"></dmx-value>
   <dmx-value id="totalDeposits" dmx-bind:value="list_customer_transactions_amounts.data.custom_list_transaction_amounts[0].Deposits.toNumber()"></dmx-value>
   <dmx-value id="netDeposits" dmx-bind:value="(totalDeposits.value-(totalDepositPayments.value + totalDepositSettlements.value))"></dmx-value>
-  <main class="mt-2 ms-2 me-2">
+  <main class="bg-light mt-2 ms-2 me-2 pt-2 rounded">
     <div class="mt-auto ms-2 me-2">
 
 
@@ -447,9 +447,9 @@
                   </div>
                 </div>
                 <div class="mt-3 col-lg-6">
-                  <div class="row">
+                  <div class="row me-2">
 
-                    <div class="col bg-secondary rounded pt-5 pb-2 ps-2 pe-2">
+                    <div class="col bg-secondary rounded ms-2 me-2 pt-5 pb-2 ps-2 pe-2">
                       <dmx-chart id="chart1" responsive="true" dataset-1:value="Total" smooth="true" thickness="3" height="350" colors="colors9" point-size="" type="pie" dataset-1="" labels="payment_method_name+' '+Total.toNumber().formatNumber('0',',',',')" legend="top" dmx-bind:data="list_customer_transactions.data.transactions_shift_pos_payment_methods"></dmx-chart>
                     </div>
                   </div>
@@ -1256,7 +1256,7 @@
       <div class="modal-dialog modal-xl" role="document" style="margin: 0px !important; width: 100% !important; height: 99% !important; max-width: 100% !important; max-height: 99% !important;">
         <div class="modal-content">
           <div class="modal-header mt-0 mb-0 pb-0">
-            <div class="d-block d-flex flex-wrap">
+            <div class="d-block d-flex flex-wrap flex-sm-wrap flex-md-wrap flex-lg-wrap flex-xl-wrap flex-xxl-wrap">
               <div class="d-block">
                 <h5 class="fw-bold text-white rounded me-3 pt-2 pb-2 ps-3 pe-3" dmx-class:bg-danger="readCustomerOrder.data.query.order_status!=='Paid'" dmx-class:bg-success="readCustomerOrder.data.query.order_status=='Paid'">{{trans.data.order[lang.value]}} : {{readCustomerOrder.data.query.order_id}}</h5>
               </div>
@@ -1272,7 +1272,7 @@
                 <input id="update_order_user_id" name="servo_users_cashier_id" type="text" class="form-control visually-hidden" dmx-bind:value="session_variables.data.user_id">
                 <input id="update_order_status" name="order_status" type="text" class="form-control visually-hidden" dmx-bind:value="'Paid'">
                 <input id="update_order_time_paid" name="order_time_paid" type="datetime-local" class="form-control visually-hidden" dmx-bind:value="dateTime.datetime">
-                <button id="btn18" class="btn float-right text-danger bg-success bg-opacity-10" data-bs-target="#AddProductsToOrderOffCanvas" dmx-show="(variableCustomerTotalToPay.value =='0')&amp;&amp;(OrderTotal.value !== '0')" style="color: #9bff66 !important;" type="submit" dmx-bind:hidden="(readCustomerOrder.data.query.order_status == 'Paid')" dmx-bs-tooltip="trans.data.edit[lang.value]" data-bs-placement="bottom" data-bs-trigger="hover">
+                <button id="btn18" class="btn float-right text-danger bg-success bg-opacity-10 me-3" data-bs-target="#AddProductsToOrderOffCanvas" dmx-show="(variableCustomerTotalToPay.value =='0')&amp;&amp;(OrderTotal.value !== '0')" style="color: #9bff66 !important;" type="submit" dmx-bind:hidden="(readCustomerOrder.data.query.order_status == 'Paid')" dmx-bs-tooltip="trans.data.edit[lang.value]" data-bs-placement="bottom" data-bs-trigger="hover">
                   <i class="fas fa-lock"></i>
                 </button>
               </form>
@@ -1280,17 +1280,17 @@
                 <input id="update_order_order_id1" name="order_id" type="text" class="form-control visually-hidden" dmx-bind:value="session_variables.data.current_order">
                 <input id="update_order_user_id1" name="servo_users_cashier_id" type="text" class="form-control visually-hidden" dmx-bind:value="session_variables.data.user_id">
                 <input id="update_order_status1" name="order_status" type="text" class="form-control visually-hidden" dmx-bind:value="'Ordered'">
-                <button id="btn36" class="btn float-right text-danger bg-danger bg-opacity-10" data-bs-target="#AddProductsToOrderOffCanvas" dmx-show="(readCustomerOrder.data.query.order_status == 'Paid')" type="submit" dmx-bs-tooltip="trans.data.edit[lang.value]" data-bs-placement="bottom" data-bs-trigger="hover">
+                <button id="btn36" class="btn float-right text-danger bg-danger bg-opacity-10 me-2" data-bs-target="#AddProductsToOrderOffCanvas" dmx-show="(readCustomerOrder.data.query.order_status == 'Paid')" type="submit" dmx-bs-tooltip="trans.data.edit[lang.value]" data-bs-placement="bottom" data-bs-trigger="hover">
                   <i class="fas fa-lock-open"></i>
                 </button>
               </form>
               <form id="updateItemsToOrdered2" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_order_items/update_order_item_to_ordered.php">
                 <input id="orderId2" name="servo_orders_order_id" type="number" class="form-control visually-hidden" dmx-bind:value="session_variables.data.current_order">
                 <input id="orderItemStatus3" name="order_item_status" class="form-control visually-hidden" dmx-bind:value="'Ordered'">
-                <button id="sendOrderItems2" class="btn text-info" dmx-on:click="run({'bootbox.confirm':{message:'\n',buttons:{confirm:{label:'Confirm',className:'btn-primary'},cancel:{label:'Cancel',className:'btn-secondary'}},centerVertical:true,then:{steps:[{run:{action:`updateItemsToOrdered2.submit()`,outputType:'text'}},{run:{action:`list_order_items.load({order_id: readCustomerOrder.data.query.order_id})`,outputType:'text'}},{run:{action:`notifies1.success(\'Success!\')`,outputType:'text'}}]},name:'confirmOrders'}})" dmx-bs-tooltip="trans.data.send[lang.value]" data-bs-placement="bottom" data-bs-trigger="hover focus" dmx-hide="(list_order_items.data.query.where(`order_item_status`, 'Pending', '=='))==0"><i class="fas fa-paper-plane fa-2x"></i></button>
+                <button id="sendOrderItems2" class="btn text-info me-3" dmx-on:click="run({'bootbox.confirm':{message:'\n',buttons:{confirm:{label:'Confirm',className:'btn-primary'},cancel:{label:'Cancel',className:'btn-secondary'}},centerVertical:true,then:{steps:[{run:{action:`updateItemsToOrdered2.submit()`,outputType:'text'}},{run:{action:`list_order_items.load({order_id: readCustomerOrder.data.query.order_id})`,outputType:'text'}},{run:{action:`notifies1.success(\'Success!\')`,outputType:'text'}}]},name:'confirmOrders'}})" dmx-bs-tooltip="trans.data.send[lang.value]" data-bs-placement="bottom" data-bs-trigger="hover focus" dmx-hide="(list_order_items.data.query.where(`order_item_status`, 'Pending', '=='))==0"><i class="fas fa-paper-plane fa-lg"></i></button>
               </form>
               <div class="d-block">
-                <h3 class="fw-bold mt-1 ms-2">{{(variableCustomerTotalToPay.value).formatNumber('0',',',',')}}</h3>
+                <h3 class="fw-bold text-primary bg-primary bg-opacity-10 rounded mt-1 pt-1 pb-1 ps-3 pe-3">{{(variableCustomerTotalToPay.value).formatNumber('0',',',',')}}</h3>
               </div>
             </div>
 
@@ -1560,7 +1560,7 @@
 
             <div class="row mt-4">
               <div class="col">
-                <ul class="nav nav-tabs nav-fill" id="navTabs1_tabs" role="tablist">
+                <ul class="nav nav-tabs nav-fill flex-nowrap align-items-end" id="navTabs1_tabs" role="tablist">
                   <li class="nav-item">
                     <a class="nav-link active" id="navTabs1_13_tab" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_13" role="tab" aria-controls="navTabs1_1" aria-selected="true" dmx-bs-tooltip="trans.data.overview[lang.value]" data-bs-trigger="hover" data-bs-placement="bottom">
                       <i class="fas fa-eye fa-lg"></i>
