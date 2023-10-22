@@ -1893,7 +1893,7 @@
                 <input id="update_order_user_id" name="servo_users_cashier_id" type="text" class="form-control visually-hidden" dmx-bind:value="session_variables.data.user_id">
                 <input id="update_order_status" name="order_status" type="text" class="form-control visually-hidden" dmx-bind:value="'Paid'">
                 <input id="update_order_time_paid" name="order_time_paid" type="datetime-local" class="form-control visually-hidden" dmx-bind:value="dateTime.datetime">
-                <button id="btn18" class="btn bg-success bg-opacity-10 text-success" data-bs-target="#AddProductsToOrderOffCanvas" dmx-show="(variableCustomerTotalToPay.value =='0')&amp;&amp;(OrderTotal.value !== '0')" type="submit" dmx-bind:hidden="(readCustomerOrder.data.query.order_status == 'Paid')" dmx-bs-tooltip="trans.data.edit[lang.value]" data-bs-placement="bottom" data-bs-trigger="hover">
+                <button id="btn18" class="btn bg-success bg-opacity-10 text-success me-3" data-bs-target="#AddProductsToOrderOffCanvas" dmx-show="(variableCustomerTotalToPay.value =='0')&amp;&amp;(OrderTotal.value !== '0')" type="submit" dmx-bind:hidden="(readCustomerOrder.data.query.order_status == 'Paid')" dmx-bs-tooltip="trans.data.edit[lang.value]" data-bs-placement="bottom" data-bs-trigger="hover">
                   <i class="fas fa-lock fa-sm"></i>
                 </button>
               </form>
@@ -1901,9 +1901,14 @@
                 <input id="update_order_order_id1" name="order_id" type="text" class="form-control visually-hidden" dmx-bind:value="session_variables.data.current_order">
                 <input id="update_order_user_id1" name="servo_users_cashier_id" type="text" class="form-control visually-hidden" dmx-bind:value="session_variables.data.user_id">
                 <input id="update_order_status1" name="order_status" type="text" class="form-control visually-hidden" dmx-bind:value="'Ordered'">
-                <button id="btn36" class="btn float-right text-danger bg-danger bg-opacity-10" data-bs-target="#AddProductsToOrderOffCanvas" dmx-show="(readCustomerOrder.data.query.order_status == 'Paid')" type="submit" dmx-bs-tooltip="trans.data.edit[lang.value]" data-bs-placement="bottom" data-bs-trigger="hover">
+                <button id="btn36" class="btn float-right text-danger bg-danger bg-opacity-10 me-3" data-bs-target="#AddProductsToOrderOffCanvas" dmx-show="(readCustomerOrder.data.query.order_status == 'Paid')" type="submit" dmx-bs-tooltip="trans.data.edit[lang.value]" data-bs-placement="bottom" data-bs-trigger="hover">
                   <i class="fas fa-lock-open"></i>
                 </button>
+              </form>
+              <form id="updateItemsToOrdered2" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_order_items/update_order_item_to_ordered.php" dmx-on:success="list_order_items.load({order_id: readCustomerOrder.data.query.order_id})" dmx-on:error="notifies1.danger('Error!')">
+                <input id="orderId2" name="servo_orders_order_id" type="number" class="form-control visually-hidden" dmx-bind:value="session_variables.data.current_order">
+                <input id="orderItemStatus3" name="order_item_status" class="form-control visually-hidden" dmx-bind:value="'Ordered'">
+                <button id="sendOrderItems2" class="btn bg-success text-success bg-opacity-10 me-2" dmx-on:click="run({'bootbox.confirm':{message:'\n',buttons:{confirm:{label:'Confirm',className:'btn-primary'},cancel:{label:'Cancel',className:'btn-secondary'}},centerVertical:true,then:{steps:[{run:{action:`updateItemsToOrdered2.submit()`,outputType:'text'}},{run:{action:`list_order_items.load({order_id: readCustomerOrder.data.query.order_id})`,outputType:'text'}},{run:{action:`notifies1.success(\'Success!\')`,outputType:'text'}}]},name:'confirmOrders'}})" dmx-bs-tooltip="trans.data.send[lang.value]" data-bs-placement="bottom" data-bs-trigger="hover focus" dmx-hide="(list_order_items.data.query.where(`order_item_status`, 'Pending', '=='))==0"><i class="fas fa-paper-plane fa-sm"></i></button>
               </form>
             </div>
 
@@ -1998,7 +2003,7 @@
                                   <button id="btn16" class="btn btn-lg text-muted shadow-none" dmx-on:click="form3.inp_order_item_quantity.setValue((inp_order_item_quantity.value.toNumber()+1) )"><i class="fas fa-plus"></i>
                                   </button>
                                 </div>
-                              </div><input id="inp_order_time_ordered" name="order_time_ordered" class="form-control mb-sm-1 mb-2 visually-hidden" type="datetime-local" dmx-bind:value="dateTime.datetime"><input id="inp_order_item_status" name="order_item_status" class="form-control mb-sm-1 mb-2 visually-hidden" value="Ordered"><input id="inp_order_id" name="servo_orders_order_id" type="number" class="form-control mb-sm-1 mb-2 visually-hidden" dmx-bind:value="session_variables.data.current_order"><input id="inp_order_product_id" name="servo_products_product_id" type="number" class="form-control mb-sm-1 mb-2 visually-hidden" placeholder="1" dmx-bind:value="product_id"><input id="inp_order_item_price" name="order_item_price" type="number" class="form-control mb-sm-1 mb-2 visually-hidden" placeholder="1" dmx-bind:value="product_price">
+                              </div><input id="inp_order_time_ordered" name="order_time_ordered" class="form-control mb-sm-1 mb-2 visually-hidden" type="datetime-local" dmx-bind:value="dateTime.datetime"><input id="inp_order_item_status" name="order_item_status" class="form-control mb-sm-1 mb-2 visually-hidden" value="Pending"><input id="inp_order_id" name="servo_orders_order_id" type="number" class="form-control mb-sm-1 mb-2 visually-hidden" dmx-bind:value="session_variables.data.current_order"><input id="inp_order_product_id" name="servo_products_product_id" type="number" class="form-control mb-sm-1 mb-2 visually-hidden" placeholder="1" dmx-bind:value="product_id"><input id="inp_order_item_price" name="order_item_price" type="number" class="form-control mb-sm-1 mb-2 visually-hidden" placeholder="1" dmx-bind:value="product_price">
                               <input id="inp_order_item_type" name="order_item_type" class="form-control mb-sm-1 mb-2 visually-hidden" placeholder="1" dmx-bind:value="'Simple'">
                               <input id="inp_order_item_user_ordered2" name="servo_users_user_ordered" class="form-control mb-sm-1 mb-2 visually-hidden" placeholder="1" dmx-bind:value="session_variables.data.user_id" type="number">
 
@@ -2234,7 +2239,7 @@
                                 <td dmx-text="order_item_id" class="text-center"></td>
                                 <td dmx-text="product_name" class="text-center"></td>
                                 <td dmx-text="order_time_ordered" class="text-center"></td>
-                                <td dmx-text="trans.data.getValueOrKey(order_item_status)[lang.value]" class="text-center"></td>
+                                <td dmx-text="trans.data.getValueOrKey(order_item_status)[lang.value]" class="text-center" dmx-class:text-success="order_item_status=='Delivered'" dmx-class:text-warning="order_item_status=='Ordered'"></td>
                                 <td dmx-text="order_item_notes"></td>
                                 <td class="text-end">
 
@@ -2450,7 +2455,7 @@
                             <select id="orderTransactionPaymentMethod" class="form-select" dmx-bind:options="payment_methods.data.query" optiontext="payment_method_name" optionvalue="payment_method_id" name="transaction_payment_method" dmx-bind:disabled="((readCustomerOrder.data.query.order_status == 'Paid')||(createCustomerTransaction.transactionPaymentMethod1.value == '1'))" required="" data-msg-required="!">
                               <option selected="" value="">----</option>
                             </select>
-                            <button id="payFromDeposit" class="btn ms-2 fw-bold btn-success" dmx-text="trans.data.payFromDeposit[lang.value]+' : '+netDeposits.value" dmx-on:click="createOrderTransaction.transactionType.disable();createOrderTransaction.orderTransactionPaymentMethod.setValue(1)" dmx-show="createOrderTransaction.transactionAmount.value<=netDeposits.value&amp;&amp;createOrderTransaction.transactionAmount.value>0"></button>
+                            <button id="payFromDeposit" class="btn ms-2 fw-bold btn-success text-white bg-success bg-opacity-75" dmx-text="trans.data.payFromDeposit[lang.value]+' : '+netDeposits.value.toNumber().formatNumber('0',',',',')" dmx-on:click="createOrderTransaction.transactionType.disable();createOrderTransaction.orderTransactionPaymentMethod.setValue(1)" dmx-show="createOrderTransaction.transactionAmount.value&lt;=netDeposits.value&amp;&amp;createOrderTransaction.transactionAmount.value&gt;0"></button>
                           </div>
                         </div>
 
@@ -2458,8 +2463,8 @@
                         <div class="mb-3 row">
                           <div class="col-sm-2">
                             &nbsp;</div>
-                          <div class="col-sm-10 d-flex justify-content-start">
-                            <button class="btn btn-success pt-md-2 pb-md-2 ps-md-2 pe-md-2" id="receive_payment1" dmx-bind:disabled="(readCustomerOrder.data.query.order_status == 'Paid')" type="submit" dmx-show="createOrderTransaction.transactionAmount.value>0"><i class="fas fa-hand-holding-usd fa-2x"></i></button>
+                          <div class="col-sm-10 d-flex justify-content-start w-auto col-2">
+                            <button class="btn pt-md-2 pb-md-2 ps-md-2 pe-md-2 w-100 text-white bg-success" id="receive_payment1" dmx-bind:disabled="(readCustomerOrder.data.query.order_status == 'Paid')" type="submit" dmx-show="createOrderTransaction.transactionAmount.value&gt;0"><i class="fas fa-hand-holding-usd fa-2x"></i></button>
                           </div>
 
                         </div>

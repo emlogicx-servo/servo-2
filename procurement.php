@@ -941,7 +941,7 @@ JSON
                         <input id="poidClosed" name="po_id" type="text" class="form-control visually-hidden" dmx-bind:value="read_purchase_order.data.query.po_id">
                         <input id="timeClosed" name="time_closed" type="datetime-local" class="form-control visually-hidden" dmx-bind:value="var1.datetime">
                         <input id="userClosed" name="servo_users_user_closed_id" class="form-control visually-hidden" dmx-bind:value="session_variables.data.user_id">
-                        <input id="poStatus5" name="po_payment_status" type="text" class="form-control visually-hidden" dmx-bind:value="'Paid'"><button id="btn25" class="btn float-right me-3 bg-opacity-10 text-success bg-success" data-bs-target="#AddProductsToOrderOffCanvas" type="submit" dmx-show="(poTotalOwing.value== '0')">
+                        <input id="poStatus5" name="po_payment_status" type="text" class="form-control visually-hidden" dmx-bind:value="'Paid'"><button id="btn25" class="btn float-right me-3 bg-opacity-10 text-success bg-success" data-bs-target="#AddProductsToOrderOffCanvas" type="submit" dmx-show="(poTotalOwing.value &gt;= '0' &amp;&amp; read_purchase_order.data.query.po_payment_status== 'Ordered')">
                           <i class="fas fa-lock fa-sm"></i>
                         </button>
                       </form>
