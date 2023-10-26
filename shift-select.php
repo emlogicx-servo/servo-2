@@ -1,3 +1,23 @@
+<?php
+require('dmxConnectLib/dmxConnect.php');
+
+$app = new \lib\App();
+
+$app->exec(<<<'JSON'
+{
+	"steps": [
+		"Connections/servodb",
+		"SecurityProviders/servo_login",
+		{
+			"module": "auth",
+			"action": "restrict",
+			"options": {"loginUrl":"index.php","forbiddenUrl":"index.php","provider":"servo_login"}
+		}
+	]
+}
+JSON
+, TRUE);
+?>
 <!doctype html>
 <html>
 

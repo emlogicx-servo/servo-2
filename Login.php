@@ -32,7 +32,7 @@
     <dmx-cookie-manager id="cookies"></dmx-cookie-manager>
 </head>
 
-<body id="brands" is="dmx-app" dmx-on:load="login_session.removeAll();local1.removeAll()" dmx-on:ready="login_session.removeAll();local1.removeAll()">
+<body id="brands" is="dmx-app" dmx-on:load="login_session.removeAll(); local1.removeAll(); cookies.remove('PHPSESSID')" dmx-on:ready="login_session.removeAll();local1.removeAll(); cookies.remove('PHPSESSID')">
     <dmx-local-manager id="local1"></dmx-local-manager>
 
     <dmx-value id="lang" dmx-bind:value="browser1.language"></dmx-value>

@@ -72,7 +72,8 @@ JSON
   <link rel="stylesheet" href="bootstrap/5/css/bootstrap.min.css" />
 </head>
 
-<body is="dmx-app" id="ServoReports" style="">
+<body id="ServoReports" style="" is="dmx-app">
+
   <dmx-value id="pageName" dmx-bind:value="trans.data.reports[lang.value]"></dmx-value>
   <dmx-download id="download1" url="reports/servoSalesReport.csv" dmx-bind:filename="'ServoReport-'+listOrdersFilters.date1.value+listOrdersFilters.date2.value+'-'+listOrdersFilters.waiterFilter.selectedText+'-'+listOrdersFilters.serviceSelect.selectedText+'.csv'"></dmx-download>
   <dmx-download id="download2" url="reports/servoPurchaseReport.csv" dmx-bind:filename="'servoPurchaseReport-'+listOrdersFilters1.date3.value+'-'+listOrdersFilters1.date4.value+'-'+listOrdersFilters1.waiterFilter1.selectedText+'-'+listOrdersFilters1.departmentSelect1.selectedText"></dmx-download>

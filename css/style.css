@@ -16,37 +16,9 @@
 
 @media print
 {
-    *, body 
-        {
-            background: white !important;
-            background-color: white !important;
-            color: black !important;
-        }
+    
 
-        body, #customerInvoiceContentdialog, #invoice, .modal
-        {
-            border: none !important;
-        }
-
-        #invoiceHead
-        {
-            display: none !important;
-        }
-
-        @page
-        {
-            size: A4;
-            size: portrait;
-        }
-
-        .modal-content
-        {
-            height: auto !important;
-
-        }
-
-
-       
+      
 }
 
 .receipt-footer

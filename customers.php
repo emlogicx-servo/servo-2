@@ -1005,8 +1005,7 @@
                                     <td dmx-text="order_time" class="text-center"></td>
                                     <td dmx-text="user_username" class="text-center"></td>
                                     <td dmx-text="service_name" class="text-center"></td>
-                                    <td class="text-center">
-                                      <h6 dmx-text="trans.data.getValueOrKey(order_status)[lang.value]" class="text-center pt-1 pb-1 ps-2 pe-2 rounded bg-light" dmx-class:text-warning="(order_status == 'Ordered')" dmx-class:text-success="(order_status == 'Paid')" dmx-class:text-muted="(order_status == 'Pending')" dmx-class:text-danger="(order_status == 'Credit')"></h6>
+                                    <td class="text-center" dmx-text="trans.data.getValueOrKey(order_status)[lang.value]" class="text-center pt-1 pb-1 ps-2 pe-2 rounded" dmx-class:text-warning="(order_status == 'Ordered')" dmx-class:text-success="(order_status == 'Paid')" dmx-class:text-muted="(order_status == 'Pending')" dmx-class:text-danger="(order_status == 'Credit')">
 
                                     </td>
 
@@ -1876,7 +1875,6 @@
   <?php include 'printTransactionReceipt.php'; ?>
   <main id="customerOrder">
     <div class="modal readitem shadow" id="customerOrderModal" is="dmx-bs5-modal" tabindex="-1" dmx-on:hidden-bs-modal="total_sales_per_waiter.load();updateOrderCashier.reset();readCustomerOrder.load({order_id: session_variables.data.current_order});list_customer_orders.load({}); readItemModal.show();list_customer_transactions_amounts.load({customer_id: session_variables.data.current_customer});list_customer_orders_totals.load({customer_id: readCustomerOrder.data.query.order_customer});session_variables.remove('current_order')">
-      <dmx-preloader id="preloader1" spinner="doubleBounce" bgcolor="#8A8686" ,255,255,0.99),255,255,0.97)=""></dmx-preloader>
       <dmx-value id="orderTotal" dmx-bind:value="list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`)"></dmx-value>
       <dmx-value id="netDeposit" dmx-bind:value="list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`)"></dmx-value>
       <div class="modal-dialog modal-xl" role="document" style="margin: 0px !important; width: 100% !important; height: 99% !important; max-width: 100% !important; max-height: 99% !important;">
@@ -1908,7 +1906,7 @@
               <form id="updateItemsToOrdered2" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_order_items/update_order_item_to_ordered.php" dmx-on:success="list_order_items.load({order_id: readCustomerOrder.data.query.order_id})" dmx-on:error="notifies1.danger('Error!')">
                 <input id="orderId2" name="servo_orders_order_id" type="number" class="form-control visually-hidden" dmx-bind:value="session_variables.data.current_order">
                 <input id="orderItemStatus3" name="order_item_status" class="form-control visually-hidden" dmx-bind:value="'Ordered'">
-                <button id="sendOrderItems2" class="btn bg-success text-success bg-opacity-10 me-2" dmx-on:click="run({'bootbox.confirm':{message:'\n',buttons:{confirm:{label:'Confirm',className:'btn-primary'},cancel:{label:'Cancel',className:'btn-secondary'}},centerVertical:true,then:{steps:[{run:{action:`updateItemsToOrdered2.submit()`,outputType:'text'}},{run:{action:`list_order_items.load({order_id: readCustomerOrder.data.query.order_id})`,outputType:'text'}},{run:{action:`notifies1.success(\'Success!\')`,outputType:'text'}}]},name:'confirmOrders'}})" dmx-bs-tooltip="trans.data.send[lang.value]" data-bs-placement="bottom" data-bs-trigger="hover focus" dmx-hide="(list_order_items.data.query.where(`order_item_status`, 'Pending', '=='))==0"><i class="fas fa-paper-plane fa-sm"></i></button>
+                <button id="sendOrderItems2" class="btn bg-opacity-10 me-2 text-danger bg-danger" dmx-on:click="run({'bootbox.confirm':{message:'\n',buttons:{confirm:{label:'Confirm',className:'btn-primary'},cancel:{label:'Cancel',className:'btn-secondary'}},centerVertical:true,then:{steps:[{run:{action:`updateItemsToOrdered2.submit()`,outputType:'text'}},{run:{action:`list_order_items.load({order_id: readCustomerOrder.data.query.order_id})`,outputType:'text'}},{run:{action:`notifies1.success(\'Success!\')`,outputType:'text'}}]},name:'confirmOrders'}})" dmx-bs-tooltip="trans.data.send[lang.value]" data-bs-placement="bottom" data-bs-trigger="hover focus" dmx-hide="(list_order_items.data.query.where(`order_item_status`, 'Pending', '=='))==0"><i class="fas fa-paper-plane fa-sm"></i></button>
               </form>
             </div>
 
@@ -2239,7 +2237,7 @@
                                 <td dmx-text="order_item_id" class="text-center"></td>
                                 <td dmx-text="product_name" class="text-center"></td>
                                 <td dmx-text="order_time_ordered" class="text-center"></td>
-                                <td dmx-text="trans.data.getValueOrKey(order_item_status)[lang.value]" class="text-center" dmx-class:text-success="order_item_status=='Delivered'" dmx-class:text-warning="order_item_status=='Ordered'"></td>
+                                <td dmx-text="trans.data.getValueOrKey(order_item_status)[lang.value]" class="text-center" dmx-class:text-success="order_item_status=='Delivered'" dmx-class:text-warning="order_item_status=='Ready'" dmx-class:text-info="order_item_status=='Processing'" dmx-class:text-danger="order_item_status=='Ordered'"></td>
                                 <td dmx-text="order_item_notes"></td>
                                 <td class="text-end">
 
@@ -2463,8 +2461,8 @@
                         <div class="mb-3 row">
                           <div class="col-sm-2">
                             &nbsp;</div>
-                          <div class="col-sm-10 d-flex justify-content-start w-auto col-2">
-                            <button class="btn pt-md-2 pb-md-2 ps-md-2 pe-md-2 w-100 text-white bg-success" id="receive_payment1" dmx-bind:disabled="(readCustomerOrder.data.query.order_status == 'Paid')" type="submit" dmx-show="createOrderTransaction.transactionAmount.value&gt;0"><i class="fas fa-hand-holding-usd fa-2x"></i></button>
+                          <div class="col-sm-10 d-flex justify-content-start w-auto col-3">
+                            <button class="btn pt-md-2 pb-md-2 ps-md-2 pe-md-2 w-100 text-white bg-success" id="receive_payment1" dmx-bind:disabled="(readCustomerOrder.data.query.order_status == 'Paid')" type="submit" dmx-show="createOrderTransaction.transactionAmount.value&gt;0"><i class="fas fa-hand-holding-usd fa-lg"></i></button>
                           </div>
 
                         </div>

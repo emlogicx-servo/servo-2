@@ -20,6 +20,12 @@ $app->define(<<<'JSON'
     "module": "core",
     "action": "removesession",
     "options": {}
+  },
+  {
+    "name": "PHPSESSID",
+    "module": "core",
+    "action": "removecookie",
+    "options": {}
   }
 ]
 JSON

@@ -22,6 +22,54 @@ JSON
 <html>
 
 <head>
+  <style>
+    @media print {
+
+
+      body {
+        visibility: hidden;
+      }
+
+      .modal {
+        visibility: visible !important;
+        overflow: visible !important;
+        page-break-inside: auto;
+        position: absolute !important;
+
+      }
+
+
+      table {
+        page-break-inside: auto
+      }
+
+      tr {
+        page-break-inside: avoid;
+        page-break-after: auto
+      }
+
+
+      html,
+      body {
+        background: white !important;
+        background-color: white !important;
+        color: black !important;
+        overflow: visible !important;
+      }
+
+      body,
+      #customerInvoiceContentdialog,
+      #invoice,
+      .modal {
+        border: none !important;
+      }
+
+      #invoiceHead {
+        display: none !important;
+      }
+
+    }
+  </style>
   <script src="dmxAppConnect/dmxAppConnect.js"></script>
   <meta name="ac:base" content="/servo">
   <base href="/servo/">
@@ -1815,9 +1863,9 @@ JSON
   </main>
   <main class="mt-4" id="printPO">
 
-    <div class="modal readitem" id="printInvoiceModal" is="dmx-bs5-modal" tabindex="-1" dmx-on:hidden-bs-modal="readItemModal.show()" style="z-index: 9000000000000; background: white !important; border: none !important;">
-      <div class="modal-dialog modal-xl" role="document" style="margin: 0px !important; width: 100% !important; height: 99% !important; max-width: 100% !important; max-height: 99% !important; boder: none !important;">
-        <div class="modal-content" style="max-height: 100% !important; height: 100% !important; border: none !important;">
+    <div class="modal readitem" id="printInvoiceModal" is="dmx-bs5-modal" tabindex="-1" dmx-on:hidden-bs-modal="readItemModal.show()" style="z-index: 9000000000000; background: white !important;">
+      <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document" style="margin: 0px !important; width: 100% !important; height: auto !important; max-width: 100% !important; max-height: auto !important; boder: none !important;">
+        <div class="modal-content" style="max-height: auto !important; height: auto !important; border: none !important;">
           <dmx-value id="InvoiceTitleContent" dmx-bind:value="trans.data.receipt[lang.value]"></dmx-value>
           <div class="modal-header bg-light" id="invoiceHead">
             <div class="d-block "><button id="proFormaButton" class="btn me-2 text-body bg-secondary" dmx-on:click="InvoiceTitleContent.setValue(trans.data.proFormaInvoice[lang.value])">{{trans.data.proFormaInvoice[lang.value]}}
@@ -1827,13 +1875,10 @@ JSON
               </button></div>
 
 
-
-
-
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <div class="modal-body" id="invoice" style="background: white;">
-            <div class="container" id="customerInvoiceContent">
+          <div class="modal-body" id="invoice" style="background: white; overflow: visible;">
+            <div class="container" id="poContent">
               <div class="row justify-content-between" id="invoiceHeader">
                 <div class="col">
                   <img dmx-bind:src="'uploads/'+companyInfo.data.query.company_logo" width="100">
@@ -1871,7 +1916,7 @@ JSON
               <div class="row justify-content-center row-cols-1" id="receiptTable">
 
                 <div class="col">
-                  <div class="table-responsive bg-white" id="ReceiptOrderDetails" style="/* background: white */ /* border-color: white */ color: black !important;">
+                  <div class="bg-white" id="ReceiptOrderDetails" style="overflow: visible; color: black !important;">
                     <table class="table" style="background: white;">
                       <thead style="background: #b0b0b0 !important;">
                         <tr style="color: black !important;">

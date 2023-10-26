@@ -1,5 +1,25 @@
+<?php
+require('dmxConnectLib/dmxConnect.php');
+
+$app = new \lib\App();
+
+$app->exec(<<<'JSON'
+{
+	"steps": [
+		"Connections/servodb",
+		"SecurityProviders/servo_login",
+		{
+			"module": "auth",
+			"action": "restrict",
+			"options": {"permissions":"Service","loginUrl":"index.php","forbiddenUrl":"index.php","provider":"servo_login"}
+		}
+	]
+}
+JSON
+, TRUE);
+?>
 <!doctype html>
-<html>
+<html is="dmx-app">
 
 <head>
   <script src="dmxAppConnect/dmxAppConnect.js"></script>
@@ -12,7 +32,6 @@
   <link rel="stylesheet" href="css/style.css" />
   <script src="js/jquery-3.5.1.min.js"></script>
   <script src="dmxAppConnect/dmxBootstrap5Navigation/dmxBootstrap5Navigation.js" defer=""></script>
-  <link rel="stylesheet" href="bootstrap/5/servodark/bootstrap.min.css" />
   <link rel="stylesheet" href="dmxAppConnect/dmxBootstrap5TableGenerator/dmxBootstrap5TableGenerator.css" />
   <script src="dmxAppConnect/dmxScheduler/dmxScheduler.js" defer=""></script>
   <script src="dmxAppConnect/dmxTyped/dmxTyped.js" defer=""></script>
@@ -39,10 +58,12 @@
   <script src="dmxAppConnect/dmxBootstrap5Collapse/dmxBootstrap5Collapse.js" defer=""></script>
   <script src="dmxAppConnect/dmxBootstrap5Offcanvas/dmxBootstrap5Offcanvas.js" defer=""></script>
   <link rel="stylesheet" href="fontawesome5/css/all.min.css" />
+  <script src="dmxAppConnect/dmxBootbox5/bootstrap-modbox.min.js" defer></script>
+  <script src="dmxAppConnect/dmxBootbox5/dmxBootbox5.js" defer></script>
   <link rel="stylesheet" href="bootstrap/5/css/bootstrap.min.css" />
 </head>
 
-<body is="dmx-app" id="service">
+<body id="service">
   <dmx-serverconnect id="list_order_items_shift_all" url="dmxConnect/api/servo_order_items/list_order_items_shift_all.php" dmx-param:department_id="session_variables.data.user_department_id" dmx-param:sort="" dmx-param:dir="'DESC'" dmx-param:shift_id="session_variables.data.current_shift"></dmx-serverconnect>
   <dmx-serverconnect id="product_report_shift_department" url="dmxConnect/api/servo_reporting/product_report_shift_department.php" dmx-param:department_id="session_variables.data.user_department_id" dmx-param:sort="" dmx-param:dir="'DESC'" dmx-param:shift_id="session_variables.data.current_shift" dmx-param:shift="list_user_shift_info.data.query_list_user_shift[0].servo_shifts_shift_id" dmx-param:department_user="list_user_shift_info.data.query_list_user_shift[0].servo_user_user_id"></dmx-serverconnect>
   <dmx-serverconnect id="product_report_shift_department_accessories" url="dmxConnect/api/servo_reporting/product_report_shift_department_accessories.php" dmx-param:department_id="session_variables.data.user_department_id" dmx-param:sort="" dmx-param:dir="'DESC'" dmx-param:shift_id="session_variables.data.current_shift" dmx-param:shift="list_user_shift_info.data.query_list_user_shift[0].servo_shifts_shift_id" dmx-param:department_user="list_user_shift_info.data.query_list_user_shift[0].servo_user_user_id" dmx-param:department="list_user_info.data.query_list_user_info.servo_user_departments_department_id"></dmx-serverconnect>
@@ -186,15 +207,15 @@
 
 
       <div class="row servo-page-header mt-2">
-        <div class="col d-flex flex-row justify-content-start">
-          <h5 class="servo-page-heading text-body me-2 pt-2 pb-2 ps-3 pe-3 rounded" dmx-text="session_variables.data.user_department">&nbsp;{{session_variables.data.current_shift}}</h5>
+        <div class="d-flex  justify-content-start align-self-center align-items-center">
+          <h5 class="me-2 pt-2 pb-2 ps-3 pe-3 rounded" dmx-text="session_variables.data.user_department">&nbsp;{{session_variables.data.current_shift}}</h5>
           <button id="btn4" class="btn w-auto text-info bg-info bg-opacity-10" data-bs-toggle="modal" data-bs-target="#productSalesShiftDepartment" dmx-on:click="product_report_shift_department.load({shift: list_user_shift_info.data.query_list_user_shift[0].servo_shifts_shift_id, department_user: list_user_shift_info.data.query_list_user_shift[0].servo_user_user_id}); product_report_shift_department_grouped.load({shift: list_user_shift_info.data.query_list_user_shift[0].servo_shifts_shift_id, department_user: list_user_shift_info.data.query_list_user_shift[0].servo_user_user_id});product_report_shift_department_accessories.load({shift: list_user_shift_info.data.query_list_user_shift[0].servo_shifts_shift_id, department: list_user_info.data.query_list_user_info.servo_user_departments_department_id})">
             <i class="fas fa-chart-line fa-sm"></i>
           </button>
 
         </div>
       </div>
-      <div class="row justify-content-start" style="height: auto; overflow: scroll;">
+      <div class="row justify-content-start y-scroll flex-nowrap scrollable" style="height: auto; overflow: scroll;">
         <div class="col border-danger ">
           <div class="row rounded text-danger pt-2 pb-1">
             <h5 dmx-text="trans.data.Ordered[lang.value]+': '+(list_order_items_shift_all.data.query.where(`order_item_group_type`, 'Ingredient', '!==')).count()" class="text-center fw-bold"></h5>
@@ -254,6 +275,7 @@
                             </button>
                           </div>
                         </form>
+
                       </div>
 
                       <div>
@@ -311,6 +333,14 @@
                             <h6 dmx-text="order_time_processing" class="text-body fw-bold"></h6>
                           </div>
                         </div>
+                        <form id="update_order_item_to_ready1" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_order_items/update_order_item_to_ready.php" dmx-on:success="list_order_items_shift_all_processing.load();list_order_items_shift_all_ready.load();notifies1.success('Success')">
+
+                          <input id="OrderItemStatus4" name="order_item_status" type="text" class="form-control visually-hidden" dmx-bind:value="'Ordered'">
+                          <input id="OrderItemId5" name="order_item_id" type="text" class="form-control visually-hidden" dmx-bind:value="order_item_id">
+                          <div class="row justify-content-end mb-1 ms-3 me-3"><button id="btn6" class="btn align-self-baseline bg-opacity-10 bg-primary text-primary" type="submit"><i class="far fa-bell fa-sm"></i>
+                            </button>
+                          </div>
+                        </form>
 
 
                       </div>
@@ -328,6 +358,7 @@
                             </button>
                           </div>
                         </form>
+
                       </div>
 
                       <div>
@@ -381,6 +412,17 @@
                             <h6 dmx-text="order_time_ready" class="text-body fw-bold"></h6>
                           </div>
                         </div>
+                        <form id="update_order_item_to_processing1" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_order_items/update_order_item_to_processing.php" dmx-on:success="notifies1.success('Success');list_order_items_shift_all.load();list_order_items_shift_all_processing.load({});list_order_items_shift_all_ready.load()">
+
+                          <input id="UserPrepared1" name="servo_user_user_prepared_id" type="text" class="form-control visually-hidden" dmx-bind:value="session_variables.data.user_id">
+                          <input id="OrderItemStatus3" name="order_item_status" type="text" class="form-control visually-hidden" dmx-bind:value="'Processing'">
+                          <input id="OrderTimeProcessing1" name="order_time_processing" type="text" class="form-control visually-hidden" dmx-bind:value="var1.datetime">
+                          <input id="OrderItemId4" name="order_item_id" type="text" class="form-control visually-hidden" dmx-bind:value="order_item_id">
+                          <input id="OrderItemId41" name="order_item_id" type="text" class="form-control visually-hidden" dmx-bind:value="order_item_id">
+                          <div class="row justify-content-end mb-2 ms-3 me-3"><button id="btn5" class="btn align-self-baseline bg-danger text-danger bg-opacity-10" type="submit"><i class="fas fa-times-circle"></i>
+                            </button>
+                          </div>
+                        </form>
 
 
                       </div>
@@ -388,7 +430,10 @@
                         <h4 dmx-text="order_item_quantity+' x '" class="fw-bolder text-center text-success"></h4>
                         <h5 dmx-text="product_name" class="text-center fw-bolder text-body"></h5>
                         <h6 dmx-text="order_item_notes" class="fw-bold text-center text-danger"></h6>
-                        <form id="update_order_item_to_delivered" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_order_items/update_order_item_to_delivered.php" dmx-on:success="notifies1.success('Success!');list_order_items_shift_all_ready.load()">
+
+
+
+                        <form id="update_order_item_to_delivered" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_order_items/update_order_item_to_delivered.php" dmx-on:success="notifies1.success('Success!');list_order_items_shift_all_ready.load();">
 
                           <input id="OrderItemStatus2" name="order_item_status" type="text" class="form-control visually-hidden" dmx-bind:value="'Processing'">
                           <input id="OrderTimeDelivered" name="order_time_delivered" type="text" class="form-control visually-hidden" dmx-bind:value="var1.datetime">
@@ -425,7 +470,6 @@
       </div>
     </div>
   </main>
-  <script src="bootstrap/5/js/bootstrap.bundle.min.js"></script>
   <script src="bootstrap/5/js/bootstrap.min.js"></script>
 </body>
 

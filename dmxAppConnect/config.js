@@ -2942,5 +2942,13 @@ dmx.config({
         "name": "customerTransactionsOffset"
       }
     ]
+  },
+  "index": {
+    "cookies": [
+      {
+        "type": "text",
+        "name": "cookie1"
+      }
+    ]
   }
 });

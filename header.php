@@ -19,6 +19,7 @@
   <dmx-serverconnect id="load_users" url="dmxConnect/api/servo_users/list_users_for_filter.php"></dmx-serverconnect>
   <dmx-serverconnect id="load_currencies" url="dmxConnect/api/servo_currencies/load_currencies.php"></dmx-serverconnect>
   <dmx-serverconnect id="load_payment_methods" url="dmxConnect/api/servo_payment_methods/list_payment_methods.php"></dmx-serverconnect>
+  <dmx-serverconnect id="logout1" url="dmxConnect/api/servo_users/user_logout.php"></dmx-serverconnect>
 
 
   <dmx-session-manager id="session1"></dmx-session-manager>
