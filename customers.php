@@ -7,17 +7,51 @@
   <style>
     @media print {
 
-      #invoiceHead,
-      .invoiceHead {
-        display: none;
+
+      body {
+        visibility: hidden;
       }
 
-      * {
+      .modal {
+        visibility: visible !important;
+        overflow: visible !important;
+        page-break-inside: auto;
+        position: absolute !important;
+      }
+
+      .modal-content {
+        border-radius: 0px !important;
+        box-shadow: none !important;
+      }
+
+
+      table {
+        page-break-inside: auto
+      }
+
+      tr {
+        page-break-inside: avoid;
+        page-break-after: auto
+      }
+
+
+      html,
+      body {
+        background: white !important;
+        background-color: white !important;
         color: black !important;
+        overflow: visible !important;
       }
 
-      .modal-footer {
-        diaplay: none !important;
+      body,
+      #customerInvoiceContentdialog,
+      #invoice,
+      .modal {
+        border: none !important;
+      }
+
+      #invoiceHead {
+        display: none !important;
       }
 
     }
@@ -337,7 +371,7 @@
               <div class="row scrollable mb-2">
                 <div class="col rounded">
 
-                  <div class="row justify-content-sm-between justify-content-md-between justify-content-lg-between justify-content-xl-between justify-content-xxl-between justify-content-between sorter shadow-none mt-2 mb-2 rounded bg-body bg-opacity-50">
+                  <div class="row justify-content-sm-between justify-content-md-between justify-content-lg-between justify-content-xl-between justify-content-xxl-between justify-content-between sorter shadow-none mt-2 mb-2 rounded bg-primary bg-opacity-10">
                     <div class="d-flex col-xxl flex-wrap col-auto col-sm-auto col-md col-lg-auto align-items-baseline"><input id="customerfilter" name="customerfilter" type="text" class="form-control search mb-2 me-2 form-control-sm" dmx-bind:placeholder="trans.data.name[lang.value]+'  '">
                       <input id="customerfilter2" name="customerfilter1" type="text" class="form-control search form-control-sm mb-2 me-2" dmx-bind:placeholder="trans.data.surname[lang.value]+'  '">
                       <button id="btn29" class="btn align-self-lg-start bg-opacity-10 me-2 bg-body" dmx-on:click="customerfilter.setValue(NULL); customerfilter2.setValue(NULL)">
@@ -1422,14 +1456,14 @@
 
     <div class="modal readitem justify-content-between" id="printInvoiceModal" is="dmx-bs5-modal" tabindex="-1" dmx-on:hidden-bs-modal="customerOrderModal.show()" style="z-index: 9000000000000; background: white !important; border: none !important;">
       <div class="modal-dialog modal-xl" role="document" style="margin: 0px !important; width: 100% !important; height: 99% !important; max-width: 100% !important; max-height: 99% !important; boder: none !important;">
-        <div class="modal-content" style="max-height: 100% !important; height: 100% !important; border: none !important;">
+        <div class="modal-content" style="max-height: auto !important; height: auto !important; border: none !important;">
           <dmx-value id="InvoiceTitleContent" dmx-bind:value="trans.data.receipt[lang.value]"></dmx-value>
-          <div class="modal-header bg-light bg-opacity-100" id="invoiceHead">
+          <div class="modal-header bg-light bg-opacity-100 text-info" id="invoiceHead">
             <div class="d-block"><button id="proFormaButton" class="btn me-2 text-white bg-primary" dmx-on:click="InvoiceTitleContent.setValue(trans.data.proFormaInvoice[lang.value])">{{trans.data.proFormaInvoice[lang.value]}}
               </button><button id="invoiceButton" class="btn me-2 bg-primary text-white" dmx-on:click="InvoiceTitleContent.setValue(trans.data.invoice[lang.value])">{{trans.data.invoice[lang.value]}}
               </button><button id="receiptButton" class="btn me-2 text-white bg-primary" dmx-on:click="InvoiceTitleContent.setValue(trans.data.receipt[lang.value])">{{trans.data.receipt[lang.value]}}
               </button><button id="loadingButton" class="btn me-2 text-white bg-primary" dmx-on:click="InvoiceTitleContent.setValue(trans.data.deliveryNote[lang.value])">{{trans.data.deliveryNote[lang.value]}}
-              </button><button id="printInvoiceButton2" class="btn text-white" onclick="window.print()"><i class="fas fa-print fa-lg"></i>
+              </button><button id="printInvoiceButton2" class="btn text-info bg-info bg-opacity-10" onclick="window.print()"><i class="fas fa-print fa-sm"></i>
               </button></div><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 
 

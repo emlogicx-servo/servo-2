@@ -87,6 +87,7 @@
 </head>
 
 <body is="dmx-app" id="brands" dmx-on:ready="preloader1.hide()">
+  <dmx-query-manager id="listTransactionsQuery"></dmx-query-manager>
 
   <dmx-scheduler id="scheduler1" dmx-on:tick="load_products.load({service_id: list_user_shift_info.data.query_list_user_shift[0].servo_service_service_id});list_value_updates_per_order.load({order_id: readCustomerOrder.data.query.order_id});list_order_items_deleted.load({order_id: readCustomerOrder.data.query.order_id});list_order_items.load({order_id: readCustomerOrder.data.query.order_id});wallet_report_per_wallet.load({wallet_id: read_wallet.data.read_wallet.wallet_id})" delay="15"></dmx-scheduler>
 
@@ -98,7 +99,7 @@
 
   <dmx-serverconnect id="companyInfo" url="dmxConnect/api/servo_company_information/read_company_information.php" dmx-param:id="id" dmx-param:item_id="" dmx-param:user_id="" dmx-param:customer_id="session_variables.data.current_customer" dmx-param:offset="listCustomerOrders.data.offset" dmx-param:limit="c_order_sort_limit.value" dmx-param:company_info_id="1"></dmx-serverconnect>
 
-  <dmx-serverconnect id="list_wallet_transactions" url="dmxConnect/api/servo_wallet_transactions/list_wallet_transactions.php" dmx-param:sort="" dmx-param:dir="" dmx-param:limit="200" dmx-param:offset="" dmx-param:customerfilter="customerfilter.value" dmx-param:customerfilter2="customerfilter2.value" dmx-param:wallet_id="read_wallet.data.read_wallet.wallet_id" dmx-on:start="readItemModal.preloader2.show()" dmx-on:done="readItemModal.preloader2.hide()"></dmx-serverconnect>
+  <dmx-serverconnect id="list_wallet_transactions" url="dmxConnect/api/servo_wallet_transactions/list_wallet_transactions.php" dmx-param:sort="" dmx-param:dir="" dmx-param:limit="readItemModal.transactionSortLimit.value" dmx-param:offset="query.ListTransactionsOffset" dmx-param:customerfilter="customerfilter.value" dmx-param:customerfilter2="customerfilter2.value" dmx-param:wallet_id="read_wallet.data.read_wallet.wallet_id" dmx-on:start="readItemModal.preloader2.show()" dmx-on:done="readItemModal.preloader2.hide()" dmx-param:transaction_type="readItemModal.transactionTypeSelect.value" dmx-param:transaction_status="readItemModal.transactionStatusSelect.value"></dmx-serverconnect>
   <dmx-serverconnect id="list_wallet_transactions_deletes" url="dmxConnect/api/servo_wallet_transactions/list_wallet_transactions_deletes.php" dmx-param:sort="" dmx-param:dir="" dmx-param:limit="" dmx-param:offset="" dmx-param:customerfilter="customerfilter.value" dmx-param:customerfilter2="customerfilter2.value" dmx-param:wallet_id="read_wallet.data.read_wallet.wallet_id"></dmx-serverconnect>
   <dmx-serverconnect id="list_wallets" url="dmxConnect/api/servo_wallets/list_wallets_paged.php" dmx-param:sort="" dmx-param:dir="" dmx-param:limit="customer_sort_limit.value" dmx-param:offset="listcustomers.data.offset" dmx-param:customerfilter="customerfilter.value" dmx-param:customerfilter2="customerfilter2.value"></dmx-serverconnect>
 
@@ -698,6 +699,48 @@
 
 
                         </form>
+                      </div>
+
+
+                    </div>
+                    <div class="row justify-content-sm-between justify-content-md-between justify-content-lg-between justify-content-xl-between justify-content-xxl-between justify-content-between sorter rounded mt-2 mb-2 ms-auto me-auto bg-secondary">
+                      <div class="d-flex col-auto flex-wrap col-sm-auto col-md-auto col-lg-auto col-xxl-auto col-xl-auto align-items-baseline"><select id="transactionTypeSelect" class="form-select mb-1 me-2" name="transaction_type" style="width: 150px !important">
+                          <option value="Deposit">{{trans.data.Deposit[lang.value]}}</option>
+                          <option value="Payment">{{trans.data.payment[lang.value]}}</option>
+                          <option value="Transfer">{{trans.data.wireTransfer[lang.value]}}</option>
+                          <option selected="" value="">{{trans.data.all[lang.value]}}</option>
+                        </select>
+                        <select id="transactionStatusSelect" class="form-select mb-1 me-2" name="transaction_status" style="width: 150px !important">
+                          <option value="Pending">{{trans.data.pending[lang.value]}}</option>
+                          <option value="Approved">{{trans.data.Approved[lang.value]}}</option>
+                          <option value="Received">{{trans.data.Received[lang.value]}}</option>
+                          <option selected="" value="">{{trans.data.all[lang.value]}}</option>
+                        </select>
+                        <ul class="pagination bg-opacity-10 rounded d-flex flex-wrap bg-primary mb-1 me-2" dmx-populate="list_wallet_transactions.data.list_wallet_transactions_paged" dmx-state="listTransactionsQuery" dmx-offset="ListTransactionsOffset" dmx-generator="bs5paging">
+                          <li class="page-item" dmx-class:disabled="list_wallet_transactions.data.list_wallet_transactions_paged.page.current == 1" aria-label="First">
+                            <a href="javascript:void(0)" class="page-link" dmx-on:click="listTransactionsQuery.set('ListTransactionsOffset',list_wallet_transactions.data.list_wallet_transactions_paged.page.offset.first)"><span aria-hidden="true">&lsaquo;&lsaquo;</span></a>
+                          </li>
+                          <li class="page-item" dmx-class:disabled="list_wallet_transactions.data.list_wallet_transactions_paged.page.current == 1" aria-label="Previous">
+                            <a href="javascript:void(0)" class="page-link" dmx-on:click="listTransactionsQuery.set('ListTransactionsOffset',list_wallet_transactions.data.list_wallet_transactions_paged.page.offset.prev)"><span aria-hidden="true">&lsaquo;</span></a>
+                          </li>
+                          <li class="page-item" dmx-class:active="title == list_wallet_transactions.data.list_wallet_transactions_paged.page.current" dmx-class:disabled="!active" dmx-repeat="list_wallet_transactions.data.list_wallet_transactions_paged.getServerConnectPagination(2,1,'...')">
+                            <a href="javascript:void(0)" class="page-link" dmx-on:click="listTransactionsQuery.set('ListTransactionsOffset',(page-1)*list_wallet_transactions.data.list_wallet_transactions_paged.limit)">{{title}}</a>
+                          </li>
+                          <li class="page-item" dmx-class:disabled="list_wallet_transactions.data.list_wallet_transactions_paged.page.current ==  list_wallet_transactions.data.list_wallet_transactions_paged.page.total" aria-label="Next">
+                            <a href="javascript:void(0)" class="page-link" dmx-on:click="listTransactionsQuery.set('ListTransactionsOffset',list_wallet_transactions.data.list_wallet_transactions_paged.page.offset.next)"><span aria-hidden="true">&rsaquo;</span></a>
+                          </li>
+                          <li class="page-item" dmx-class:disabled="list_wallet_transactions.data.list_wallet_transactions_paged.page.current ==  list_wallet_transactions.data.list_wallet_transactions_paged.page.total" aria-label="Last">
+                            <a href="javascript:void(0)" class="page-link" dmx-on:click="listTransactionsQuery.set('ListTransactionsOffset',list_wallet_transactions.data.list_wallet_transactions_paged.page.offset.last)"><span aria-hidden="true">&rsaquo;&rsaquo;</span></a>
+                          </li>
+                        </ul><select id="transactionSortLimit" class="form-select mb-0" name="transaction_sort_limit" style="width: 150px !important">
+                          <option value="5">5</option>
+                          <option selected="" value="25">25</option>
+                          <option value="50">50</option>
+                          <option value="100">100</option>
+                          <option value="'250">250</option>
+                          <option value="500">500</option>
+                        </select>
+
                       </div>
 
 

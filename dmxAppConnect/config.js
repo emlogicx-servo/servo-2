@@ -2950,5 +2950,17 @@ dmx.config({
         "name": "cookie1"
       }
     ]
+  },
+  "brands": {
+    "query": [
+      {
+        "type": "text",
+        "name": "ListTransactionsLimit"
+      },
+      {
+        "type": "text",
+        "name": "ListTransactionsOffset"
+      }
+    ]
   }
 });

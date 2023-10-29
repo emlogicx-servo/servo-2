@@ -68,6 +68,9 @@ select option
 }
 
 
+input[type=search]::-webkit-search-cancel-button {
+    -webkit-appearance: searchfield-cancel-button;
+}
 
 .top-badge
 
@@ -167,9 +170,9 @@ background: #11d3bc1c  !important;
 .yellow-state
 {
 
-    background:#e6ff9a !important /* #cdcdcd*/;
+    background: #8d8d8c1c !important;
     border-radius: 13px;
-    color: #262b00;
+    color: #8c942f;
 }
 
 .grey-state
@@ -234,6 +237,11 @@ background: #11d3bc1c  !important;
 {
     border: none !important;
     
+}
+
+.modal-content
+{
+    height: 99% !important;
 }
 
 textarea, select, input {

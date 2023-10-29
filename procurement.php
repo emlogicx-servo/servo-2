@@ -35,7 +35,11 @@ JSON
         overflow: visible !important;
         page-break-inside: auto;
         position: absolute !important;
+      }
 
+      .modal-content {
+        border-radius: 0px !important;
+        box-shadow: none !important;
       }
 
 
@@ -268,7 +272,7 @@ JSON
         </div>
         <div class="row rounded ms-0 me-0 pt-3 bg-light ">
           <div class="col y-scroll">
-            <dmx-chart id="chart5" height="400" dmx-bind:data="productstockvalues.data.getStockValues2" dataset-1:value="(TotalPurchased - TotalSold - TotalAdjusted)" point-size="" type="bar" multicolor="true" colors="colors1" dataset-1:label="Quantities" labels="product_name" dataset-1:tooltip="" width="1300"></dmx-chart>
+            <dmx-chart id="chart5" height="400" dmx-bind:data="productstockvalues.data.getStockValues2" dataset-1:value="(TotalPurchased - TotalSold - TotalAdjusted)" point-size="" type="bar" multicolor="true" colors="colors1" dataset-1:label="Quantities" labels="product_name+'('+(TotalPurchased - TotalSold - TotalAdjusted)+')'" dataset-1:tooltip="" width="1300"></dmx-chart>
           </div>
 
         </div>
@@ -313,8 +317,8 @@ JSON
         </div>
       </div>
       <div class="tab-pane fade" id="navTabs1_4" role="tabpanel">
-        <div class="row justify-content-sm-between justify-content-md-between justify-content-lg-between justify-content-xl-between justify-content-xxl-between justify-content-between sorter bg-secondary rounded mt-2 mb-2 ms-auto me-auto">
-          <div class="d-flex col-auto flex-wrap col-sm-auto col-md-auto col-lg-auto col-xxl-auto col-xl-auto align-items-baseline"><input id="poFilter" name="poFilter" type="text" class="form-control search mb-2 me-2" placeholder="ID"><button id="btn299" class="btn align-self-lg-start btn-outline-secondary text-primary bg-opacity-10 me-2 align-self-baseline bg-primary" dmx-on:click="poFilter.setValue(NULL)">
+        <div class="row justify-content-sm-between justify-content-md-between justify-content-lg-between justify-content-xl-between justify-content-xxl-between justify-content-between sorter rounded mt-2 mb-2 ms-auto me-auto bg-secondary">
+          <div class="d-flex col-auto flex-wrap col-sm-auto col-md-auto col-lg-auto col-xxl-auto col-xl-auto align-items-baseline"><input id="poFilter" name="poFilter" type="search" class="form-control search mb-2 me-2" placeholder="ID"><button id="btn299" class="btn align-self-lg-start btn-outline-secondary text-primary bg-opacity-10 me-2 align-self-baseline bg-primary" dmx-on:click="poFilter.setValue(NULL)">
               <i class="fas fa-backspace fa-sm"></i>
             </button>
             <ul class="pagination me-2 bg-opacity-10 rounded d-flex flex-wrap bg-primary" dmx-populate="list_purchase_orders.data.list_purchase_orders_paged" dmx-state="listPurchaseOrders" dmx-offset="offset_po" dmx-generator="bs5paging">
@@ -397,7 +401,7 @@ JSON
             <div class="row justify-content-sm-between justify-content-md-between justify-content-lg-between justify-content-xl-between justify-content-xxl-between justify-content-between sorter mt-2 mb-2 ms-0 me-0 bg-secondary rounded">
               <div class="col-auto col-9 col-sm-9 col-lg-3 d-flex col-xxl align-items-baseline">
 
-                <input id="toFilterIn" name="toFilterIn" type="text" class="form-control search form-control-sm mb-2 me-2" placeholder="ID"><button id="btn26" class="btn align-self-lg-start btn-outline-secondary btn-sm ms-xxl-1 bg-info text-white me-2" dmx-on:click="poFilter.setValue(NULL)">
+                <input id="toFilterIn" name="toFilterIn" type="search" class="form-control search form-control-sm mb-2 me-2" placeholder="ID"><button id="btn26" class="btn align-self-lg-start btn-outline-secondary btn-sm ms-xxl-1 bg-info text-white me-2" dmx-on:click="poFilter.setValue(NULL)">
                   <i class="fas fa-backspace"></i>
 
 
@@ -1863,11 +1867,11 @@ JSON
   </main>
   <main class="mt-4" id="printPO">
 
-    <div class="modal readitem" id="printInvoiceModal" is="dmx-bs5-modal" tabindex="-1" dmx-on:hidden-bs-modal="readItemModal.show()" style="z-index: 9000000000000; background: white !important;">
-      <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document" style="margin: 0px !important; width: 100% !important; height: auto !important; max-width: 100% !important; max-height: auto !important; boder: none !important;">
+    <div class="modal readitem " id="printInvoiceModal" is="dmx-bs5-modal" tabindex="-1" dmx-on:hidden-bs-modal="readItemModal.show()" style="z-index: 9000000000000; background: white !important;">
+      <div class="modal-dialog modal-xl" role="document" style="margin: 0px !important; width: 100% !important; height: auto !important; max-width: 100% !important; max-height: auto !important; boder: none !important;">
         <div class="modal-content" style="max-height: auto !important; height: auto !important; border: none !important;">
           <dmx-value id="InvoiceTitleContent" dmx-bind:value="trans.data.receipt[lang.value]"></dmx-value>
-          <div class="modal-header bg-light" id="invoiceHead">
+          <div class="modal-header bg-white text-black-50" id="invoiceHead">
             <div class="d-block "><button id="proFormaButton" class="btn me-2 text-body bg-secondary" dmx-on:click="InvoiceTitleContent.setValue(trans.data.proFormaInvoice[lang.value])">{{trans.data.proFormaInvoice[lang.value]}}
               </button><button id="invoiceButton" class="btn me-2 text-body bg-secondary" dmx-on:click="InvoiceTitleContent.setValue(trans.data.invoice[lang.value])">{{trans.data.invoice[lang.value]}}
               </button><button id="printInvoiceButton3" class="btn me-2 text-body bg-secondary" dmx-on:click="InvoiceTitleContent.setValue(trans.data.receipt[lang.value])">{{trans.data.receipt[lang.value]}}
