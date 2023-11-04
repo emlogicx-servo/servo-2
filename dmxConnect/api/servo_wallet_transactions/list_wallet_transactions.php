@@ -35,6 +35,14 @@ $app->define(<<<'JSON'
       {
         "type": "text",
         "name": "transaction_status"
+      },
+      {
+        "type": "text",
+        "name": "transaction_origin"
+      },
+      {
+        "type": "text",
+        "name": "transaction_destination"
       }
     ]
   },
@@ -176,6 +184,20 @@ $app->define(<<<'JSON'
               "name": ":P4",
               "value": "{{$_GET.transaction_status}}",
               "test": ""
+            },
+            {
+              "operator": "equal",
+              "type": "expression",
+              "name": ":P5",
+              "value": "{{$_GET.transaction_origin}}",
+              "test": ""
+            },
+            {
+              "operator": "equal",
+              "type": "expression",
+              "name": ":P6",
+              "value": "{{$_GET.transaction_destination}}",
+              "test": ""
             }
           ],
           "table": {
@@ -315,7 +337,7 @@ $app->define(<<<'JSON'
               "primary": "wallet_id"
             }
           ],
-          "query": "select `servo_wallet_transactions`.`transaction_id`, `servo_wallet_transactions`.`transaction_amount`, `servo_wallet_transactions`.`transaction_type`, `servo_wallet_transactions`.`transaction_user_initiated_id`, `servo_wallet_transactions`.`transaction_date`, `servo_wallet_transactions`.`transaction_payment_method`, `servo_wallet_transactions`.`transaction_status`, `servo_wallet_transactions`.`transaction_note`, `servo_wallet_transactions`.`transaction_balance`, `servo_wallet_transactions`.`transaction_amount_tendered`, `servo_wallet_transactions`.`transaction_user_received`, `servo_wallet_transactions`.`transaction_department_received`, `servo_wallet_transactions`.`transaction_originating_wallet`, `servo_wallet_transactions`.`transaction_destination_wallet`, `servo_wallet_transactions`.`transaction_user_approved`, `servo_payment_methods`.`payment_method_name`, `user_initiated`.`user_username` as `user_initiated_username`, `user_approved`.`user_username` as `user_approved_username`, `user_received`.`user_username` as `user_received_username`, `originating_wallet`.`wallet_name` as `originating_wallet_name`, `destination_wallet`.`wallet_name` as `destination_wallet_name`, `destination_wallet`.`wallet_id` as `destination_wallet_id`, `originating_wallet`.`wallet_id` as `originating_wallet_id` from `servo_wallet_transactions` left join `servo_user` as `user_initiated` on `user_initiated`.`user_id` = `servo_wallet_transactions`.`transaction_user_initiated_id` left join `servo_user` as `user_approved` on `user_approved`.`user_id` = `servo_wallet_transactions`.`transaction_user_approved` left join `servo_user` as `user_received` on `user_received`.`user_id` = `servo_wallet_transactions`.`transaction_user_received` left join `servo_payment_methods` on `servo_payment_methods`.`payment_method_id` = `servo_wallet_transactions`.`transaction_payment_method` left join `servo_wallets` as `originating_wallet` on `originating_wallet`.`wallet_id` = `servo_wallet_transactions`.`transaction_originating_wallet` left join `servo_wallets` as `destination_wallet` on `destination_wallet`.`wallet_id` = `servo_wallet_transactions`.`transaction_destination_wallet` where (`servo_wallet_transactions`.`transaction_destination_wallet` = ? or `servo_wallet_transactions`.`transaction_originating_wallet` = ?) and (`servo_wallet_transactions`.`delete_status` = ?) and `servo_wallet_transactions`.`transaction_type` like ? and `servo_wallet_transactions`.`transaction_status` like ? order by `servo_wallet_transactions`.`transaction_id` DESC",
+          "query": "select `servo_wallet_transactions`.`transaction_id`, `servo_wallet_transactions`.`transaction_amount`, `servo_wallet_transactions`.`transaction_type`, `servo_wallet_transactions`.`transaction_user_initiated_id`, `servo_wallet_transactions`.`transaction_date`, `servo_wallet_transactions`.`transaction_payment_method`, `servo_wallet_transactions`.`transaction_status`, `servo_wallet_transactions`.`transaction_note`, `servo_wallet_transactions`.`transaction_balance`, `servo_wallet_transactions`.`transaction_amount_tendered`, `servo_wallet_transactions`.`transaction_user_received`, `servo_wallet_transactions`.`transaction_department_received`, `servo_wallet_transactions`.`transaction_originating_wallet`, `servo_wallet_transactions`.`transaction_destination_wallet`, `servo_wallet_transactions`.`transaction_user_approved`, `servo_payment_methods`.`payment_method_name`, `user_initiated`.`user_username` as `user_initiated_username`, `user_approved`.`user_username` as `user_approved_username`, `user_received`.`user_username` as `user_received_username`, `originating_wallet`.`wallet_name` as `originating_wallet_name`, `destination_wallet`.`wallet_name` as `destination_wallet_name`, `destination_wallet`.`wallet_id` as `destination_wallet_id`, `originating_wallet`.`wallet_id` as `originating_wallet_id` from `servo_wallet_transactions` left join `servo_user` as `user_initiated` on `user_initiated`.`user_id` = `servo_wallet_transactions`.`transaction_user_initiated_id` left join `servo_user` as `user_approved` on `user_approved`.`user_id` = `servo_wallet_transactions`.`transaction_user_approved` left join `servo_user` as `user_received` on `user_received`.`user_id` = `servo_wallet_transactions`.`transaction_user_received` left join `servo_payment_methods` on `servo_payment_methods`.`payment_method_id` = `servo_wallet_transactions`.`transaction_payment_method` left join `servo_wallets` as `originating_wallet` on `originating_wallet`.`wallet_id` = `servo_wallet_transactions`.`transaction_originating_wallet` left join `servo_wallets` as `destination_wallet` on `destination_wallet`.`wallet_id` = `servo_wallet_transactions`.`transaction_destination_wallet` where (`servo_wallet_transactions`.`transaction_destination_wallet` = ? or `servo_wallet_transactions`.`transaction_originating_wallet` = ?) and (`servo_wallet_transactions`.`delete_status` = ?) and `servo_wallet_transactions`.`transaction_type` like ? and `servo_wallet_transactions`.`transaction_status` like ? and (`servo_wallet_transactions`.`transaction_originating_wallet` = ?) and (`servo_wallet_transactions`.`transaction_destination_wallet` = ?) order by `servo_wallet_transactions`.`transaction_id` DESC",
           "wheres": {
             "condition": "AND",
             "rules": [
@@ -443,6 +465,68 @@ $app->define(<<<'JSON'
                   }
                 },
                 "operation": "LIKE"
+              },
+              {
+                "condition": "OR",
+                "rules": [
+                  {
+                    "id": "servo_wallet_transactions.transaction_originating_wallet",
+                    "field": "servo_wallet_transactions.transaction_originating_wallet",
+                    "type": "double",
+                    "operator": "equal",
+                    "value": "{{$_GET.transaction_origin}}",
+                    "data": {
+                      "table": "servo_wallet_transactions",
+                      "column": "transaction_originating_wallet",
+                      "type": "number",
+                      "columnObj": {
+                        "type": "reference",
+                        "default": "",
+                        "primary": false,
+                        "nullable": true,
+                        "references": "wallet_id",
+                        "inTable": "servo_wallets",
+                        "referenceType": "integer",
+                        "onUpdate": "RESTRICT",
+                        "onDelete": "RESTRICT",
+                        "name": "transaction_originating_wallet"
+                      }
+                    },
+                    "operation": "="
+                  }
+                ],
+                "conditional": "{{$_GET.transaction_origin}}"
+              },
+              {
+                "condition": "AND",
+                "rules": [
+                  {
+                    "id": "servo_wallet_transactions.transaction_destination_wallet",
+                    "field": "servo_wallet_transactions.transaction_destination_wallet",
+                    "type": "double",
+                    "operator": "equal",
+                    "value": "{{$_GET.transaction_destination}}",
+                    "data": {
+                      "table": "servo_wallet_transactions",
+                      "column": "transaction_destination_wallet",
+                      "type": "number",
+                      "columnObj": {
+                        "type": "reference",
+                        "default": "",
+                        "primary": false,
+                        "nullable": true,
+                        "references": "wallet_id",
+                        "inTable": "servo_wallets",
+                        "referenceType": "integer",
+                        "onUpdate": "RESTRICT",
+                        "onDelete": "RESTRICT",
+                        "name": "transaction_destination_wallet"
+                      }
+                    },
+                    "operation": "="
+                  }
+                ],
+                "conditional": "{{$_GET.transaction_destination}}"
               }
             ],
             "conditional": null,

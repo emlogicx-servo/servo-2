@@ -19,7 +19,7 @@ JSON
 , TRUE);
 ?>
 <!doctype html>
-<html>
+<html data-bs-theme="dark">
 
 <head>
   <style>
@@ -175,8 +175,7 @@ JSON
   <dmx-serverconnect id="read_product_data" url="dmxConnect/api/servo_products/list_product_purchases.php" dmx-on:start="preloader.show()" dmx-on:done="preloader.hide()"></dmx-serverconnect>
   <div is="dmx-browser" id="browser1"></div>
   <dmx-notifications id="notifies1" timeout="100" position="bottom" extended-timeout="200"></dmx-notifications>
-  <?php require 'header.php'; ?>
-  <main class="bg-light rounded mt-2 ms-2 me-2 pt-2 pb-2 ps-2 pe-2" id="MainBody">
+  <main class="rounded mt-2 ms-2 me-2 pt-2 pb-2 ps-2 pe-2 bg-light" id="MainBody">
     <div>
 
 
@@ -189,8 +188,8 @@ JSON
     </div>
     <ul class="nav nav-tabs nav-fill scrollable flex-nowrap align-items-end fw-bold" id="navTabs1_tabs" role="tablist">
 
-      <li class="nav-item">
-        <a class="nav-link active" id="navTabs1_2_tab" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_2" role="tab" aria-controls="navTabs1_2" aria-selected="false" dmx-on:click="procurement_information.load();procurement_information_products.load()">
+      <li class="nav-item" style="">
+        <a class="nav-link active" id="navTabs1_2_tab" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_2" role="tab" aria-controls="navTabs1_2" aria-selected="false" dmx-on:click="procurement_information.load();procurement_information_products.load()" style="">
 
           {{trans.data.overview[lang.value]}}<i class="far fa-eye" style="margin-left: 5px;"></i></a>
       </li>
@@ -316,7 +315,7 @@ JSON
       </div>
       <div class="tab-pane fade" id="navTabs1_4" role="tabpanel">
         <div class="row justify-content-sm-between justify-content-md-between justify-content-lg-between justify-content-xl-between justify-content-xxl-between justify-content-between sorter rounded mt-2 mb-2 ms-auto me-auto bg-secondary">
-          <div class="d-flex col-auto flex-wrap col-sm-auto col-md-auto col-lg-auto col-xxl-auto col-xl-auto align-items-baseline"><input id="poFilter" name="poFilter" type="search" class="form-control search mb-2 me-2" placeholder="ID"><button id="btn299" class="btn align-self-lg-start btn-outline-secondary text-primary bg-opacity-10 me-2 align-self-baseline bg-primary" dmx-on:click="poFilter.setValue(NULL)">
+          <div class="d-flex col-auto flex-wrap col-sm-auto col-md-auto col-lg-auto col-xxl-auto col-xl-auto align-items-baseline"><input id="poFilter" name="poFilter" type="search" class="form-control search mb-2 me-2" placeholder="ID"><button id="btn299" class="btn align-self-lg-start btn-outline-secondary me-2 align-self-baseline bg-info text-white" dmx-on:click="poFilter.setValue(NULL)">
               <i class="fas fa-backspace fa-sm"></i>
             </button>
             <ul class="pagination me-2 bg-opacity-10 rounded d-flex flex-wrap bg-primary" dmx-populate="list_purchase_orders.data.list_purchase_orders_paged" dmx-state="listPurchaseOrders" dmx-offset="offset_po" dmx-generator="bs5paging">
@@ -372,7 +371,7 @@ JSON
                     <td dmx-text="department_name"></td>
                     <td dmx-text="vendor_name"></td>
                     <td>
-                      <h6 dmx-text="trans.data.getValueOrKey(po_status)[lang.value]" class="text-center pt-1 pb-1 ps-2 pe-2 rounded fw-bold" dmx-class:text-success="(po_status=='Received')" dmx-class:text-danger="(po_status=='Requested')" dmx-class:text-warning="(po_status=='Approved')">Fancy display heading</h6>
+                      <h6 dmx-text="trans.data.getValueOrKey(po_status)[lang.value]" class="text-center pt-1 pb-1 ps-2 pe-2 rounded bg-light fw-bold" dmx-class:text-success="(po_status=='Received')" dmx-class:text-danger="(po_status=='Requested')" dmx-class:text-warning="(po_status=='Approved')">Fancy display heading</h6>
                     </td>
                     <td class="text-center"><button id="btn16" class="btn open" data-bs-target="#readItemModal" dmx-on:click="readItemModal.show();session_variables.set('current_purchase_order',po_id);read_purchase_order.load({po_id: po_id});query_po_items.load({po_id: po_id})" dmx-bind:value="list_purchase_orders.data.query[0].po_id" data-bs-toggle="modal"><i class="far fa-edit"><br></i></button></td>
                   </tr>
@@ -955,7 +954,7 @@ JSON
           <dmx-preloader id="preloader1" spinner="pulse" bgcolor="#8A8686" ,255,255,0.99),255,255,0.97)=""></dmx-preloader>
 
           <div class="modal-header border-0">
-            <div class="d-block d-flex"><button id="btn10" class="btn float-right bg-opacity-10 me-3 text-primary bg-primary" data-bs-toggle="offcanvas" data-bs-target="#AddProductsToOrderOffCanvas" dmx-on:click="" dmx-hide="(read_purchase_order.data.query.po_status == 'Received')||(profile_privileges.data.profile_privileges[0].delete_po=='No')"><i class="fas fa-cart-plus fa-sm"></i></button>
+            <div class="d-block d-flex"><button id="btn10" class="btn float-right bg-opacity-10 me-3 text-info bg-info" data-bs-toggle="offcanvas" data-bs-target="#AddProductsToOrderOffCanvas" dmx-on:click="" dmx-hide="(read_purchase_order.data.query.po_status == 'Received')||(profile_privileges.data.profile_privileges[0].delete_po=='No')"><i class="fas fa-cart-plus fa-sm"></i></button>
               <div id="conditional1" is="dmx-if" dmx-bind:condition="(profile_privileges.data.profile_privileges[0].approve_po == 'Yes')">
                 <main>
                   <div class="row">
@@ -1080,11 +1079,11 @@ JSON
               <div class="d-flex col justify-content-start flex-wrap">
                 <div class="d-block">
                   <h6 dmx-show="(read_purchase_order.data.query.po_type == 'Purchase')" class="rounded pt-2 pb-2 ps-3 pe-3 bg-secondary">{{trans.data.purchaseOrder[lang.value]}}: {{read_purchase_order.data.query.po_id}}</h6>
-                  <h6 dmx-show="(read_purchase_order.data.query.po_type == 'Transfer')" class="rounded pt-2 pb-2 ps-3 pe-3 bg-secondary">{{trans.data.transferOrder[lang.value]}}: {{read_purchase_order.data.query.po_id}}</h6>
+                  <h6 dmx-show="(read_purchase_order.data.query.po_type == 'Transfer')" class="rounded bg-primary bg-opacity-10 pt-2 pb-2 ps-3 pe-3">{{trans.data.transferOrder[lang.value]}}: {{read_purchase_order.data.query.po_id}}</h6>
                 </div>
 
                 <div class="d-block ms-2">
-                  <h6 class="ms-2 pt-2 pb-2 ps-3 pe-3 rounded fw-bold bg-secondary" dmx-text="trans.data.getValueOrKey(read_purchase_order.data.query.po_status)[lang.value]
+                  <h6 class="ms-2 pt-2 pb-2 ps-3 pe-3 rounded fw-bold text-primary bg-secondary" dmx-text="trans.data.getValueOrKey(read_purchase_order.data.query.po_status)[lang.value]
                                     " dmx-class:text-success="read_purchase_order.data.query.po_status=='Received'" dmx-class:text-danger="read_purchase_order.data.query.po_status=='Requested'" dmx-class:text-warning="read_purchase_order.data.query.po_status=='Approved'"><i class="fas fa-check fa-sm" style="margin-right: 10px"></i>
 
                   </h6>
@@ -1095,13 +1094,13 @@ JSON
                   <dmx-value id="poTotalOwing" dmx-bind:value="((read_purchase_order.data.read_po_totals[0].POTotalPaid).toNumber() - read_purchase_order.data.read_po_totals[0].POTotal).toNumber().formatNumber('0',',',',')"></dmx-value>
                   <dmx-value id="poTotalOwing2" dmx-bind:value="((read_purchase_order.data.read_po_totals[0].POTotalPaid).toNumber() - read_purchase_order.data.read_po_totals[0].POTotal).toNumber()"></dmx-value>
 
-                  <h6 class="fw-bold ms-2 pt-2 pb-2 ps-3 pe-3 rounded bg-opacity-10 bg-primary text-primary"><i class="fas fa-cash-register fa-sm" style="margin-right:10px"></i>
+                  <h6 class="fw-bold ms-2 pt-2 pb-2 ps-3 pe-3 rounded bg-opacity-10 text-info bg-info"><i class="fas fa-cash-register fa-sm" style="margin-right:10px"></i>
                     {{poTotal.value}}
                   </h6>
                   <h6 class="fw-bold ms-2 pt-2 pb-2 ps-3 pe-3 rounded bg-opacity-10 text-success bg-success"><i class="fas fa-arrow-circle-up fa-sm" style="margin-right:10px"></i>{{poTotalPaid.value}}
 
                   </h6>
-                  <h6 class="fw-bold text-danger ms-2 pt-2 pb-2 ps-3 pe-3 rounded bg-danger bg-opacity-10"><i class="fas fa-arrow-circle-down fa-sm" style="margin-right:10px"></i>
+                  <h6 class="fw-bold ms-2 pt-2 pb-2 ps-3 pe-3 rounded bg-opacity-10 text-warning bg-warning"><i class="fas fa-arrow-circle-down fa-sm" style="margin-right:10px"></i>
                     {{poTotalOwing.value}}
                   </h6>
                 </div>
@@ -1888,22 +1887,22 @@ JSON
                 <div class="col">
                 </div>
                 <div class="col">
-                  <h5 class="fw-bolder text-primary" dmx-text="companyInfo.data.query.company_address"></h5>
+                  <h5 class="text-info fw-bolder" dmx-text="companyInfo.data.query.company_address"></h5>
                 </div>
               </div>
               <div class="row justify-content-center row-cols-1" id="receiptNumber">
 
                 <div class="col">
-                  <h4 class="fw-bolder text-center text-primary" dmx-text="trans.data.purchaseOrder[lang.value]+' : '+read_purchase_order.data.query.po_id" id="poTitle" dmx-show="read_purchase_order.data.query.po_type=='Purchase'"></h4>
-                  <h4 class="fw-bolder text-center text-primary" dmx-text="trans.data.transferOrder[lang.value]+' : '+read_purchase_order.data.query.po_id" id="toTitle" dmx-show="read_purchase_order.data.query.po_type=='Transfer'"></h4>
+                  <h4 class="text-info fw-bolder text-center" dmx-text="trans.data.purchaseOrder[lang.value]+' : '+read_purchase_order.data.query.po_id" id="poTitle" dmx-show="read_purchase_order.data.query.po_type=='Purchase'"></h4>
+                  <h4 class="text-info fw-bolder text-center" dmx-text="trans.data.transferOrder[lang.value]+' : '+read_purchase_order.data.query.po_id" id="toTitle" dmx-show="read_purchase_order.data.query.po_type=='Transfer'"></h4>
                 </div>
               </div>
               <div class="row justify-content-center row-cols-1" id="receiptInformation">
 
                 <div class="col" dmx-hide="read_purchase_order.data.query.po_type=='Transfer'">
-                  <h6 class="fw-bolder text-start text-primary" dmx-text="trans.data.vendor[lang.value]+' : '"></h6>
+                  <h6 class="text-info fw-bolder text-start" dmx-text="trans.data.vendor[lang.value]+' : '"></h6>
                   <p dmx-html="read_purchase_order.data.query.vendor_name+' &lt;br&gt;'+read_purchase_order.data.query.vendor_address+'&lt;br&gt;'+read_purchase_order.data.query.vendor_phone_number" dmx-hide="read_purchase_order.data.query.po_type=='Transfer'"></p>
-                  <h5 class="fw-bolder text-start text-primary" dmx-text="trans.data.name[lang.value]+' : '+read_customer.data.query_read_customer.customer_first_name+' '+read_customer.data.query_read_customer.customer_last_name"></h5>
+                  <h5 class="text-info fw-bolder text-start" dmx-text="trans.data.name[lang.value]+' : '+read_customer.data.query_read_customer.customer_first_name+' '+read_customer.data.query_read_customer.customer_last_name"></h5>
                 </div>
               </div>
               <div class="row justify-content-center row-cols-1" id="transferInformation" dmx-show="read_purchase_order.data.query.po_type=='Transfer'">
@@ -1950,10 +1949,10 @@ JSON
               </div>
               <div class="row justify-content-end">
                 <div class="col">
-                  <h5 dmx-text="trans.data.total[lang.value]" class="text-primary">Fancy display heading</h5>
+                  <h5 dmx-text="trans.data.total[lang.value]">Fancy display heading</h5>
                 </div>
                 <div class="col">
-                  <h5 dmx-text="" class="text-primary">Fancy display heading</h5>
+                  <h5 dmx-text="">Fancy display heading</h5>
                 </div>
               </div>
             </div>
@@ -1972,7 +1971,7 @@ JSON
 
 
 
-  <script src="bootstrap/5/js/bootstrap.min.js"></script>
+  <script src="bootstrap/5/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

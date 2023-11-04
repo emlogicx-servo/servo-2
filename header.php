@@ -70,7 +70,8 @@
       <div class="justify-content-lg-start col-8 justify-content-start my-auto" style="padding-left: 10px;">
 
         <button id="btn1" class="btn gy-0 btn-sm text-start" dmx-on:click="offcanvas1.toggle()" dmx-show="(list_user_info.data.query_list_user_info.user_profile == 'Admin')" style="margin-left: 2px !important; font-size:17px; "><i class="fas fa-th fa-1.5x" style="" dmx-animate-enter="pulse"></i></button>
-        <span class="fw-bold" style="font-family:'Josefin-Sans'; margin-left: 5px">SERVO {{pageName.value}}</span>
+        <span class="" style="font-family:'Josefin-Sans'; margin-left: 5px; font-size:15px;">SERVO</span>
+           <span class="fw-bold text-success" style="font-family:'Josefin-Sans'; margin-left: 5px; font-size:18x;">{{pageName.value}}</span>
       </div>
 
       <div class="col-auto justify-content-end" id="headerbuttons" style="/* font-size: 16px !important */">

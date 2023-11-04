@@ -99,7 +99,7 @@
 
   <dmx-serverconnect id="companyInfo" url="dmxConnect/api/servo_company_information/read_company_information.php" dmx-param:id="id" dmx-param:item_id="" dmx-param:user_id="" dmx-param:customer_id="session_variables.data.current_customer" dmx-param:offset="listCustomerOrders.data.offset" dmx-param:limit="c_order_sort_limit.value" dmx-param:company_info_id="1"></dmx-serverconnect>
 
-  <dmx-serverconnect id="list_wallet_transactions" url="dmxConnect/api/servo_wallet_transactions/list_wallet_transactions.php" dmx-param:sort="" dmx-param:dir="" dmx-param:limit="readItemModal.transactionSortLimit.value" dmx-param:offset="query.ListTransactionsOffset" dmx-param:customerfilter="customerfilter.value" dmx-param:customerfilter2="customerfilter2.value" dmx-param:wallet_id="read_wallet.data.read_wallet.wallet_id" dmx-on:start="readItemModal.preloader2.show()" dmx-on:done="readItemModal.preloader2.hide()" dmx-param:transaction_type="readItemModal.transactionTypeSelect.value" dmx-param:transaction_status="readItemModal.transactionStatusSelect.value"></dmx-serverconnect>
+  <dmx-serverconnect id="list_wallet_transactions" url="dmxConnect/api/servo_wallet_transactions/list_wallet_transactions.php" dmx-param:sort="" dmx-param:dir="" dmx-param:limit="readItemModal.transactionSortLimit.value" dmx-param:offset="query.ListTransactionsOffset" dmx-param:customerfilter="customerfilter.value" dmx-param:customerfilter2="customerfilter2.value" dmx-param:wallet_id="read_wallet.data.read_wallet.wallet_id" dmx-on:start="readItemModal.preloader2.show()" dmx-on:done="readItemModal.preloader2.hide()" dmx-param:transaction_type="readItemModal.transactionTypeSelect.value" dmx-param:transaction_status="readItemModal.transactionStatusSelect.value" dmx-param:transaction_origin="readItemModal.transactionOriginSelect.value" dmx-param:transaction_destination="readItemModal.transactionDestinationSelect.value"></dmx-serverconnect>
   <dmx-serverconnect id="list_wallet_transactions_deletes" url="dmxConnect/api/servo_wallet_transactions/list_wallet_transactions_deletes.php" dmx-param:sort="" dmx-param:dir="" dmx-param:limit="" dmx-param:offset="" dmx-param:customerfilter="customerfilter.value" dmx-param:customerfilter2="customerfilter2.value" dmx-param:wallet_id="read_wallet.data.read_wallet.wallet_id"></dmx-serverconnect>
   <dmx-serverconnect id="list_wallets" url="dmxConnect/api/servo_wallets/list_wallets_paged.php" dmx-param:sort="" dmx-param:dir="" dmx-param:limit="customer_sort_limit.value" dmx-param:offset="listcustomers.data.offset" dmx-param:customerfilter="customerfilter.value" dmx-param:customerfilter2="customerfilter2.value"></dmx-serverconnect>
 
@@ -560,14 +560,14 @@
                     <div class="row mt-3">
                       <div class="col d-flex rounded ms-1 me-1">
                         <h5 class="fw-bold me-2 pt-2 text-body">{{trans.data.newTransaction[lang.value]}}</h5>
-                        <div id="allowDeposit" is="dmx-if" dmx-bind:condition="read_wallet.data.query_wallet_privileges_user[0].wallet_privilege_deposit=='Yes'"><button id="ButtonDeposit" class="btn me-2 bg-success text-success fw-bold bg-opacity-10" dmx-on:click="transactionType.setValue('deposit')"><i class="fas fa-arrow-down"></i>
+                        <div id="allowDeposit" is="dmx-if" dmx-bind:condition="read_wallet.data.query_wallet_privileges_user[0].wallet_privilege_deposit=='Yes'"><button id="ButtonDeposit" class="btn me-2 bg-success text-success fw-bold bg-opacity-10" dmx-on:click="transactionType.setValue('deposit')"><i class="fas fa-arrow-circle-down"></i>
                             {{trans.data.Deposit[lang.value]}}
                           </button></div>
 
-                        <div id="allowPayment" is="dmx-if" dmx-bind:condition="read_wallet.data.query_wallet_privileges_user[0].wallet_privilege_payout=='Yes'"><button id="ButtonPayment" class="btn me-2 bg-danger text-danger bg-opacity-10 fw-bold" dmx-on:click="transactionType.setValue('payment')"><i class="fas fa-arrow-up"></i>
+                        <div id="allowPayment" is="dmx-if" dmx-bind:condition="read_wallet.data.query_wallet_privileges_user[0].wallet_privilege_payout=='Yes'"><button id="ButtonPayment" class="btn me-2 bg-danger text-danger bg-opacity-10 fw-bold" dmx-on:click="transactionType.setValue('payment')"><i class="fas fa-arrow-circle-up"></i>
                             {{trans.data.Payment[lang.value]}}
                           </button></div>
-                        <div id="allowTransfer" is="dmx-if" dmx-bind:condition="read_wallet.data.query_wallet_privileges_user[0].wallet_privilege_transfer=='Yes'"><button id="ButtonTransfer" class="btn me-2 bg-info bg-opacity-10 text-info fw-bold" dmx-on:click="transactionType.setValue('transfer')"><i class="fas fa-exchange-alt"></i>
+                        <div id="allowTransfer" is="dmx-if" dmx-bind:condition="read_wallet.data.query_wallet_privileges_user[0].wallet_privilege_transfer=='Yes'"><button id="ButtonTransfer" class="btn me-2 bg-info bg-opacity-10 text-info fw-bold" dmx-on:click="transactionType.setValue('transfer')"><i class="fas fa-arrow-circle-right"></i>
                             {{trans.data.wireTransfer[lang.value]}}
                           </button></div>
 
@@ -636,9 +636,11 @@
                                 <option value="Transfer">{{trans.data.wireTransfer[lang.value]}}</option>
                                 <option selected="" value="Payment">{{trans.data.payment[lang.value]}}</option>
                               </select></div>
-                            <div class="col-auto mb-2 col-sm-auto col-md-auto visually-hidden"><select id="transactionDestination1" class="form-select" name="transaction_destination_wallet" dmx-bind:options="list_wallets.data.query_list_wallets_paged.data" optiontext="wallet_name" optionvalue="wallet_id">
+                            <div class="col-auto mb-2 col-sm-auto col-md-auto visually-hidden">
+                              <select id="transactionDestination1" class="form-select" name="transaction_destination_wallet" dmx-bind:options="list_wallets.data.query_list_wallets_paged.data" optiontext="wallet_name" optionvalue="wallet_id">
                                 <option value="">----</option>
-                              </select></div>
+                              </select>
+                            </div>
                             <div class="col-auto mb-2 col-sm-auto col-md-auto visually-hidden"><select id="transactionPaymentMethod2" class="form-select" name="transaction_payment_method" optiontext="payment_method_name" optionvalue="payment_method_id" required="" data-msg-required="!" dmx-bind:options="load_payment_methods.data.query" dmx-bind:value="read_wallet.data.read_wallet.wallet_format">
                                 <option value="">----</option>
                               </select></div>
@@ -703,19 +705,41 @@
 
 
                     </div>
-                    <div class="row justify-content-sm-between justify-content-md-between justify-content-lg-between justify-content-xl-between justify-content-xxl-between justify-content-between sorter rounded mt-2 mb-2 ms-auto me-auto bg-secondary">
-                      <div class="d-flex col-auto flex-wrap col-sm-auto col-md-auto col-lg-auto col-xxl-auto col-xl-auto align-items-baseline"><select id="transactionTypeSelect" class="form-select mb-1 me-2" name="transaction_type" style="width: 150px !important">
+                    <div class="row sorter rounded bg-secondary row-cols-12 g-0 mt-2 mb-2 ms-auto me-auto ps-1 justify-content-xxl-start">
+                      <div class="col-auto col-sm-auto col-md-auto col-lg-auto col-xxl-auto col-xl-auto text-center">
+                        <select id="transactionTypeSelect" class="form-select me-2" name="transaction_type" style="width: 150px !important">
                           <option value="Deposit">{{trans.data.Deposit[lang.value]}}</option>
                           <option value="Payment">{{trans.data.payment[lang.value]}}</option>
                           <option value="Transfer">{{trans.data.wireTransfer[lang.value]}}</option>
                           <option selected="" value="">{{trans.data.all[lang.value]}}</option>
                         </select>
-                        <select id="transactionStatusSelect" class="form-select mb-1 me-2" name="transaction_status" style="width: 150px !important">
+                        <small class="text-muted">{{trans.data.type[lang.value]}}</small>
+
+
+
+
+
+
+                      </div>
+                      <div class="text-center col-auto"><select id="transactionStatusSelect" class="form-select me-2" name="transaction_status" style="width: 150px !important">
                           <option value="Pending">{{trans.data.pending[lang.value]}}</option>
                           <option value="Approved">{{trans.data.Approved[lang.value]}}</option>
                           <option value="Received">{{trans.data.Received[lang.value]}}</option>
                           <option selected="" value="">{{trans.data.all[lang.value]}}</option>
                         </select>
+                        <small class="text-muted">{{trans.data.status[lang.value]}}</small>
+                      </div>
+                      <div class="text-center col-auto"><select id="transactionOriginSelect" class="form-select mb-1 me-2" name="transaction_origin_select" dmx-bind:options="list_wallets.data.query_list_wallets_paged.data" optiontext="wallet_name" optionvalue="wallet_id" style="width: auto;">
+                          <option selected="" value="">----</option>
+                        </select>
+                        <small class="text-muted">{{trans.data.origin[lang.value]}}</small>
+                      </div>
+                      <div class="col-auto text-center"><select id="transactionDestinationSelect" class="form-select mb-1 me-2" name="transaction_destination_select" dmx-bind:options="list_wallets.data.query_list_wallets_paged.data" optiontext="wallet_name" optionvalue="wallet_id" style="width: auto;">
+                          <option selected="" value="">----</option>
+                        </select>
+                        <small class="text-muted">{{trans.data.destination[lang.value]}}</small>
+                      </div>
+                      <div class="col-auto">
                         <ul class="pagination bg-opacity-10 rounded d-flex flex-wrap bg-primary mb-1 me-2" dmx-populate="list_wallet_transactions.data.list_wallet_transactions_paged" dmx-state="listTransactionsQuery" dmx-offset="ListTransactionsOffset" dmx-generator="bs5paging">
                           <li class="page-item" dmx-class:disabled="list_wallet_transactions.data.list_wallet_transactions_paged.page.current == 1" aria-label="First">
                             <a href="javascript:void(0)" class="page-link" dmx-on:click="listTransactionsQuery.set('ListTransactionsOffset',list_wallet_transactions.data.list_wallet_transactions_paged.page.offset.first)"><span aria-hidden="true">&lsaquo;&lsaquo;</span></a>
@@ -732,16 +756,16 @@
                           <li class="page-item" dmx-class:disabled="list_wallet_transactions.data.list_wallet_transactions_paged.page.current ==  list_wallet_transactions.data.list_wallet_transactions_paged.page.total" aria-label="Last">
                             <a href="javascript:void(0)" class="page-link" dmx-on:click="listTransactionsQuery.set('ListTransactionsOffset',list_wallet_transactions.data.list_wallet_transactions_paged.page.offset.last)"><span aria-hidden="true">&rsaquo;&rsaquo;</span></a>
                           </li>
-                        </ul><select id="transactionSortLimit" class="form-select mb-0" name="transaction_sort_limit" style="width: 150px !important">
+                        </ul>
+                      </div>
+                      <div class="col-auto"><select id="transactionSortLimit" class="form-select mb-0" name="transaction_sort_limit" style="width: 150px !important">
                           <option value="5">5</option>
                           <option selected="" value="25">25</option>
                           <option value="50">50</option>
                           <option value="100">100</option>
                           <option value="'250">250</option>
                           <option value="500">500</option>
-                        </select>
-
-                      </div>
+                        </select></div>
 
 
                     </div>
@@ -751,6 +775,7 @@
                           <table class="table table-hover table-sm">
                             <thead>
                               <tr class="text-center">
+                                <th scope="row"></th>
                                 <th>#</th>
                                 <th>{{trans.data.amount[lang.value]}}</th>
 
@@ -778,6 +803,12 @@
                             </thead>
                             <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="list_wallet_transactions.data.list_wallet_transactions_paged.data" id="tableRepeat2">
                               <tr class="text-center">
+                                <td>
+                                  <i class="fas fa-arrow-circle-down text-success fa-lg" dmx-show="transaction_type=='Deposit'"></i>
+                                  <i class="fas fa-arrow-circle-up text-danger fa-lg" dmx-show="transaction_type=='Payment'"></i>
+                                  <i class="fas fa-arrow-circle-right text-info fa-lg" dmx-show="(transaction_type=='Transfer' &amp;&amp; transaction_destination_wallet == read_wallet.data.read_wallet.wallet_id)"></i>
+                                  <i class="fas fa-arrow-circle-left text-primary fa-lg" dmx-show="(transaction_type=='Transfer' &amp;&amp; transaction_originating_wallet == read_wallet.data.read_wallet.wallet_id)"></i>
+                                </td>
                                 <td dmx-text="transaction_id"></td>
                                 <td dmx-text="transaction_amount.toNumber().formatNumber('0',',',',')" class="text-end"></td>
                                 <td dmx-text="transaction_type"></td>
@@ -828,7 +859,7 @@
                                     <input id="userDeleted" name="user_deleted" type="number" class="form-control visually-hidden" dmx-bind:value="list_user_info.data.query_list_user_info.user_id">
                                     <input id="deleteStatus" name="delete_status" class="form-control visually-hidden" dmx-bind:value="'deleted'">
                                     <button id="btn19" class="btn text-body" type="submit">
-                                      <i class="far fa-trash-alt"></i></button>
+                                      <i class="far fa-trash-alt fa-sm"></i></button>
                                   </form>
 
                                 </td>
@@ -1170,12 +1201,12 @@
           </div>
           <div class="modal-footer">
             <div id="conditional2" is="dmx-if" dmx-bind:condition="(profile_privileges.data.profile_privileges[0].delete_customer == 'Yes')">
-              <form id="deleteCustomer" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_customers/delete_customer.php" dmx-on:success="notifies1.success('Success');list_customers.load({});readItemModal.hide()" onsubmit=" return confirm('CONFIRM DELETE?');" dmx-on:error="notifies1.warning('Error!')">
+              <form id="deleteWallet" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_wallets/delete_wallet.php" dmx-on:success="notifies1.success('Success');list_customers.load({});readItemModal.hide()" onsubmit=" return confirm('CONFIRM DELETE?');" dmx-on:error="notifies1.danger('Error!')">
 
-                <input id="text1" name="customer_id" type="hidden" class="form-control" dmx-bind:value="read_customer.data.query_read_customer.customer_id">
+                <input id="text1" name="wallet_id" type="hidden" class="form-control" dmx-bind:value="read_wallet.data.read_wallet.wallet_id">
 
-                <button id="btn6" class="btn text-secondary" type="submit">
-                  <i class="far fa-trash-alt fa-lg"></i>
+                <button id="btn6" class="btn text-muted" type="submit">
+                  <i class="far fa-trash-alt fa-sm"></i>
                 </button>
               </form>
             </div>

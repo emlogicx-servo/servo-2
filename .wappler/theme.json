@@ -1,0 +1,27 @@
+{
+  "bootstrap5": {
+    "basic": {
+      "primary": "#96dfff",
+      "secondary": "#25395f",
+      "success": "#11D3BC",
+      "danger": "#F67280",
+      "info": "#1380ff",
+      "warning": "#e4ff67",
+      "light": "#1d2d4c",
+      "dark": "#4e4e4e",
+      "link-color": "$primary",
+      "headings-font-family": "Muli",
+      "border-radius": "1.35rem",
+      "theme": "Fresca",
+      "body-bg": "#0e1422",
+      "body-color": "#d1efff"
+    },
+    "advanced": {
+      "modal-content-bg": "$light",
+      "nav-tabs-link-active-color": "$primary",
+      "input-bg": "$light",
+      "input-border-color": "rgba(138, 138, 138, 0.23)",
+      "table-border-color": "rgba(158, 158, 158, 0.13)"
+    }
+  }
+}

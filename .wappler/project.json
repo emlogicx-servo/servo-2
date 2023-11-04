@@ -26,10 +26,6 @@
       "type": "local"
     },
     {
-      "name": "bootstrap5",
-      "type": "custom"
-    },
-    {
       "name": "jquery_slim_35",
       "type": "local"
     },
@@ -39,6 +35,10 @@
     },
     {
       "name": "bootstrap_icons",
+      "type": "local"
+    },
+    {
+      "name": "bootstrap5",
       "type": "local"
     }
   ],

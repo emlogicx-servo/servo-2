@@ -1170,6 +1170,7 @@
           "servo_project_step": "step_user_created",
           "servo_project_tasks": "task_user_created",
           "servo_purchase_orders": "servo_users_user_ordered_id",
+          "servo_purchase_order_items": "po_item_user_received",
           "servo_purchase_order_item_deletes": "po_user_deleted",
           "servo_vendor_cash_transaction": "user_approved_id",
           "servo_wallet_privileges": "wallet_privilege_user_id",
@@ -1184,6 +1185,124 @@
       },
       "servo_user_shifts": {
         "db": {},
+        "columns": {
+          "user_shift_id": {
+            "db": {
+              "type": "increments",
+              "primary": true,
+              "nullable": false
+            }
+          },
+          "time_checkin": {
+            "db": {
+              "type": "datetime",
+              "default": "",
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "time_checkout": {
+            "db": {
+              "type": "datetime",
+              "default": "",
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "balance_checkin": {
+            "db": {
+              "type": "integer",
+              "default": "",
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "balance_checkout": {
+            "db": {
+              "type": "integer",
+              "default": "",
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "servo_user_user_id": {
+            "db": {
+              "type": "reference",
+              "primary": false,
+              "nullable": false,
+              "references": "user_id",
+              "inTable": "servo_user",
+              "referenceType": "integer",
+              "onUpdate": "NO ACTION",
+              "onDelete": "NO ACTION"
+            }
+          },
+          "servo_shifts_shift_id": {
+            "db": {
+              "type": "reference",
+              "primary": false,
+              "nullable": false,
+              "references": "shift_id",
+              "inTable": "servo_shifts",
+              "referenceType": "integer",
+              "onUpdate": "RESTRICT",
+              "onDelete": "RESTRICT"
+            }
+          },
+          "user_shift_notes": {
+            "db": {
+              "type": "text",
+              "default": "",
+              "maxLength": 65535,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "user_shift_code": {
+            "db": {
+              "type": "string",
+              "default": "",
+              "maxLength": 25,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "assigned": {
+            "db": {
+              "type": "text",
+              "default": "",
+              "maxLength": 65535,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "servo_service_service_id": {
+            "db": {
+              "type": "reference",
+              "default": "",
+              "primary": false,
+              "nullable": true,
+              "references": "service_id",
+              "inTable": "servo_services",
+              "referenceType": "integer",
+              "onUpdate": "RESTRICT",
+              "onDelete": "RESTRICT"
+            }
+          },
+          "servo_sales_point_sales_point_id": {
+            "db": {
+              "type": "reference",
+              "default": "",
+              "primary": false,
+              "nullable": true,
+              "references": "sales_point_id",
+              "inTable": "servo_sales_point",
+              "referenceType": "integer",
+              "onUpdate": "RESTRICT",
+              "onDelete": "RESTRICT"
+            }
+          }
+        },
         "parent": "servo_user"
       },
       "servo_user_tenure": {
