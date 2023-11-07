@@ -710,10 +710,10 @@ JSON
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link flex-shrink-1 fw-bold" id="navTabs1_2_tab_3" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_2_3" role="tab" aria-controls="navTabs1_2" aria-selected="false"><i class="fas fa-exclamation-triangle" style="margin-right: 5px;"></i>{{trans.data.lowStock[lang.value]}} <sup id="readyItems" dmx-text="list_low_stock.data.custom_get_stock_alerts.count()" class="sup-text text-danger" style="font-size:15px;"></sup></a>
+                            <a class="nav-link flex-shrink-1" id="navTabs1_2_tab_3" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_2_3" role="tab" aria-controls="navTabs1_2" aria-selected="false"><i class="fas fa-exclamation-triangle" style="margin-right: 5px;"></i>{{trans.data.lowStock[lang.value]}} <sup id="readyItems" dmx-text="list_low_stock.data.custom_get_stock_alerts.count()" class="sup-text text-danger" style="font-size:15px;"></sup></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link flex-shrink-1 fw-bold" id="navTabs1_2_tab_4" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_2_4" role="tab" aria-controls="navTabs1_2" aria-selected="false"><i class="fas fa-coins" style="margin-right: 5px;"></i>{{trans.data.transactions[lang.value]}}</a>
+                            <a class="nav-link flex-shrink-1" id="navTabs1_2_tab_4" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_2_4" role="tab" aria-controls="navTabs1_2" aria-selected="false"><i class="fas fa-coins" style="margin-right: 5px;"></i>{{trans.data.transactions[lang.value]}}</a>
                         </li>
                     </ul>
                     <div class="tab-content" id="navTabs1_content">
@@ -749,7 +749,7 @@ JSON
                                                         <h6 dmx-text="trans.data.getValueOrKey(order_status)[lang.value]" dmx-class:grey-state="(order_status == 'Pending')" dmx-class:red-state="(order_status == 'Credit')" class="text-center pt-1 pb-1 ps-2 pe-2 bg-light rounded" dmx-class:text-warning="(order_status == 'Ordered')" dmx-class:text-success="(order_status == 'Paid')">Fancy display heading</h6>
                                                     </td>
                                                     <td class="text-center">
-                                                        <button id="btn22" class="btn text-info bg-info bg-opacity-10 opacity-50" data-bs-target="#productInfo" dmx-on:click="session_variables.remove('current_order');session_variables.set('current_order',order_id);read_item_order.load({order_id: order_id});list_order_items.load({order_id: order_id})" dmx-bind:value="list_orders.data.query[0].order_id" style="/* color: #ff84ff !important */"><i class="far fa-edit fa-sm"><br></i></button>
+                                                        <button id="btn22" class="btn text-primary bg-primary bg-opacity-10" data-bs-target="#productInfo" dmx-on:click="session_variables.remove('current_order');session_variables.set('current_order',order_id);read_item_order.load({order_id: order_id});list_order_items.load({order_id: order_id})" dmx-bind:value="list_orders.data.query[0].order_id" style="/* color: #ff84ff !important */"><i class="fas fa-pencil-alt fa-sm"><br></i></button>
                                                     </td>
                                                 </tr>
                                             </tbody>

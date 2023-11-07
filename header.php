@@ -27,7 +27,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header bg-light">
-          <h5 class="modal-title">{{trans.data.shifts[lang.value]}}</h5>
+          <h6 class="modal-title">{{trans.data.shifts[lang.value]}}</h6>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body bg-light">
@@ -76,7 +76,7 @@
 
       <div class="col-auto justify-content-end" id="headerbuttons" style="/* font-size: 16px !important */">
 
-        <button id="toggleSubMenu" class="btn bg-secondary text-body" dmx-on:click="offcanvas2.toggle()"><i class="fas fa-user fa-lg fa-1x" style="margin-right:5px;"></i>{{session_variables.data.current_user}}</button>
+        <button id="toggleSubMenu" class="btn bg-secondary text-primary" dmx-on:click="offcanvas2.toggle()" dmx-text="session_variables.data.current_user.capitalize().substr(0, 1)"</button>
     </div>
       <div class="row" style="margin:3px;">
         <div id="submenuoptions" class="collapse bg-secondary rounded" is="dmx-bs5-collapse" style="padding:5px; margin-bottom:3px; margin-top:3px;">
@@ -86,33 +86,36 @@
       </div>
 
       </div>
-  <div class="offcanvas offcanvas-top bg-dark opacity-100" id="offcanvas2" is="dmx-bs5-offcanvas" tabindex="-1" style="width: auto !important; opacity: 0.85 !important;">
+  <div class="offcanvas offcanvas-end opacity-100" id="offcanvas2" is="dmx-bs5-offcanvas" tabindex="-1" style="max-width: 80% !important; opacity: 0.85 !important;  background: #0e1422 !important;">
 
     <div class="offcanvas-body" style="oveflow-y: hidden;">
- <div class="col d-flex justify-content-end">
+ <div class="col d-flex justify-content-evenly">
        <div style="padding: 3px; margin-top: 15px">
-        <button id="btn7" class="btn btn-sm text-white" data-bs-toggle="modal" data-bs-target="#shiftSelectModal" dmx-bind:disabled="(list_user_info.data.query_list_user_info.user_profile !== 'Admin')" dmx-on:click="list_shifts.load({})"><i class="fas fa-hourglass-half fa-lg"></i> {{list_user_shift_info.data.query_list_user_shift[0].servo_shifts_shift_id}}</button>
+        <button id="btn7" class="btn bg-white bg-opacity-25 text-white" data-bs-toggle="modal" data-bs-target="#shiftSelectModal" dmx-bind:disabled="(list_user_info.data.query_list_user_info.user_profile !== 'Admin')" dmx-on:click="list_shifts.load({})"><i class="fas fa-hourglass-half fa-sm" style="margin-right: 15px !important;"></i> {{list_user_shift_info.data.query_list_user_shift[0].servo_shifts_shift_id}}</button>
       </div>
       <div style="padding: 3px; margin-top: 15px">
-        <button id="btn3" class="btn btn-sm text-white" dmx-on:click="browser1.goto(list_user_info.data.query_list_user_info.user_profile+'.php')"><i class="fas fa-home fa-lg"></i></button>
+        <button id="btn3" class="btn bg-info text-white" dmx-on:click="browser1.goto(list_user_info.data.query_list_user_info.user_profile+'.php')" style="margin-right: 15px;"><i class="fas fa-home fa-sm"></i></button>
       </div>
 
       <div style="padding: 3px; margin-top: 15px">
-        <button id="themelight" class="btn btn-sm me-2 text-white"  dmx-on:click="themedark.hide();cookies.set('servotheme','bootstrap/5/servolight/bootstrap.min.css',{expires: 30})" dmx-hide="(cookies.data.servotheme =='bootstrap/5/servolight/bootstrap.min.css')">
-            <i class="fas fa-lightbulb fa-lg"></i>
+        <button id="themelight" class="btn me-2 bg-primary text-light"  dmx-on:click="themedark.hide();cookies.set('servotheme','bootstrap/5/servolight/bootstrap.min.css',{expires: 30})" dmx-hide="(cookies.data.servotheme =='bootstrap/5/servolight/bootstrap.min.css')" style="margin-right: 15px;">
+            <i class="fas fa-lightbulb fa-sm"></i>
           </button>
-          <button id="themedark" class="btn btn-sm me-2 text-white"  dmx-on:click="themedark.hide();cookies.set('servotheme','bootstrap/5/servodark/bootstrap.min.css',{expires: 30})" dmx-hide="(cookies.data.servotheme =='bootstrap/5/servodark/bootstrap.min.css')">
-            <i class="far fa-lightbulb fa-lg"></i>
+          <button id="themedark" class="btn me-2 bg-info bg-opacity-25 text-white"  dmx-on:click="themedark.hide();cookies.set('servotheme','bootstrap/5/servodark/bootstrap.min.css',{expires: 30})" dmx-hide="(cookies.data.servotheme =='bootstrap/5/servodark/bootstrap.min.css')" style="margin-right: 15px;">
+            <i class="fas fa-lightbulb fa-sm"></i>
           </button>        
       </div>
       <div style="padding: 3px; margin-top: 15px">    
-          <button id="btn4" class="btn btn-sm me-2 text-white" dmx-on:click="logout1.load();notifies1.warning('&quot;Logging Out&quot;');session_variables.removeAll();session1.removeAll(); browser1.goto('login.php')">
+          <button id="btn4" class="btn me-2 bg-danger bg-opacity-25 text-danger" dmx-on:click="logout1.load();notifies1.warning('&quot;Logging Out&quot;');session_variables.removeAll();session1.removeAll(); browser1.goto('login.php')">
 
-            <i class="fa fa-power-off fa-lg"></i>
+            <i class="fa fa-power-off fa-sm"></i>
           </button>
       </div>
           </div>
-      <div class="row">
+      <div class="row" style="margin-top: 10px">
+        <h6 class="text-white">
+            User: {{list_user_info.data.query_list_user_info.user_fname}} {{list_user_info.data.query_list_user_info.user_lname}} | {{list_user_info.data.query_list_user_info.user_username}}
+        </h6>
         <h6 class="text-white">
             Session Login Information:
             Shift ID: {{list_user_shift_info.data.query_list_user_shift[0].servo_shifts_shift_id}}
@@ -127,69 +130,69 @@
 
     </div>
   </div>
-  <div class="offcanvas offcanvas-start bg-dark opacity-100" id="offcanvas1" is="dmx-bs5-offcanvas" tabindex="-1" style="width: 180px !important; opacity: 0.85 !important;">
+  <div class="offcanvas offcanvas-start opacity-100" id="offcanvas1" is="dmx-bs5-offcanvas" tabindex="-1" style="width: 180px !important; opacity: 0.85 !important; background: #2c415c !important;">
 
     <div class="offcanvas-body" style="oveflow-y: hidden;">
       <div class="row row-cols-1 h-auto">
         <div class="col" id="shifts">
           <div class="row">
-            <div class="col w-auto h-auto mt-sm-1 mb-sm-2 ms-sm-1 me-sm-1 d-flex justify-content-sm-center justify-content-center mt-2 mb-2 ms-2 me-2 border-secondary rounded-2"><a href="shifts.php" class="badge style25 w-auto h-auto" style="text-decoration: unset;"><i class="fas fa-user-clock fa-2x" style="color: #ff9518 !important;"></i>
-                <h5 class="mt-lg-3">
+            <div class="col w-auto h-auto mt-sm-1 mb-sm-2 ms-sm-1 me-sm-1 d-flex justify-content-sm-center justify-content-center mt-2 mb-2 ms-2 me-2 border-secondary rounded-2"><a href="shifts.php" class="badge style25 w-auto h-auto" style="text-decoration: unset;"><i class="fas fa-user-clock fa-lg" style="color: #ff9518 !important;"></i>
+                <h6 class="mt-lg-3 text-white">
                   {{trans.data.shifts[lang.value]}}
-                </h5>
+                </h6>
               </a></div>
           </div>
         </div>
         <div class="col" id="clients">
           <div class="row">
-            <div class="col w-auto h-auto mt-sm-1 mb-sm-2 ms-sm-1 me-sm-1 d-flex justify-content-sm-center justify-content-center mt-2 mb-2 ms-2 me-2 border-secondary rounded-2"><a href="customers.php" class="badge style25 w-auto h-auto" style="text-decoration: unset;"><i class="fas fa-users fa-2x" style="color: #afff18 !important;"></i>
-                <h5 class="mt-lg-3">{{trans.data.customers[lang.value]}}</h5>
+            <div class="col w-auto h-auto mt-sm-1 mb-sm-2 ms-sm-1 me-sm-1 d-flex justify-content-sm-center justify-content-center mt-2 mb-2 ms-2 me-2 border-secondary rounded-2"><a href="customers.php" class="badge style25 w-auto h-auto" style="text-decoration: unset;"><i class="fas fa-users fa-lg" style="color: #afff18 !important;"></i>
+                <h6 class="mt-lg-3 text-white">{{trans.data.customers[lang.value]}}</h6>
               </a></div>
           </div>
         </div>
         <div class="col" id="vendors">
           <div class="row">
-            <div class="col w-auto h-auto mt-sm-1 mb-sm-2 ms-sm-1 me-sm-1 d-flex justify-content-sm-center justify-content-center mt-2 mb-2 ms-2 me-2 border-secondary rounded-2"><a href="vendors.php" class="badge style25 w-auto h-auto" style="text-decoration: unset;"><i class="fas fa-truck fa-2x" style="color: #18f7ff !important;"></i>
-                <h5 class="mt-lg-3">{{trans.data.vendors[lang.value]}}</h5>
+            <div class="col w-auto h-auto mt-sm-1 mb-sm-2 ms-sm-1 me-sm-1 d-flex justify-content-sm-center justify-content-center mt-2 mb-2 ms-2 me-2 border-secondary rounded-2"><a href="vendors.php" class="badge style25 w-auto h-auto" style="text-decoration: unset;"><i class="fas fa-truck fa-lg" style="color: #18f7ff !important;"></i>
+                <h6 class="mt-lg-3 text-white">{{trans.data.vendors[lang.value]}}</h6>
               </a></div>
           </div>
         </div>
         <div class="col" id="procurement">
           <div class="row">
-            <div class="col w-auto h-auto mt-sm-1 mb-sm-2 ms-sm-1 me-sm-1 d-flex justify-content-sm-center justify-content-center mt-2 mb-2 ms-2 me-2 border-secondary rounded-2"><a href="procurement.php" class="badge style25 w-auto h-auto" style="text-decoration: unset;"><i class="fas fa-cart-plus fa-2x" style="color: #ff18c3 !important;"></i>
-                <h5 class="mt-lg-3">{{trans.data.procurement[lang.value]}}</h5>
+            <div class="col w-auto h-auto mt-sm-1 mb-sm-2 ms-sm-1 me-sm-1 d-flex justify-content-sm-center justify-content-center mt-2 mb-2 ms-2 me-2 border-secondary rounded-2"><a href="procurement.php" class="badge style25 w-auto h-auto" style="text-decoration: unset;"><i class="fas fa-cart-plus fa-lg" style="color: #ff18c3 !important;"></i>
+                <h6 class="mt-lg-3 text-white">{{trans.data.procurement[lang.value]}}</h6>
               </a></div>
           </div>
         </div>
 
         <div class="col" id="finance">
           <div class="row">
-            <div class="col w-auto h-auto mt-sm-1 mb-sm-2 ms-sm-1 me-sm-1 d-flex justify-content-sm-center justify-content-center mt-2 mb-2 ms-2 me-2 border-secondary rounded-2"><a href="finance.php" class="badge style25 w-auto h-auto" style="text-decoration: unset;"><i class="fas fa-coins fa-2x" style="color: #ff1847 !important;"></i>
-                <h5 class="mt-lg-3">{{trans.data.finance[lang.value]}}</h5>
+            <div class="col w-auto h-auto mt-sm-1 mb-sm-2 ms-sm-1 me-sm-1 d-flex justify-content-sm-center justify-content-center mt-2 mb-2 ms-2 me-2 border-secondary rounded-2"><a href="finance.php" class="badge style25 w-auto h-auto" style="text-decoration: unset;"><i class="fas fa-coins fa-lg" style="color: #ff1847 !important;"></i>
+                <h6 class="mt-lg-3 text-white">{{trans.data.finance[lang.value]}}</h6>
               </a></div>
           </div>
         </div>
 
         <div class="col" id="reports">
           <div class="row">
-            <div class="col w-auto h-auto mt-sm-1 mb-sm-2 ms-sm-1 me-sm-1 d-flex justify-content-sm-center justify-content-center mt-2 mb-2 ms-2 me-2 border-secondary rounded-2"><a href="reports.php" class="badge style25 w-auto h-auto" style="text-decoration: unset;"><i class="fas fa-chart-line fa-2x" style="color: #18f7ff !important;"></i>
-                <h5 class="mt-lg-3">{{trans.data.reports[lang.value]}}</h5>
+            <div class="col w-auto h-auto mt-sm-1 mb-sm-2 ms-sm-1 me-sm-1 d-flex justify-content-sm-center justify-content-center mt-2 mb-2 ms-2 me-2 border-secondary rounded-2"><a href="reports.php" class="badge style25 w-auto h-auto" style="text-decoration: unset;"><i class="fas fa-chart-line fa-lg" style="color: #18f7ff !important;"></i>
+                <h6 class="mt-lg-3 text-white">{{trans.data.reports[lang.value]}}</h6>
               </a>
             </div>
           </div>
         </div>
         <div class="col" id="products">
           <div class="row">
-            <div class="col w-auto h-auto mt-sm-1 mb-sm-2 ms-sm-1 me-sm-1 d-flex justify-content-sm-center justify-content-center mt-2 mb-2 ms-2 me-2 border-secondary rounded-2"><a href="products.php" class="badge style25 w-auto h-auto" style="text-decoration: unset;"><i class="fas fa-barcode fa-2x" style="color: #fffa18 !important;"></i>
-                <h5 class="mt-lg-3">{{trans.data.products[lang.value]}}</h5>
+            <div class="col w-auto h-auto mt-sm-1 mb-sm-2 ms-sm-1 me-sm-1 d-flex justify-content-sm-center justify-content-center mt-2 mb-2 ms-2 me-2 border-secondary rounded-2"><a href="products.php" class="badge style25 w-auto h-auto" style="text-decoration: unset;"><i class="fas fa-barcode fa-lg" style="color: #fffa18 !important;"></i>
+                <h6 class="mt-lg-3 text-white">{{trans.data.products[lang.value]}}</h6>
               </a></div>
           </div>
         </div>
 
         <div class="col" id="categories">
           <div class="row">
-            <div class="col w-auto h-auto mt-sm-1 mb-sm-2 ms-sm-1 me-sm-1 d-flex justify-content-sm-center justify-content-center mt-2 mb-2 ms-2 me-2 border-secondary rounded-2"><a href="product-categories.php" class="badge style25 w-auto h-auto" style="text-decoration: unset;"><i class="fas fa-tags fa-2x" style="color: #ff9518 !important;"></i>
-                <h5 class="mt-lg-3">{{trans.data.categories[lang.value]}}</h5>
+            <div class="col w-auto h-auto mt-sm-1 mb-sm-2 ms-sm-1 me-sm-1 d-flex justify-content-sm-center justify-content-center mt-2 mb-2 ms-2 me-2 border-secondary rounded-2"><a href="product-categories.php" class="badge style25 w-auto h-auto" style="text-decoration: unset;"><i class="fas fa-tags fa-lg" style="color: #ff9518 !important;"></i>
+                <h6 class="mt-lg-3 text-white">{{trans.data.categories[lang.value]}}</h6>
               </a></div>
           </div>
         </div>
@@ -200,23 +203,23 @@
 
         <div class="col" id="brands">
           <div class="row">
-            <div class="col w-auto h-auto mt-sm-1 mb-sm-2 ms-sm-1 me-sm-1 d-flex justify-content-sm-center justify-content-center mt-2 mb-2 ms-2 me-2 border-secondary rounded-2"><a href="brands.php" class="badge style25 w-auto h-auto" style="text-decoration: unset;"><i class="fas fa-tag fa-2x" style="color: #fffa18 !important;"></i>
-                <h5 class="mt-lg-3">{{trans.data.brands[lang.value]}}</h5>
+            <div class="col w-auto h-auto mt-sm-1 mb-sm-2 ms-sm-1 me-sm-1 d-flex justify-content-sm-center justify-content-center mt-2 mb-2 ms-2 me-2 border-secondary rounded-2"><a href="brands.php" class="badge style25 w-auto h-auto" style="text-decoration: unset;"><i class="fas fa-tag fa-lg" style="color: #fffa18 !important;"></i>
+                <h6 class="mt-lg-3 text-white">{{trans.data.brands[lang.value]}}</h6>
               </a></div>
           </div>
         </div>
         <div class="col" id="departments">
           <div class="row">
-            <div class="col w-auto h-auto mt-sm-1 mb-sm-2 ms-sm-1 me-sm-1 d-flex justify-content-sm-center justify-content-center mt-2 mb-2 ms-2 me-2 border-secondary rounded-2"><a href="departments.php" class="badge style25 w-auto h-auto" style="text-decoration: unset;"><i class="fas fa-sitemap fa-2x" style="color: #18ff92 !important;"></i>
-                <h5 class="mt-lg-3">{{trans.data.businessSetup[lang.value]}}</h5>
+            <div class="col w-auto h-auto mt-sm-1 mb-sm-2 ms-sm-1 me-sm-1 d-flex justify-content-sm-center justify-content-center mt-2 mb-2 ms-2 me-2 border-secondary rounded-2"><a href="departments.php" class="badge style25 w-auto h-auto" style="text-decoration: unset;"><i class="fas fa-sitemap fa-lg" style="color: #18ff92 !important;"></i>
+                <h6 class="mt-lg-3 text-white">{{trans.data.businessSetup[lang.value]}}</h6>
               </a></div>
           </div>
         </div>
 
         <div class="col" id="paymentMethods">
           <div class="row">
-            <div class="col w-auto h-auto mt-sm-1 mb-sm-2 ms-sm-1 me-sm-1 d-flex justify-content-sm-center justify-content-center mt-2 mb-2 ms-2 me-2 border-secondary rounded-2"><a href="payment-methods.php" class="badge style25 w-auto h-auto" style="text-decoration: unset;"><i class="fas fa-cash-register fa-2x" style="color: #ff1847 !important;"></i>
-                <h5 class="mt-lg-3">{{trans.data.payments[lang.value]}}</h5>
+            <div class="col w-auto h-auto mt-sm-1 mb-sm-2 ms-sm-1 me-sm-1 d-flex justify-content-sm-center justify-content-center mt-2 mb-2 ms-2 me-2 border-secondary rounded-2"><a href="payment-methods.php" class="badge style25 w-auto h-auto" style="text-decoration: unset;"><i class="fas fa-cash-register fa-lg" style="color: #ff1847 !important;"></i>
+                <h6 class="mt-lg-3 text-white">{{trans.data.payments[lang.value]}}</h6>
               </a></div>
           </div>
         </div>
@@ -224,52 +227,52 @@
 
         <div class="col" id="salesPoints">
           <div class="row">
-            <div class="col w-auto h-auto mt-sm-1 mb-sm-2 ms-sm-1 me-sm-1 d-flex justify-content-sm-center justify-content-center mt-2 mb-2 ms-2 me-2 border-secondary rounded-2"><a href="sales-points.php" class="badge style25 w-auto h-auto" style="text-decoration: unset;"><i class="fas fa-store fa-2x" style="color: #fffa18 !important;"></i>
-                <h5 class="mt-lg-3">{{trans.data.salesPoints[lang.value]}}</h5>
+            <div class="col w-auto h-auto mt-sm-1 mb-sm-2 ms-sm-1 me-sm-1 d-flex justify-content-sm-center justify-content-center mt-2 mb-2 ms-2 me-2 border-secondary rounded-2"><a href="sales-points.php" class="badge style25 w-auto h-auto" style="text-decoration: unset;"><i class="fas fa-store fa-lg" style="color: #fffa18 !important;"></i>
+                <h6 class="mt-lg-3 text-white">{{trans.data.salesPoints[lang.value]}}</h6>
               </a></div>
           </div>
         </div>
         <div class="col" id="assets">
           <div class="row">
-            <div class="col w-auto h-auto mt-sm-1 mb-sm-2 ms-sm-1 me-sm-1 d-flex justify-content-sm-center justify-content-center mt-2 mb-2 ms-2 me-2 border-secondary rounded-2"><a href="tables.php" class="badge style25 w-auto h-auto" style="text-decoration: unset;"><i class="fas fa-key fa-2x" style="color: #afff18 !important;"></i>
-                <h5 class="mt-lg-3">{{trans.data.assets[lang.value]}}</h5>
+            <div class="col w-auto h-auto mt-sm-1 mb-sm-2 ms-sm-1 me-sm-1 d-flex justify-content-sm-center justify-content-center mt-2 mb-2 ms-2 me-2 border-secondary rounded-2"><a href="tables.php" class="badge style25 w-auto h-auto" style="text-decoration: unset;"><i class="fas fa-key fa-lg" style="color: #afff18 !important;"></i>
+                <h6 class="mt-lg-3 text-white">{{trans.data.assets[lang.value]}}</h6>
               </a></div>
           </div>
         </div>
         <div class="col" id="users">
           <div class="row">
             <div class="col w-auto h-auto mt-sm-1 mb-sm-2 ms-sm-1 me-sm-1 d-flex justify-content-sm-center justify-content-center mt-2 mb-2 ms-2 me-2 border-secondary rounded-2">
-              <a href="users.php" class="badge style25 w-auto h-auto" style="text-decoration: unset;"><i class="fas fa-users fa-2x" style="color: #ffcd74 !important;"></i>
-                <h5 class="mt-lg-3">{{trans.data.users[lang.value]}}</h5>
+              <a href="users.php" class="badge style25 w-auto h-auto" style="text-decoration: unset;"><i class="fas fa-users fa-lg" style="color: #ffcd74 !important;"></i>
+                <h6 class="mt-lg-3 text-white">{{trans.data.users[lang.value]}}</h6>
               </a>
             </div>
           </div>
         </div>
         <div class="col" id="profiles">
           <div class="row">
-            <div class="col w-auto h-auto mt-sm-1 mb-sm-2 ms-sm-1 me-sm-1 d-flex justify-content-sm-center justify-content-center mt-2 mb-2 ms-2 me-2 border-secondary rounded-2"><a href="user-profiles.php" class="badge style25 w-auto h-auto" style="text-decoration: unset;"><i class="fas fa-id-badge fa-2x" style="color: #189aff !important;"></i>
-                <h5 class="mt-lg-3" style="">{{trans.data.profiles[lang.value]}}</h5>
+            <div class="col w-auto h-auto mt-sm-1 mb-sm-2 ms-sm-1 me-sm-1 d-flex justify-content-sm-center justify-content-center mt-2 mb-2 ms-2 me-2 border-secondary rounded-2"><a href="user-profiles.php" class="badge style25 w-auto h-auto" style="text-decoration: unset;"><i class="fas fa-id-badge fa-lg" style="color: #189aff !important;"></i>
+                <h6 class="mt-lg-3 text-white" style="">{{trans.data.profiles[lang.value]}}</h6>
               </a></div>
           </div>
         </div>
         <div class="col" id="dataFields">
           <div class="row">
-            <div class="col w-auto h-auto mt-sm-1 mb-sm-2 ms-sm-1 me-sm-1 d-flex justify-content-sm-center justify-content-center mt-2 mb-2 ms-2 me-2 border-secondary rounded-2"><a href="data-fields.php" class="badge style25 w-auto h-auto" style="text-decoration: unset;"><i class="fas fa-database fa-2x" style="color: #ff18f2 !important;"></i>
-                <h5 class="mt-lg-3" style="">{{trans.data.dataFields[lang.value]}}</h5>
+            <div class="col w-auto h-auto mt-sm-1 mb-sm-2 ms-sm-1 me-sm-1 d-flex justify-content-sm-center justify-content-center mt-2 mb-2 ms-2 me-2 border-secondary rounded-2"><a href="data-fields.php" class="badge style25 w-auto h-auto" style="text-decoration: unset;"><i class="fas fa-database fa-lg" style="color: #ff18f2 !important;"></i>
+                <h6 class="mt-lg-3 text-white" style="">{{trans.data.dataFields[lang.value]}}</h6>
               </a></div>
           </div>
         </div>
         <div class="col" id="companyInformation">
           <div class="row">
-            <div class="col w-auto h-auto mt-sm-1 mb-sm-2 ms-sm-1 me-sm-1 d-flex justify-content-sm-center justify-content-center mt-2 mb-2 ms-2 me-2 border-secondary rounded-2"><a href="company-info.php" class="badge style25 w-auto h-auto" style="text-decoration: unset;"><i class="fas fa-info-circle fa-2x" style="color: #ff1847 !important;"></i>
-                <h5 class="mt-lg-3">{{trans.data.companyInformation[lang.value]}}</h5>
+            <div class="col w-auto h-auto mt-sm-1 mb-sm-2 ms-sm-1 me-sm-1 d-flex justify-content-sm-center justify-content-center mt-2 mb-2 ms-2 me-2 border-secondary rounded-2"><a href="company-info.php" class="badge style25 w-auto h-auto" style="text-decoration: unset;"><i class="fas fa-info-circle fa-lg" style="color: #ff1847 !important;"></i>
+                <h6 class="mt-lg-3 text-white">{{trans.data.companyInformation[lang.value]}}</h6>
               </a></div>
           </div>
         </div>
         <div class="col" id="permissions">
           <div class="row">
-            <div class="col w-auto h-auto mt-sm-1 mb-sm-2 ms-sm-1 me-sm-1 d-flex justify-content-sm-center justify-content-center mt-2 mb-2 ms-2 me-2 border-secondary rounded-2"><a href="configuration.php" class="badge style25 w-auto h-auto" style="text-decoration: unset;"><i class="fas fa-user-cog fa-2x" style="color: #18ffef !important;"></i>
-                <h5 class="mt-lg-3">{{trans.data.userPrivileges[lang.value]}}</h5>
+            <div class="col w-auto h-auto mt-sm-1 mb-sm-2 ms-sm-1 me-sm-1 d-flex justify-content-sm-center justify-content-center mt-2 mb-2 ms-2 me-2 border-secondary rounded-2"><a href="configuration.php" class="badge style25 w-auto h-auto" style="text-decoration: unset;"><i class="fas fa-user-cog fa-lg" style="color: #18ffef !important;"></i>
+                <h6 class="mt-lg-3 text-white">{{trans.data.userPrivileges[lang.value]}}</h6>
               </a></div>
           </div>
         </div>

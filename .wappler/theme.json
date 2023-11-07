@@ -3,13 +3,13 @@
     "basic": {
       "primary": "#96dfff",
       "secondary": "#25395f",
-      "success": "#11D3BC",
+      "success": "#38ffd3",
       "danger": "#F67280",
       "info": "#1380ff",
       "warning": "#e4ff67",
       "light": "#1d2d4c",
       "dark": "#4e4e4e",
-      "link-color": "$primary",
+      "link-color": "#70a7bf",
       "headings-font-family": "Muli",
       "border-radius": "1.35rem",
       "theme": "Fresca",
@@ -18,10 +18,12 @@
     },
     "advanced": {
       "modal-content-bg": "$light",
-      "nav-tabs-link-active-color": "$primary",
+      "modal-footer-border-color": "$light",
       "input-bg": "$light",
       "input-border-color": "rgba(138, 138, 138, 0.23)",
-      "table-border-color": "rgba(158, 158, 158, 0.13)"
+      "table-border-color": "rgba(158, 158, 158, 0.13)",
+      "nav-tabs-link-active-color": "$primary",
+      "nav-tabs-link-active-border-color": "$primary"
     }
   }
 }

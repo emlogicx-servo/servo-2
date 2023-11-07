@@ -2099,6 +2099,18 @@ dmx.config({
       {
         "type": "text",
         "name": "dir_gugr_projects"
+      },
+      {
+        "type": "text",
+        "name": "offset_gugr_project_tasks"
+      },
+      {
+        "type": "text",
+        "name": "sort_gugr_project_tasks"
+      },
+      {
+        "type": "text",
+        "name": "dir_gugr_project_tasks"
       }
     ],
     "repeat1": {

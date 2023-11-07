@@ -176,13 +176,13 @@ JSON
       <div class="row servo-page-header rounded bg-light mt-2 ms-2 me-2 pt-1 ps-2 pe-2">
         <ul class="nav nav-tabs nav-fill" id="navTabs1_tabs" role="tablist">
           <li class="nav-item text-truncate">
-            <a class="nav-link active text-break fw-bold" id="navTabs1_1_tab" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_1" role="tab" aria-controls="navTabs1_1" aria-selected="true"><i class="fas fa-cash-register" style="margin-right: 5px;"></i>{{trans.data.sales[lang.value]}}</a>
+            <a class="nav-link active text-break" id="navTabs1_1_tab" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_1" role="tab" aria-controls="navTabs1_1" aria-selected="true"><i class="fas fa-cash-register" style="margin-right: 5px;"></i>{{trans.data.sales[lang.value]}}</a>
           </li>
           <li class="nav-item text-truncate">
-            <a class="nav-link text-break fw-bold" id="navTabs1_2_tab" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_2" role="tab" aria-controls="navTabs1_2" aria-selected="false"><i class="fas fa-cart-arrow-down" style="margin-right: 5px;"></i>{{trans.data.purchasing[lang.value]}}</a>
+            <a class="nav-link text-break" id="navTabs1_2_tab" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_2" role="tab" aria-controls="navTabs1_2" aria-selected="false"><i class="fas fa-cart-arrow-down" style="margin-right: 5px;"></i>{{trans.data.purchasing[lang.value]}}</a>
           </li>
           <li class="nav-item text-truncate">
-            <a class="nav-link text-break fw-bold" id="navTabs1_3_tab" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_3" role="tab" aria-controls="navTabs1_3" aria-selected="false"><i class="fas fa-coins" style="margin-right:5px;"></i>{{trans.data.finance[lang.value]}}</a>
+            <a class="nav-link text-break" id="navTabs1_3_tab" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_3" role="tab" aria-controls="navTabs1_3" aria-selected="false"><i class="fas fa-coins" style="margin-right:5px;"></i>{{trans.data.finance[lang.value]}}</a>
           </li>
         </ul>
         <div class="tab-content" id="navTabs1_content">

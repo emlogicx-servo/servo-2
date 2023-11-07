@@ -308,10 +308,8 @@ label
 
 thead {
     font-family: Josefin-Sans;
- /*   color: white;
+ /*   color: white; */
     font-size: 17px;
-    background: rgba(116, 116, 116, 0.2) !important;
-*/
 }
 
 .tablestyle
@@ -396,7 +394,7 @@ header{
 tbody
 {
    font-family: 'Open-sans-condensed';
-    font-size: 16px;
+    font-size: 14px;
     border-top: none !important;
     font-weight: bold;
 }

@@ -16,6 +16,23 @@
                 "en-US": "Source",
                 "fr-FR": "Source"
             },
+    "task": 
+            {
+                "en-US": "Task",
+                "fr-FR": "Tâche"
+            },
+
+    "myTasks": 
+            {
+                "en-US": "My Tasks",
+                "fr-FR": "Mes Tâches"
+            },
+    
+    "createNewTask": 
+            {
+                "en-US": "Create New Task",
+                "fr-FR": "Créer Nouvelle Tâche"
+            },
     "newExpense": 
             {
                 "en-US": "New Expense",

@@ -89,10 +89,10 @@
 
       <div class="justify-content-lg-start col d-flex justify-content-start" style="padding-left: 0px;">
 
-        <div class="d-block"><button id="btn1" class="btn gy-0 btn-sm text-start text-primary" data-bs-toggle="offcanvas" data-bs-target="#offcanvas1" dmx-show="(list_user_info.data.query_list_user_info.user_profile == 'gugr-admin' || list_user_info.data.query_list_user_info.user_profile == 'Admin' )" style="color: #afff18 !important;"><i class="fas fa-th fa-2x" style="color:;"></i></button></div>
+        <div class="d-block"><button id="btn1" class="btn gy-0 btn-sm text-start text-primary" data-bs-toggle="offcanvas" data-bs-target="#offcanvas1" dmx-show="(list_user_info.data.query_list_user_info.user_profile == 'gugr-admin' || list_user_info.data.query_list_user_info.user_profile == 'Admin' )" style="color: #afff18 !important;"><i class="fas fa-th fa-lg" style="color:;"></i></button></div>
         <div class="d-block">
 
-          <h3 class="d-none d-sm-block text-light ms-2" style="margin-left: 2px; /* font-size: 28px */">SERVO</h3>
+          <h3 class="d-none d-sm-block text-light ms-2" style="margin-left: 2px;  font-size: 20px ">SERVO</h3>
         </div>
       </div>
 

@@ -4,17 +4,23 @@
 }
 
 @font-face {
-    font-family: "Open-Sans-Condensed";
-    src: url("/servo/css/fonts/open-sans-condensed/fonts/open-sans-condensed-300/open-sans-condensed-300.woff2");
+    font-family: "Open Sans";
+    src: url("/servo/css/fonts/open_sans/OpenSans-VariableFont_wdth,wght.ttf");
 }
 
 @font-face{
-  font-family: "Roboto Condensed";
-  src: url("/servo/css/fonts/roboto_condensed/robotocondensed-regular.ttf") format("truetype");
+  font-family: "Dosis";
+  src: url("/servo/css/fonts/dosis/Dosis-VariableFont_wght.ttf") format("truetype");
 }
 
 
+@font-face{
+  font-family: "Roboto";
+  src: url("/servo/css/fonts/Roboto_Condensed/RobotoCondensed-VariableFont_wght.ttf") format("truetype");
+}
+
 @media print
+
 {
     
 
@@ -239,6 +245,10 @@ background: #11d3bc1c  !important;
     
 }
 
+.modal-dialog .modal-header{
+    background: transparent !important;
+}
+
 .modal-content
 {
     height: 99% !important;
@@ -301,9 +311,10 @@ label
     font-size: 50px !important;
 }
 
-thead {
-    font-family: Josefin-Sans;
-    font-size: 17px;
+thead, th {
+    font-family: 'Roboto';
+    font-size: 16px;
+    font-weight: 400 !important;
 }
 
 .tablestyle
@@ -366,9 +377,11 @@ header{
 
 tbody
 {
-    font-family: 'Roboto Condensed';
+    font-family: 'Roboto';
     font-size: 14px;
-    border-top: none !important;
+    border-top: 0px !important;
+    padding-top: 5px !important;
+    font-weight: 400;
 }
 
 .servo-page-heading
@@ -400,9 +413,10 @@ tbody
 {
     padding: 0px !important;
 }
-.nav-item
+.nav-item, .nav-link
 {
-    font-family: 'josefin-sans' !important;
+    font-family: 'Dosis' !important;
+    font-weight: 500 !important;
     font-size: 16px !important;
 }
 
@@ -418,12 +432,13 @@ tbody
     float: right !important;
 }
 
-.nav-link
+.nav-link, .nav-link.hover
 {
    background: transparent !important;
     border-top: 0px !important;
    border-right: 0px !important;
    border-left: 0px !important;
+   border-bottom: none !important;
 }
 
 .nav-link.active, .page-item.active

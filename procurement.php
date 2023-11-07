@@ -176,16 +176,9 @@ JSON
   <div is="dmx-browser" id="browser1"></div>
   <dmx-notifications id="notifies1" timeout="100" position="bottom" extended-timeout="200"></dmx-notifications>
   <?php require 'header.php'; ?>
-  <main class="bg-light rounded mt-2 ms-2 me-2 pt-2 pb-2 ps-2 pe-2" id="MainBody">
+  <main class="bg-light rounded mt-2 mb-0 ms-2 me-2 pt-2 pb-2 ps-2 pe-2 " id="MainBody">
     <div>
 
-
-      <div class="row">
-        <div class="col style13 page-button d-flex justify-content-sm-end justify-content-end" id="pagebuttons">
-
-          <button id="btn1" class="btn style12 fw-light add-button pill text-info bg-info bg-opacity-10" data-bs-toggle="modal" data-bs-target="#CreateOrderModal" style="float: right;"><i class="fas fa-plus"></i></button>
-        </div>
-      </div>
     </div>
     <ul class="nav nav-tabs nav-fill scrollable flex-nowrap align-items-end fw-bold" id="navTabs1_tabs" role="tablist">
 
@@ -213,7 +206,13 @@ JSON
     <div class="tab-content" id="navTabs1_content">
 
       <div class="tab-pane fade active show" id="navTabs1_2" role="tabpanel">
-        <div class="row mt-xxl-2 rounded rounded-2 border-secondary bg-light mt-2 mb-2 ms-0 me-0 pt-4" id="procurement_reports_" style="height: 450px; overflow: scroll;">
+        <div class="row">
+          <div class="col style13 page-button d-flex justify-content-sm-end justify-content-end" id="pagebuttons">
+
+            <button id="btn1" class="btn style12 fw-light add-button pill text-info bg-info bg-opacity-10" data-bs-toggle="modal" data-bs-target="#CreateOrderModal" style="float: right;"><i class="fas fa-plus"></i></button>
+          </div>
+        </div>
+        <div class="row mt-xxl-2 rounded rounded-2 border-secondary bg-light mt-1 mb-2 ms-0 me-0 pt-2" id="procurement_reports_" style="height: 450px; overflow: scroll;">
           <h3 class="text-body">{{trans.data.products[lang.value]}}</h3>
           <div class="col-sm col-md-6">
 
@@ -314,8 +313,8 @@ JSON
           </div>
         </div>
       </div>
-      <div class="tab-pane fade" id="navTabs1_4" role="tabpanel">
-        <div class="row justify-content-sm-between justify-content-md-between justify-content-lg-between justify-content-xl-between justify-content-xxl-between justify-content-between sorter rounded mt-2 mb-2 ms-auto me-auto bg-secondary">
+      <div class="tab-pane fade bg-secondary rounded" id="navTabs1_4" role="tabpanel">
+        <div class="row justify-content-sm-between justify-content-md-between justify-content-lg-between justify-content-xl-between justify-content-xxl-between justify-content-between sorter rounded bg-secondary mt-2 ms-auto me-auto">
           <div class="d-flex col-auto flex-wrap col-sm-auto col-md-auto col-lg-auto col-xxl-auto col-xl-auto align-items-baseline"><input id="poFilter" name="poFilter" type="search" class="form-control search mb-2 me-2" placeholder="ID"><button id="btn299" class="btn align-self-lg-start btn-outline-secondary text-primary bg-opacity-10 me-2 align-self-baseline bg-primary" dmx-on:click="poFilter.setValue(NULL)">
               <i class="fas fa-backspace fa-sm"></i>
             </button>
@@ -347,13 +346,13 @@ JSON
 
 
         </div>
-        <div class="row mt-1" id="orders_table1" style="height: 450px; overflow: scroll;">
-          <div class="col bg-secondary rounded ms-3 me-3">
+        <div class="row mt-1" id="orders_table1" style="height: 98vh; overflow: scroll;">
+          <div class="col rounded ms-3 me-3">
 
 
             <div class="table-responsive">
-              <table class="table table-hover table-sm table-borderless">
-                <thead>
+              <table class="table table-hover table-sm">
+                <thead class="text-center">
                   <tr>
                     <th class="sorting" dmx-on:click="listPurchaseOrders.set('sort_po','po_id');listPurchaseOrders.set('dir_po',listPurchaseOrders.data.dir_po == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="listPurchaseOrders.data.sort_po=='po_id' && listPurchaseOrders.data.dir_po == 'asc'" dmx-class:sorting_desc="listPurchaseOrders.data.sort_po=='po_id' && listPurchaseOrders.data.dir_po == 'desc'">#</th>
                     <th class="sorting" dmx-on:click="listPurchaseOrders.set('sort_po','user_username');listPurchaseOrders.set('dir_po',listPurchaseOrders.data.dir_po == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="listPurchaseOrders.data.sort_po=='user_username' && listPurchaseOrders.data.dir_po == 'asc'" dmx-class:sorting_desc="listPurchaseOrders.data.sort_po=='user_username' && listPurchaseOrders.data.dir_po == 'desc'">{{trans.data.attention[lang.value]}}</th>
@@ -367,14 +366,14 @@ JSON
                 <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="list_purchase_orders.data.list_purchase_orders_paged.data" id="tableRepeat5" dmx-state="listPurchaseOrders" dmx-sort="sort_po" dmx-order="dir_po" class="scrollable">
                   <tr>
                     <td dmx-text="po_id"></td>
-                    <td dmx-text="user_username"></td>
-                    <td dmx-text="time_ordered"></td>
-                    <td dmx-text="department_name"></td>
-                    <td dmx-text="vendor_name"></td>
-                    <td>
-                      <h6 dmx-text="trans.data.getValueOrKey(po_status)[lang.value]" class="text-center pt-1 pb-1 ps-2 pe-2 rounded fw-bold" dmx-class:text-success="(po_status=='Received')" dmx-class:text-danger="(po_status=='Requested')" dmx-class:text-warning="(po_status=='Approved')">Fancy display heading</h6>
+                    <td dmx-text="user_username" class="text-center"></td>
+                    <td dmx-text="time_ordered" class="text-center"></td>
+                    <td dmx-text="department_name" class="text-center"></td>
+                    <td dmx-text="vendor_name" class="text-center"></td>
+                    <td class="text-center">
+                      <p dmx-text="trans.data.getValueOrKey(po_status)[lang.value]" class="text-center pt-1 pb-1 ps-2 pe-2 rounded" dmx-class:text-success="(po_status=='Received')" dmx-class:text-danger="(po_status=='Requested')" dmx-class:text-warning="(po_status=='Approved')">Fancy display heading</p>
                     </td>
-                    <td class="text-center"><button id="btn16" class="btn open" data-bs-target="#readItemModal" dmx-on:click="readItemModal.show();session_variables.set('current_purchase_order',po_id);read_purchase_order.load({po_id: po_id});query_po_items.load({po_id: po_id})" dmx-bind:value="list_purchase_orders.data.query[0].po_id" data-bs-toggle="modal"><i class="far fa-edit"><br></i></button></td>
+                    <td class="text-center"><button id="btn16" class="btn open text-primary bg-primary bg-opacity-10" data-bs-target="#readItemModal" dmx-on:click="readItemModal.show();session_variables.set('current_purchase_order',po_id);read_purchase_order.load({po_id: po_id});query_po_items.load({po_id: po_id})" dmx-bind:value="list_purchase_orders.data.query[0].po_id" data-bs-toggle="modal"><i class="fas fa-pencil-alt fa-sm"><br></i></button></td>
                   </tr>
                 </tbody>
               </table>
@@ -440,7 +439,7 @@ JSON
 
 
                 <div class="table-responsive bg-secondary">
-                  <table class="table table-hover table-sm table-borderless">
+                  <table class="table table-hover table-sm">
                     <thead>
                       <tr>
                         <th class="sorting" dmx-on:click="listPurchaseOrders.set('sort_po','po_id');listPurchaseOrders.set('dir_po',listPurchaseOrders.data.dir_po == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="listPurchaseOrders.data.sort_po=='po_id' &amp;&amp; listPurchaseOrders.data.dir_po == 'asc'" dmx-class:sorting_desc="listPurchaseOrders.data.sort_po=='po_id' &amp;&amp; listPurchaseOrders.data.dir_po == 'desc'">#</th>
@@ -463,7 +462,7 @@ JSON
                           <h6 dmx-text="trans.data.getValueOrKey(po_status)[lang.value]" class="text-center pt-1 pb-1 ps-2 pe-2" dmx-class:red-state="(po_status=='Requested')" dmx-class:green-state="(po_status=='Received')" dmx-class:yellow-state="(po_status=='Approved')">Fancy display heading</h6>
                         </td>
                         <td>
-                          <button id="btn22" class="btn open" data-bs-target="#readItemModal" dmx-on:click="readItemModal.show();session_variables.set('current_purchase_order',po_id);read_purchase_order.load({po_id: po_id});list_purchase_order_items_current.load({po_id: po_id})" dmx-bind:value="list_purchase_orders.data.query[0].po_id" data-bs-toggle="modal"><i class="far fa-edit"><br></i></button>
+                          <button id="btn22" class="btn open text-primary bg-primary bg-opacity-10" data-bs-target="#readItemModal" dmx-on:click="readItemModal.show();session_variables.set('current_purchase_order',po_id);read_purchase_order.load({po_id: po_id});list_purchase_order_items_current.load({po_id: po_id})" dmx-bind:value="list_purchase_orders.data.query[0].po_id" data-bs-toggle="modal"><i class="fas fa-pencil-alt"><br></i></button>
                         </td>
                       </tr>
                     </tbody>
@@ -515,11 +514,11 @@ JSON
 
             </div>
             <div class="row mt-1" id="transfer_orders_table1" style="height: 450px; overflow: scroll;">
-              <div class="col bg-secondary rounded">
+              <div class="col bg-secondary rounded ms-3 me-3">
 
 
                 <div class="table-responsive">
-                  <table class="table table-hover table-sm table-borderless">
+                  <table class="table table-hover table-sm">
                     <thead>
                       <tr>
                         <th class="sorting" dmx-on:click="listPurchaseOrders.set('sort_po','po_id');listPurchaseOrders.set('dir_po',listPurchaseOrders.data.dir_po == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="listPurchaseOrders.data.sort_po=='po_id' &amp;&amp; listPurchaseOrders.data.dir_po == 'asc'" dmx-class:sorting_desc="listPurchaseOrders.data.sort_po=='po_id' &amp;&amp; listPurchaseOrders.data.dir_po == 'desc'">#</th>
@@ -542,7 +541,7 @@ JSON
                           <h6 dmx-text="trans.data.getValueOrKey(po_status)[lang.value]" class="text-center pt-1 pb-1 ps-2 pe-2" dmx-class:red-state="(po_status=='Requested')" dmx-class:green-state="(po_status=='Received')" dmx-class:yellow-state="(po_status=='Approved')">Fancy display heading</h6>
                         </td>
                         <td>
-                          <button id="btn231" class="btn open" data-bs-target="#readItemModal" dmx-on:click="readItemModal.show();session_variables.set('current_purchase_order',po_id);read_purchase_order.load({po_id: po_id});list_purchase_order_items.load({po_id: po_id})" dmx-bind:value="list_purchase_orders.data.query[0].po_id" data-bs-toggle="modal"><i class="fas fa-expand-alt fa-lg"><br></i></button>
+                          <button id="btn231" class="btn open text-primary bg-primary bg-opacity-10" data-bs-target="#readItemModal" dmx-on:click="readItemModal.show();session_variables.set('current_purchase_order',po_id);read_purchase_order.load({po_id: po_id});list_purchase_order_items.load({po_id: po_id})" dmx-bind:value="list_purchase_orders.data.query[0].po_id" data-bs-toggle="modal"><i class="fas fa-pencil-alt fa-sm"><br></i></button>
                         </td>
                       </tr>
                     </tbody>
@@ -559,7 +558,7 @@ JSON
         <div class="row">
           <div class="col rounded mt-2 ms-3 me-3 bg-secondary">
             <div class="table-responsive mt-1" id="stockadjustments">
-              <table class="table table-hover table-sm table-borderless" id="stockadjustmentsTable">
+              <table class="table table-hover table-sm" id="stockadjustmentsTable">
                 <thead>
                   <tr>
                     <th>#</th>
@@ -574,7 +573,7 @@ JSON
                     <td dmx-text="order_time"></td>
                     <td dmx-text="user_username"></td>
                     <td>
-                      <button id="btn2" class="btn open" data-bs-target="#readAOModal" dmx-on:click="session_variables.set('current_adjustment_order',order_id);read_adjustment_order.load({order_id: session_variables.data.current_adjustment_order});list_ao_items.load({order_id: read_adjustment_order.data.query.order_id})" dmx-bind:value="order_id" data-bs-toggle="modal"><i class="far fa-edit"><br></i></button>
+                      <button id="btn2" class="btn open text-primary bg-primary text-truncate bg-opacity-10" data-bs-target="#readAOModal" dmx-on:click="session_variables.set('current_adjustment_order',order_id);read_adjustment_order.load({order_id: session_variables.data.current_adjustment_order});list_ao_items.load({order_id: read_adjustment_order.data.query.order_id})" dmx-bind:value="order_id" data-bs-toggle="modal"><i class="fas fa-pencil-alt fa-sm"><br></i></button>
                     </td>
                   </tr>
                 </tbody>
@@ -641,8 +640,8 @@ JSON
                     <td dmx-text="ReservedStock"></td>
                     <td dmx-text="(TotalPurchased - TotalSold - TotalAdjusted)"></td>
                     <td>
-                      <button id="btn24" class="btn" data-bs-toggle="modal" data-bs-target="#readItemProduct" dmx-on:click="read_product_data.load({product_id: po_product_id})">
-                        <i class="far fa-edit"></i></button>
+                      <button id="btn24" class="btn bg-primary bg-opacity-10 text-primary" data-bs-toggle="modal" data-bs-target="#readItemProduct" dmx-on:click="read_product_data.load({product_id: po_product_id})">
+                        <i class="fas fa-pencil-alt fa-sm"></i></button>
                     </td>
                   </tr>
                 </tbody>
@@ -955,7 +954,7 @@ JSON
           <dmx-preloader id="preloader1" spinner="pulse" bgcolor="#8A8686" ,255,255,0.99),255,255,0.97)=""></dmx-preloader>
 
           <div class="modal-header border-0">
-            <div class="d-block d-flex"><button id="btn10" class="btn float-right bg-opacity-10 me-3 text-primary bg-primary" data-bs-toggle="offcanvas" data-bs-target="#AddProductsToOrderOffCanvas" dmx-on:click="" dmx-hide="(read_purchase_order.data.query.po_status == 'Received')||(profile_privileges.data.profile_privileges[0].delete_po=='No')"><i class="fas fa-cart-plus fa-sm"></i></button>
+            <div class="d-block d-flex"><button id="btn10" class="btn float-right bg-opacity-10 me-3 text-success bg-success" data-bs-toggle="offcanvas" data-bs-target="#AddProductsToOrderOffCanvas" dmx-on:click="" dmx-hide="(read_purchase_order.data.query.po_status == 'Received')||(profile_privileges.data.profile_privileges[0].delete_po=='No')"><i class="fas fa-cart-plus fa-sm"></i></button>
               <div id="conditional1" is="dmx-if" dmx-bind:condition="(profile_privileges.data.profile_privileges[0].approve_po == 'Yes')">
                 <main>
                   <div class="row">
