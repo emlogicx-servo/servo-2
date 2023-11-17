@@ -176,7 +176,7 @@ JSON
   <div is="dmx-browser" id="browser1"></div>
   <dmx-notifications id="notifies1" timeout="100" position="bottom" extended-timeout="200"></dmx-notifications>
   <?php require 'header.php'; ?>
-  <main class="bg-light rounded mt-2 mb-0 ms-2 me-2 pt-2 pb-2 ps-2 pe-2 " id="MainBody">
+  <main class="rounded mt-2 mb-0 ms-2 me-2 pt-2 pb-2 ps-2 pe-2 bg-light" id="MainBody">
     <div>
 
     </div>
@@ -208,8 +208,6 @@ JSON
       <div class="tab-pane fade active show" id="navTabs1_2" role="tabpanel">
         <div class="row">
           <div class="col style13 page-button d-flex justify-content-sm-end justify-content-end" id="pagebuttons">
-
-            <button id="btn1" class="btn style12 fw-light add-button pill text-info bg-info bg-opacity-10" data-bs-toggle="modal" data-bs-target="#CreateOrderModal" style="float: right;"><i class="fas fa-plus"></i></button>
           </div>
         </div>
         <div class="row mt-xxl-2 rounded rounded-2 border-secondary bg-light mt-1 mb-2 ms-0 me-0 pt-2" id="procurement_reports_" style="height: 450px; overflow: scroll;">
@@ -268,7 +266,7 @@ JSON
           </div>
         </div>
         <div class="row rounded ms-0 me-0 pt-3 bg-light ">
-          <div class="col y-scroll">
+          <div class="col y-scroll text-primary fw-bold">
             <dmx-chart id="chart5" height="400" dmx-bind:data="productstockvalues.data.getStockValues2" dataset-1:value="(TotalPurchased - TotalSold - TotalAdjusted)" point-size="" type="bar" multicolor="true" colors="colors1" dataset-1:label="Quantities" labels="product_name+'('+(TotalPurchased - TotalSold - TotalAdjusted)+')'" dataset-1:tooltip="" width="1300"></dmx-chart>
           </div>
 
@@ -313,9 +311,9 @@ JSON
           </div>
         </div>
       </div>
-      <div class="tab-pane fade bg-secondary rounded" id="navTabs1_4" role="tabpanel">
-        <div class="row justify-content-sm-between justify-content-md-between justify-content-lg-between justify-content-xl-between justify-content-xxl-between justify-content-between sorter rounded bg-secondary mt-2 ms-auto me-auto">
-          <div class="d-flex col-auto flex-wrap col-sm-auto col-md-auto col-lg-auto col-xxl-auto col-xl-auto align-items-baseline"><input id="poFilter" name="poFilter" type="search" class="form-control search mb-2 me-2" placeholder="ID"><button id="btn299" class="btn align-self-lg-start btn-outline-secondary text-primary bg-opacity-10 me-2 align-self-baseline bg-primary" dmx-on:click="poFilter.setValue(NULL)">
+      <div class="tab-pane fade rounded" id="navTabs1_4" role="tabpanel">
+        <div class="row justify-content-sm-between justify-content-md-between justify-content-lg-between justify-content-xl-between justify-content-xxl-between justify-content-between sorter rounded mt-2 ms-auto me-auto bg-transparent">
+          <div class="d-flex col-auto flex-wrap col-sm-auto col-md-auto col-lg-auto col-xxl-auto col-xl-auto align-items-baseline"><input id="poFilter" name="poFilter" type="search" class="form-control search mb-2 me-2" placeholder="ID"><button id="btn299" class="btn btn-outline-secondary text-primary bg-opacity-10 me-2 align-self-baseline bg-primary" dmx-on:click="poFilter.setValue(NULL)">
               <i class="fas fa-backspace fa-sm"></i>
             </button>
             <ul class="pagination me-2 bg-opacity-10 rounded d-flex flex-wrap bg-primary" dmx-populate="list_purchase_orders.data.list_purchase_orders_paged" dmx-state="listPurchaseOrders" dmx-offset="offset_po" dmx-generator="bs5paging">
@@ -334,7 +332,7 @@ JSON
               <li class="page-item" dmx-class:disabled="list_purchase_orders.data.list_purchase_orders_paged.page.current ==  list_purchase_orders.data.list_purchase_orders_paged.page.total" aria-label="Last">
                 <a href="javascript:void(0)" class="page-link" dmx-on:click="listPurchaseOrders.set('offset_po',list_purchase_orders.data.list_purchase_orders_paged.page.offset.last)"><span aria-hidden="true">&rsaquo;&rsaquo;</span></a>
               </li>
-            </ul><select id="poSortLimit" class="form-select" name="po_sort_limit" style="width: 150px !important">
+            </ul><select id="poSortLimit" class="form-select me-3" name="po_sort_limit" style="width: 150px !important">
               <option value="5">5</option>
               <option selected="" value="25">25</option>
               <option value="50">50</option>
@@ -342,6 +340,8 @@ JSON
               <option value="'250">250</option>
               <option value="500">500</option>
             </select>
+            <button id="btn1" class="btn style12 add-button pill bg-success bg-opacity-10 text-success fw-light" data-bs-toggle="modal" data-bs-target="#CreatePOModal" style="float: right;"><i class="fas fa-plus"></i>
+            </button>
           </div>
 
 
@@ -395,18 +395,18 @@ JSON
         </div>
         <div class="row" id="transferOrdersIn" dmx-show="(transferOrderDirection.value == 'In')">
           <div class="col">
-            <div class="row justify-content-sm-between justify-content-md-between justify-content-lg-between justify-content-xl-between justify-content-xxl-between justify-content-between sorter mt-2 mb-2 ms-0 me-0 bg-secondary rounded">
-              <div class="col-auto col-9 col-sm-9 col-lg-3 d-flex col-xxl align-items-baseline">
+            <div class="row justify-content-sm-between justify-content-md-between justify-content-lg-between justify-content-xl-between justify-content-xxl-between sorter mt-2 mb-2 ms-0 me-0 rounded bg-transparent row-cols-12">
+              <div class="col-sm-9 col-lg-3 d-flex col-xxl align-items-baseline col-auto">
 
-                <input id="toFilterIn" name="toFilterIn" type="search" class="form-control search form-control-sm mb-2 me-2" placeholder="ID"><button id="btn26" class="btn align-self-lg-start btn-outline-secondary btn-sm ms-xxl-1 bg-info text-white me-2" dmx-on:click="poFilter.setValue(NULL)">
-                  <i class="fas fa-backspace"></i>
+                <input id="toFilterIn" name="toFilterIn" type="search" class="form-control search mb-2 me-2" placeholder="ID"><button id="btn26" class="btn align-self-lg-start btn-outline-secondary ms-xxl-1 me-2 text-primary bg-primary bg-opacity-10" dmx-on:click="poFilter.setValue(NULL)">
+                  <i class="fas fa-backspace fa-sm"></i>
 
 
 
 
 
                 </button>
-                <ul class="pagination me-2 rounded bg-dark bg-opacity-10 flex-wrap" dmx-populate="list_transfer_orders_in.data.list_purchase_orders_paged" dmx-generator="bs5paging">
+                <ul class="pagination me-2 rounded bg-opacity-10 flex-wrap bg-primary" dmx-populate="list_transfer_orders_in.data.list_purchase_orders_paged" dmx-generator="bs5paging">
                   <li class="page-item" dmx-class:disabled="list_transfer_orders_in.data.list_purchase_orders_paged.page.current == 1" aria-label="First">
                     <a href="javascript:void(0)" class="page-link" dmx-on:click="list_transfer_orders_in.load({offset: list_transfer_orders_in.data.list_purchase_orders_paged.page.offset.first})"><span aria-hidden="true">&lsaquo;&lsaquo;</span></a>
                   </li>
@@ -422,7 +422,7 @@ JSON
                   <li class="page-item" dmx-class:disabled="list_transfer_orders_in.data.list_purchase_orders_paged.page.current ==  list_transfer_orders_in.data.list_purchase_orders_paged.page.total" aria-label="Last">
                     <a href="javascript:void(0)" class="page-link" dmx-on:click="list_transfer_orders_in.load({offset: list_transfer_orders_in.data.list_purchase_orders_paged.page.offset.last})"><span aria-hidden="true">&rsaquo;&rsaquo;</span></a>
                   </li>
-                </ul><select id="toSortLimitIn" class="form-select" name="to_sort_limit_in" style="width: 150px !important" dmx-on:updated="list_transfer_orders.load({limit: value, to_filter: toFilter.value, to_destination: transferDirection.value});listTransferOrders.set('offset_to',0)">
+                </ul><select id="toSortLimitIn" class="form-select me-3" name="to_sort_limit_in" style="width: 150px !important" dmx-on:updated="list_transfer_orders.load({limit: value, to_filter: toFilter.value, to_destination: transferDirection.value});listTransferOrders.set('offset_to',0)">
                   <option value="5">5</option>
                   <option selected="" value="25">25</option>
                   <option value="50">50</option>
@@ -430,6 +430,9 @@ JSON
                   <option value="'250">250</option>
                   <option value="500">500</option>
                 </select>
+                <button id="btn5" class="btn text-success bg-success bg-opacity-10 active" data-bs-toggle="modal" data-bs-target="#CreateTOModal">
+                  <i class="fas fa-plus fa-sm"></i>
+                </button>
               </div>
 
 
@@ -438,7 +441,7 @@ JSON
               <div class="col">
 
 
-                <div class="table-responsive bg-secondary">
+                <div class="table-responsive">
                   <table class="table table-hover table-sm">
                     <thead>
                       <tr>
@@ -474,18 +477,18 @@ JSON
         </div>
         <div class="row" id="transferOrdersOut" dmx-show="(transferOrderDirection.value == 'Out')">
           <div class="col">
-            <div class="row justify-content-sm-between justify-content-md-between justify-content-lg-between justify-content-xl-between justify-content-xxl-between justify-content-between sorter mt-2 mb-2 ms-0 me-0 bg-secondary rounded">
+            <div class="row justify-content-sm-between justify-content-md-between justify-content-lg-between justify-content-xl-between justify-content-xxl-between sorter mt-2 mb-2 ms-0 me-0 rounded bg-transparent">
               <div class="d-flex align-items-baseline col-auto col-sm-auto col-md-auto col-lg-auto col-xl-auto col-xxl-auto">
 
-                <input id="toFilterOut" name="toFilterOut" type="text" class="form-control search form-control-sm mb-2 me-2" placeholder="ID"><button id="btn23" class="btn align-self-lg-start btn-sm ms-xxl-1 bg-info text-white me-2" dmx-on:click="poFilter.setValue(NULL)">
-                  <i class="fas fa-backspace"></i>
+                <input id="toFilterOut" name="toFilterOut" type="text" class="form-control search mb-2 me-2" placeholder="ID"><button id="btn23" class="btn align-self-lg-start ms-xxl-1 me-2 bg-opacity-10 bg-primary text-primary" dmx-on:click="poFilter.setValue(NULL)">
+                  <i class="fas fa-backspace fa-sm"></i>
 
 
 
 
 
                 </button>
-                <ul class="pagination me-2 rounded bg-dark bg-opacity-10 flex-wrap" dmx-populate="list_transfer_orders_out.data.list_purchase_orders_paged" dmx-generator="bs5paging">
+                <ul class="pagination me-2 rounded bg-opacity-10 flex-wrap bg-primary text-primary" dmx-populate="list_transfer_orders_out.data.list_purchase_orders_paged" dmx-generator="bs5paging">
                   <li class="page-item" dmx-class:disabled="list_transfer_orders_out.data.list_purchase_orders_paged.page.current == 1" aria-label="First">
                     <a href="javascript:void(0)" class="page-link" dmx-on:click="list_transfer_orders_out.load({offset: list_transfer_orders_out.data.list_purchase_orders_paged.page.offset.first})"><span aria-hidden="true">&lsaquo;&lsaquo;</span></a>
                   </li>
@@ -501,7 +504,7 @@ JSON
                   <li class="page-item" dmx-class:disabled="list_transfer_orders_out.data.list_purchase_orders_paged.page.current ==  list_transfer_orders_out.data.list_purchase_orders_paged.page.total" aria-label="Last">
                     <a href="javascript:void(0)" class="page-link" dmx-on:click="list_transfer_orders_out.load({offset: list_transfer_orders_out.data.list_purchase_orders_paged.page.offset.last})"><span aria-hidden="true">&rsaquo;&rsaquo;</span></a>
                   </li>
-                </ul><select id="toSortLimitOut" class="form-select" name="to_sort_limit1_out" style="width: 150px !important" dmx-on:updated="list_transfer_orders.load({limit: value, to_filter: toFilter.value, to_destination: transferDirection.value});listTransferOrders.set('offset_to',0)">
+                </ul><select id="toSortLimitOut" class="form-select me-3" name="to_sort_limit1_out" style="width: 150px !important" dmx-on:updated="list_transfer_orders.load({limit: value, to_filter: toFilter.value, to_destination: transferDirection.value});listTransferOrders.set('offset_to',0)">
                   <option value="5">5</option>
                   <option selected="" value="25">25</option>
                   <option value="50">50</option>
@@ -509,12 +512,15 @@ JSON
                   <option value="'250">250</option>
                   <option value="500">500</option>
                 </select>
+                <button id="btn5" class="btn text-success bg-success bg-opacity-10 active" data-bs-toggle="modal" data-bs-target="#CreateTOModal">
+                  <i class="fas fa-plus fa-sm"></i>
+                </button>
               </div>
 
 
             </div>
             <div class="row mt-1" id="transfer_orders_table1" style="height: 450px; overflow: scroll;">
-              <div class="col bg-secondary rounded ms-3 me-3">
+              <div class="col rounded ms-3 me-3">
 
 
                 <div class="table-responsive">
@@ -820,7 +826,7 @@ JSON
         </div>
       </div>
     </div>
-    <div class="modal" id="CreateOrderModal" is="dmx-bs5-modal" tabindex="-1">
+    <div class="modal" id="CreatePOModal" is="dmx-bs5-modal" tabindex="-1">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header border-0">
@@ -871,19 +877,35 @@ JSON
 
 
               </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal" id="CreateTOModal" is="dmx-bs5-modal" tabindex="-1">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header border-0">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="container ps-3 pe-3">
               <div class="row">
-                <div class="col text-center mt-4 ms-1 me-1 pt-3 pb-3 ps-2 pe-2 rounded rounded-3 border-secondary bg-secondary" id="createTO">
+                <div class="col text-center mt-4 ms-1 me-1 pt-3 pb-3 ps-2 pe-2 rounded rounded-3 border-secondary bg-secondary" id="createTO1">
                   <div class="row">
                     <div class="col">
                       <h4 class="fw-bold">{{trans.data.transferOrder[lang.value]}}</h4>
                     </div>
                   </div>
                   <div class="row">
-                    <form is="dmx-serverconnect-form" id="create_transfer_order_form" method="post" action="dmxConnect/api/servo_purchase_orders/create_transfer_order.php" dmx-on:success="notifies1.success('TO # '+create_transfer_order_form.data.last_insert_to[0]['last_insert_id()']+'Created');session_variables.set('current_purchase_order',create_transfer_order_form.data.last_insert_to[0]['last_insert_id()']);create_transfer_order_form.reset();list_transfer_orders.load({});CreateOrderModal.hide();read_purchase_order.load({po_id: create_transfer_order_form.data.last_insert_to[0]['last_insert_id()']});readItemModal.show();list_transfer_orders_in.load({sort: query.sort_to_in, offset: query.offset_to_in, limit: toSortLimitIn.value, to_filter: toFilterIn.value});list_transfer_orders_out.load({sort: query.offset_to_out, offset: query.offset_to_out, limit: toSortLimitOut.value, to_filter: toFilterOut.value, department_source: list_user_info.data.query_list_user_info.servo_user_departments_department_id})" dmx-on:error="notifies1.warning('Error')">
-                      <input id="timeOrdered1" name="time_ordered" class="form-control visually-hidden" type="datetime-local" dmx-bind:value="var1.datetime">
-                      <input id="userOrdered1" name="servo_users_user_ordered_id" type="hidden" class="form-control visually-hidden" dmx-bind:value="session_variables.data.user_id">
-                      <input id="poStatus3" name="po_status" type="hidden" class="form-control visually-hidden" dmx-bind:value="'Requested'">
-                      <input id="poType" name="po_type" type="hidden" class="form-control visually-hidden" dmx-bind:value="'Transfer'">
+                    <form is="dmx-serverconnect-form" id="create_transfer_order_form1" method="post" action="dmxConnect/api/servo_purchase_orders/create_transfer_order.php" dmx-on:success="notifies1.success('TO # '+create_transfer_order_form.data.last_insert_to[0]['last_insert_id()']+'Created');session_variables.set('current_purchase_order',create_transfer_order_form.data.last_insert_to[0]['last_insert_id()']);create_transfer_order_form.reset();list_transfer_orders.load({});CreateOrderModal.hide();read_purchase_order.load({po_id: create_transfer_order_form.data.last_insert_to[0]['last_insert_id()']});readItemModal.show();list_transfer_orders_in.load({sort: query.sort_to_in, offset: query.offset_to_in, limit: toSortLimitIn.value, to_filter: toFilterIn.value});list_transfer_orders_out.load({sort: query.offset_to_out, offset: query.offset_to_out, limit: toSortLimitOut.value, to_filter: toFilterOut.value, department_source: list_user_info.data.query_list_user_info.servo_user_departments_department_id})" dmx-on:error="notifies1.warning('Error')">
+                      <input id="timeOrdered2" name="time_ordered" class="form-control visually-hidden" type="datetime-local" dmx-bind:value="var1.datetime">
+                      <input id="userOrdered2" name="servo_users_user_ordered_id" type="hidden" class="form-control visually-hidden" dmx-bind:value="session_variables.data.user_id">
+                      <input id="poStatus6" name="po_status" type="hidden" class="form-control visually-hidden" dmx-bind:value="'Requested'">
+                      <input id="poType1" name="po_type" type="hidden" class="form-control visually-hidden" dmx-bind:value="'Transfer'">
 
 
 
@@ -891,7 +913,7 @@ JSON
                       <div class="row mt-2 mb-3 row-cols-12">
                         <div class="d-flex col-sm-10 offset-0 col">
                           <h5 class="me-2">{{trans.data.source[lang.value]}}</h5>
-                          <select id="select6" class="form-select" name="transfer_source_department_id" optionvalue="department_id" dmx-bind:options="load_departments.data.query_list_departments" optiontext="department_name" dmx-bind:value="session_variables.data.user_department_id">
+                          <select id="select1" class="form-select" name="transfer_source_department_id" optionvalue="department_id" dmx-bind:options="load_departments.data.query_list_departments" optiontext="department_name" dmx-bind:value="session_variables.data.user_department_id">
                             <option value="">{{trans.data.department[lang.value]}}</option>
                           </select>
                         </div>
@@ -899,37 +921,13 @@ JSON
                       <div class="row mt-2 mb-3">
                         <div class="d-flex col-sm-10 offset-0">
                           <h5 class="me-2">{{trans.data.destination[lang.value]}}</h5>
-                          <select id="select7" class="form-select" name="servo_departments_department_id" optionvalue="department_id" dmx-bind:options="load_departments.data.query_list_departments" optiontext="department_name" dmx-bind:value="session_variables.data.user_department_id">
+                          <select id="select1" class="form-select" name="servo_departments_department_id1" optionvalue="department_id" dmx-bind:options="load_departments.data.query_list_departments" optiontext="department_name" dmx-bind:value="session_variables.data.user_department_id">
                             <option value="">{{trans.data.department[lang.value]}}</option>
                           </select>
                         </div>
                       </div>
                       <div class="row row-cols-1">
-                        <div class="border-warning offset-0 col"><button id="btn20" class="btn btn-lg bg-warning text-white me-1 ps-5 pe-5" type="submit"><i class="fas fa-exchange-alt fa-lg"></i></button>
-                        </div>
-                      </div>
-                    </form>
-                  </div>
-
-
-                </div>
-              </div>
-              <div class="row row-cols-12">
-                <div class="col mt-4 ms-1 me-1 pt-3 pb-3 ps-2 pe-2 border-secondary bg-secondary rounded" id="createao">
-                  <div class="row justify-content-center row-cols-12">
-                    <div class="col text-center">
-                      <h4 class="fw-bold">{{trans.data.stockAdjustment[lang.value]}}</h4>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <form is="dmx-serverconnect-form" id="create_adjustment_order" method="post" action="dmxConnect/api/servo_orders/create_adjustment_order.php" dmx-on:success="notifies1.success('Success!');session_variables.set('current_adjustment_order',create_adjustment_order.data.custom[0]['last_insert_id()']);list_adjustment_orders.load({});CreateOrderModal.hide();read_adjustment_order.load({order_id: create_adjustment_order.data.custom[0]['last_insert_id()']});readAOModal.show()">
-                      <input id="order_time" name="order_time" class="form-control visually-hidden" type="datetime-local" dmx-bind:value="var1.datetime">
-                      <input id="order_status" name="order_status" type="hidden" class="form-control visually-hidden" dmx-bind:value="session_variables.data.user_id">
-                      <input id="user_ordered" name="servo_user_user_id" type="hidden" class="form-control visually-hidden" dmx-bind:value="session_variables.data.user_id">
-
-                      <input id="aoDepartment" name="servo_departments_department_id" type="hidden" class="form-control" dmx-bind:value="session_variables.data.user_department_id">
-                      <div class="row row-cols-1">
-                        <div class="d-flex border-warning col offset-0 justify-content-center"><button id="btn5" class="btn btn-lg text-white bg-danger pt-1 pb-1 ps-5 pe-5" type="submit"><i class="far fa-minus-square fa-lg"></i></button>
+                        <div class="border-warning offset-0 col"><button id="btn27" class="btn btn-lg me-1 ps-5 pe-5 text-success lh-base bg-opacity-10 bg-success" type="submit"><i class="fas fa-exchange-alt fa-lg"></i></button>
                         </div>
                       </div>
                     </form>
@@ -939,6 +937,20 @@ JSON
                 </div>
               </div>
             </div>
+          </div>
+          <div class="modal-footer">
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal" id="CreateSAModal" is="dmx-bs5-modal" tabindex="-1">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header border-0">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
           </div>
           <div class="modal-footer">
 

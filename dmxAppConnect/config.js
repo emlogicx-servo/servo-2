@@ -2116,40 +2116,72 @@ dmx.config({
     "repeat1": {
       "meta": [
         {
-          "type": "number",
-          "name": "project_step_id"
+          "name": "$index",
+          "type": "number"
+        },
+        {
+          "name": "$key",
+          "type": "text"
+        },
+        {
+          "name": "$value",
+          "type": "object"
         },
         {
           "type": "number",
-          "name": "step_project"
-        },
-        {
-          "type": "text",
-          "name": "step_description"
-        },
-        {
-          "type": "number",
-          "name": "step_department_concerned"
-        },
-        {
-          "type": "number",
-          "name": "step_user_created"
-        },
-        {
-          "type": "number",
-          "name": "step_users_concerned"
+          "name": "task_id"
         },
         {
           "type": "datetime",
-          "name": "step_start_date"
+          "name": "task_start"
         },
         {
           "type": "datetime",
-          "name": "step_end_date"
+          "name": "task_stop"
+        },
+        {
+          "type": "number",
+          "name": "task_user_created"
+        },
+        {
+          "type": "number",
+          "name": "task_user_concerned"
         },
         {
           "type": "text",
-          "name": "step_status"
+          "name": "task_notes"
+        },
+        {
+          "type": "text",
+          "name": "task_status"
+        },
+        {
+          "type": "datetime",
+          "name": "task_date_created"
+        },
+        {
+          "type": "number",
+          "name": "userCreatedID"
+        },
+        {
+          "type": "text",
+          "name": "userCratedName"
+        },
+        {
+          "type": "number",
+          "name": "userConcernedID"
+        },
+        {
+          "type": "text",
+          "name": "userConcernedName"
+        },
+        {
+          "type": "text",
+          "name": "task_description"
+        },
+        {
+          "type": "datetime",
+          "name": "task_date_completed"
         }
       ],
       "outputType": "array"

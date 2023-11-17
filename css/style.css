@@ -312,8 +312,8 @@ label
 }
 
 thead, th {
-    font-family: 'Roboto';
-    font-size: 16px;
+    font-family: 'Dosis';
+    font-size: 17px;
     font-weight: 400 !important;
 }
 
@@ -377,11 +377,16 @@ header{
 
 tbody
 {
-    font-family: 'Roboto';
+    font-family: 'Dosis';
     font-size: 14px;
     border-top: 0px !important;
     padding-top: 5px !important;
-    font-weight: 400;
+    font-weight: 500;
+}
+
+.pagination
+{
+    font-family: 'Dosis' !important;
 }
 
 .servo-page-heading
@@ -417,7 +422,7 @@ tbody
 {
     font-family: 'Dosis' !important;
     font-weight: 500 !important;
-    font-size: 16px !important;
+    font-size: 15px !important;
 }
 
 .nav-tabs

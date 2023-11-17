@@ -145,6 +145,7 @@
                     <div style="padding: 3px; margin-top: 15px">
                         <button id="themelight" class="btn btn-sm me-2 text-white" dmx-on:click="themedark.hide();cookies.set('servotheme','bootstrap/5/servolight/bootstrap.min.css',{expires: 30})" dmx-hide="(cookies.data.servotheme =='bootstrap/5/servolight/bootstrap.min.css')">
                             <i class="fas fa-lightbulb fa-lg"></i>
+                            <i class="bi-sun bi-lg"></i>
                         </button>
                         <button id="themedark" class="btn btn-sm me-2 text-white" dmx-on:click="themedark.hide();cookies.set('servotheme','bootstrap/5/servodark/bootstrap.min.css',{expires: 30})" dmx-hide="(cookies.data.servotheme =='bootstrap/5/servodark/bootstrap.min.css')">
                             <i class="far fa-lightbulb fa-lg"></i>

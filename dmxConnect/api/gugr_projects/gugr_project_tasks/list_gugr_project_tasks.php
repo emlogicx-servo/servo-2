@@ -95,6 +95,10 @@ $app->define(<<<'JSON'
             {
               "table": "servo_project_tasks",
               "column": "task_description"
+            },
+            {
+              "table": "servo_project_tasks",
+              "column": "task_date_completed"
             }
           ],
           "params": [
@@ -156,7 +160,7 @@ $app->define(<<<'JSON'
               "primary": "user_id"
             }
           ],
-          "query": "select `servo_project_tasks`.`task_id`, `servo_project_tasks`.`task_start`, `servo_project_tasks`.`task_stop`, `servo_project_tasks`.`task_user_created`, `servo_project_tasks`.`task_user_concerned`, `servo_project_tasks`.`task_notes`, `servo_project_tasks`.`task_status`, `servo_project_tasks`.`task_date_created`, `userCreated`.`user_id` as `userCreatedID`, `userCreated`.`user_username` as `userCratedName`, `userConcerned`.`user_id` as `userConcernedID`, `userConcerned`.`user_username` as `userConcernedName`, `servo_project_tasks`.`task_description` from `servo_project_tasks` left join `servo_user` as `userCreated` on `userCreated`.`user_id` = `servo_project_tasks`.`task_user_created` left join `servo_user` as `userConcerned` on `userConcerned`.`user_id` = `servo_project_tasks`.`task_user_concerned` where `servo_project_tasks`.`task_user_concerned` = ? order by `servo_project_tasks`.`task_date_created` DESC, `servo_project_tasks`.`task_status` ASC",
+          "query": "select `servo_project_tasks`.`task_id`, `servo_project_tasks`.`task_start`, `servo_project_tasks`.`task_stop`, `servo_project_tasks`.`task_user_created`, `servo_project_tasks`.`task_user_concerned`, `servo_project_tasks`.`task_notes`, `servo_project_tasks`.`task_status`, `servo_project_tasks`.`task_date_created`, `userCreated`.`user_id` as `userCreatedID`, `userCreated`.`user_username` as `userCratedName`, `userConcerned`.`user_id` as `userConcernedID`, `userConcerned`.`user_username` as `userConcernedName`, `servo_project_tasks`.`task_description`, `servo_project_tasks`.`task_date_completed` from `servo_project_tasks` left join `servo_user` as `userCreated` on `userCreated`.`user_id` = `servo_project_tasks`.`task_user_created` left join `servo_user` as `userConcerned` on `userConcerned`.`user_id` = `servo_project_tasks`.`task_user_concerned` where `servo_project_tasks`.`task_user_concerned` = ? order by `servo_project_tasks`.`task_date_created` DESC, `servo_project_tasks`.`task_status` ASC",
           "wheres": {
             "condition": "AND",
             "rules": [
@@ -310,6 +314,10 @@ $app->define(<<<'JSON'
             {
               "type": "text",
               "name": "task_description"
+            },
+            {
+              "type": "datetime",
+              "name": "task_date_completed"
             }
           ]
         }

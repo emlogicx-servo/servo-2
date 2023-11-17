@@ -88,29 +88,30 @@
       </div>
   <div class="offcanvas offcanvas-end opacity-100" id="offcanvas2" is="dmx-bs5-offcanvas" tabindex="-1" style="max-width: 80% !important; opacity: 0.85 !important;  background: #0e1422 !important;">
 
-    <div class="offcanvas-body" style="oveflow-y: hidden;">
- <div class="col d-flex justify-content-evenly">
-       <div style="padding: 3px; margin-top: 15px">
+  <div class="offcanvas-body" style="oveflow-y: hidden;">
+    <div class="col d-flex justify-content-evenly">
+
+        <button id="btn4" class="btn bg-white bg-opacity-25 text-white" dmx-on:click="logout1.load();notifies1.warning('&quot;Logging Out&quot;');session_variables.removeAll();session1.removeAll(); browser1.goto('login.php')">
+
+          <i class="fa fa-power-off fa-sm"></i>
+        </button>
+  
+
         <button id="btn7" class="btn bg-white bg-opacity-25 text-white" data-bs-toggle="modal" data-bs-target="#shiftSelectModal" dmx-bind:disabled="(list_user_info.data.query_list_user_info.user_profile !== 'Admin')" dmx-on:click="list_shifts.load({})"><i class="fas fa-hourglass-half fa-sm" style="margin-right: 15px !important;"></i> {{list_user_shift_info.data.query_list_user_shift[0].servo_shifts_shift_id}}</button>
-      </div>
-      <div style="padding: 3px; margin-top: 15px">
-        <button id="btn3" class="btn bg-info text-white" dmx-on:click="browser1.goto(list_user_info.data.query_list_user_info.user_profile+'.php')" style="margin-right: 15px;"><i class="fas fa-home fa-sm"></i></button>
-      </div>
+      
+        <button id="btn3" class="btn bg-white bg-opacity-25 text-white" dmx-on:click="browser1.goto(list_user_info.data.query_list_user_info.user_profile+'.php')" style="">
+        <i class="fas fa-home fa-sm"></i>
+        </button>
 
-      <div style="padding: 3px; margin-top: 15px">
-        <button id="themelight" class="btn me-2 bg-primary text-light"  dmx-on:click="themedark.hide();cookies.set('servotheme','bootstrap/5/servolight/bootstrap.min.css',{expires: 30})" dmx-hide="(cookies.data.servotheme =='bootstrap/5/servolight/bootstrap.min.css')" style="margin-right: 15px;">
-            <i class="fas fa-lightbulb fa-sm"></i>
-          </button>
-          <button id="themedark" class="btn me-2 bg-info bg-opacity-25 text-white"  dmx-on:click="themedark.hide();cookies.set('servotheme','bootstrap/5/servodark/bootstrap.min.css',{expires: 30})" dmx-hide="(cookies.data.servotheme =='bootstrap/5/servodark/bootstrap.min.css')" style="margin-right: 15px;">
-            <i class="fas fa-lightbulb fa-sm"></i>
-          </button>        
-      </div>
-      <div style="padding: 3px; margin-top: 15px">    
-          <button id="btn4" class="btn me-2 bg-danger bg-opacity-25 text-danger" dmx-on:click="logout1.load();notifies1.warning('&quot;Logging Out&quot;');session_variables.removeAll();session1.removeAll(); browser1.goto('login.php')">
+        <button id="themelight" class="btn  text-warning rounded"  dmx-on:click="themedark.hide();cookies.set('servotheme','bootstrap/5/servolight/bootstrap.min.css',{expires: 30})" dmx-hide="(cookies.data.servotheme =='bootstrap/5/servolight/bootstrap.min.css')" style="">
+                <i class="fa fa-lightbulb fa-rotate-180"></i>
+        </button>
+              
+        <button id="themedark" class="btn text-white rounded"  dmx-on:click="themedark.hide();cookies.set('servotheme','bootstrap/5/servodark/bootstrap.min.css',{expires: 30})" dmx-hide="(cookies.data.servotheme =='bootstrap/5/servodark/bootstrap.min.css')" style="">
+            <i class="fa fa-lightbulb fa-rotate-180"></i>
+        </button>
 
-            <i class="fa fa-power-off fa-sm"></i>
-          </button>
-      </div>
+      
           </div>
       <div class="row" style="margin-top: 10px">
         <h6 class="text-white">
