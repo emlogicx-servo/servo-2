@@ -77,7 +77,8 @@ JSON
   <dmx-serverconnect id="readGuGrProject" url="dmxConnect/api/gugr_projects/gugr_projects/read_gugr_project.php" dmx-param:product_price_id="load_product_prices.data.query[0].product_price_id" dmx-param:project_id="" noload=""></dmx-serverconnect>
   <dmx-serverconnect id="deleteProjectFile" url="dmxConnect/api/gugr_projects/gugr_files/delete_project_file.php" dmx-param:product_price_id="load_product_prices.data.query[0].product_price_id" dmx-param:project_id="session1.data.current_project"></dmx-serverconnect>
   <dmx-serverconnect id="listGugrNotes" url="dmxConnect/api/gugr_projects/gugr_notes/list_gugr_project_notes.php" dmx-param:project_id="readGuGrProject.data.query_read_gugr_project.project_id"></dmx-serverconnect>
-  <dmx-serverconnect id="listGugrUserProjectTasks" url="dmxConnect/api/gugr_projects/gugr_project_tasks/list_gugr_project_tasks.php" dmx-param:offset="listGugrProjectTasks.data.offset_gugr_project_tasks" dmx-param:limit="gugrProjecTaskstLimit.value" dmx-param:user_concerned="list_user_info.data.query_list_user_info.user_id" dmx-param:sort="listGugrProjectTasks.data.sort_gugr_project_tasks" dmx-param:dir="listGugrProjectTasks.data.dir_gugr_project_tasks"></dmx-serverconnect>
+  <dmx-serverconnect id="listGugrUserProjectTasks" url="dmxConnect/api/gugr_projects/gugr_project_tasks/list_gugr_project_tasks.php" dmx-param:offset="listGugrProjectTasks.data.offset_gugr_project_tasks" dmx-param:limit="taskStatsModal.gugrProjecTaskstLimit.value" dmx-param:user_concerned="list_user_info.data.query_list_user_info.user_id" dmx-param:sort="listGugrProjectTasks.data.sort_gugr_project_tasks" dmx-param:dir="listGugrProjectTasks.data.dir_gugr_project_tasks"></dmx-serverconnect>
+  <dmx-serverconnect id="listGugrUserProjectTasksAll" url="dmxConnect/api/gugr_projects/gugr_project_tasks/list_gugr_project_tasks.php" dmx-param:offset="" dmx-param:limit="" dmx-param:user_concerned="list_user_info.data.query_list_user_info.user_id" dmx-param:sort="" dmx-param:dir=""></dmx-serverconnect>
 
   <dmx-value id="lang" dmx-bind:value="browser1.language"></dmx-value>
   <dmx-json-datasource id="trans" is="dmx-serverconnect" url="assets/translation/translation.JSON"></dmx-json-datasource>
@@ -389,7 +390,7 @@ JSON
                 <div class="modal-body">
                   <div class="row row-cols-12 mb-0 me-2 pt-2 pb-2">
                     <div class="col-sm-12 bg-opacity-10 bg-primary col-12 col-xxl-12 col-lg-12 col-xl-12 ms-2 me-2 pt-3 pb-2 pe-3">
-                      <form id="createProjectTaskForm" is="dmx-serverconnect-form" method="post" action="dmxConnect/api/gugr_projects/gugr_project_tasks/create_gugr_project_task.php" dmx-on:success="notifies1.success('Success!');listGugrUserProjectTasks.load({});createProjectTaskForm.reset()" dmx-on:error="notifies1.danger('Error!')">
+                      <form id="createProjectTaskForm" is="dmx-serverconnect-form" method="post" action="dmxConnect/api/gugr_projects/gugr_project_tasks/create_gugr_project_task.php" dmx-on:success="notifies1.success('Success!');listGugrUserProjectTasks.load({});listGugrUserProjectTasksAll.load({})createProjectTaskForm.reset()" dmx-on:error="notifies1.danger('Error!')">
                         <textarea id="taskDescription" name="task_description" type="text" class="form-control" style="height: 100px;"></textarea>
                         <input id="taskDateCreated" name="task_date_created" type="datetime-local" class="form-control visually-hidden" dmx-bind:value="dateTime.datetime">
                         <input id="taskStatus" name="task_status" class="form-control visually-hidden" dmx-bind:value="'Pending'">
@@ -520,25 +521,25 @@ JSON
               <i class="fas fa-chart-line"></i>
             </button>
           </div>
-          <div class="row mt-2 ps-2 pe-2">
+          <div class="row mt-2 ps-2 pe-2 row-cols-12">
 
 
-            <div class="col-auto col-xxl-auto col-xl-auto col-lg-auto col-md-auto">
+            <div class="col-xl-auto col-lg col-md col-xxl">
               <div class="mt-auto" style="max-width: 98% !important; width: 98% !important; overflow-x: overflow;">
 
 
 
 
-                <div class="row justify-content-start y-scroll flex-nowrap scrollable" style="height: auto; overflow: scroll;">
-                  <div class="col border-danger scrollable ms-1 ps-2">
+                <div class="row y-scroll flex-nowrap scrollable row-cols-7" style="height: auto; overflow: scroll;">
+                  <div class="border-danger scrollable ms-1 ps-2 w-25 col">
                     <div class="row rounded text-danger pt-2 pb-1">
                       <h5 dmx-text="trans.data.pending[lang.value]+': '+(list_order_items_shift_all.data.query.where(`order_item_group_type`, 'Ingredient', '!==')).count()" class="text-center fw-bold"></h5>
                     </div>
                     <div class="row scrollable">
-                      <div dmx-repeat:repeat1="listGugrUserProjectTasks.data.list_project_tasks_paged.data.where(`task_status`, 'Pending', '==')">
+                      <div dmx-repeat:repeat1="listGugrUserProjectTasksAll.data.list_project_tasks_all.where(`task_status`, 'Pending', '==')">
                         <main>
                           <div class="row justify-content-start" style="">
-                            <div class="col rounded-2 border-secondary execution-card shadow-none mt-1 mb-1 ms-3 me-2 pt-2 pb-3 ps-3 pe-3 bg-secondary" dmx-animate-enter.delay:500.duration:500="pulse" dmx-class:main-group-product="order_item_group_type=='Main'" dmx-class:accessory-product="order_item_group_type=='Accessory'">
+                            <div class="rounded-2 border-secondary execution-card shadow-none mt-1 mb-1 ms-3 me-2 pt-2 pb-3 ps-3 pe-3 bg-secondary col" dmx-animate-enter.delay:500.duration:500="pulse" dmx-class:main-group-product="order_item_group_type=='Main'" dmx-class:accessory-product="order_item_group_type=='Accessory'">
 
                               <div class="row">
 
@@ -585,13 +586,13 @@ JSON
                               </div>
                               <div class="row row-cols-12">
                                 <div class="d-flex justify-content-between col">
-                                  <form id="deletePersonalTask" is="dmx-serverconnect-form" method="post" action="dmxConnect/api/gugr_projects/gugr_project_tasks/delete_gugr_project_task.php" dmx-on:success="notifies1.success('Success');listGugrUserProjectTasks.load({})" onsubmit="return confirm ('Confirm Delete')">
+                                  <form id="deletePersonalTask" is="dmx-serverconnect-form" method="post" action="dmxConnect/api/gugr_projects/gugr_project_tasks/delete_gugr_project_task.php" dmx-on:success="notifies1.success('Success');listGugrUserProjectTasks.load({});listGugrUserProjectTasksAll.load({})" onsubmit="return confirm ('Confirm Delete')">
                                     <input id="text12" name="task_id" type="text" class="form-control visually-hidden" dmx-bind:value="task_id">
                                     <input id="text12" class="visually-hidden" name="task_date_completed" type="datetime-local" dmx-bind:value="dateTime.datetime">
                                     <button id="btn17" class="btn rounded me-3 text-muted rounded-9" type="submit">
                                       <i class="far fa-trash-alt"></i></button>
                                   </form>
-                                  <form id="updateTaskToActive" is="dmx-serverconnect-form" method="post" action="dmxConnect/api/gugr_projects/gugr_project_tasks/update_gugr_project_task_to_completed.php" dmx-on:success="notifies1.success('Success');listGugrUserProjectTasks.load({})">
+                                  <form id="updateTaskToActive" is="dmx-serverconnect-form" method="post" action="dmxConnect/api/gugr_projects/gugr_project_tasks/update_gugr_project_task_to_completed.php" dmx-on:success="notifies1.success('Success');listGugrUserProjectTasks.load({});listGugrUserProjectTasksAll.load({})">
                                     <input id="text91" name="task_status" type="text" class="form-control visually-hidden" dmx-bind:value="'Active'">
                                     <input id="text101" name="task_id" type="text" class="form-control visually-hidden" dmx-bind:value="task_id">
                                     <input id="text111" class="visually-hidden" name="task_date_completed" type="datetime-local" class="task_date_completed" dmx-bind:value="dateTime.datetime">
@@ -613,12 +614,12 @@ JSON
 
 
                   </div>
-                  <div class="col border-danger scrollable ms-1 ps-2">
+                  <div class="border-danger scrollable ms-1 ps-2 w-25 col">
                     <div class="row rounded text-danger pt-2 pb-1">
                       <h5 dmx-text="trans.data.Active[lang.value]+': '+(list_order_items_shift_all.data.query.where(`order_item_group_type`, 'Ingredient', '!==')).count()" class="text-center fw-bold"></h5>
                     </div>
                     <div class="row scrollable">
-                      <div dmx-repeat:repeat1="listGugrUserProjectTasks.data.list_project_tasks_paged.data.where(`task_status`, 'Active', '==')">
+                      <div dmx-repeat:repeat1="listGugrUserProjectTasksAll.data.list_project_tasks_all.where(`task_status`, 'Active', '==')">
                         <main>
                           <div class="row justify-content-start" style="">
                             <div class="col rounded-2 border-secondary execution-card shadow-none mt-1 mb-1 ms-3 me-2 pt-2 pb-3 ps-3 pe-3 bg-secondary" dmx-animate-enter.delay:500.duration:500="pulse" dmx-class:main-group-product="order_item_group_type=='Main'" dmx-class:accessory-product="order_item_group_type=='Accessory'">
@@ -668,14 +669,14 @@ JSON
                               </div>
                               <div class="row row-cols-12">
                                 <div class="d-flex justify-content-between col">
-                                  <form id="deletePersonalTask1" is="dmx-serverconnect-form" method="post" action="dmxConnect/api/gugr_projects/gugr_project_tasks/delete_gugr_project_task.php" dmx-on:success="notifies1.success('Success');listGugrUserProjectTasks.load({})" onsubmit="return confirm ('Confirm Delete')">
+                                  <form id="deletePersonalTask1" is="dmx-serverconnect-form" method="post" action="dmxConnect/api/gugr_projects/gugr_project_tasks/delete_gugr_project_task.php" dmx-on:success="notifies1.success('Success');listGugrUserProjectTasks.load({});listGugrUserProjectTasksAll.load({})" onsubmit="return confirm ('Confirm Delete')">
                                     <input id="text13" name="task_id" type="text" class="form-control visually-hidden" dmx-bind:value="task_id">
                                     <input id="text13" class="visually-hidden" name="task_date_completed" type="datetime-local" dmx-bind:value="dateTime.datetime">
                                     <button id="btn19" class="btn rounded me-3 text-muted rounded-9" type="submit">
                                       <i class="far fa-trash-alt"></i></button>
                                   </form>
-                                  <form id="updateTaskToActive1" is="dmx-serverconnect-form" method="post" action="dmxConnect/api/gugr_projects/gugr_project_tasks/update_gugr_project_task_to_completed.php" dmx-on:success="notifies1.success('Success');listGugrUserProjectTasks.load({})">
-                                    <input id="text13" name="task_status" type="text" class="form-control visually-hidden" dmx-bind:value="'Validated'">
+                                  <form id="updateTaskToActive1" is="dmx-serverconnect-form" method="post" action="dmxConnect/api/gugr_projects/gugr_project_tasks/update_gugr_project_task_to_completed.php" dmx-on:success="notifies1.success('Success');listGugrUserProjectTasks.load({});listGugrUserProjectTasksAll.load({})">
+                                    <input id="text13" name="task_status" type="text" class="form-control visually-hidden" dmx-bind:value="'Completed'">
                                     <input id="text13" name="task_id" type="text" class="form-control visually-hidden" dmx-bind:value="task_id">
                                     <input id="text13" class="visually-hidden" name="task_date_completed" type="datetime-local" dmx-bind:value="dateTime.datetime">
                                     <button id="btn19" class="btn text-danger bg-opacity-10 rounded" type="submit">
@@ -696,12 +697,12 @@ JSON
 
 
                   </div>
-                  <div class="col border-danger scrollable ms-1 ps-2">
+                  <div class="border-danger scrollable ms-1 ps-2 w-25 col">
                     <div class="row rounded text-danger pt-2 pb-1">
                       <h5 dmx-text="trans.data.Completed[lang.value]+': '+(list_order_items_shift_all.data.query.where(`order_item_group_type`, 'Ingredient', '!==')).count()" class="text-center fw-bold"></h5>
                     </div>
                     <div class="row scrollable">
-                      <div dmx-repeat:repeat1="listGugrUserProjectTasks.data.list_project_tasks_paged.data.where(`task_status`, 'Completed', '==')">
+                      <div dmx-repeat:repeat1="listGugrUserProjectTasksAll.data.list_project_tasks_all.where(`task_status`, 'Completed', '==')">
                         <main>
                           <div class="row justify-content-start" style="">
                             <div class="col rounded-2 border-secondary execution-card shadow-none mt-1 mb-1 ms-3 me-2 pt-2 pb-3 ps-3 pe-3 bg-secondary" dmx-animate-enter.delay:500.duration:500="pulse" dmx-class:main-group-product="order_item_group_type=='Main'" dmx-class:accessory-product="order_item_group_type=='Accessory'">
@@ -751,14 +752,14 @@ JSON
                               </div>
                               <div class="row row-cols-12">
                                 <div class="d-flex justify-content-between col">
-                                  <form id="deletePersonalTask2" is="dmx-serverconnect-form" method="post" action="dmxConnect/api/gugr_projects/gugr_project_tasks/delete_gugr_project_task.php" dmx-on:success="notifies1.success('Success');listGugrUserProjectTasks.load({})" onsubmit="return confirm ('Confirm Delete')">
+                                  <form id="deletePersonalTask2" is="dmx-serverconnect-form" method="post" action="dmxConnect/api/gugr_projects/gugr_project_tasks/delete_gugr_project_task.php" dmx-on:success="notifies1.success('Success');listGugrUserProjectTasks.load({});listGugrUserProjectTasksAll.load({})" onsubmit="return confirm ('Confirm Delete')">
                                     <input id="text14" name="task_id" type="text" class="form-control visually-hidden" dmx-bind:value="task_id">
                                     <input id="text14" class="visually-hidden" name="task_date_completed" type="datetime-local" dmx-bind:value="dateTime.datetime">
                                     <button id="btn20" class="btn rounded me-3 text-muted rounded-9" type="submit">
                                       <i class="far fa-trash-alt"></i></button>
                                   </form>
-                                  <form id="updateTaskToActive2" is="dmx-serverconnect-form" method="post" action="dmxConnect/api/gugr_projects/gugr_project_tasks/update_gugr_project_task_to_completed.php" dmx-on:success="notifies1.success('Success');listGugrUserProjectTasks.load({})">
-                                    <input id="text14" name="task_status" type="text" class="form-control visually-hidden" dmx-bind:value="'Active'">
+                                  <form id="updateTaskToActive2" is="dmx-serverconnect-form" method="post" action="dmxConnect/api/gugr_projects/gugr_project_tasks/update_gugr_project_task_to_completed.php" dmx-on:success="notifies1.success('Success');listGugrUserProjectTasks.load({});listGugrUserProjectTasksAll.load({})">
+                                    <input id="text14" name="task_status" type="text" class="form-control visually-hidden" dmx-bind:value="'Validated'">
                                     <input id="text14" name="task_id" type="text" class="form-control visually-hidden" dmx-bind:value="task_id">
                                     <input id="text14" class="visually-hidden" name="task_date_completed" type="datetime-local" dmx-bind:value="dateTime.datetime">
                                     <button id="btn20" class="btn text-danger bg-opacity-10 rounded" type="submit">

@@ -323,7 +323,8 @@ $app->define(<<<'JSON'
             ]
           }
         ],
-        "outputType": "object"
+        "outputType": "object",
+        "disabled": true
       },
       {
         "name": "list_project_tasks_all",
