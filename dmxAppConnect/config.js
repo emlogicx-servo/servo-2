@@ -2226,6 +2226,120 @@ dmx.config({
     "tableRepeat1": {
       "meta": [
         {
+          "name": "$index",
+          "type": "number"
+        },
+        {
+          "name": "$key",
+          "type": "text"
+        },
+        {
+          "name": "$value",
+          "type": "object"
+        },
+        {
+          "type": "number",
+          "name": "project_id"
+        },
+        {
+          "type": "text",
+          "name": "project_code"
+        },
+        {
+          "type": "number",
+          "name": "project_user_created"
+        },
+        {
+          "type": "text",
+          "name": "project_status"
+        },
+        {
+          "type": "datetime",
+          "name": "project_date_created"
+        },
+        {
+          "type": "datetime",
+          "name": "project_date_due"
+        },
+        {
+          "type": "number",
+          "name": "project_step_id"
+        },
+        {
+          "type": "text",
+          "name": "step_status"
+        },
+        {
+          "type": "datetime",
+          "name": "step_end_date"
+        },
+        {
+          "type": "text",
+          "name": "step_description"
+        }
+      ],
+      "outputType": "array"
+    },
+    "tableRepeat5": {
+      "meta": [
+        {
+          "type": "number",
+          "name": "project_id"
+        },
+        {
+          "type": "text",
+          "name": "project_code"
+        },
+        {
+          "type": "number",
+          "name": "project_user_created"
+        },
+        {
+          "type": "text",
+          "name": "project_status"
+        },
+        {
+          "type": "datetime",
+          "name": "project_date_created"
+        },
+        {
+          "type": "datetime",
+          "name": "project_date_due"
+        },
+        {
+          "type": "number",
+          "name": "project_step_id"
+        },
+        {
+          "type": "text",
+          "name": "step_status"
+        },
+        {
+          "type": "datetime",
+          "name": "step_end_date"
+        },
+        {
+          "type": "text",
+          "name": "step_description"
+        }
+      ],
+      "outputType": "array"
+    },
+    "tableRepeat6": {
+      "meta": [
+        {
+          "name": "$index",
+          "type": "number"
+        },
+        {
+          "name": "$key",
+          "type": "text"
+        },
+        {
+          "name": "$value",
+          "type": "object"
+        },
+        {
           "type": "number",
           "name": "project_id"
         },
@@ -2251,6 +2365,10 @@ dmx.config({
         },
         {
           "type": "text",
+          "name": "project_notes"
+        },
+        {
+          "type": "text",
           "name": "project_code"
         },
         {
@@ -2264,6 +2382,95 @@ dmx.config({
         {
           "type": "text",
           "name": "userConcerned_username"
+        },
+        {
+          "type": "text",
+          "name": "user_fname"
+        },
+        {
+          "type": "text",
+          "name": "user_lname"
+        },
+        {
+          "type": "text",
+          "name": "user_username"
+        }
+      ],
+      "outputType": "array"
+    },
+    "tableRepeat2": {
+      "meta": [
+        {
+          "name": "$index",
+          "type": "number"
+        },
+        {
+          "name": "$key",
+          "type": "text"
+        },
+        {
+          "name": "$value",
+          "type": "object"
+        },
+        {
+          "type": "number",
+          "name": "project_id"
+        },
+        {
+          "type": "number",
+          "name": "project_user_created"
+        },
+        {
+          "type": "text",
+          "name": "user_profile"
+        },
+        {
+          "type": "text",
+          "name": "project_status"
+        },
+        {
+          "type": "datetime",
+          "name": "project_date_created"
+        },
+        {
+          "type": "datetime",
+          "name": "project_date_due"
+        },
+        {
+          "type": "text",
+          "name": "project_notes"
+        },
+        {
+          "type": "text",
+          "name": "project_code"
+        },
+        {
+          "type": "text",
+          "name": "userConcerned_fname"
+        },
+        {
+          "type": "text",
+          "name": "userConcerned_lname"
+        },
+        {
+          "type": "text",
+          "name": "userConcerned_username"
+        },
+        {
+          "type": "text",
+          "name": "user_fname"
+        },
+        {
+          "type": "text",
+          "name": "user_lname"
+        },
+        {
+          "type": "text",
+          "name": "user_username"
+        },
+        {
+          "type": "text",
+          "name": "project_type"
         }
       ],
       "outputType": "array"

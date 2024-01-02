@@ -65,9 +65,9 @@
   </div>
 
   <main>
-    <div id="top-bar" class="row row-cols-12 justify-content-xl-between justify-content-between mt-2 me-0 ps-0 pe-1 bg-light rounded shadow-sm">
+    <div id="top-bar" class="row row-cols-12 justify-content-xl-between justify-content-between mt-2 me-0 ps-0 pe-1">
 
-      <div class="justify-content-lg-start col-8 justify-content-start my-auto" style="padding-left: 10px;">
+      <div class="justify-content-lg-start col-8 justify-content-start my-auto" style="padding-left: 3px;">
 
         <button id="btn1" class="btn gy-0 btn-sm text-start" dmx-on:click="offcanvas1.toggle()" dmx-show="(list_user_info.data.query_list_user_info.user_profile == 'Admin')" style="margin-left: 2px !important; font-size:17px; "><i class="fas fa-th fa-1.5x" style="" dmx-animate-enter="pulse"></i></button>
         <span class="" style="font-family:'Josefin-Sans'; margin-left: 5px; font-size:15px;">SERVO</span>
@@ -287,6 +287,8 @@
   $(document).ready(
     function()
     {
+
+
     // change modal close button
 
         $("<i class='bi bi-x text-body btn-close' style='font-size: 30px; float: right;'></i>").appendTo(".btn-close");

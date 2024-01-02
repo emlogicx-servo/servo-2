@@ -102,7 +102,7 @@ JSON
         </div>
 
         <div class="style13 page-button offset-0 offset-sm-1 offset-md-2 col-sm" id="pagebuttons">
-          <button id="btn1" class="btn style12 text-white fw-bold shadow-none" data-bs-toggle="modal" data-bs-target="#createItemModal" style="background: #47d92e !important; float: right;" dmx-hide="list_user_info.data.query_list_user_info.user_profile!=='gugr-reception'&amp;&amp;list_user_info.data.query_list_user_info.user_profile!=='gugr-admin'"><i class="fas fa-plus style14 fa-lg"></i> {{trans.data.createQuery[lang.value]}}</button>
+          <button id="btn1" class="btn style12 text-white fw-bold shadow-none" data-bs-toggle="modal" data-bs-target="#createItemModal" style="background: #47d92e !important; float: right;" dmx-hide="list_user_info.data.query_list_user_info.user_profile!=='gugr-reception'&amp;&amp;list_user_info.data.query_list_user_info.user_profile!=='gugr-admin'&amp;&amp;list_user_info.data.query_list_user_info.user_profile!=='gugr-cordo'"><i class="fas fa-plus style14 fa-lg"></i> {{trans.data.createQuery[lang.value]}}</button>
         </div>
       </div>
       <ul class="nav nav-tabs nav-fill" id="navTabs1_tabs" role="tablist">
@@ -112,14 +112,16 @@ JSON
             {{trans.data.myAssignments[lang.value]}}<span class="badge rounded-pill bg-danger" dmx-html="listGugrProjectsSteps.data.query_list_gugr_projects.data.where(`step_status`, 'Pending', '==').count()" style="margin-left: 5px;">New</span></a>
         </li>
         <li class="nav-item" dmx-hide="list_user_info.data.query_list_user_info.user_profile!=='gugr-cordo'">
-          <a class="nav-link" id="navTabs1_1_tab2" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_1" role="tab" aria-controls="navTabs1_1" aria-selected="true"><i class="far fa-eye" style="margin-right: 5px;"></i>
+          <a class="nav-link" id="navTabs1_1_tab2" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_2" role="tab" aria-controls="navTabs1_1" aria-selected="true"><i class="far fa-eye" style="margin-right: 5px;"></i>
 
             {{trans.data.allAssignments[lang.value]}}<span class="badge rounded-pill bg-success" dmx-html="listGugrProjectsStepsAll.data.query_list_gugr_projects.data.count()" style="margin-left: 5px;">New</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" id="navTabs1_1_tab" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_11" role="tab" aria-controls="navTabs1_1" aria-selected="true"><i class="fas fa-folder" style="margin-right: 5px;"></i>
+          <a class="nav-link" id="navTabs1_1_tab" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_11" role="tab" aria-controls="navTabs1_1" aria-selected="true"><i class="fas fa-copy" style="margin-right: 5px;"></i>
             {{trans.data.queries[lang.value]}}</a>
         </li>
+        <li class="nav-item"><a class="nav-link" id="navTabs1_1_tab4" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_4" role="tab" aria-controls="navTabs1_1" aria-selected="true"><i class="fas fa-folder-open" style="margin-right: 5px;"></i>
+            {{trans.data.projects[lang.value]}}</a></li>
         <li class="nav-item"><a class="nav-link" id="navTabs1_1_tab3" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_3" role="tab" aria-controls="navTabs1_1" aria-selected="true"><i class="far fa-calendar-check" style="margin-right: 5px;"></i>
             {{trans.data.myTasks[lang.value]}}</a></li>
 
@@ -199,17 +201,13 @@ JSON
 
             <div class="col-lg-8">
               <div class="row">
-
-                <div class="col">
-                </div>
-              </div>
-              <div class="row">
                 <div class="col bg-light me-2 rounded rounded-2">
                   <div class="table-responsive">
                     <table class="table table-hover">
                       <thead class="text-center">
                         <tr>
                           <th>#</th>
+                          <th> {{trans.data.user[lang.value]}}</th>
                           <th>{{trans.data.query[lang.value]}}</th>
                           <th>{{trans.data.status[lang.value]}}</th>
                           <th>{{trans.data.dateTime[lang.value]}}</th>
@@ -220,6 +218,7 @@ JSON
                       <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="listGugrProjectsStepsAll.data.query_list_gugr_projects.data" id="tableRepeat1">
                         <tr class="text-center">
                           <td dmx-text="project_id"></td>
+                          <td dmx-text="user_fname+' '+user_lname"></td>
                           <td dmx-text="project_code"></td>
                           <td>
                             <h6 dmx-text="trans.data.getValueOrKey(step_status)[lang.value]" dmx-class:green-state="step_status=='Completed'" class="fw-bold" dmx-class:yellow-state="step_status=='Active'" dmx-class:red-state="step_status=='Pending'" style="/* padding-left: 5px */ text-align: center;"></h6>
@@ -272,19 +271,19 @@ JSON
                 <div class="col-xxl-4 flex-sm-wrap col-md flex-md-wrap flex-lg-wrap col-lg col-sm-auto col-auto offset-lg-1 col-lg-8 offset-xl-1 col-xl-8" style="">
                   <ul class="pagination" dmx-populate="listGugrProjects.data.query_list_gugr_projects" dmx-state="list_gugr_projects" dmx-offset="offset_gugr_projects" dmx-generator="bs5paging">
                     <li class="page-item" dmx-class:disabled="listGugrProjects.data.query_list_gugr_projects.page.current == 1" aria-label="First">
-                      <a href="javascript:void(0)" class="page-link" dmx-on:click="list_gugr_projects.set('offset_gugr_projects',listGugrProjects.data.query_list_gugr_projects.page.offset.first)"><span aria-hidden="true">&lsaquo;&lsaquo;</span></a>
+                      <a href="javascript:void(0)" class="page-link" dmx-on:click="list_gugr_projects.set('offset_gugr_projects',listGugrProjects.data.query_list_gugr_projects.page.offset.first)"><span aria-hidden="true">‹‹</span></a>
                     </li>
                     <li class="page-item" dmx-class:disabled="listGugrProjects.data.query_list_gugr_projects.page.current == 1" aria-label="Previous">
-                      <a href="javascript:void(0)" class="page-link" dmx-on:click="list_gugr_projects.set('offset_gugr_projects',listGugrProjects.data.query_list_gugr_projects.page.offset.prev)"><span aria-hidden="true">&lsaquo;</span></a>
+                      <a href="javascript:void(0)" class="page-link" dmx-on:click="list_gugr_projects.set('offset_gugr_projects',listGugrProjects.data.query_list_gugr_projects.page.offset.prev)"><span aria-hidden="true">‹</span></a>
                     </li>
                     <li class="page-item" dmx-class:active="title == listGugrProjects.data.query_list_gugr_projects.page.current" dmx-class:disabled="!active" dmx-repeat="listGugrProjects.data.query_list_gugr_projects.getServerConnectPagination(2,1,'...')">
                       <a href="javascript:void(0)" class="page-link" dmx-on:click="list_gugr_projects.set('offset_gugr_projects',(page-1)*listGugrProjects.data.query_list_gugr_projects.limit)">{{title}}</a>
                     </li>
                     <li class="page-item" dmx-class:disabled="listGugrProjects.data.query_list_gugr_projects.page.current ==  listGugrProjects.data.query_list_gugr_projects.page.total" aria-label="Next">
-                      <a href="javascript:void(0)" class="page-link" dmx-on:click="list_gugr_projects.set('offset_gugr_projects',listGugrProjects.data.query_list_gugr_projects.page.offset.next)"><span aria-hidden="true">&rsaquo;</span></a>
+                      <a href="javascript:void(0)" class="page-link" dmx-on:click="list_gugr_projects.set('offset_gugr_projects',listGugrProjects.data.query_list_gugr_projects.page.offset.next)"><span aria-hidden="true">›</span></a>
                     </li>
                     <li class="page-item" dmx-class:disabled="listGugrProjects.data.query_list_gugr_projects.page.current ==  listGugrProjects.data.query_list_gugr_projects.page.total" aria-label="Last">
-                      <a href="javascript:void(0)" class="page-link" dmx-on:click="list_gugr_projects.set('offset_gugr_projects',listGugrProjects.data.query_list_gugr_projects.page.offset.last)"><span aria-hidden="true">&rsaquo;&rsaquo;</span></a>
+                      <a href="javascript:void(0)" class="page-link" dmx-on:click="list_gugr_projects.set('offset_gugr_projects',listGugrProjects.data.query_list_gugr_projects.page.offset.last)"><span aria-hidden="true">››</span></a>
                     </li>
                   </ul>
                 </div>
@@ -327,7 +326,7 @@ JSON
                           <th class="sorting" dmx-on:click="list_gugr_projects.set('sort_gugr_projects','userConcerned_username');list_gugr_projects.set('dir_gugr_projects',list_gugr_projects.data.dir_gugr_projects == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="list_gugr_projects.data.sort_gugr_projects=='userConcerned_username' &amp;&amp; list_gugr_projects.data.dir_gugr_projects == 'asc'" dmx-class:sorting_desc="list_gugr_projects.data.sort_gugr_projects=='userConcerned_username' &amp;&amp; list_gugr_projects.data.dir_gugr_projects == 'desc'"></th>
                         </tr>
                       </thead>
-                      <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="listGugrProjects.data.query_list_gugr_projects.data" id="tableRepeat2" dmx-state="list_gugr_projects" dmx-sort="sort_gugr_projects" dmx-order="dir_gugr_projects">
+                      <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="listGugrProjects.data.query_list_gugr_projects.data.where(`project_type`, 'Query', '==')" id="tableRepeat2" dmx-state="list_gugr_projects" dmx-sort="sort_gugr_projects" dmx-order="dir_gugr_projects">
                         <tr>
                           <td dmx-text="project_id"></td>
                           <td dmx-text="project_code"></td>
@@ -338,13 +337,130 @@ JSON
 
                           </td>
                           <td dmx-text="project_date_created"></td>
-                          <td dmx-class:red-state="project_date_due&gt;=dateTime.datetime">
-                            <p dmx-text="project_date_due" dmx-class:red-state="project_date_due&lt;=dateTime.datetime" class="pt-1 pb-1 ps-2 pe-1 fw-bold text-body">Fancy display heading</p>
+                          <td dmx-class:red-state="project_date_due>=dateTime.datetime">
+                            <p dmx-text="project_date_due" dmx-class:red-state="project_date_due<=dateTime.datetime" class="pt-1 pb-1 ps-2 pe-1 fw-bold text-body">Fancy display heading</p>
                           </td>
 
                           <td dmx-text="userConcerned_username"></td>
                           <td>
                             <button id="btn2" class="btn text-body" data-bs-toggle="modal" data-bs-target="#readItemModal" dmx-on:click="session1.set('current_project',project_id);readGuGrProject.load({project_id: project_id});listGugrProjectsFiles.load({project_id: project_id});listGugrProjectSteps.load({project_id: project_id})">
+                              <i class="far fa-edit"></i></button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+
+                </div>
+              </div>
+            </div>
+            <div class="col-lg d-flex visually-hidden">
+              <div class="row"></div>
+              <h2>{{trans.data.overview[lang.value]}}</h2>
+              <h5>{{trans.data.Active[lang.value]}}</h5>
+
+              <div class="d-block">
+                <h4 dmx-text="listGugrProjects.data.query_stats[0].Active+'  '"></h4>
+              </div>
+              <div class="d-block">
+                <h4 dmx-text="listGugrProjects.data.query_stats[0].Active+'  '"></h4>
+              </div>
+              <div class="d-block">
+                <h4 dmx-text="listGugrProjects.data.query_stats[0].Active+'  '"></h4>
+              </div>
+            </div>
+
+          </div>
+
+
+
+
+
+        </div>
+        <div class="tab-pane fade mt-3 scrollable" id="navTabs1_4" role="tabpanel">
+          <div class="row">
+
+            <div class="col-lg-8">
+              <div class="row justify-content-between justify-content-sm-between justify-content-md-between justify-content-lg-between justify-content-xl-between justify-content-xxl-between mb-xl-2 mb-2 sorter shadow-none bg-light">
+                <div class="col-xxl-3 col-12 col-sm-12 col-lg-3"><input id="gugrProjectFilter1" name="text1" type="text" class="form-control mb-2 form-control-sm" dmx-bind:placeholder="trans.data.search[lang.value]+'  '"></div>
+
+                <div class="col-xxl-4 flex-sm-wrap col-md flex-md-wrap flex-lg-wrap col-lg col-sm-auto col-auto offset-lg-1 col-lg-8 offset-xl-1 col-xl-8" style="">
+                  <ul class="pagination" dmx-populate="listGugrProjects.data.query_list_gugr_projects" dmx-state="list_gugr_projects" dmx-offset="offset_gugr_projects" dmx-generator="bs5paging">
+                    <li class="page-item" dmx-class:disabled="listGugrProjects.data.query_list_gugr_projects.page.current == 1" aria-label="First">
+                      <a href="javascript:void(0)" class="page-link" dmx-on:click="list_gugr_projects.set('offset_gugr_projects',listGugrProjects.data.query_list_gugr_projects.page.offset.first)"><span aria-hidden="true">‹‹</span></a>
+                    </li>
+                    <li class="page-item" dmx-class:disabled="listGugrProjects.data.query_list_gugr_projects.page.current == 1" aria-label="Previous">
+                      <a href="javascript:void(0)" class="page-link" dmx-on:click="list_gugr_projects.set('offset_gugr_projects',listGugrProjects.data.query_list_gugr_projects.page.offset.prev)"><span aria-hidden="true">‹</span></a>
+                    </li>
+                    <li class="page-item" dmx-class:active="title == listGugrProjects.data.query_list_gugr_projects.page.current" dmx-class:disabled="!active" dmx-repeat="listGugrProjects.data.query_list_gugr_projects.getServerConnectPagination(2,1,'...')">
+                      <a href="javascript:void(0)" class="page-link" dmx-on:click="list_gugr_projects.set('offset_gugr_projects',(page-1)*listGugrProjects.data.query_list_gugr_projects.limit)">{{title}}</a>
+                    </li>
+                    <li class="page-item" dmx-class:disabled="listGugrProjects.data.query_list_gugr_projects.page.current ==  listGugrProjects.data.query_list_gugr_projects.page.total" aria-label="Next">
+                      <a href="javascript:void(0)" class="page-link" dmx-on:click="list_gugr_projects.set('offset_gugr_projects',listGugrProjects.data.query_list_gugr_projects.page.offset.next)"><span aria-hidden="true">›</span></a>
+                    </li>
+                    <li class="page-item" dmx-class:disabled="listGugrProjects.data.query_list_gugr_projects.page.current ==  listGugrProjects.data.query_list_gugr_projects.page.total" aria-label="Last">
+                      <a href="javascript:void(0)" class="page-link" dmx-on:click="list_gugr_projects.set('offset_gugr_projects',listGugrProjects.data.query_list_gugr_projects.page.offset.last)"><span aria-hidden="true">››</span></a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-auto col-xxl col-sm-5 col-md-4 col-lg-3 col-xl-2 col-xxl-2 col-4"><select id="gugrProjectStatusFilter1" class="form-select" name="gugrProjectStatusFilter2">
+                    <option selected="" value="">-----</option>
+                    <option value="Pending">Registered</option>
+                    <option value="Active">Active</option>
+                    <option value="Completed">Closed</option>
+                  </select></div>
+                <div class="col-md-2 col-sm-2 col-3 offset-lg-2 col-lg-3 col-xl-2 offset-xl-1 offset-sm-1"><select id="gugrProjectLimit1" class="form-select" name="product_category_sort_limit2">
+                    <option value="5">5</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                    <option value="''">{{trans.data.all[lang.value]}}</option>
+                  </select></div>
+                <div class="col-md-2 col-sm-2 col-3 offset-lg-2 col-lg-3 col-xl-2 offset-xl-1">
+                  <button id="btn22" class="btn bg-success text-white" data-bs-toggle="modal" data-bs-target="#createProject">&nbsp;{{trans.data.createProject[lang.value]}}</button>
+                </div>
+              </div>
+              <div class="row">
+
+                <div class="col">
+                  <h5>{{trans.data.total[lang.value]}} : {{list_item_products.data.query_list_products.total}}&nbsp;</h5>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col bg-light me-2 rounded rounded-2">
+                  <div class="table-responsive" id="projectsTable1">
+                    <table class="table table-hover table-sm">
+                      <thead>
+                        <tr>
+                          <th class="sorting" dmx-on:click="list_gugr_projects.set('sort_gugr_projects','project_id');list_gugr_projects.set('dir_gugr_projects',list_gugr_projects.data.dir_gugr_projects == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="list_gugr_projects.data.sort_gugr_projects=='project_id' &amp;&amp; list_gugr_projects.data.dir_gugr_projects == 'asc'" dmx-class:sorting_desc="list_gugr_projects.data.sort_gugr_projects=='project_id' &amp;&amp; list_gugr_projects.data.dir_gugr_projects == 'desc'">{{trans.data.project[lang.value]}}</th>
+                          <th class="sorting" dmx-on:click="list_gugr_projects.set('sort_gugr_projects','project_code');list_gugr_projects.set('dir_gugr_projects',list_gugr_projects.data.dir_gugr_projects == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="list_gugr_projects.data.sort_gugr_projects=='project_code' &amp;&amp; list_gugr_projects.data.dir_gugr_projects == 'asc'" dmx-class:sorting_desc="list_gugr_projects.data.sort_gugr_projects=='project_code' &amp;&amp; list_gugr_projects.data.dir_gugr_projects == 'desc'">{{trans.data.expeditor[lang.value]}}</th>
+                          <th class="sorting" dmx-on:click="list_gugr_projects.set('sort_gugr_projects','user_username');list_gugr_projects.set('dir_gugr_projects',list_gugr_projects.data.dir_gugr_projects == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="list_gugr_projects.data.sort_gugr_projects=='user_username' &amp;&amp; list_gugr_projects.data.dir_gugr_projects == 'asc'" dmx-class:sorting_desc="list_gugr_projects.data.sort_gugr_projects=='user_username' &amp;&amp; list_gugr_projects.data.dir_gugr_projects == 'desc'">{{trans.data.username[lang.value]}}</th>
+                          <th class="sorting" dmx-on:click="list_gugr_projects.set('sort_gugr_projects','project_status');list_gugr_projects.set('dir_gugr_projects',list_gugr_projects.data.dir_gugr_projects == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="list_gugr_projects.data.sort_gugr_projects=='project_status' &amp;&amp; list_gugr_projects.data.dir_gugr_projects == 'asc'" dmx-class:sorting_desc="list_gugr_projects.data.sort_gugr_projects=='project_status' &amp;&amp; list_gugr_projects.data.dir_gugr_projects == 'desc'">{{trans.data.status[lang.value]}}</th>
+                          <th class="sorting" dmx-on:click="list_gugr_projects.set('sort_gugr_projects','project_date_created');list_gugr_projects.set('dir_gugr_projects',list_gugr_projects.data.dir_gugr_projects == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="list_gugr_projects.data.sort_gugr_projects=='project_date_created' &amp;&amp; list_gugr_projects.data.dir_gugr_projects == 'asc'" dmx-class:sorting_desc="list_gugr_projects.data.sort_gugr_projects=='project_date_created' &amp;&amp; list_gugr_projects.data.dir_gugr_projects == 'desc'">{{trans.data.dateCreated[lang.value]}}</th>
+                          <th class="sorting" dmx-on:click="list_gugr_projects.set('sort_gugr_projects','project_date_due');list_gugr_projects.set('dir_gugr_projects',list_gugr_projects.data.dir_gugr_projects == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="list_gugr_projects.data.sort_gugr_projects=='project_date_due' &amp;&amp; list_gugr_projects.data.dir_gugr_projects == 'asc'" dmx-class:sorting_desc="list_gugr_projects.data.sort_gugr_projects=='project_date_due' &amp;&amp; list_gugr_projects.data.dir_gugr_projects == 'desc'">{{trans.data.dateDue[lang.value]}}</th>
+
+                          <th class="sorting" dmx-on:click="list_gugr_projects.set('sort_gugr_projects','userConcerned_username');list_gugr_projects.set('dir_gugr_projects',list_gugr_projects.data.dir_gugr_projects == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="list_gugr_projects.data.sort_gugr_projects=='userConcerned_username' &amp;&amp; list_gugr_projects.data.dir_gugr_projects == 'asc'" dmx-class:sorting_desc="list_gugr_projects.data.sort_gugr_projects=='userConcerned_username' &amp;&amp; list_gugr_projects.data.dir_gugr_projects == 'desc'">{{trans.data.attention[lang.value]}}</th>
+                          <th class="sorting" dmx-on:click="list_gugr_projects.set('sort_gugr_projects','userConcerned_username');list_gugr_projects.set('dir_gugr_projects',list_gugr_projects.data.dir_gugr_projects == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="list_gugr_projects.data.sort_gugr_projects=='userConcerned_username' &amp;&amp; list_gugr_projects.data.dir_gugr_projects == 'asc'" dmx-class:sorting_desc="list_gugr_projects.data.sort_gugr_projects=='userConcerned_username' &amp;&amp; list_gugr_projects.data.dir_gugr_projects == 'desc'"></th>
+                        </tr>
+                      </thead>
+                      <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="listGugrProjects.data.query_list_gugr_projects.data.where(`project_type`, 'Work Order', '==')" id="tableRepeat6" dmx-state="list_gugr_projects" dmx-sort="sort_gugr_projects" dmx-order="dir_gugr_projects">
+                        <tr>
+                          <td dmx-text="project_id"></td>
+                          <td dmx-text="project_notes"></td>
+                          <td dmx-text="user_username"></td>
+                          <td>
+                            <h6 dmx-text="trans.data.getValueOrKey(project_status)[lang.value]" dmx-class:green-state="project_status=='Completed'" class="fw-bold pt-1 pb-1 ps-1 pe-1" dmx-class:yellow-state="project_status=='Active'" dmx-class:red-state="project_status=='Pending'" style="/* padding-left: 5px */ text-align: center;">Fancy display heading</h6>
+
+                          </td>
+                          <td dmx-text="project_date_created"></td>
+                          <td dmx-class:red-state="project_date_due>=dateTime.datetime">
+                            <p dmx-text="project_date_due" dmx-class:red-state="project_date_due<=dateTime.datetime" class="pt-1 pb-1 ps-2 pe-1 fw-bold text-body">Fancy display heading</p>
+                          </td>
+
+                          <td dmx-text="userConcerned_username"></td>
+                          <td>
+                            <button id="btn21" class="btn text-body" data-bs-toggle="modal" data-bs-target="#readItemModalProject" dmx-on:click="session1.set('current_project',project_id);readGuGrProject.load({project_id: project_id});listGugrProjectsFiles.load({project_id: project_id});listGugrProjectSteps.load({project_id: project_id})">
                               <i class="far fa-edit"></i></button>
                           </td>
                         </tr>
@@ -390,12 +506,13 @@ JSON
                 <div class="modal-body">
                   <div class="row row-cols-12 mb-0 me-2 pt-2 pb-2">
                     <div class="col-sm-12 bg-opacity-10 bg-primary col-12 col-xxl-12 col-lg-12 col-xl-12 ms-2 me-2 pt-3 pb-2 pe-3">
-                      <form id="createProjectTaskForm" is="dmx-serverconnect-form" method="post" action="dmxConnect/api/gugr_projects/gugr_project_tasks/create_gugr_project_task.php" dmx-on:success="notifies1.success('Success!');listGugrUserProjectTasks.load({});listGugrUserProjectTasksAll.load({})createProjectTaskForm.reset()" dmx-on:error="notifies1.danger('Error!')">
+                      <form id="createProjectTaskForm" is="dmx-serverconnect-form" method="post" action="dmxConnect/api/gugr_projects/gugr_project_tasks/create_gugr_project_task.php" dmx-on:success="notifies1.success('Success!');listGugrUserProjectTasks.load({});listGugrUserProjectTasksAll.load({});createProjectTaskForm.reset()" dmx-on:error="notifies1.danger('Error!')">
                         <textarea id="taskDescription" name="task_description" type="text" class="form-control" style="height: 100px;"></textarea>
                         <input id="taskDateCreated" name="task_date_created" type="datetime-local" class="form-control visually-hidden" dmx-bind:value="dateTime.datetime">
                         <input id="taskStatus" name="task_status" class="form-control visually-hidden" dmx-bind:value="'Pending'">
                         <input id="taskUserCreated" name="task_user_created" class="form-control visually-hidden" dmx-bind:value="list_user_info.data.query_list_user_info.user_id" type="number">
                         <input id="taskUserConcerned" name="task_user_concerned" class="form-control visually-hidden" dmx-bind:value="list_user_info.data.query_list_user_info.user_id" type="number">
+                        <input id="taskProject" name="task_project" class="form-control visually-hidden" dmx-bind:value="list_user_info.data.query_list_user_info.user_id" type="number">
                         <div class="row justify-content-end mt-1 ps-2 pe-2">
                           <small class="text-muted">{{trans.data.createNewTAsk[lang.value]}}</small>
                           <button id="btn15" class="btn mt-1 mb-2 w-25 btn-primary visually-hidden" type="submit">
@@ -430,19 +547,19 @@ JSON
                     <div class="flex-sm-wrap flex-md-wrap flex-lg-wrap col-sm-auto col-auto col-md-auto col-lg-auto col-xl-auto col-xxl-auto" style="">
                       <ul class="pagination" dmx-populate="listGugrUserProjectTasks.data.list_project_tasks_paged" dmx-state="list_gugr_projects" dmx-offset="offset_gugr_project_tasks" dmx-generator="bs5paging">
                         <li class="page-item" dmx-class:disabled="listGugrUserProjectTasks.data.list_project_tasks_paged.page.current == 1" aria-label="First">
-                          <a href="javascript:void(0)" class="page-link" dmx-on:click="list_gugr_projects.set('offset_gugr_project_tasks',listGugrUserProjectTasks.data.list_project_tasks_paged.page.offset.first)"><span aria-hidden="true">&lsaquo;&lsaquo;</span></a>
+                          <a href="javascript:void(0)" class="page-link" dmx-on:click="list_gugr_projects.set('offset_gugr_project_tasks',listGugrUserProjectTasks.data.list_project_tasks_paged.page.offset.first)"><span aria-hidden="true">‹‹</span></a>
                         </li>
                         <li class="page-item" dmx-class:disabled="listGugrUserProjectTasks.data.list_project_tasks_paged.page.current == 1" aria-label="Previous">
-                          <a href="javascript:void(0)" class="page-link" dmx-on:click="list_gugr_projects.set('offset_gugr_project_tasks',listGugrUserProjectTasks.data.list_project_tasks_paged.page.offset.prev)"><span aria-hidden="true">&lsaquo;</span></a>
+                          <a href="javascript:void(0)" class="page-link" dmx-on:click="list_gugr_projects.set('offset_gugr_project_tasks',listGugrUserProjectTasks.data.list_project_tasks_paged.page.offset.prev)"><span aria-hidden="true">‹</span></a>
                         </li>
                         <li class="page-item" dmx-class:active="title == listGugrUserProjectTasks.data.list_project_tasks_paged.page.current" dmx-class:disabled="!active" dmx-repeat="listGugrUserProjectTasks.data.list_project_tasks_paged.getServerConnectPagination(2,1,'...')">
                           <a href="javascript:void(0)" class="page-link" dmx-on:click="list_gugr_projects.set('offset_gugr_project_tasks',(page-1)*listGugrUserProjectTasks.data.list_project_tasks_paged.limit)">{{title}}</a>
                         </li>
                         <li class="page-item" dmx-class:disabled="listGugrUserProjectTasks.data.list_project_tasks_paged.page.current ==  listGugrUserProjectTasks.data.list_project_tasks_paged.page.total" aria-label="Next">
-                          <a href="javascript:void(0)" class="page-link" dmx-on:click="list_gugr_projects.set('offset_gugr_project_tasks',listGugrUserProjectTasks.data.list_project_tasks_paged.page.offset.next)"><span aria-hidden="true">&rsaquo;</span></a>
+                          <a href="javascript:void(0)" class="page-link" dmx-on:click="list_gugr_projects.set('offset_gugr_project_tasks',listGugrUserProjectTasks.data.list_project_tasks_paged.page.offset.next)"><span aria-hidden="true">›</span></a>
                         </li>
                         <li class="page-item" dmx-class:disabled="listGugrUserProjectTasks.data.list_project_tasks_paged.page.current ==  listGugrUserProjectTasks.data.list_project_tasks_paged.page.total" aria-label="Last">
-                          <a href="javascript:void(0)" class="page-link" dmx-on:click="list_gugr_projects.set('offset_gugr_project_tasks',listGugrUserProjectTasks.data.list_project_tasks_paged.page.offset.last)"><span aria-hidden="true">&rsaquo;&rsaquo;</span></a>
+                          <a href="javascript:void(0)" class="page-link" dmx-on:click="list_gugr_projects.set('offset_gugr_project_tasks',listGugrUserProjectTasks.data.list_project_tasks_paged.page.offset.last)"><span aria-hidden="true">››</span></a>
                         </li>
                       </ul>
                     </div>
@@ -472,13 +589,13 @@ JSON
                         <table class="table table-hover table-sm">
                           <thead class="text-center">
                             <tr>
-                              <th class="sorting" dmx-on:click="list_gugr_projects.set('sort_gugr_project_tasks','task_id');list_gugr_projects.set('dir_gugr_project_tasks',list_gugr_projects.data.dir_gugr_project_tasks == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="list_gugr_projects.data.sort_gugr_project_tasks=='task_id' && list_gugr_projects.data.dir_gugr_project_tasks == 'asc'" dmx-class:sorting_desc="list_gugr_projects.data.sort_gugr_project_tasks=='task_id' && list_gugr_projects.data.dir_gugr_project_tasks == 'desc'">#</th>
-                              <th class="sorting" dmx-on:click="list_gugr_projects.set('sort_gugr_project_tasks','task_date_created');list_gugr_projects.set('dir_gugr_project_tasks',list_gugr_projects.data.dir_gugr_project_tasks == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="list_gugr_projects.data.sort_gugr_project_tasks=='task_date_created' && list_gugr_projects.data.dir_gugr_project_tasks == 'asc'" dmx-class:sorting_desc="list_gugr_projects.data.sort_gugr_project_tasks=='task_date_created' && list_gugr_projects.data.dir_gugr_project_tasks == 'desc'">{{trans.data.dateTime[lang.value]}}</th>
-                              <th class="sorting" dmx-on:click="list_gugr_projects.set('sort_gugr_project_tasks','task_user_created');list_gugr_projects.set('dir_gugr_project_tasks',list_gugr_projects.data.dir_gugr_project_tasks == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="list_gugr_projects.data.sort_gugr_project_tasks=='task_user_created' && list_gugr_projects.data.dir_gugr_project_tasks == 'asc'" dmx-class:sorting_desc="list_gugr_projects.data.sort_gugr_project_tasks=='task_user_created' && list_gugr_projects.data.dir_gugr_project_tasks == 'desc'">{{trans.data.user[lang.value]}}</th>
-                              <th class="sorting" dmx-on:click="list_gugr_projects.set('sort_gugr_project_tasks','task_user_concerned');list_gugr_projects.set('dir_gugr_project_tasks',list_gugr_projects.data.dir_gugr_project_tasks == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="list_gugr_projects.data.sort_gugr_project_tasks=='task_user_concerned' && list_gugr_projects.data.dir_gugr_project_tasks == 'asc'" dmx-class:sorting_desc="list_gugr_projects.data.sort_gugr_project_tasks=='task_user_concerned' && list_gugr_projects.data.dir_gugr_project_tasks == 'desc'">{{trans.data.attention[lang.value]}}</th>
-                              <th class="sorting" dmx-on:click="list_gugr_projects.set('sort_gugr_project_tasks','task_notes');list_gugr_projects.set('dir_gugr_project_tasks',list_gugr_projects.data.dir_gugr_project_tasks == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="list_gugr_projects.data.sort_gugr_project_tasks=='task_notes' && list_gugr_projects.data.dir_gugr_project_tasks == 'asc'" dmx-class:sorting_desc="list_gugr_projects.data.sort_gugr_project_tasks=='task_notes' && list_gugr_projects.data.dir_gugr_project_tasks == 'desc'">{{trans.data.note[lang.value]}}</th>
-                              <th class="sorting" dmx-on:click="list_gugr_projects.set('sort_gugr_project_tasks','task_status');list_gugr_projects.set('dir_gugr_project_tasks',list_gugr_projects.data.dir_gugr_project_tasks == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="list_gugr_projects.data.sort_gugr_project_tasks=='task_status' && list_gugr_projects.data.dir_gugr_project_tasks == 'asc'" dmx-class:sorting_desc="list_gugr_projects.data.sort_gugr_project_tasks=='task_status' && list_gugr_projects.data.dir_gugr_project_tasks == 'desc'">{{trans.data.status[lang.value]}}</th>
-                              <th class=""></th>
+                              <th class="sorting" dmx-on:click="list_gugr_projects.set('sort_gugr_project_tasks','task_id');list_gugr_projects.set('dir_gugr_project_tasks',list_gugr_projects.data.dir_gugr_project_tasks == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="list_gugr_projects.data.sort_gugr_project_tasks=='task_id' &amp;&amp; list_gugr_projects.data.dir_gugr_project_tasks == 'asc'" dmx-class:sorting_desc="list_gugr_projects.data.sort_gugr_project_tasks=='task_id' &amp;&amp; list_gugr_projects.data.dir_gugr_project_tasks == 'desc'">#</th>
+                              <th class="sorting" dmx-on:click="list_gugr_projects.set('sort_gugr_project_tasks','task_date_created');list_gugr_projects.set('dir_gugr_project_tasks',list_gugr_projects.data.dir_gugr_project_tasks == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="list_gugr_projects.data.sort_gugr_project_tasks=='task_date_created' &amp;&amp; list_gugr_projects.data.dir_gugr_project_tasks == 'asc'" dmx-class:sorting_desc="list_gugr_projects.data.sort_gugr_project_tasks=='task_date_created' &amp;&amp; list_gugr_projects.data.dir_gugr_project_tasks == 'desc'">{{trans.data.dateTime[lang.value]}}</th>
+                              <th class="sorting" dmx-on:click="list_gugr_projects.set('sort_gugr_project_tasks','task_user_created');list_gugr_projects.set('dir_gugr_project_tasks',list_gugr_projects.data.dir_gugr_project_tasks == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="list_gugr_projects.data.sort_gugr_project_tasks=='task_user_created' &amp;&amp; list_gugr_projects.data.dir_gugr_project_tasks == 'asc'" dmx-class:sorting_desc="list_gugr_projects.data.sort_gugr_project_tasks=='task_user_created' &amp;&amp; list_gugr_projects.data.dir_gugr_project_tasks == 'desc'">{{trans.data.user[lang.value]}}</th>
+                              <th class="sorting" dmx-on:click="list_gugr_projects.set('sort_gugr_project_tasks','task_user_concerned');list_gugr_projects.set('dir_gugr_project_tasks',list_gugr_projects.data.dir_gugr_project_tasks == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="list_gugr_projects.data.sort_gugr_project_tasks=='task_user_concerned' &amp;&amp; list_gugr_projects.data.dir_gugr_project_tasks == 'asc'" dmx-class:sorting_desc="list_gugr_projects.data.sort_gugr_project_tasks=='task_user_concerned' &amp;&amp; list_gugr_projects.data.dir_gugr_project_tasks == 'desc'">{{trans.data.attention[lang.value]}}</th>
+                              <th class="sorting" dmx-on:click="list_gugr_projects.set('sort_gugr_project_tasks','task_notes');list_gugr_projects.set('dir_gugr_project_tasks',list_gugr_projects.data.dir_gugr_project_tasks == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="list_gugr_projects.data.sort_gugr_project_tasks=='task_notes' &amp;&amp; list_gugr_projects.data.dir_gugr_project_tasks == 'asc'" dmx-class:sorting_desc="list_gugr_projects.data.sort_gugr_project_tasks=='task_notes' &amp;&amp; list_gugr_projects.data.dir_gugr_project_tasks == 'desc'">{{trans.data.note[lang.value]}}</th>
+                              <th class="sorting" dmx-on:click="list_gugr_projects.set('sort_gugr_project_tasks','task_status');list_gugr_projects.set('dir_gugr_project_tasks',list_gugr_projects.data.dir_gugr_project_tasks == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="list_gugr_projects.data.sort_gugr_project_tasks=='task_status' &amp;&amp; list_gugr_projects.data.dir_gugr_project_tasks == 'asc'" dmx-class:sorting_desc="list_gugr_projects.data.sort_gugr_project_tasks=='task_status' &amp;&amp; list_gugr_projects.data.dir_gugr_project_tasks == 'desc'">{{trans.data.status[lang.value]}}</th>
+                              <th></th>
                             </tr>
                           </thead>
                           <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="listGugrUserProjectTasks.data.list_project_tasks_paged.data" id="tableRepeat4" dmx-state="list_gugr_projects" dmx-sort="sort_gugr_project_tasks" dmx-order="dir_gugr_project_tasks">
@@ -493,7 +610,7 @@ JSON
                                 <form id="updateTaskToComplete" is="dmx-serverconnect-form" method="post" action="dmxConnect/api/gugr_projects/gugr_project_tasks/update_gugr_project_task_to_completed.php" dmx-on:success="notifies1.success('Success');listGugrUserProjectTasks.load({})">
                                   <input id="text9" name="task_status" type="text" class="form-control visually-hidden" dmx-bind:value="'Completed'">
                                   <input id="text10" name="task_id" type="text" class="form-control visually-hidden" dmx-bind:value="task_id">
-                                  <input id="text11" class="visually-hidden" name="task_date_completed" type="datetime-local" class="task_date_completed" dmx-bind:value="dateTime.datetime">
+                                  <input id="text11" class="visually-hidden" name="task_date_completed" type="datetime-local" dmx-bind:value="dateTime.datetime">
                                   <button id="btn14" class="btn text-danger" type="submit">
                                     <i class="fas fa-thumbs-up"></i></button>
                                 </form>
@@ -595,7 +712,7 @@ JSON
                                   <form id="updateTaskToActive" is="dmx-serverconnect-form" method="post" action="dmxConnect/api/gugr_projects/gugr_project_tasks/update_gugr_project_task_to_completed.php" dmx-on:success="notifies1.success('Success');listGugrUserProjectTasks.load({});listGugrUserProjectTasksAll.load({})">
                                     <input id="text91" name="task_status" type="text" class="form-control visually-hidden" dmx-bind:value="'Active'">
                                     <input id="text101" name="task_id" type="text" class="form-control visually-hidden" dmx-bind:value="task_id">
-                                    <input id="text111" class="visually-hidden" name="task_date_completed" type="datetime-local" class="task_date_completed" dmx-bind:value="dateTime.datetime">
+                                    <input id="text111" class="visually-hidden" name="task_date_completed" type="datetime-local" dmx-bind:value="dateTime.datetime">
                                     <button id="btn141" class="btn text-danger bg-opacity-10 rounded" type="submit">
                                       <i class="fas fa-thumbs-up"></i></button>
                                   </form>
@@ -814,6 +931,7 @@ JSON
 
         </div>
 
+
       </div>
 
     </div>
@@ -825,11 +943,11 @@ JSON
           <div class="modal-header border-0">
             <div class="d-block me-1">
 
-              <h5 dmx-text="trans.data.query[lang.value]+' : #'+readGuGrProject.data.query_read_gugr_project.project_code" class="fw-bold bg-body"></h5>
+              <h5 dmx-text="trans.data.query[lang.value]+' : #'+readGuGrProject.data.query_read_gugr_project.project_code" class="fw-bold pt-1 pb-1 ps-2 pe-2 rounded-pill bg-secondary bg-opacity-75"></h5>
             </div>
 
             <div class="d-block">
-              <h5 dmx-text="trans.data.getValueOrKey(readGuGrProject.data.query_read_gugr_project.project_status)[lang.value]" style="padding: 4px 10px 4px 10px;" dmx-class:red-state="readGuGrProject.data.query_read_gugr_project.project_status=='Pending'" dmx-class:yellow-state="readGuGrProject.data.query_read_gugr_project.project_status=='Active'" dmx-class:green-state="readGuGrProject.data.query_read_gugr_project.project_status=='Completed'" class="fw-bold"></h5>
+              <h5 dmx-text="trans.data.getValueOrKey(readGuGrProject.data.query_read_gugr_project.project_status)[lang.value]" style="padding: 4px 10px 4px 10px;" dmx-class:red-state="readGuGrProject.data.query_read_gugr_project.project_status=='Pending'" dmx-class:yellow-state="readGuGrProject.data.query_read_gugr_project.project_status=='Active'" dmx-class:green-state="readGuGrProject.data.query_read_gugr_project.project_status=='Completed'" class="fw-bold rounded-pill"></h5>
             </div>
             <div class="d-block">
               <h5 dmx-text="updateProjectAssignment.selectUserAssign1.selectedText" style="padding: 10px;"></h5>
@@ -841,10 +959,7 @@ JSON
             <div class="row">
               <div class="col">
                 <ul class="nav nav-tabs nav-fill" id="navTabs2_tabs" role="tablist">
-                  <li class="nav-item">
-                    <a class="nav-link active" id="navTabs2_1_tab" data-bs-toggle="tab" href="#" data-bs-target="#navTabs2_1" role="tab" aria-controls="navTabs1_1" aria-selected="true"><i class="fas fa-info" style="margin-right: 5px;"></i>
-                      {{trans.data.info[lang.value]}}</a>
-                  </li>
+
                   <li class="nav-item">
                     <a class="nav-link" id="navTabs2_1_tab1" data-bs-toggle="tab" href="#" data-bs-target="#navTabs2_4" role="tab" aria-controls="navTabs1_1" aria-selected="true"><i class="fas fa-tasks" style="margin-right: 5px;"></i>
                       {{trans.data.assignment[lang.value]}}</a>
@@ -856,99 +971,14 @@ JSON
                   <li class="nav-item">
                     <a class="nav-link" id="navTabs2_3_tab" data-bs-toggle="tab" href="#" data-bs-target="#navTabs2_3" role="tab" aria-controls="navTabs1_3" aria-selected="false">{{trans.data.treatment[lang.value]}}<i class="far fa-comment"></i></a>
                   </li>
+                  <li class="nav-item">
+                    <a class="nav-link active" id="navTabs2_1_tab" data-bs-toggle="tab" href="#" data-bs-target="#navTabs2_1" role="tab" aria-controls="navTabs1_1" aria-selected="true"><i class="fas fa-info" style="margin-right: 5px;"></i>
+                      {{trans.data.info[lang.value]}}</a>
+                  </li>
                 </ul>
                 <div class="tab-content" id="navTabs2_content">
-                  <div class="tab-pane fade show active mt-2" id="navTabs2_1" role="tabpanel">
-                    <div class="row">
-                      <div class="col-xl-4 text-sm-center text-center text-md-center rounded rounded-1 border-light col-12 col-md-5 col-lg-5 mt-2 pt-3 pb-2 ps-3 pe-3">
-                        <div class="row">
-                          <div class="col pt-3 ps-3 pe-3 bg-light">
 
-                            <h5 class="text-start fw-bold"><i class="far fa-file-alt" style="margin-right: 5px;"></i>{{trans.data.info[lang.value]}}</h5>
-                            <div class="row rounded mb-3 ms-0 me-0 pt-4 pb-3 border-secondary bg-secondary">
-                              <p class="text-start" dmx-text="readGuGrProject.data.query_read_gugr_project.project_code"></p>
-                              <p class="text-start" dmx-text="trans.data.dateCreated[lang.value]+': '+readGuGrProject.data.query_read_gugr_project.project_date_created"></p>
-                              <p class="text-start" dmx-text="trans.data.dateDue[lang.value]+': '+readGuGrProject.data.query_read_gugr_project.project_date_due"></p>
-                            </div>
-                            <form is="dmx-serverconnect-form" id="updateProjectReception" method="post" action="dmxConnect/api/gugr_projects/gugr_projects/update_gugr_project_reception.php" dmx-generator="bootstrap5" dmx-form-type="horizontal" dmx-populate="readGuGrProject.data.query_read_gugr_project" dmx-on:success="readGuGrProject.load({project_id: readGuGrProject.data.query_read_gugr_project.project_id}); listGugrProjects.load({gugr_project_filter: gugrProjectFilter.value, gugr_project_status: gugrProjectStatusFilter.value, offset: list_gugr_projects.data.offset_gugr_projects, limit: gugrProjectLimit.value}); listGugrProjects.load({gugr_project_filter: gugrProjectFilter.value, gugr_project_status: gugrProjectStatusFilter.value, offset: list_gugr_projects.data.offset_gugr_projects, limit: gugrProjectLimit.value})">
-                              <input id="text2" name="project_id" type="text" class="form-control visually-hidden" dmx-bind:value="readGuGrProject.data.query_read_gugr_project.project_id">
-                              <div class="form-group mb-3 row">
-
-                                <label for="inp_project_code" class="col-sm-2 col-form-label col">{{trans.data.code[lang.value]}}</label>
-                                <div class="col-sm-10">
-                                  <input type="text" class="form-control" id="inp_project_code" name="project_code" dmx-bind:value="readGuGrProject.data.query_read_gugr_project.project_code" aria-describedby="inp_project_code_help" dmx-bind:readonly="(list_user_info.data.query_list_user_info.user_profile!=='gugr-reception')&amp;&amp;(list_user_info.data.query_list_user_info.user_profile!=='gugr-cordo')">
-                                </div>
-                              </div>
-                              <div class="form-group mb-3 row">
-
-                                <label for="inp_project_code1" class="col-sm-2 col-form-label col">{{trans.data.expeditor[lang.value]}}</label>
-                                <div class="col-sm-10">
-                                  <input type="text" class="form-control" id="inp_project_code1" name="project_notes" dmx-bind:value="readGuGrProject.data.query_read_gugr_project.project_notes" aria-describedby="inp_project_code_help" dmx-bind:readonly="(list_user_info.data.query_list_user_info.user_profile!=='gugr-reception')&amp;&amp;(list_user_info.data.query_list_user_info.user_profile!=='gugr-cordo')">
-                                </div>
-                              </div>
-                              <div class="form-group mb-3 row">
-                                <label for="inp_project_description" class="col-sm-2 col-form-label">{{trans.data.object[lang.value]}}</label>
-                                <div class="col-sm-10">
-                                  <textarea type="text" class="form-control" id="inp_project_description" name="project_description" dmx-bind:value="readGuGrProject.data.query_read_gugr_project.project_description" aria-describedby="inp_project_description_help" style="height: 150px;" dmx-bind:readonly="(list_user_info.data.query_list_user_info.user_profile!=='gugr-reception')&amp;&amp;(list_user_info.data.query_list_user_info.user_profile!=='gugr-cordo')"></textarea>
-                                </div>
-                              </div>
-                              <div class="form-group mb-3 row">
-                                <label for="inp_project_date_due_2" class="col-sm-2 col-form-label">{{trans.data.dateDue[lang.value]}}</label>
-                                <div class="col-sm-10">
-                                  <input type="datetime-local" class="form-control" id="inp_project_date_due_2" name="project_date_due" dmx-bind:value="readGuGrProject.data.query_read_gugr_project.project_date_due" aria-describedby="inp_project_date_due_help" dmx-bind:readonly="(list_user_info.data.query_list_user_info.user_profile!=='gugr-reception')&amp;&amp;(list_user_info.data.query_list_user_info.user_profile!=='gugr-cordo')">
-                                </div>
-                              </div>
-                              <div class="form-group mb-3 row">
-                                <div class="col-sm-10 text-end" dmx-hide="list_user_info.data.query_list_user_info.user_profile!=='gugr-reception'&&list_user_info.data.query_list_user_info.user_profile!=='gugr-cordo'">
-                                  <button type="submit" class="btn btn-primary text-white bg-primary" dmx-bind:value="readGuGrProject.data.query_read_gugr_project.Save" dmx-bind:readonly="state.executing">{{trans.data.update[lang.value]}} <span class="spinner-border spinner-border-sm" role="status" dmx-show="state.executing"></span></button>
-                                </div>
-                              </div>
-                            </form>
-                          </div>
-                        </div>
-
-
-
-                      </div>
-                      <div class="col-xl-4 col-12 text-sm-center text-center text-md-center rounded rounded-1 border-light col-md-3 col-lg-3 mt-2 pt-3 pb-2 ps-3 pe-3">
-                        <div class="row">
-                          <div class="col bg-secondary pt-3 ps-3 pe-3 rounded rounded-3" dmx-show="list_user_info.data.query_list_user_info.user_profile=='gugr-cordo'">
-                            <h5 class="text-start fw-bold"><i class="fas fa-hourglass-half" style="margin-right: 5px;"></i>{{trans.data.status[lang.value]}}</h5>
-                            <form is="dmx-serverconnect-form" id="updateProjectStatus" method="post" action="dmxConnect/api/gugr_projects/gugr_projects/update_gugr_project_status.php" dmx-generator="bootstrap5" dmx-form-type="horizontal" dmx-populate="readGuGrProject.data.query_read_gugr_project" dmx-on:success="readGuGrProject.load({project_id: readGuGrProject.data.query_read_gugr_project.project_id});updateProjectStatus.reset(); listGugrProjects.load({gugr_project_filter: gugrProjectFilter.value, gugr_project_status: gugrProjectStatusFilter.value, offset: list_gugr_projects.data.offset_gugr_projects, limit: gugrProjectLimit.value});notifies1.success('Success!')" dmx-on:error="notifies1.danger('Error!')">
-                              <input id="text3" name="project_id" type="text" class="form-control visually-hidden" dmx-bind:value="readGuGrProject.data.query_read_gugr_project.project_id">
-                              <div class="form-group mb-3 row">
-
-                                <label for="inp_project_status1" class="col-sm-2 col-form-label col">{{trans.data.status[lang.value]}}</label>
-                                <div class="col-sm-10">
-                                  <select id="select1" class="form-select" name="project_status" dmx-bind:value="readGuGrProject.data.query_read_gugr_project.project_status">
-                                    <option value="Pending">{{trans.data.pending[lang.value]}}</option>
-                                    <option value="Active">{{trans.data.Active[lang.value]}}</option>
-                                    <option value="Completed">{{trans.data.Completed[lang.value]}}</option>
-                                  </select>
-                                </div>
-                              </div>
-                              <div class="form-group mb-3 row">
-                                <div class="col-sm-10 text-end">
-                                  <button type="submit" class="btn btn-primary text-white bg-primary" dmx-bind:value="readGuGrProject.data.query_read_gugr_project.Save" dmx-bind:readonly="state.executing">{{trans.data.update[lang.value]}}<span class="spinner-border spinner-border-sm" role="status" dmx-show="state.executing"></span></button>
-                                </div>
-                              </div>
-                            </form>
-                          </div>
-                        </div>
-
-
-
-                      </div>
-                      <div class="col-12 text-sm-center text-center text-md-center rounded rounded-1 border-light col-md-3 col-lg-3 col-xl-3 mt-2 pt-3 pb-2 ps-3 pe-3">
-                        <div class="row">
-                        </div>
-
-
-
-                      </div>
-                    </div>
-                  </div>
-                  <div class="tab-pane fade mt-2" id="navTabs2_4" role="tabpanel">
+                  <div class="tab-pane fade mt-2 show active" id="navTabs2_4" role="tabpanel">
                     <div class="row">
                       <div class="col-xl-4 text-sm-center text-center text-md-center rounded rounded-1 border-light col-12 col-md-5 col-lg-5 mt-2 pt-3 pb-2 ps-3 pe-3" dmx-show="list_user_info.data.query_list_user_info.user_profile=='gugr-cordo'">
                         <div class="row">
@@ -1135,7 +1165,7 @@ JSON
                                 </div>
                               </div>
                               <div class="form-group mb-3 row">
-                                <label for="fileUpload1" class="col-sm-2 col-form-label col-lg-2">{{trans.data.object.lang.value]}}</label>
+                                <label for="fileUpload" class="col-sm-2 col-form-label col-lg-2">{{trans.data.object.lang.value]}}</label>
                                 <div class="col-sm-10 offset-md-4 col-lg-5 offset-lg-1">
                                   <textarea id="projectFileProjectFile1" name="project_file_description" class="form-control"></textarea>
                                 </div>
@@ -1298,6 +1328,96 @@ JSON
 
 
                   </div>
+                  <div class="tab-pane fade mt-2" id="navTabs2_1" role="tabpanel">
+                    <div class="row">
+                      <div class="col-xl-4 text-sm-center text-center text-md-center rounded rounded-1 border-light col-12 col-md-5 col-lg-5 mt-2 pt-3 pb-2 ps-3 pe-3">
+                        <div class="row">
+                          <div class="col pt-3 ps-3 pe-3 bg-light">
+
+                            <h5 class="text-start fw-bold"><i class="far fa-file-alt" style="margin-right: 5px;"></i>{{trans.data.info[lang.value]}}</h5>
+                            <div class="row rounded mb-3 ms-0 me-0 pt-4 pb-3 border-secondary bg-secondary">
+                              <p class="text-start" dmx-text="readGuGrProject.data.query_read_gugr_project.project_code"></p>
+                              <p class="text-start" dmx-text="trans.data.dateCreated[lang.value]+': '+readGuGrProject.data.query_read_gugr_project.project_date_created"></p>
+                              <p class="text-start" dmx-text="trans.data.dateDue[lang.value]+': '+readGuGrProject.data.query_read_gugr_project.project_date_due"></p>
+                            </div>
+                            <form is="dmx-serverconnect-form" id="updateProjectReception" method="post" action="dmxConnect/api/gugr_projects/gugr_projects/update_gugr_project_reception.php" dmx-generator="bootstrap5" dmx-form-type="horizontal" dmx-populate="readGuGrProject.data.query_read_gugr_project" dmx-on:success="readGuGrProject.load({project_id: readGuGrProject.data.query_read_gugr_project.project_id}); listGugrProjects.load({gugr_project_filter: gugrProjectFilter.value, gugr_project_status: gugrProjectStatusFilter.value, offset: list_gugr_projects.data.offset_gugr_projects, limit: gugrProjectLimit.value}); listGugrProjects.load({gugr_project_filter: gugrProjectFilter.value, gugr_project_status: gugrProjectStatusFilter.value, offset: list_gugr_projects.data.offset_gugr_projects, limit: gugrProjectLimit.value})">
+                              <input id="text2" name="project_id" type="text" class="form-control visually-hidden" dmx-bind:value="readGuGrProject.data.query_read_gugr_project.project_id">
+                              <div class="form-group mb-3 row">
+
+                                <label for="inp_project_code" class="col-sm-2 col-form-label col">{{trans.data.code[lang.value]}}</label>
+                                <div class="col-sm-10">
+                                  <input type="text" class="form-control" id="inp_project_code" name="project_code" dmx-bind:value="readGuGrProject.data.query_read_gugr_project.project_code" aria-describedby="inp_project_code_help" dmx-bind:readonly="(list_user_info.data.query_list_user_info.user_profile!=='gugr-reception')&amp;&amp;(list_user_info.data.query_list_user_info.user_profile!=='gugr-cordo')">
+                                </div>
+                              </div>
+                              <div class="form-group mb-3 row">
+
+                                <label for="inp_project_code1" class="col-sm-2 col-form-label col">{{trans.data.expeditor[lang.value]}}</label>
+                                <div class="col-sm-10">
+                                  <input type="text" class="form-control" id="inp_project_code1" name="project_notes" dmx-bind:value="readGuGrProject.data.query_read_gugr_project.project_notes" aria-describedby="inp_project_code_help" dmx-bind:readonly="(list_user_info.data.query_list_user_info.user_profile!=='gugr-reception')&amp;&amp;(list_user_info.data.query_list_user_info.user_profile!=='gugr-cordo')">
+                                </div>
+                              </div>
+                              <div class="form-group mb-3 row">
+                                <label for="inp_project_description" class="col-sm-2 col-form-label">{{trans.data.object[lang.value]}}</label>
+                                <div class="col-sm-10">
+                                  <textarea type="text" class="form-control" id="inp_project_description" name="project_description" dmx-bind:value="readGuGrProject.data.query_read_gugr_project.project_description" aria-describedby="inp_project_description_help" style="height: 150px;" dmx-bind:readonly="(list_user_info.data.query_list_user_info.user_profile!=='gugr-reception')&amp;&amp;(list_user_info.data.query_list_user_info.user_profile!=='gugr-cordo')"></textarea>
+                                </div>
+                              </div>
+                              <div class="form-group mb-3 row">
+                                <label for="inp_project_date_due_2" class="col-sm-2 col-form-label">{{trans.data.dateDue[lang.value]}}</label>
+                                <div class="col-sm-10">
+                                  <input type="datetime-local" class="form-control" id="inp_project_date_due_2" name="project_date_due" dmx-bind:value="readGuGrProject.data.query_read_gugr_project.project_date_due" aria-describedby="inp_project_date_due_help" dmx-bind:readonly="(list_user_info.data.query_list_user_info.user_profile!=='gugr-reception')&amp;&amp;(list_user_info.data.query_list_user_info.user_profile!=='gugr-cordo')">
+                                </div>
+                              </div>
+                              <div class="form-group mb-3 row">
+                                <div class="col-sm-10 text-end" dmx-hide="list_user_info.data.query_list_user_info.user_profile!=='gugr-reception'&amp;&amp;list_user_info.data.query_list_user_info.user_profile!=='gugr-cordo'">
+                                  <button type="submit" class="btn btn-primary text-white bg-primary" dmx-bind:value="readGuGrProject.data.query_read_gugr_project.Save" dmx-bind:readonly="state.executing">{{trans.data.update[lang.value]}} <span class="spinner-border spinner-border-sm" role="status" dmx-show="state.executing"></span></button>
+                                </div>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+
+
+
+                      </div>
+                      <div class="col-xl-4 col-12 text-sm-center text-center text-md-center rounded rounded-1 border-light col-md-3 col-lg-3 mt-2 pt-3 pb-2 ps-3 pe-3">
+                        <div class="row">
+                          <div class="col bg-secondary pt-3 ps-3 pe-3 rounded rounded-3" dmx-show="list_user_info.data.query_list_user_info.user_profile=='gugr-cordo'">
+                            <h5 class="text-start fw-bold"><i class="fas fa-hourglass-half" style="margin-right: 5px;"></i>{{trans.data.status[lang.value]}}</h5>
+                            <form is="dmx-serverconnect-form" id="updateProjectStatus" method="post" action="dmxConnect/api/gugr_projects/gugr_projects/update_gugr_project_status.php" dmx-generator="bootstrap5" dmx-form-type="horizontal" dmx-populate="readGuGrProject.data.query_read_gugr_project" dmx-on:success="readGuGrProject.load({project_id: readGuGrProject.data.query_read_gugr_project.project_id});updateProjectStatus.reset(); listGugrProjects.load({gugr_project_filter: gugrProjectFilter.value, gugr_project_status: gugrProjectStatusFilter.value, offset: list_gugr_projects.data.offset_gugr_projects, limit: gugrProjectLimit.value});notifies1.success('Success!')" dmx-on:error="notifies1.danger('Error!')">
+                              <input id="text3" name="project_id" type="text" class="form-control visually-hidden" dmx-bind:value="readGuGrProject.data.query_read_gugr_project.project_id">
+                              <div class="form-group mb-3 row">
+
+                                <label for="inp_project_status1" class="col-sm-2 col-form-label col">{{trans.data.status[lang.value]}}</label>
+                                <div class="col-sm-10">
+                                  <select id="select1" class="form-select" name="project_status" dmx-bind:value="readGuGrProject.data.query_read_gugr_project.project_status">
+                                    <option value="Pending">{{trans.data.pending[lang.value]}}</option>
+                                    <option value="Active">{{trans.data.Active[lang.value]}}</option>
+                                    <option value="Completed">{{trans.data.Completed[lang.value]}}</option>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="form-group mb-3 row">
+                                <div class="col-sm-10 text-end">
+                                  <button type="submit" class="btn btn-primary text-white bg-primary" dmx-bind:value="readGuGrProject.data.query_read_gugr_project.Save" dmx-bind:readonly="state.executing">{{trans.data.update[lang.value]}}<span class="spinner-border spinner-border-sm" role="status" dmx-show="state.executing"></span></button>
+                                </div>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+
+
+
+                      </div>
+                      <div class="col-12 text-sm-center text-center text-md-center rounded rounded-1 border-light col-md-3 col-lg-3 col-xl-3 mt-2 pt-3 pb-2 ps-3 pe-3">
+                        <div class="row">
+                        </div>
+
+
+
+                      </div>
+                    </div>
+                  </div>
 
                 </div>
 
@@ -1324,8 +1444,772 @@ JSON
         </div>
       </div>
     </div>
+    <div class="modal readitem" id="readItemModalProject" is="dmx-bs5-modal" tabindex="-1" style="" nocloseonclick="true">
+      <div class="modal-dialog modal-xl modal-fullscreen-xxl-down modal-dialog-scrollable" role="document" style="margin: 0px !important; width: 100% !important; height: 99% !important; max-width: 100% !important; max-height: 99% !important;">
+        <div class="modal-content" style="max-height: 100% !important; height: 100% !important;">
+          <div class="modal-header border-0">
+            <div class="d-block me-1">
+
+              <h5 dmx-text="trans.data.project[lang.value]+' : #'+readGuGrProject.data.query_read_gugr_project.project_id" class="fw-bold bg-body"></h5>
+            </div>
+
+            <div class="d-block">
+              <h5 dmx-text="trans.data.getValueOrKey(readGuGrProject.data.query_read_gugr_project.project_status)[lang.value]" style="padding: 4px 10px 4px 10px;" dmx-class:red-state="readGuGrProject.data.query_read_gugr_project.project_status=='Pending'" dmx-class:yellow-state="readGuGrProject.data.query_read_gugr_project.project_status=='Active'" dmx-class:green-state="readGuGrProject.data.query_read_gugr_project.project_status=='Completed'" class="fw-bold"></h5>
+            </div>
+            <div class="d-block">
+              <h5 dmx-text="updateProjectAssignment.selectUserAssign1.selectedText" style="padding: 10px;"></h5>
+            </div><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
 
 
+            <div class="row">
+              <div class="col">
+                <ul class="nav nav-tabs nav-fill" id="navTabs2_tabs1" role="tablist">
+
+                  <li class="nav-item">
+                    <a class="nav-link" id="navTabs2_1_tab2" data-bs-toggle="tab" href="#" data-bs-target="#navTabs2_51" role="tab" aria-controls="navTabs1_1" aria-selected="true"><i class="fas fa-tasks" style="margin-right: 5px;"></i>
+                      {{trans.data.tasks[lang.value]}}</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="navTabs2_2_tab1" data-bs-toggle="tab" href="#" data-bs-target="#navTabs2_52" role="tab" aria-controls="navTabs1_2" aria-selected="false"><i class="far fa-file"></i>
+                      {{trans.data.files[lang.value]}}</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="navTabs2_3_tab1" data-bs-toggle="tab" href="#" data-bs-target="#navTabs2_53" role="tab" aria-controls="navTabs1_3" aria-selected="false">{{trans.data.treatment[lang.value]}}<i class="far fa-comment"></i></a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active" id="navTabs2_1_tab2" data-bs-toggle="tab" href="#" data-bs-target="#navTabs2_5" role="tab" aria-controls="navTabs1_1" aria-selected="true"><i class="fas fa-info" style="margin-right: 5px;"></i>
+                      {{trans.data.info[lang.value]}}</a>
+                  </li>
+                </ul>
+                <div class="tab-content" id="navTabs2_content1">
+
+                  <div class="tab-pane fade mt-3 scrollable show active" id="navTabs2_51" role="tabpanel">
+
+                    <div class="modal" id="taskStatsModal1" is="dmx-bs5-modal" tabindex="-1">
+                      <div class="modal-dialog modal-fullscreen-xl-down modal-xl" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title">{{trans.data.tasks[lang.value]}}</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            <div class="row mb-xl-2 mb-2 sorter shadow-none bg-light justify-content-start justify-content-md-start justify-content-lg-start justify-content-xl-start justify-content-xxl-start row-cols-12 justify-content-sm-start">
+
+
+                              <div class="flex-sm-wrap flex-md-wrap flex-lg-wrap col-sm-auto col-auto col-md-auto col-lg-auto col-xl-auto col-xxl-auto" style="">
+                                <ul class="pagination" dmx-populate="listGugrUserProjectTasks.data.list_project_tasks_paged" dmx-state="list_gugr_projects" dmx-offset="offset_gugr_project_tasks" dmx-generator="bs5paging">
+                                  <li class="page-item" dmx-class:disabled="listGugrUserProjectTasks.data.list_project_tasks_paged.page.current == 1" aria-label="First">
+                                    <a href="javascript:void(0)" class="page-link" dmx-on:click="list_gugr_projects.set('offset_gugr_project_tasks',listGugrUserProjectTasks.data.list_project_tasks_paged.page.offset.first)"><span aria-hidden="true">‹‹</span></a>
+                                  </li>
+                                  <li class="page-item" dmx-class:disabled="listGugrUserProjectTasks.data.list_project_tasks_paged.page.current == 1" aria-label="Previous">
+                                    <a href="javascript:void(0)" class="page-link" dmx-on:click="list_gugr_projects.set('offset_gugr_project_tasks',listGugrUserProjectTasks.data.list_project_tasks_paged.page.offset.prev)"><span aria-hidden="true">‹</span></a>
+                                  </li>
+                                  <li class="page-item" dmx-class:active="title == listGugrUserProjectTasks.data.list_project_tasks_paged.page.current" dmx-class:disabled="!active" dmx-repeat="listGugrUserProjectTasks.data.list_project_tasks_paged.getServerConnectPagination(2,1,'...')">
+                                    <a href="javascript:void(0)" class="page-link" dmx-on:click="list_gugr_projects.set('offset_gugr_project_tasks',(page-1)*listGugrUserProjectTasks.data.list_project_tasks_paged.limit)">{{title}}</a>
+                                  </li>
+                                  <li class="page-item" dmx-class:disabled="listGugrUserProjectTasks.data.list_project_tasks_paged.page.current ==  listGugrUserProjectTasks.data.list_project_tasks_paged.page.total" aria-label="Next">
+                                    <a href="javascript:void(0)" class="page-link" dmx-on:click="list_gugr_projects.set('offset_gugr_project_tasks',listGugrUserProjectTasks.data.list_project_tasks_paged.page.offset.next)"><span aria-hidden="true">›</span></a>
+                                  </li>
+                                  <li class="page-item" dmx-class:disabled="listGugrUserProjectTasks.data.list_project_tasks_paged.page.current ==  listGugrUserProjectTasks.data.list_project_tasks_paged.page.total" aria-label="Last">
+                                    <a href="javascript:void(0)" class="page-link" dmx-on:click="list_gugr_projects.set('offset_gugr_project_tasks',listGugrUserProjectTasks.data.list_project_tasks_paged.page.offset.last)"><span aria-hidden="true">››</span></a>
+                                  </li>
+                                </ul>
+                              </div>
+                              <div class="col-auto col-xl-2 col-md-auto col-sm-auto col-3 col-sm-2 col-lg-2 col-xxl-auto"><select id="gugrProjectTaskStatusFilter1" class="form-select" name="gugrProjectStatusFilter3">
+                                  <option selected="" value="">-----</option>
+                                  <option value="Pending">Registered</option>
+                                  <option value="Active">Active</option>
+                                  <option value="Completed">Closed</option>
+                                </select></div>
+                              <div class="offset-sm-1 col-md-auto col-auto col-sm-auto col-sm-2 col-lg-auto offset-xl-1 col-xl-1 col-xxl-auto">
+
+                                <select id="gugrProjecTaskstLimit1" class="form-select" name="product_category_sort_limit3">
+                                  <option value="5">5</option>
+                                  <option value="25">25</option>
+                                  <option value="50">50</option>
+                                  <option value="100">100</option>
+                                  <option value="''">{{trans.data.all[lang.value]}}</option>
+                                </select>
+                              </div>
+                              <div class="col-xl-2 offset-xl-1 col-md-auto col-auto col-sm-auto col-lg-2 col-xxl-auto">
+                              </div>
+
+                            </div>
+                            <div class="row">
+                              <div class="col bg-light rounded rounded-2 ms-2 me-2">
+                                <div class="table-responsive">
+                                  <table class="table table-hover table-sm">
+                                    <thead class="text-center">
+                                      <tr>
+                                        <th class="sorting" dmx-on:click="list_gugr_projects.set('sort_gugr_project_tasks','task_id');list_gugr_projects.set('dir_gugr_project_tasks',list_gugr_projects.data.dir_gugr_project_tasks == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="list_gugr_projects.data.sort_gugr_project_tasks=='task_id' &amp;&amp; list_gugr_projects.data.dir_gugr_project_tasks == 'asc'" dmx-class:sorting_desc="list_gugr_projects.data.sort_gugr_project_tasks=='task_id' &amp;&amp; list_gugr_projects.data.dir_gugr_project_tasks == 'desc'">#</th>
+                                        <th class="sorting" dmx-on:click="list_gugr_projects.set('sort_gugr_project_tasks','task_date_created');list_gugr_projects.set('dir_gugr_project_tasks',list_gugr_projects.data.dir_gugr_project_tasks == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="list_gugr_projects.data.sort_gugr_project_tasks=='task_date_created' &amp;&amp; list_gugr_projects.data.dir_gugr_project_tasks == 'asc'" dmx-class:sorting_desc="list_gugr_projects.data.sort_gugr_project_tasks=='task_date_created' &amp;&amp; list_gugr_projects.data.dir_gugr_project_tasks == 'desc'">{{trans.data.dateTime[lang.value]}}</th>
+                                        <th class="sorting" dmx-on:click="list_gugr_projects.set('sort_gugr_project_tasks','task_user_created');list_gugr_projects.set('dir_gugr_project_tasks',list_gugr_projects.data.dir_gugr_project_tasks == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="list_gugr_projects.data.sort_gugr_project_tasks=='task_user_created' &amp;&amp; list_gugr_projects.data.dir_gugr_project_tasks == 'asc'" dmx-class:sorting_desc="list_gugr_projects.data.sort_gugr_project_tasks=='task_user_created' &amp;&amp; list_gugr_projects.data.dir_gugr_project_tasks == 'desc'">{{trans.data.user[lang.value]}}</th>
+                                        <th class="sorting" dmx-on:click="list_gugr_projects.set('sort_gugr_project_tasks','task_user_concerned');list_gugr_projects.set('dir_gugr_project_tasks',list_gugr_projects.data.dir_gugr_project_tasks == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="list_gugr_projects.data.sort_gugr_project_tasks=='task_user_concerned' &amp;&amp; list_gugr_projects.data.dir_gugr_project_tasks == 'asc'" dmx-class:sorting_desc="list_gugr_projects.data.sort_gugr_project_tasks=='task_user_concerned' &amp;&amp; list_gugr_projects.data.dir_gugr_project_tasks == 'desc'">{{trans.data.attention[lang.value]}}</th>
+                                        <th class="sorting" dmx-on:click="list_gugr_projects.set('sort_gugr_project_tasks','task_notes');list_gugr_projects.set('dir_gugr_project_tasks',list_gugr_projects.data.dir_gugr_project_tasks == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="list_gugr_projects.data.sort_gugr_project_tasks=='task_notes' &amp;&amp; list_gugr_projects.data.dir_gugr_project_tasks == 'asc'" dmx-class:sorting_desc="list_gugr_projects.data.sort_gugr_project_tasks=='task_notes' &amp;&amp; list_gugr_projects.data.dir_gugr_project_tasks == 'desc'">{{trans.data.note[lang.value]}}</th>
+                                        <th class="sorting" dmx-on:click="list_gugr_projects.set('sort_gugr_project_tasks','task_status');list_gugr_projects.set('dir_gugr_project_tasks',list_gugr_projects.data.dir_gugr_project_tasks == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="list_gugr_projects.data.sort_gugr_project_tasks=='task_status' &amp;&amp; list_gugr_projects.data.dir_gugr_project_tasks == 'asc'" dmx-class:sorting_desc="list_gugr_projects.data.sort_gugr_project_tasks=='task_status' &amp;&amp; list_gugr_projects.data.dir_gugr_project_tasks == 'desc'">{{trans.data.status[lang.value]}}</th>
+                                        <th></th>
+                                      </tr>
+                                    </thead>
+                                    <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="listGugrUserProjectTasks.data.list_project_tasks_paged.data" id="tableRepeat7" dmx-state="list_gugr_projects" dmx-sort="sort_gugr_project_tasks" dmx-order="dir_gugr_project_tasks">
+                                      <tr>
+                                        <td dmx-text="task_id"></td>
+                                        <td dmx-text="task_date_created" class="text-center"></td>
+                                        <td dmx-text="userCratedName" class="text-center"></td>
+                                        <td dmx-text="userConcernedName" class="text-center"></td>
+                                        <td dmx-text="task_description"></td>
+                                        <td dmx-text="task_status" dmx-class:text-success="task_status=='Completed'" dmx-class:text-danger="task_status=='Pending'" class="text-center"></td>
+                                        <td class="text-center">
+                                          <form id="updateTaskToComplete1" is="dmx-serverconnect-form" method="post" action="dmxConnect/api/gugr_projects/gugr_project_tasks/update_gugr_project_task_to_completed.php" dmx-on:success="notifies1.success('Success');listGugrUserProjectTasks.load({})">
+                                            <input id="text157" name="task_status1" type="text" class="form-control visually-hidden" dmx-bind:value="'Completed'">
+                                            <input id="text156" name="task_id1" type="text" class="form-control visually-hidden" dmx-bind:value="task_id">
+                                            <input id="text154" class="visually-hidden" name="task_date_completed1" type="datetime-local" dmx-bind:value="dateTime.datetime">
+                                            <button id="btn234" class="btn text-danger" type="submit">
+                                              <i class="fas fa-thumbs-up"></i></button>
+                                          </form>
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </div>
+
+
+                              </div>
+                            </div>
+                          </div>
+                          <div class="modal-footer">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <button id="btn231" class="btn btn-primary w-25 me-3" data-bs-toggle="modal" data-bs-target="#createTask1"><i class="fas fa-plus fa-lg"></i></button>
+                      <button id="btn232" class="btn btn-primary w-25" data-bs-toggle="modal" data-bs-target="#taskStatsModal1">
+                        <i class="fas fa-chart-line"></i>
+                      </button>
+                    </div>
+                    <div class="row mt-2 ps-2 pe-2 row-cols-12">
+
+
+                      <div class="col-xl-auto col-lg col-md col-xxl">
+                        <div class="mt-auto" style="max-width: 98% !important; width: 98% !important; overflow-x: overflow;">
+
+
+
+
+                          <div class="row y-scroll flex-nowrap scrollable row-cols-7" style="height: auto; overflow: scroll;">
+                            <div class="border-danger scrollable ms-1 ps-2 w-25 col">
+                              <div class="row rounded text-danger pt-2 pb-1">
+                                <h5 dmx-text="trans.data.pending[lang.value]+': '+(list_order_items_shift_all.data.query.where(`order_item_group_type`, 'Ingredient', '!==')).count()" class="text-center fw-bold"></h5>
+                              </div>
+                              <div class="row scrollable">
+                                <div dmx-repeat:repeat1="listGugrUserProjectTasksAll.data.list_project_tasks_all.where(`task_status`, 'Pending', '==')">
+                                  <main>
+                                    <div class="row justify-content-start" style="">
+                                      <div class="rounded-2 border-secondary execution-card shadow-none mt-1 mb-1 ms-3 me-2 pt-2 pb-3 ps-3 pe-3 bg-secondary col" dmx-animate-enter.delay:500.duration:500="pulse" dmx-class:main-group-product="order_item_group_type=='Main'" dmx-class:accessory-product="order_item_group_type=='Accessory'">
+
+                                        <div class="row">
+
+                                          <div class="col">
+
+
+
+                                            <div class="row">
+                                              <div class="col">
+                                                <h6 class="fw-bold me-3 pt-1 pb-1 ps-1 pe-1 text-body"><i class="far fa-user fa-sm" style="margin-right: 5px;"> {{userCratedName}}</i></h6>
+
+                                                <h6 class="fw-bold text-info"><i class="fas fa-user-alt fa-sm" style="margin-right: 5px;"> {{userConcernedName}}</i></h6>
+
+
+                                              </div>
+
+                                            </div>
+                                            <div class="row">
+                                              <div class="col">
+                                                <h6 dmx-text="'#'+task_id+" class="fw-bold text-body"><i class="fas fa-clipboard-list fa-lg"></i></h6>
+                                                <h6 dmx-text="task_date_created" class="fw-bold text-body"></h6>
+                                                <h6 dmx-text="task_date_due" class="fw-bold text-body"></h6>
+                                              </div>
+                                            </div>
+
+
+                                          </div>
+                                          <div class="col rounded mt-1 me-1 pt-1 bg-light">
+                                            <h5 dmx-text="product_name" class="text-center fw-bolder"></h5>
+                                            <h6 dmx-text="task_description" class="fw-bold text-center bg-opacity-10 rounded ms-1 me-1 pt-1 pb-1 ps-1 pe-1 text-body">
+
+                                            </h6>
+
+                                          </div>
+
+
+
+                                          <div>
+                                            <div>
+
+                                            </div>
+                                          </div>
+
+                                        </div>
+                                        <div class="row row-cols-12">
+                                          <div class="d-flex justify-content-between col">
+                                            <form id="deletePersonalTask3" is="dmx-serverconnect-form" method="post" action="dmxConnect/api/gugr_projects/gugr_project_tasks/delete_gugr_project_task.php" dmx-on:success="notifies1.success('Success');listGugrUserProjectTasks.load({});listGugrUserProjectTasksAll.load({})" onsubmit="return confirm ('Confirm Delete')">
+                                              <input id="text15" name="task_id1" type="text" class="form-control visually-hidden" dmx-bind:value="task_id">
+                                              <input id="text15" class="visually-hidden" name="task_date_completed1" type="datetime-local" dmx-bind:value="dateTime.datetime">
+                                              <button id="btn23" class="btn rounded me-3 text-muted rounded-9" type="submit">
+                                                <i class="far fa-trash-alt"></i></button>
+                                            </form>
+                                            <form id="updateTaskToActive3" is="dmx-serverconnect-form" method="post" action="dmxConnect/api/gugr_projects/gugr_project_tasks/update_gugr_project_task_to_completed.php" dmx-on:success="notifies1.success('Success');listGugrUserProjectTasks.load({});listGugrUserProjectTasksAll.load({})">
+                                              <input id="text15" name="task_status1" type="text" class="form-control visually-hidden" dmx-bind:value="'Active'">
+                                              <input id="text15" name="task_id1" type="text" class="form-control visually-hidden" dmx-bind:value="task_id">
+                                              <input id="text15" class="visually-hidden" name="task_date_completed1" type="datetime-local" dmx-bind:value="dateTime.datetime">
+                                              <button id="btn23" class="btn text-danger bg-opacity-10 rounded" type="submit">
+                                                <i class="fas fa-thumbs-up"></i></button>
+                                            </form>
+
+                                          </div>
+                                        </div>
+                                      </div>
+
+                                    </div>
+
+                                  </main>
+                                </div>
+                              </div>
+
+
+
+
+                            </div>
+                            <div class="border-danger scrollable ms-1 ps-2 w-25 col">
+                              <div class="row rounded text-danger pt-2 pb-1">
+                                <h5 dmx-text="trans.data.Active[lang.value]+': '+(list_order_items_shift_all.data.query.where(`order_item_group_type`, 'Ingredient', '!==')).count()" class="text-center fw-bold"></h5>
+                              </div>
+                              <div class="row scrollable">
+                                <div dmx-repeat:repeat1="listGugrUserProjectTasksAll.data.list_project_tasks_all.where(`task_status`, 'Active', '==')">
+                                  <main>
+                                    <div class="row justify-content-start" style="">
+                                      <div class="col rounded-2 border-secondary execution-card shadow-none mt-1 mb-1 ms-3 me-2 pt-2 pb-3 ps-3 pe-3 bg-secondary" dmx-animate-enter.delay:500.duration:500="pulse" dmx-class:main-group-product="order_item_group_type=='Main'" dmx-class:accessory-product="order_item_group_type=='Accessory'">
+
+                                        <div class="row">
+
+                                          <div class="col">
+
+
+
+                                            <div class="row">
+                                              <div class="col">
+                                                <h6 class="fw-bold me-3 pt-1 pb-1 ps-1 pe-1 text-body"><i class="far fa-user fa-sm" style="margin-right: 5px;"> {{userCratedName}}</i></h6>
+
+                                                <h6 class="fw-bold text-info"><i class="fas fa-user-alt fa-sm" style="margin-right: 5px;"> {{userConcernedName}}</i></h6>
+
+
+                                              </div>
+
+                                            </div>
+                                            <div class="row">
+                                              <div class="col">
+                                                <h6 dmx-text="'#'+task_id+" class="fw-bold text-body"><i class="fas fa-clipboard-list fa-lg"></i></h6>
+                                                <h6 dmx-text="task_date_created" class="fw-bold text-body"></h6>
+                                                <h6 dmx-text="task_date_due" class="fw-bold text-body"></h6>
+                                              </div>
+                                            </div>
+
+
+                                          </div>
+                                          <div class="col rounded mt-1 me-1 pt-1 bg-light">
+                                            <h5 dmx-text="product_name" class="text-center fw-bolder"></h5>
+                                            <h6 dmx-text="task_description" class="fw-bold text-center bg-opacity-10 rounded ms-1 me-1 pt-1 pb-1 ps-1 pe-1 text-body">
+
+                                            </h6>
+
+                                          </div>
+
+
+
+                                          <div>
+                                            <div>
+
+                                            </div>
+                                          </div>
+
+                                        </div>
+                                        <div class="row row-cols-12">
+                                          <div class="d-flex justify-content-between col">
+                                            <form id="deletePersonalTask3" is="dmx-serverconnect-form" method="post" action="dmxConnect/api/gugr_projects/gugr_project_tasks/delete_gugr_project_task.php" dmx-on:success="notifies1.success('Success');listGugrUserProjectTasks.load({});listGugrUserProjectTasksAll.load({})" onsubmit="return confirm ('Confirm Delete')">
+                                              <input id="text15" name="task_id1" type="text" class="form-control visually-hidden" dmx-bind:value="task_id">
+                                              <input id="text15" class="visually-hidden" name="task_date_completed1" type="datetime-local" dmx-bind:value="dateTime.datetime">
+                                              <button id="btn23" class="btn rounded me-3 text-muted rounded-9" type="submit">
+                                                <i class="far fa-trash-alt"></i></button>
+                                            </form>
+                                            <form id="updateTaskToActive3" is="dmx-serverconnect-form" method="post" action="dmxConnect/api/gugr_projects/gugr_project_tasks/update_gugr_project_task_to_completed.php" dmx-on:success="notifies1.success('Success');listGugrUserProjectTasks.load({});listGugrUserProjectTasksAll.load({})">
+                                              <input id="text15" name="task_status1" type="text" class="form-control visually-hidden" dmx-bind:value="'Completed'">
+                                              <input id="text15" name="task_id1" type="text" class="form-control visually-hidden" dmx-bind:value="task_id">
+                                              <input id="text15" class="visually-hidden" name="task_date_completed1" type="datetime-local" dmx-bind:value="dateTime.datetime">
+                                              <button id="btn23" class="btn text-danger bg-opacity-10 rounded" type="submit">
+                                                <i class="fas fa-thumbs-up"></i></button>
+                                            </form>
+
+                                          </div>
+                                        </div>
+                                      </div>
+
+                                    </div>
+
+                                  </main>
+                                </div>
+                              </div>
+
+
+
+
+                            </div>
+                            <div class="border-danger scrollable ms-1 ps-2 w-25 col">
+                              <div class="row rounded text-danger pt-2 pb-1">
+                                <h5 dmx-text="trans.data.Completed[lang.value]+': '+(list_order_items_shift_all.data.query.where(`order_item_group_type`, 'Ingredient', '!==')).count()" class="text-center fw-bold"></h5>
+                              </div>
+                              <div class="row scrollable">
+                                <div dmx-repeat:repeat1="listGugrUserProjectTasksAll.data.list_project_tasks_all.where(`task_status`, 'Completed', '==')">
+                                  <main>
+                                    <div class="row justify-content-start" style="">
+                                      <div class="col rounded-2 border-secondary execution-card shadow-none mt-1 mb-1 ms-3 me-2 pt-2 pb-3 ps-3 pe-3 bg-secondary" dmx-animate-enter.delay:500.duration:500="pulse" dmx-class:main-group-product="order_item_group_type=='Main'" dmx-class:accessory-product="order_item_group_type=='Accessory'">
+
+                                        <div class="row">
+
+                                          <div class="col">
+
+
+
+                                            <div class="row">
+                                              <div class="col">
+                                                <h6 class="fw-bold me-3 pt-1 pb-1 ps-1 pe-1 text-body"><i class="far fa-user fa-sm" style="margin-right: 5px;"> {{userCratedName}}</i></h6>
+
+                                                <h6 class="fw-bold text-info"><i class="fas fa-user-alt fa-sm" style="margin-right: 5px;"> {{userConcernedName}}</i></h6>
+
+
+                                              </div>
+
+                                            </div>
+                                            <div class="row">
+                                              <div class="col">
+                                                <h6 dmx-text="'#'+task_id+" class="fw-bold text-body"><i class="fas fa-clipboard-list fa-lg"></i></h6>
+                                                <h6 dmx-text="task_date_created" class="fw-bold text-body"></h6>
+                                                <h6 dmx-text="task_date_due" class="fw-bold text-body"></h6>
+                                              </div>
+                                            </div>
+
+
+                                          </div>
+                                          <div class="col rounded mt-1 me-1 pt-1 bg-light">
+                                            <h5 dmx-text="product_name" class="text-center fw-bolder"></h5>
+                                            <h6 dmx-text="task_description" class="fw-bold text-center bg-opacity-10 rounded ms-1 me-1 pt-1 pb-1 ps-1 pe-1 text-body">
+
+                                            </h6>
+
+                                          </div>
+
+
+
+                                          <div>
+                                            <div>
+
+                                            </div>
+                                          </div>
+
+                                        </div>
+                                        <div class="row row-cols-12">
+                                          <div class="d-flex justify-content-between col">
+                                            <form id="deletePersonalTask3" is="dmx-serverconnect-form" method="post" action="dmxConnect/api/gugr_projects/gugr_project_tasks/delete_gugr_project_task.php" dmx-on:success="notifies1.success('Success');listGugrUserProjectTasks.load({});listGugrUserProjectTasksAll.load({})" onsubmit="return confirm ('Confirm Delete')">
+                                              <input id="text15" name="task_id1" type="text" class="form-control visually-hidden" dmx-bind:value="task_id">
+                                              <input id="text15" class="visually-hidden" name="task_date_completed1" type="datetime-local" dmx-bind:value="dateTime.datetime">
+                                              <button id="btn23" class="btn rounded me-3 text-muted rounded-9" type="submit">
+                                                <i class="far fa-trash-alt"></i></button>
+                                            </form>
+                                            <form id="updateTaskToActive3" is="dmx-serverconnect-form" method="post" action="dmxConnect/api/gugr_projects/gugr_project_tasks/update_gugr_project_task_to_completed.php" dmx-on:success="notifies1.success('Success');listGugrUserProjectTasks.load({});listGugrUserProjectTasksAll.load({})">
+                                              <input id="text15" name="task_status1" type="text" class="form-control visually-hidden" dmx-bind:value="'Validated'">
+                                              <input id="text15" name="task_id1" type="text" class="form-control visually-hidden" dmx-bind:value="task_id">
+                                              <input id="text15" class="visually-hidden" name="task_date_completed1" type="datetime-local" dmx-bind:value="dateTime.datetime">
+                                              <button id="btn23" class="btn text-danger bg-opacity-10 rounded" type="submit">
+                                                <i class="fas fa-thumbs-up"></i></button>
+                                            </form>
+
+                                          </div>
+                                        </div>
+                                      </div>
+
+                                    </div>
+
+                                  </main>
+                                </div>
+                              </div>
+
+
+
+
+                            </div>
+
+
+
+
+
+                          </div>
+                        </div>
+
+
+                      </div>
+                      <div class="col-lg d-flex visually-hidden">
+                        <div class="row"></div>
+                        <h2>{{trans.data.overview[lang.value]}}</h2>
+                        <h5>{{trans.data.Active[lang.value]}}</h5>
+
+                        <div class="d-block">
+                          <h4 dmx-text="listGugrProjects.data.query_stats[0].Active+'  '"></h4>
+                        </div>
+                        <div class="d-block">
+                          <h4 dmx-text="listGugrProjects.data.query_stats[0].Active+'  '"></h4>
+                        </div>
+                        <div class="d-block">
+                          <h4 dmx-text="listGugrProjects.data.query_stats[0].Active+'  '"></h4>
+                        </div>
+                      </div>
+
+                    </div>
+
+
+
+
+
+                  </div>
+                  <div class="tab-pane fade mt-2" id="navTabs2_52" role="tabpanel">
+                    <div class="row justify-content-xxl-end row-cols-xxl-12 row-cols-12 mt-3 mb-2 justify-content-end">
+                      <div class="col text-end"><button id="btn23" class="btn w-auto text-white bg-primary" dmx-on:click="" data-bs-toggle="collapse" data-bs-target="#uploadFileCollapse1"><i class="fas fa-file-upload"></i>
+                        </button></div>
+                    </div>
+
+                    <div class="collapse" id="uploadFileCollapse1" is="dmx-bs5-collapse">
+                      <div class="container">
+                        <div class="row mt-xl-3 mt-3">
+                          <div class="col mt-md-3 ms-lg-2 me-lg-2 ms-2 me-2 pt-2 pb-2 ps-5 pe-2 rounded rounded-2 bg-secondary">
+                            <h3 class="mt-3">{{trans.data.uploadFile[lang.value]}}</h3>
+                            <form id="uploadProjectfile1" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/gugr_projects/gugr_files/create_project_file.php" dmx-on:success="notifies1.success('File Uploaded'); uploadFileCollapse.hide();uploadProjectfile&.reset();listGugrProjectsFiles.load({project_id: readGuGrProject.data.query_read_gugr_project.project_id})" dmx-on:error="assetNotification.danger('Error!')">
+                              <input id="fileCreator1" name="project_file_creator" type="text" class="form-control visually-hidden" dmx-bind:value="list_user_info.data.query_list_user_info.user_id">
+                              <input id="fileDateCreated1" name="project_file_date_created" type="datetime-local" class="form-control visually-hidden" dmx-bind:value="dateTime.datetime">
+                              <input id="projectFileProjectId1" name="project_file_project_id" type="number" class="form-control visually-hidden" dmx-bind:value="readGuGrProject.data.query_read_gugr_project.project_id">
+
+
+                              <div class="form-group mb-3 row">
+                                <label for="fileUpload" class="col-sm-2 col-form-label col-lg-2">{{trans.data.uploadFileCollapse.lang.value]}}</label>
+                                <div class="col-sm-10 offset-md-4 col-lg-5 offset-lg-1">
+                                  <input id="projectFileProjectFile2" name="project_file" class="form-control visually-hidden"><input type="file" class="form-control" id="fileUpload" name="project_file" aria-describedby="input1_help" data-rule-maxtotalsize="100MB" data-msg-maxtotalsize="Max 100MB!" required="" data-msg-required="!">
+                                </div>
+                              </div>
+                              <div class="form-group mb-3 row">
+                                <label for="fileUpload" class="col-sm-2 col-form-label col-lg-2">{{trans.data.object.lang.value]}}</label>
+                                <div class="col-sm-10 offset-md-4 col-lg-5 offset-lg-1">
+                                  <textarea id="projectFileProjectFile2" name="project_file_description" class="form-control"></textarea>
+                                </div>
+                              </div>
+                              <div class="form-group mb-3 row">
+                                <div class="offset-xxl-4 offset-sm-2 offset-md-4 offset-lg-3 text-end offset-xl-3 col-xl col-xl-5 col-lg-5 col-sm-10 col-md-9 col-xxl-4">
+                                  <button id="submitProjectFile1" class="btn btn-primary w-auto" type="submit"><i class="fas fa-check fa-sm"></i></button>
+                                </div>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col">
+                        <div class="table-responsive">
+                          <table class="table table-striped table-hover table-sm">
+                            <thead>
+                              <tr>
+                                <th>#</th>
+                                <th>{{trans.data.file[lang.value]}}</th>
+                                <th>{{trans.data.object[lang.value]}}</th>
+                                <th>{{trans.data.dateCreated[lang.value]}}</th>
+                                <th>{{trans.data.user[lang.value]}}</th>
+                                <th></th>
+                                <th></th>
+                              </tr>
+                            </thead>
+                            <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="listGugrProjectsFiles.data.query_list_project_files" id="tableRepeat7">
+                              <tr>
+                                <td dmx-text="project_file_id"></td>
+                                <td dmx-text="project_file"></td>
+                                <td>
+                                  <form id="updateProjectFileDescription1" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/gugr_projects/gugr_files/update_project_file_description.php" dmx-on:success="notifies1.success('Success!');listGugrProjectsFiles.load({project_id: readGuGrProject.data.query_read_gugr_project.project_id})" dmx-on:error="notifies1.danger('Error!')">
+                                    <input id="ProjectFileID2" name="project_file_id1" type="number" class="form-control visually-hidden" dmx-bind:value="project_file_id">
+                                    <textarea id="ProjectFileDescription2" name="project_file_description1" type="text" class="form-control" dmx-bind:value="project_file_description"></textarea>
+                                    <button id="btn23" class="btn text-info" type="submit">
+                                      <i class="fas fa-check"></i>
+                                    </button>
+                                  </form>
+                                </td>
+                                <td dmx-text="project_file_date_created"></td>
+                                <td dmx-text="user_username"></td>
+                                <td>
+                                  <dmx-download id="downloadFile1" dmx-bind:url="'uploads/project_files/'+project_file"></dmx-download><button id="btn23" class="btn text-info" dmx-on:click="run({confirm:{message:'Télécharger Ficher?',then:{steps:{run:{action:`downloadFile.download()`}}},name:'confirm'}})">
+                                    <i class="fas fa-download"></i></button>
+
+                                </td>
+                                <td>
+                                  <form id="deleteProjectFile1" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/gugr_projects/gugr_files/delete_project_file.php" dmx-on:success="listGugrProjectsFiles.load({project_id: readGuGrProject.data.query_read_gugr_project.project_id})">
+                                    <input id="text15" name="project_file_id1" type="text" class="form-control visually-hidden" dmx-bind:value="project_file_id">
+                                    <input id="text15" name="project_file1" type="text" class="form-control visually-hidden" dmx-bind:value="project_file">
+                                  </form>
+                                  <button id="btn23" class="btn text-secondary" dmx-on:click="run({confirm:{message:'Supprimer Ficher?',then:{steps:{run:{action:`deleteProjectFile.submit()`}}},name:'confirm'}})">
+                                    <i class="far fa-trash-alt"></i></button>
+
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                  <div class="tab-pane fade mt-2" id="navTabs2_53" role="tabpanel">
+                    <div class="row row-cols-md-12">
+                      <div class="col-12 col-md-4">
+                        <div class="row justify-content-center">
+                          <div class="col">
+                            <h4>{{trans.data.messages[lang.value]}}</h4>
+                            <div class="row">
+                              <form id="createProjectNote1" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/gugr_projects/gugr_notes/create_gugr_project_note.php" dmx-on:success="listGugrNotes.load({project_id: readGuGrProject.data.query_read_gugr_project.project_id});createProjectNote.reset();notifies1.success('Success!')">
+                                <div class="form-group mb-3 row">
+                                  <div class="rounded ms-3 pt-4 pb-3 ps-4 pe-4 col-sm-11 col-md-11 bg-secondary" style="">
+                                    <h4>{{trans.data.leaveMessage[lang.value]}}</h4>
+                                    <input id="projectNoteDateCreated1" name="date_created" type="datetime-local" class="form-control visually-hidden" dmx-bind:value="dateTime.datetime"><input type="number" class="form-control visually-hidden" id="projectNoteProjectId1" name="project_note_project_id" aria-describedby="input1_help" dmx-bind:value="readGuGrProject.data.query_read_gugr_project.project_id">
+                                    <input type="number" class="form-control visually-hidden" id="projectNoteUserCreated1" name="project_note_user_created" aria-describedby="input1_help" dmx-bind:value="list_user_info.data.query_list_user_info.user_id">
+                                    <textarea type="text" class="form-control" id="projectNoteNote2" name="project_note" aria-describedby="input1_help" style="height: 150px;"></textarea>
+
+                                    <div class="row justify-content-end me-0"><button id="btn23" class="btn mt-2 bg-primary text-white w-25" type="submit">
+                                        <i class="far fa-paper-plane fa-lg"></i>
+                                      </button></div>
+                                  </div>
+                                </div>
+                              </form>
+                            </div>
+
+                          </div>
+
+                        </div>
+
+                      </div>
+                      <div class="scrollable col-md-5">
+                        <h5 class="text-start"><i class="fas fa-comments fa-lg" style="margin-right: 5px;"></i></h5>
+                        <div dmx-repeat:repeatprojectnotes="listGugrNotes.data.query_list_project_notes">
+                          <main>
+                            <div class="row mb-2">
+                              <div class="col bg-secondary ms-3 me-5 pt-3 pb-3 ps-3 pe-3 rounded-3">
+                                <div class="row">
+                                  <div class="col d-flex">
+                                    <h6 class="fw-bold me-2" dmx-class:green-state="project_note_user_created==list_user_info.data.query_list_user_info.user_id">
+                                      <i class="far fa-user fa-sm" style="margin-right: 5px;"></i>{{user_username}}
+                                    </h6>
+                                    <h6 class="fw-bold">
+                                      <i class="far fa-clock" style="margin-right: 5px;"></i>{{date_created}}
+                                    </h6>
+                                  </div>
+                                </div>
+                                <div class="row justify-content-end row-cols-12">
+
+                                  <form is="dmx-serverconnect-form" id="updateProjectNote1" method="post" action="dmxConnect/api/gugr_projects/gugr_notes/update_gugr_note.php" dmx-generator="bootstrap5" dmx-form-type="horizontal" dmx-populate="readGuGrProject.data.query_read_gugr_project" dmx-on:success="readGuGrProject.load({project_id: readGuGrProject.data.query_read_gugr_project.project_id});updateProjectStatus.reset();listGugrProjectSteps.load({project_id: readGuGrProject.data.query_read_gugr_project.project_id}); listGugrProjects.load({gugr_project_filter: gugrProjectFilter.value, gugr_project_status: gugrProjectStatusFilter.value, offset: list_gugr_projects.data.offset_gugr_projects, limit: gugrProjectLimit.value});notifies1.success('Success!');listGugrNotes.load({project_id: readGuGrProject.data.query_read_gugr_project.project_id})" dmx-on:error="notifies1.danger('Error!')">
+
+                                    <input id="projectNoteProject2" name="project_note_id1" type="text" class="form-control visually-hidden" dmx-bind:value="project_note_id">
+
+                                    <div class="form-group mb-3 row">
+                                      <div class="col-sm-10">
+                                        <h5 dmx-text="project_note" class="fw-bold text-body">Fancy display heading</h5>
+                                        <textarea type="text" class="form-control" id="projectNoteNote2" name="project_note1" aria-describedby="inp_project_description_help" style="display: none; height: 150px; border: none; background: transparent;" dmx-bind:value="project_note"></textarea>
+                                      </div>
+                                    </div>
+                                    <div class="form-group mb-3 row">
+                                      <div class="col-sm-10 text-end visually-hidden">
+                                        <button type="submit" class="btn bg-info btn-info" dmx-bind:value="readGuGrProject.data.query_read_gugr_project.Save" dmx-bind:readonly="state.executing">{{trans.data.update[lang.value]}}<span class="spinner-border spinner-border-sm" role="status" dmx-show="state.executing"></span></button>
+                                      </div>
+                                    </div>
+                                  </form>
+
+
+                                </div>
+                                <div class="row justify-content-end row-cols-12 text-end">
+                                  <form id="deleteGugrNote1" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/gugr_projects/gugr_notes/delete_gugr_project_note.php" dmx-on:success="listGugrNotes.load({project_id: readGuGrProject.data.query_read_gugr_project.project_id})" onsubmit="return confirm('Confirm Delete!');">
+
+                                    <input id="deleteNoteId1" name="project_note_id1" type="number" class="form-control visually-hidden" dmx-bind:value="project_note_id"><button id="btn23" class="btn text-body" type="submit" dmx-hide="project_note_user_created!==list_user_info.data.query_list_user_info.user_id">
+                                      <i class="far fa-trash-alt"></i></button>
+                                  </form>
+                                </div>
+
+
+
+
+
+
+
+
+                              </div>
+
+                            </div>
+
+
+                          </main>
+                        </div>
+                      </div>
+                    </div>
+
+
+
+
+
+                  </div>
+                  <div class="tab-pane fade mt-2" id="navTabs2_5" role="tabpanel">
+                    <div class="row">
+                      <div class="col-xl-4 text-sm-center text-center text-md-center rounded rounded-1 border-light col-12 col-md-5 col-lg-5 mt-2 pt-3 pb-2 ps-3 pe-3">
+                        <div class="row">
+                          <div class="col pt-3 ps-3 pe-3 bg-light">
+
+                            <h5 class="text-start fw-bold"><i class="far fa-file-alt" style="margin-right: 5px;"></i>{{trans.data.info[lang.value]}}</h5>
+                            <div class="row rounded mb-3 ms-0 me-0 pt-4 pb-3 border-secondary bg-secondary">
+                              <p class="text-start" dmx-text="readGuGrProject.data.query_read_gugr_project.project_code"></p>
+                              <p class="text-start" dmx-text="trans.data.dateCreated[lang.value]+': '+readGuGrProject.data.query_read_gugr_project.project_date_created"></p>
+                              <p class="text-start" dmx-text="trans.data.dateDue[lang.value]+': '+readGuGrProject.data.query_read_gugr_project.project_date_due"></p>
+                            </div>
+                            <form is="dmx-serverconnect-form" id="updateProjectReception1" method="post" action="dmxConnect/api/gugr_projects/gugr_projects/update_gugr_project_reception.php" dmx-generator="bootstrap5" dmx-form-type="horizontal" dmx-populate="readGuGrProject.data.query_read_gugr_project" dmx-on:success="readGuGrProject.load({project_id: readGuGrProject.data.query_read_gugr_project.project_id}); listGugrProjects.load({gugr_project_filter: gugrProjectFilter.value, gugr_project_status: gugrProjectStatusFilter.value, offset: list_gugr_projects.data.offset_gugr_projects, limit: gugrProjectLimit.value}); listGugrProjects.load({gugr_project_filter: gugrProjectFilter.value, gugr_project_status: gugrProjectStatusFilter.value, offset: list_gugr_projects.data.offset_gugr_projects, limit: gugrProjectLimit.value})"><input id="text15" name="project_id4" type="text" class="form-control visually-hidden" dmx-bind:value="readGuGrProject.data.query_read_gugr_project.project_id">
+                              <div class="form-group mb-3 row">
+                                <label for="inp_project_description1" class="col-sm-2 col-form-label">{{trans.data.object[lang.value]}}</label>
+                                <div class="col-sm-10">
+                                  <textarea type="text" class="form-control" id="inp_project_description1" name="project_description1" dmx-bind:value="readGuGrProject.data.query_read_gugr_project.project_description" aria-describedby="inp_project_description_help" style="height: 150px;" dmx-bind:readonly="(list_user_info.data.query_list_user_info.user_profile!=='gugr-reception')&amp;&amp;(list_user_info.data.query_list_user_info.user_profile!=='gugr-cordo')"></textarea>
+                                </div>
+                              </div>
+                              <div class="form-group mb-3 row">
+                                <label for="inp_project_date_due_4" class="col-sm-2 col-form-label">{{trans.data.dateDue[lang.value]}}</label>
+                                <div class="col-sm-10">
+                                  <input type="datetime-local" class="form-control" id="inp_project_date_due_4" name="project_date_due2" dmx-bind:value="readGuGrProject.data.query_read_gugr_project.project_date_due" aria-describedby="inp_project_date_due_help" dmx-bind:readonly="(list_user_info.data.query_list_user_info.user_profile!=='gugr-reception')&amp;&amp;(list_user_info.data.query_list_user_info.user_profile!=='gugr-cordo')">
+                                </div>
+                              </div>
+                              <div class="form-group mb-3 row">
+                                <div class="col-sm-10 text-end" dmx-hide="list_user_info.data.query_list_user_info.user_profile!=='gugr-reception'&amp;&amp;list_user_info.data.query_list_user_info.user_profile!=='gugr-cordo'">
+                                  <button type="submit" class="btn btn-primary text-white bg-primary" dmx-bind:value="readGuGrProject.data.query_read_gugr_project.Save" dmx-bind:readonly="state.executing">{{trans.data.update[lang.value]}} <span class="spinner-border spinner-border-sm" role="status" dmx-show="state.executing"></span></button>
+                                </div>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+
+
+
+                      </div>
+                      <div class="col-xl-4 col-12 text-sm-center text-center text-md-center rounded rounded-1 border-light col-md-3 col-lg-3 mt-2 pt-3 pb-2 ps-3 pe-3">
+                        <div class="row">
+                          <div class="col bg-secondary pt-3 ps-3 pe-3 rounded rounded-3" dmx-show="list_user_info.data.query_list_user_info.user_profile=='gugr-cordo'">
+                            <h5 class="text-start fw-bold"><i class="fas fa-hourglass-half" style="margin-right: 5px;"></i>{{trans.data.status[lang.value]}}</h5>
+                            <form is="dmx-serverconnect-form" id="updateProjectStatus1" method="post" action="dmxConnect/api/gugr_projects/gugr_projects/update_gugr_project_status.php" dmx-generator="bootstrap5" dmx-form-type="horizontal" dmx-populate="readGuGrProject.data.query_read_gugr_project" dmx-on:success="readGuGrProject.load({project_id: readGuGrProject.data.query_read_gugr_project.project_id});updateProjectStatus.reset(); listGugrProjects.load({gugr_project_filter: gugrProjectFilter.value, gugr_project_status: gugrProjectStatusFilter.value, offset: list_gugr_projects.data.offset_gugr_projects, limit: gugrProjectLimit.value});notifies1.success('Success!')" dmx-on:error="notifies1.danger('Error!')">
+                              <input id="text15" name="project_id4" type="text" class="form-control visually-hidden" dmx-bind:value="readGuGrProject.data.query_read_gugr_project.project_id">
+                              <div class="form-group mb-3 row">
+
+                                <label for="inp_project_status1" class="col-sm-2 col-form-label col">{{trans.data.status[lang.value]}}</label>
+                                <div class="col-sm-10">
+                                  <select id="select3" class="form-select" name="project_status1" dmx-bind:value="readGuGrProject.data.query_read_gugr_project.project_status">
+                                    <option value="Pending">{{trans.data.pending[lang.value]}}</option>
+                                    <option value="Active">{{trans.data.Active[lang.value]}}</option>
+                                    <option value="Completed">{{trans.data.Completed[lang.value]}}</option>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="form-group mb-3 row">
+                                <div class="col-sm-10 text-end">
+                                  <button type="submit" class="btn btn-primary text-white bg-primary" dmx-bind:value="readGuGrProject.data.query_read_gugr_project.Save" dmx-bind:readonly="state.executing">{{trans.data.update[lang.value]}}<span class="spinner-border spinner-border-sm" role="status" dmx-show="state.executing"></span></button>
+                                </div>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+
+
+
+                      </div>
+                      <div class="col-12 text-sm-center text-center text-md-center rounded rounded-1 border-light col-md-3 col-lg-3 col-xl-3 mt-2 pt-3 pb-2 ps-3 pe-3">
+                        <div class="row">
+                        </div>
+
+
+
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer border-0">
+            <form id="updateStepActive1" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/gugr_projects/gugr_projects/delete_gugr_project.php" dmx-on:success="notifies1.success('Success');readItemModal.hide(); listGugrProjects.load({gugr_project_filter: gugrProjectFilter.value, gugr_project_status: gugrProjectStatusFilter.value, offset: list_gugr_projects.data.offset_gugr_projects, limit: gugrProjectLimit.value})" onsubmit=" return confirm('CONFIRM DELETE?');" dmx-on:error="notifies1.danger('Error!')">
+              <input id="text15" name="project_step_id1" class="form-control visually-hidden" dmx-bind:value="readGuGrProject.data.query_read_gugr_project.project_id" type="number">
+
+            </form>
+            <form id="deleteProjectForm3" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/gugr_projects/gugr_projects/delete_gugr_project.php" dmx-on:success="notifies1.success('Success');readItemModal.hide(); listGugrProjects.load({gugr_project_filter: gugrProjectFilter.value, gugr_project_status: gugrProjectStatusFilter.value, offset: list_gugr_projects.data.offset_gugr_projects, limit: gugrProjectLimit.value})" onsubmit=" return confirm('CONFIRM DELETE?');" dmx-on:error="notifies1.danger('Error!')">
+              <input id="text15" name="project_id4" class="form-control visually-hidden" dmx-bind:value="readGuGrProject.data.query_read_gugr_project.project_id" type="number">
+
+            </form>
+            <form id="deleteProjectForm3" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/gugr_projects/gugr_projects/delete_gugr_project.php" dmx-on:success="notifies1.success('Success');readItemModal.hide(); listGugrProjects.load({gugr_project_filter: gugrProjectFilter.value, gugr_project_status: gugrProjectStatusFilter.value, offset: list_gugr_projects.data.offset_gugr_projects, limit: gugrProjectLimit.value})" onsubmit=" return confirm('CONFIRM DELETE?');" dmx-on:error="notifies1.danger('Error!')">
+              <input id="text15" name="project_id" class="form-control visually-hidden" dmx-bind:value="readGuGrProject.data.query_read_gugr_project.project_id" type="number">
+
+              <button id="btn23" class="btn text-secondary" type="submit">
+                <i class="far fa-trash-alt fa-lg"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="modal" id="createTask1" is="dmx-bs5-modal" tabindex="-1">
+      <div class="modal-dialog modal-lg modal-fullscreen-xxl-down" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title text-dark">{{trans.data.createNewTask[lang.value]}}</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="row row-cols-12 mb-0 me-2 pt-2 pb-2">
+              <div class="col-sm-12 bg-opacity-10 bg-primary col-12 col-xxl-12 col-lg-12 col-xl-12 ms-2 me-2 pt-3 pb-2 pe-3">
+                <form id="createProjectTaskForm1" is="dmx-serverconnect-form" method="post" action="dmxConnect/api/gugr_projects/gugr_project_tasks/create_gugr_project_task.php" dmx-on:success="notifies1.success('Success!');listGugrUserProjectTasks.load({});listGugrUserProjectTasksAll.load({});createProjectTaskForm.reset()" dmx-on:error="notifies1.danger('Error!')">
+                  <textarea id="taskDescription1" name="task_description" type="text" class="form-control" style="height: 100px;"></textarea>
+                  <input id="taskDateCreated1" name="task_date_created" type="datetime-local" class="form-control visually-hidden" dmx-bind:value="dateTime.datetime">
+                  <input id="taskStatus1" name="task_status" class="form-control visually-hidden" dmx-bind:value="'Pending'">
+                  <input id="taskProject" name="task_project" class="form-control visually-hidden" dmx-bind:value="readGuGrProject.data.query_read_gugr_project.project_id">
+                  <input id="taskUserCreated1" name="task_user_created" class="form-control visually-hidden" dmx-bind:value="list_user_info.data.query_list_user_info.user_id" type="number">
+                  <div class="form-group mb-3">
+                    <label for="taskUserConcerned" class="form-label">{{trans.data.user[lang.value]}}</label>
+                    <select id="taskUserConcerned" class="form-select" dmx-bind:options="load_users_1.data.query_list_users" optiontext="user_username+' | '+user_fname+' '+user_lname" optionvalue="user_id" name="task_user_concerned" required="" data-msg-required="!">
+                      <option value="">-----</option>
+                    </select>
+                  </div>
+                  <div class="row justify-content-end mt-1 ps-2 pe-2">
+                    <small class="text-muted">{{trans.data.createNewTAsk[lang.value]}}</small>
+                    <button id="btn233" class="btn mt-1 mb-2 w-25 btn-primary bg-primary" type="submit">
+                      <i class="fas fa-plus-circle"></i>
+                    </button>
+                  </div>
+
+                </form>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="modal create-modal" id="createItemModal" is="dmx-bs5-modal" tabindex="-1">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -1365,6 +2249,65 @@ JSON
                   <input id="gugrProjectStatus" name="project_status" type="text" class="form-control visually-hidden" dmx-bind:value="'Pending'">
                   <input id="gugrProjectUser" name="project_user_created" type="text" class="form-control visually-hidden" dmx-bind:value="list_user_info.data.query_list_user_info.user_id">
                   <input id="gugrProjectDateCreated" name="project_date_created" type="datetime-local" class="form-control visually-hidden" dmx-bind:value="dateTime.datetime">
+
+
+                  <div class="mb-3 row">
+                    <div class="col-sm-2">&nbsp;</div>
+                    <div class="col-sm-10">
+                      <button type="submit" class="btn btn-primary">{{trans.data.register[lang.value]}}</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+
+            </div>
+
+          </div>
+          <div class="modal-footer border-0 bg-light">
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="modal create-modal" id="createProject" is="dmx-bs5-modal" tabindex="-1">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header bg-light border-0">
+            <h5 class="modal-title fw-bold">{{trans.data.newProject[lang.value]}}</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body bg-light">
+            <div class="row">
+              <div class="col">
+                <form is="dmx-serverconnect-form" id="formCreateNewRequest1" method="post" action="dmxConnect/api/gugr_projects/gugr_projects/create_gugr_project.php" dmx-generator="bootstrap5" dmx-form-type="horizontal" dmx-on:success="formCreateNewRequest1.reset();notifies1.success('Success');listGugrProjects.load({gugr_project_filter: gugrProjectFilter.value, gugr_project_status: gugrProjectStatusFilter.value, offset: 0, limit: gugrProjectLimit.value});createItemModal.hide();readGuGrProject.load({project_id: formCreateNewRequest.data.last_project_insert[0]['last_insert_id()']});readItemModalProject.show()" dmx-on:error="notifies1.danger('Error!')">
+                  <div class="mb-3 row">
+                    <label for="inp_product_name" class="col-sm-2 col-form-label"><b>{{trans.data.code[lang.value]}}</b></label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="gugrprojectcode2" name="project_code" aria-describedby="inp_product_name_help">
+                    </div>
+                  </div>
+                  <div class="mb-3 row">
+                    <label for="inp_product_name" class="col-sm-2 col-form-label"><b>{{trans.data.expeditor[lang.value]}}</b></label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="gugrprojectcode2" name="project_notes" aria-describedby="inp_product_name_help">
+                    </div>
+                  </div>
+                  <div class="mb-3 row">
+                    <label for="inp_product_name" class="col-sm-2 col-form-label"><b>{{trans.data.object[lang.value]}}</b></label>
+                    <div class="col-sm-10">
+                      <textarea type="text" class="form-control" id="gugrDescription1" name="project_description" aria-describedby="inp_product_name_help"></textarea>
+                    </div>
+                  </div>
+                  <div class="mb-3 row">
+                    <label for="inp_product_name" class="col-sm-2 col-form-label"><b>{{trans.data.dateDue[lang.value]}}</b></label>
+                    <div class="col-sm-10">
+                      <input id="gugrProjectDateDue1" name="project_date_due1" type="datetime-local" class="form-control">
+                    </div>
+                  </div>
+                  <input id="gugrProjectType1" name="project_type" type="text" class="form-control visually-hidden" dmx-bind:value="'Work Order'">
+                  <input id="gugrProjectStatus1" name="project_status" type="text" class="form-control visually-hidden" dmx-bind:value="'Pending'">
+                  <input id="gugrProjectUser1" name="project_user_created" type="text" class="form-control visually-hidden" dmx-bind:value="list_user_info.data.query_list_user_info.user_id">
+                  <input id="gugrProjectDateCreated1" name="project_date_created" type="datetime-local" class="form-control visually-hidden" dmx-bind:value="dateTime.datetime">
 
 
                   <div class="mb-3 row">

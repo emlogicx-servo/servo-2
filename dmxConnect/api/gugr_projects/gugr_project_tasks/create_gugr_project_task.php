@@ -39,6 +39,10 @@ $app->define(<<<'JSON'
       {
         "type": "datetime",
         "name": "task_date_due"
+      },
+      {
+        "type": "number",
+        "name": "task_project"
       }
     ]
   },
@@ -99,11 +103,17 @@ $app->define(<<<'JSON'
               "column": "task_date_due",
               "type": "datetime",
               "value": "{{$_POST.task_date_due}}"
+            },
+            {
+              "table": "servo_project_tasks",
+              "column": "task_project",
+              "type": "number",
+              "value": "{{$_POST.task_project}}"
             }
           ],
           "table": "servo_project_tasks",
           "returning": "task_id",
-          "query": "insert into `servo_project_tasks` (`task_date_created`, `task_date_due`, `task_description`, `task_start`, `task_status`, `task_stop`, `task_user_concerned`, `task_user_created`) values (?, ?, ?, ?, ?, ?, ?, ?)",
+          "query": "insert into `servo_project_tasks` (`task_date_created`, `task_date_due`, `task_description`, `task_project`, `task_start`, `task_status`, `task_stop`, `task_user_concerned`, `task_user_created`) values (?, ?, ?, ?, ?, ?, ?, ?, ?)",
           "params": [
             {
               "name": ":P1",
@@ -151,6 +161,12 @@ $app->define(<<<'JSON'
               "name": ":P8",
               "type": "expression",
               "value": "{{$_POST.task_date_due}}",
+              "test": ""
+            },
+            {
+              "name": ":P9",
+              "type": "expression",
+              "value": "{{$_POST.task_project}}",
               "test": ""
             }
           ]

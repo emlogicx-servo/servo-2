@@ -23,7 +23,8 @@
       "input-border-color": "rgba(138, 138, 138, 0.23)",
       "table-border-color": "rgba(158, 158, 158, 0.13)",
       "nav-tabs-link-active-color": "$primary",
-      "nav-tabs-link-active-border-color": "$primary"
+      "nav-tabs-link-active-border-color": "$primary",
+      "link-hover-color": "#dcdcdc"
     }
   }
 }

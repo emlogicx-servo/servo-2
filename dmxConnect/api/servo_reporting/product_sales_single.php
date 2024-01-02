@@ -30,7 +30,7 @@ $app->define(<<<'JSON'
       "options": {
         "connection": "servodb",
         "sql": {
-          "query": "select *, SUM(order_item_quantity * order_item_price) as AMOUNT\n\nfrom servo_order_items\n\ninner join\nservo_products on (servo_products.product_id = servo_order_items.servo_products_product_id)\n\ninner join \nservo_orders on (servo_order_items.servo_orders_order_id = servo_orders.order_id)\n\nWHERE servo_order_items.order_time_ordered between ? and ?\nand product_id = :P2\ngroup by servo_order_items.order_time_ordered",
+          "query": "select *, SUM(order_item_quantity * order_item_price) as AMOUNT\n\nfrom servo_order_items \n\ninner join\nservo_products on (servo_products.product_id = servo_order_items.servo_products_product_id)\n\ninner join \nservo_orders on (servo_order_items.servo_orders_order_id = servo_orders.order_id)\n\ninner join \nservo_customers on order_customer = customer_id\n\nWHERE servo_order_items.order_time_ordered between ? and ?\nand product_id = :P2\ngroup by servo_order_items.order_time_ordered\norder by order_time_ordered DESC",
           "params": [
             {
               "name": "?",
@@ -119,6 +119,14 @@ $app->define(<<<'JSON'
         {
           "name": "servo_departments_department_id",
           "type": "number"
+        },
+        {
+          "name": "order_item_group_id",
+          "type": "number"
+        },
+        {
+          "name": "order_item_group_reference",
+          "type": "text"
         },
         {
           "name": "product_id",
@@ -247,6 +255,110 @@ $app->define(<<<'JSON'
         {
           "name": "order_time_paid",
           "type": "datetime"
+        },
+        {
+          "name": "order_extra_info",
+          "type": "file"
+        },
+        {
+          "name": "customer_id",
+          "type": "number"
+        },
+        {
+          "name": "customer_first_name",
+          "type": "file"
+        },
+        {
+          "name": "customer_last_name",
+          "type": "file"
+        },
+        {
+          "name": "customer_phone_number",
+          "type": "text"
+        },
+        {
+          "name": "customer_picture",
+          "type": "text"
+        },
+        {
+          "name": "customer_class",
+          "type": "file"
+        },
+        {
+          "name": "customer_sex",
+          "type": "file"
+        },
+        {
+          "name": "customer_dob",
+          "type": "datetime"
+        },
+        {
+          "name": "customer_age",
+          "type": "number"
+        },
+        {
+          "name": "customer_address",
+          "type": "file"
+        },
+        {
+          "name": "id_card_number",
+          "type": "number"
+        },
+        {
+          "name": "location_lat",
+          "type": "file"
+        },
+        {
+          "name": "locatio_lon",
+          "type": "file"
+        },
+        {
+          "name": "customer_city",
+          "type": "number"
+        },
+        {
+          "name": "customer_building_photo",
+          "type": "text"
+        },
+        {
+          "name": "customer_location_diretions",
+          "type": "file"
+        },
+        {
+          "name": "customer_nationality",
+          "type": "number"
+        },
+        {
+          "name": "customer_email",
+          "type": "text"
+        },
+        {
+          "name": "customer_legal_status",
+          "type": "file"
+        },
+        {
+          "name": "customer_tax_payer_number",
+          "type": "text"
+        },
+        {
+          "name": "customer_rep_name",
+          "type": "file"
+        },
+        {
+          "name": "customer_rep_surname",
+          "type": "file"
+        },
+        {
+          "name": "customer_rep_id_card",
+          "type": "text"
+        },
+        {
+          "name": "customer_rep_address",
+          "type": "file"
+        },
+        {
+          "name": "customer_rep_phone",
+          "type": "text"
         },
         {
           "name": "AMOUNT",

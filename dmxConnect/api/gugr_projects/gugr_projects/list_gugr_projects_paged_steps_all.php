@@ -95,6 +95,14 @@ $app->define(<<<'JSON'
               {
                 "table": "servo_project_step",
                 "column": "step_description"
+              },
+              {
+                "table": "servo_user",
+                "column": "user_fname"
+              },
+              {
+                "table": "servo_user",
+                "column": "user_lname"
               }
             ],
             "table": {
@@ -121,25 +129,31 @@ $app->define(<<<'JSON'
                   ]
                 },
                 "primary": "project_step_id"
-              }
-            ],
-            "query": "SELECT servo_projects.project_id, servo_projects.project_code, servo_projects.project_user_created, servo_projects.project_status, servo_projects.project_date_created, servo_projects.project_date_due, servo_project_step.project_step_id, servo_project_step.step_status, servo_project_step.step_end_date, servo_project_step.step_description\nFROM servo_projects\nLEFT JOIN servo_project_step ON servo_project_step.step_project = servo_projects.project_id\nWHERE servo_projects.project_status LIKE :P1 /* {{$_GET.gugr_project_status}} */ AND servo_projects.project_code LIKE :P2 /* {{$_GET.gugr_project_filter}} */\nORDER BY servo_projects.project_status DESC, servo_projects.project_date_created DESC, servo_projects.project_code DESC",
-            "params": [
-              {
-                "operator": "contains",
-                "type": "expression",
-                "name": ":P1",
-                "value": "{{$_GET.gugr_project_status}}",
-                "test": "%"
               },
               {
-                "operator": "contains",
-                "type": "expression",
-                "name": ":P2",
-                "value": "{{$_GET.gugr_project_filter}}",
-                "test": "%"
+                "table": "servo_user",
+                "column": "*",
+                "type": "LEFT",
+                "clauses": {
+                  "condition": "AND",
+                  "rules": [
+                    {
+                      "table": "servo_user",
+                      "column": "user_id",
+                      "operator": "equal",
+                      "operation": "=",
+                      "value": {
+                        "table": "servo_project_step",
+                        "column": "step_users_concerned"
+                      }
+                    }
+                  ]
+                },
+                "primary": "user_id"
               }
             ],
+            "query": "select `servo_projects`.`project_id`, `servo_projects`.`project_code`, `servo_projects`.`project_user_created`, `servo_projects`.`project_status`, `servo_projects`.`project_date_created`, `servo_projects`.`project_date_due`, `servo_project_step`.`project_step_id`, `servo_project_step`.`step_status`, `servo_project_step`.`step_end_date`, `servo_project_step`.`step_description`, `servo_user`.`user_fname`, `servo_user`.`user_lname` from `servo_projects` left join `servo_project_step` on `servo_project_step`.`step_project` = `servo_projects`.`project_id` left join `servo_user` on `servo_user`.`user_id` = `servo_project_step`.`step_users_concerned` order by `servo_projects`.`project_status` DESC, `servo_projects`.`project_date_created` DESC, `servo_projects`.`project_code` DESC",
+            "params": [],
             "orders": [
               {
                 "table": "servo_projects",
@@ -160,62 +174,7 @@ $app->define(<<<'JSON'
                 "recid": 3
               }
             ],
-            "primary": "project_id",
-            "wheres": {
-              "condition": "AND",
-              "rules": [
-                {
-                  "id": "servo_projects.project_status",
-                  "field": "servo_projects.project_status",
-                  "type": "string",
-                  "operator": "contains",
-                  "value": "{{$_GET.gugr_project_status}}",
-                  "data": {
-                    "table": "servo_projects",
-                    "column": "project_status",
-                    "type": "text",
-                    "columnObj": {
-                      "type": "enum",
-                      "enumValues": [
-                        "Pending",
-                        "Active",
-                        "Completed",
-                        "Suspended",
-                        "Cancelled",
-                        "Paused"
-                      ],
-                      "maxLength": 9,
-                      "primary": false,
-                      "nullable": true,
-                      "name": "project_status"
-                    }
-                  },
-                  "operation": "LIKE"
-                },
-                {
-                  "id": "servo_projects.project_code",
-                  "field": "servo_projects.project_code",
-                  "type": "string",
-                  "operator": "contains",
-                  "value": "{{$_GET.gugr_project_filter}}",
-                  "data": {
-                    "table": "servo_projects",
-                    "column": "project_code",
-                    "type": "text",
-                    "columnObj": {
-                      "type": "string",
-                      "maxLength": 128,
-                      "primary": false,
-                      "nullable": true,
-                      "name": "project_code"
-                    }
-                  },
-                  "operation": "LIKE"
-                }
-              ],
-              "conditional": null,
-              "valid": true
-            }
+            "primary": "project_id"
           }
         },
         "meta": [
@@ -310,6 +269,14 @@ $app->define(<<<'JSON'
               {
                 "type": "text",
                 "name": "step_description"
+              },
+              {
+                "type": "text",
+                "name": "user_fname"
+              },
+              {
+                "type": "text",
+                "name": "user_lname"
               }
             ]
           }

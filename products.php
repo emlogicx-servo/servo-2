@@ -729,7 +729,6 @@ JSON
                         <dmx-chart id="chart2" dataset-1:value="order_item_quantity" dataset-1:tooltip="'Volume'" dataset-1:label="" responsive="true" points="true" dmx-bind:data="product_sales_single.data.query_product_sale_single" dataset-2:value="order_item_quantity" labels="order_time_ordered" type="area" dataset-1=""></dmx-chart>
                         <h3 class="text-warning text-center">{{trans.data.volume[lang.value]}}</h3>
                       </div>
-                      <div class="col"></div>
 
 
                     </div>
@@ -743,7 +742,56 @@ JSON
                         <dmx-chart id="chart7" dataset-1:value="order_item_price" dataset-1:tooltip="" dataset-1:label="Price" responsive="true" points="true" dataset-2:value="order_item_quantity" type="bar" dataset-1="" point-size="" dmx-bind:data="product_sales_price_variation.data.query_product_sale_single" cutout="" labels="'Price'" dataset-2="" multicolor="true" nogrid="true"></dmx-chart>
                       </div>
                     </div>
-                    <div class="row mt-2 justify-content-md-center bg-secondary justify-content-xl-center justify-content-xxl-center">
+                    <div class="row" id="productSalesTable">
+                      <div class="col bg-secondary rounded ms-0 me-0">
+                        <div class="table-responsive">
+                          <table class="table table-hover table-sm">
+                            <thead class="fw-bold">
+                              <tr>
+                                <th>#</th>
+                                <th>{{trans.data.Ordered[lang.value]}}</th>
+                                <th>{{trans.data.Processing[lang.value]}}</th>
+                                <th>{{trans.data.Ready[lang.value]}}</th>
+                                <th>{{trans.data.delivered[lang.value]}}</th>
+                                <th>{{trans.data.status[lang.value]}}</th>
+                                <th>{{trans.data.order[lang.value]}}</th>
+
+
+                                <th>{{trans.data.discount[lang.value]}}</th>
+
+                                <th>{{trans.data.dateTime[lang.value]}}</th>
+                                <th>{{trans.data.shift[lang.value]}}</th>
+                                <th>{{trans.data.quantity[lang.value]}}</th>
+                                <th>{{trans.data.price[lang.value]}}</th>
+                                <th>{{trans.data.customer[lang.value]}}</th>
+                              </tr>
+                            </thead>
+                            <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="product_sales_single.data.query_product_sale_single" id="tableRepeat6">
+                              <tr>
+                                <td dmx-text="order_item_id"></td>
+                                <td dmx-text="order_time_ordered"></td>
+                                <td dmx-text="order_time_processing"></td>
+                                <td dmx-text="order_time_ready"></td>
+                                <td dmx-text="order_time_delivered"></td>
+                                <td dmx-text="order_item_status"></td>
+                                <td dmx-text="servo_orders_order_id"></td>
+
+
+                                <td dmx-text="order_item_discount"></td>
+
+                                <td dmx-text="order_time"></td>
+                                <td dmx-text="servo_shift_shift_id"></td>
+
+                                <td dmx-text="order_item_quantity"></td>
+                                <td dmx-text="order_item_price"></td>
+                                <td dmx-text="customer_first_name"></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row mt-2 justify-content-md-center bg-secondary justify-content-xl-center justify-content-xxl-center rounded">
                       <div class="border-3 border-success justify-content-xxl-center mb-xxl-2 me-xxl-1 mb-1 ms-2 pt-2 mb-sm-1 col-xxl-6 col-5 col-lg-3">
                         <h2 class="text-center fw-bold text-md-center text-warning" dmx-text="(salesPriceAverage.value - purchasePriceAverage.value).round(2).formatNumber('0',',',',')"></h2>
                         <h5 class="text-center text-body">{{trans.data.unitMargin[lang.value]}}</h5>
@@ -786,6 +834,38 @@ JSON
                         <h3 class="text-center text-warning">{{trans.data.volume[lang.value]}}</h3>
                       </div>
                       <div class="col"></div>
+                    </div>
+                    <div class="row bg-secondary rounded ms-0 me-0" id="productPurchasesTable">
+                      <div class="col">
+                        <div class="table-responsive">
+                          <table class="table table-hover table-sm">
+                            <thead>
+                              <tr>
+                                <th>#</th>
+                                <th>{{trans.data.quantity[lang.value]}}</th>
+                                <th>{{trans.data.price[lang.value]}}</th>
+                                <th>{{trans.data.note[lang.value]}}</th>
+
+                                <th>#</th>
+                                <th>{{trans.data.dateTime[lang.value]}}</th>
+                                <th>{{trans.data.status[lang.value]}}</th>
+                              </tr>
+                            </thead>
+                            <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="product_purchases_received_single.data.product_purchases_received_single" id="tableRepeat5">
+                              <tr>
+                                <td dmx-text="po_id"></td>
+                                <td dmx-text="po_item_quantity"></td>
+                                <td dmx-text="po_item_price"></td>
+                                <td dmx-text="po_item_notes"></td>
+                                <td dmx-text="po_item_id"></td>
+
+                                <td dmx-text="time_ordered"></td>
+                                <td dmx-text="po_status"></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
                     </div>
 
                     <div class="row mt-3" id="productReportAdjustment">

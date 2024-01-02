@@ -678,12 +678,12 @@ JSON
                     <div class="row">
                         <div class="d-flex justify-content-center justify-content-sm-start col-sm-6">
                             <h4 class="text-danger"><i class="fas fa-arrow-alt-circle-up fa-2x" style="/* color: #F3426C !important */"></i></h4>
-                            <h3 class="ms-2 text-danger fw-bolder" style="/* color: #F3426C !important */">{{(total_sales_all_waiters_out_per_shift.data.query.sum(`(order_item_price * order_item_quantity)`)).formatNumber('0', ',', ',')}}</h3>
+                            <h3 class="ms-2 text-danger" style="/* color: #F3426C !important */">{{(total_sales_all_waiters_out_per_shift.data.query.sum(`(order_item_price * order_item_quantity)`)).formatNumber('0', ',', ',')}}</h3>
 
                         </div>
                         <div class="d-flex col-12 justify-content-center justify-content-sm-end col-sm-6">
                             <h4 class="text-success"><i class="fas fa-arrow-alt-circle-down fa-2x" style="/* color: #89F387 !important */"></i></h4>
-                            <h3 class="ms-2 text-success fw-bolder" dmx-text="paymentsShift.data.TotalPaymentShift[0].TotalPaymentsShift.toNumber().formatNumber('0', ',', ',').default('0')" style="/* color: #89F387 !important */"></h3>
+                            <h3 class="ms-2 text-success" dmx-text="paymentsShift.data.TotalPaymentShift[0].TotalPaymentsShift.toNumber().formatNumber('0', ',', ',').default('0')" style="/* color: #89F387 !important */"></h3>
                         </div>
                     </div>
 

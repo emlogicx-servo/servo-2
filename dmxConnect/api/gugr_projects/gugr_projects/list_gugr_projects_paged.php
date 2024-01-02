@@ -130,6 +130,10 @@ $app->define(<<<'JSON'
               {
                 "table": "servo_user",
                 "column": "user_username"
+              },
+              {
+                "table": "servo_projects",
+                "column": "project_type"
               }
             ],
             "table": {
@@ -180,7 +184,7 @@ $app->define(<<<'JSON'
                 "primary": "user_id"
               }
             ],
-            "query": "SELECT servo_projects.project_id, servo_projects.project_user_created, userConcerned.user_profile, servo_projects.project_status, servo_projects.project_date_created, servo_projects.project_date_due, servo_projects.project_notes, servo_projects.project_code, userConcerned.user_fname AS userConcerned_fname, userConcerned.user_lname AS userConcerned_lname, userConcerned.user_username AS userConcerned_username, servo_user.user_fname, servo_user.user_lname, servo_user.user_username\nFROM servo_projects\nLEFT JOIN servo_user ON servo_user.user_id = servo_projects.project_user_created LEFT JOIN servo_user AS userConcerned ON userConcerned.user_id = servo_projects.project_user_concerned\nWHERE servo_projects.project_status LIKE :P1 /* {{$_GET.gugr_project_status}} */ AND servo_projects.project_code LIKE :P2 /* {{$_GET.gugr_project_filter}} */\nORDER BY servo_projects.project_status DESC, servo_projects.project_date_created DESC, servo_projects.project_code DESC",
+            "query": "select `servo_projects`.`project_id`, `servo_projects`.`project_user_created`, `userConcerned`.`user_profile`, `servo_projects`.`project_status`, `servo_projects`.`project_date_created`, `servo_projects`.`project_date_due`, `servo_projects`.`project_notes`, `servo_projects`.`project_code`, `userConcerned`.`user_fname` as `userConcerned_fname`, `userConcerned`.`user_lname` as `userConcerned_lname`, `userConcerned`.`user_username` as `userConcerned_username`, `servo_user`.`user_fname`, `servo_user`.`user_lname`, `servo_user`.`user_username`, `servo_projects`.`project_type` from `servo_projects` left join `servo_user` on `servo_user`.`user_id` = `servo_projects`.`project_user_created` left join `servo_user` as `userConcerned` on `userConcerned`.`user_id` = `servo_projects`.`project_user_concerned` where `servo_projects`.`project_status` like ? and `servo_projects`.`project_code` like ? order by `servo_projects`.`project_status` DESC, `servo_projects`.`project_date_created` DESC, `servo_projects`.`project_code` DESC",
             "params": [
               {
                 "operator": "contains",
@@ -383,6 +387,10 @@ $app->define(<<<'JSON'
               {
                 "type": "text",
                 "name": "user_username"
+              },
+              {
+                "type": "text",
+                "name": "project_type"
               }
             ]
           }
