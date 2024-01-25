@@ -21,13 +21,29 @@
                 "en-US": "Task",
                 "fr-FR": "Tâche"
             },
+    "tasks": 
+            {
+                "en-US": "Tasks",
+                "fr-FR": "Tâches"
+            },
 
     "myTasks": 
             {
                 "en-US": "My Tasks",
                 "fr-FR": "Mes Tâches"
             },
-    
+    "allTasks": 
+            {
+                "en-US": "All Tasks",
+                "fr-FR": "Toutes les Tâches"
+            },
+
+    "taskBoard": 
+            {
+                "en-US": "Task Execution Board",
+                "fr-FR": "Tableau d'Execution des Tâches"
+            },
+   
     "createNewTask": 
             {
                 "en-US": "Create New Task",

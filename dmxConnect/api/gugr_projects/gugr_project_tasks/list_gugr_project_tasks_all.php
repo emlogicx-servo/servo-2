@@ -26,7 +26,7 @@ $app->define(<<<'JSON'
       },
       {
         "type": "text",
-        "name": "user_concerned"
+        "name": "project_id"
       }
     ]
   },
@@ -401,7 +401,7 @@ $app->define(<<<'JSON'
                 "operator": "equal",
                 "type": "expression",
                 "name": ":P1",
-                "value": "{{$_GET.user_concerned}}",
+                "value": "{{$_GET.project_id}}",
                 "test": ""
               }
             ],
@@ -455,39 +455,7 @@ $app->define(<<<'JSON'
                 "primary": "user_id"
               }
             ],
-            "query": "select `servo_project_tasks`.`task_id`, `servo_project_tasks`.`task_start`, `servo_project_tasks`.`task_stop`, `servo_project_tasks`.`task_user_created`, `servo_project_tasks`.`task_user_concerned`, `servo_project_tasks`.`task_notes`, `servo_project_tasks`.`task_status`, `servo_project_tasks`.`task_date_created`, `userCreated`.`user_id` as `userCreatedID`, `userCreated`.`user_username` as `userCratedName`, `userConcerned`.`user_id` as `userConcernedID`, `userConcerned`.`user_username` as `userConcernedName`, `servo_project_tasks`.`task_description`, `servo_project_tasks`.`task_date_completed` from `servo_project_tasks` left join `servo_user` as `userCreated` on `userCreated`.`user_id` = `servo_project_tasks`.`task_user_created` left join `servo_user` as `userConcerned` on `userConcerned`.`user_id` = `servo_project_tasks`.`task_user_concerned` where `servo_project_tasks`.`task_user_concerned` = ? order by `servo_project_tasks`.`task_date_created` DESC, `servo_project_tasks`.`task_status` ASC",
-            "wheres": {
-              "condition": "AND",
-              "rules": [
-                {
-                  "id": "servo_project_tasks.task_user_concerned",
-                  "field": "servo_project_tasks.task_user_concerned",
-                  "type": "double",
-                  "operator": "equal",
-                  "value": "{{$_GET.user_concerned}}",
-                  "data": {
-                    "table": "servo_project_tasks",
-                    "column": "task_user_concerned",
-                    "type": "number",
-                    "columnObj": {
-                      "type": "reference",
-                      "default": "",
-                      "primary": false,
-                      "nullable": true,
-                      "references": "user_id",
-                      "inTable": "servo_user",
-                      "referenceType": "integer",
-                      "onUpdate": "RESTRICT",
-                      "onDelete": "RESTRICT",
-                      "name": "task_user_concerned"
-                    }
-                  },
-                  "operation": "="
-                }
-              ],
-              "conditional": "{{$_GET.user_concerned}}",
-              "valid": true
-            },
+            "query": "select `servo_project_tasks`.`task_id`, `servo_project_tasks`.`task_start`, `servo_project_tasks`.`task_stop`, `servo_project_tasks`.`task_user_created`, `servo_project_tasks`.`task_user_concerned`, `servo_project_tasks`.`task_notes`, `servo_project_tasks`.`task_status`, `servo_project_tasks`.`task_date_created`, `userCreated`.`user_id` as `userCreatedID`, `userCreated`.`user_username` as `userCratedName`, `userConcerned`.`user_id` as `userConcernedID`, `userConcerned`.`user_username` as `userConcernedName`, `servo_project_tasks`.`task_description`, `servo_project_tasks`.`task_date_completed` from `servo_project_tasks` left join `servo_user` as `userCreated` on `userCreated`.`user_id` = `servo_project_tasks`.`task_user_created` left join `servo_user` as `userConcerned` on `userConcerned`.`user_id` = `servo_project_tasks`.`task_user_concerned` where `servo_project_tasks`.`task_project` = ? order by `servo_project_tasks`.`task_date_created` DESC, `servo_project_tasks`.`task_status` ASC",
             "orders": [
               {
                 "table": "servo_project_tasks",
@@ -501,7 +469,39 @@ $app->define(<<<'JSON'
                 "direction": "ASC",
                 "recid": 2
               }
-            ]
+            ],
+            "wheres": {
+              "condition": "AND",
+              "rules": [
+                {
+                  "id": "servo_project_tasks.task_project",
+                  "field": "servo_project_tasks.task_project",
+                  "type": "double",
+                  "operator": "equal",
+                  "value": "{{$_GET.project_id}}",
+                  "data": {
+                    "table": "servo_project_tasks",
+                    "column": "task_project",
+                    "type": "number",
+                    "columnObj": {
+                      "type": "reference",
+                      "default": "",
+                      "primary": false,
+                      "nullable": true,
+                      "references": "project_id",
+                      "inTable": "servo_projects",
+                      "referenceType": "integer",
+                      "onUpdate": "RESTRICT",
+                      "onDelete": "RESTRICT",
+                      "name": "task_project"
+                    }
+                  },
+                  "operation": "="
+                }
+              ],
+              "conditional": null,
+              "valid": true
+            }
           }
         },
         "output": true,

@@ -2094,11 +2094,19 @@ dmx.config({
       },
       {
         "type": "text",
+        "name": "offset_gugr_projects_projects"
+      },
+      {
+        "type": "text",
         "name": "offset_group_product"
       },
       {
         "type": "text",
         "name": "dir_gugr_projects"
+      },
+      {
+        "type": "text",
+        "name": "offset_all_tasks"
       },
       {
         "type": "text",
@@ -2111,6 +2119,14 @@ dmx.config({
       {
         "type": "text",
         "name": "dir_gugr_project_tasks"
+      },
+      {
+        "type": "text",
+        "name": "dir_gugr_projects_projects"
+      },
+      {
+        "type": "text",
+        "name": "sort_gugr_projects_projects"
       }
     ],
     "repeat1": {
@@ -2471,6 +2487,128 @@ dmx.config({
         {
           "type": "text",
           "name": "project_type"
+        }
+      ],
+      "outputType": "array"
+    },
+    "tableRepeat7": {
+      "meta": [
+        {
+          "type": "number",
+          "name": "task_id"
+        },
+        {
+          "type": "datetime",
+          "name": "task_start"
+        },
+        {
+          "type": "datetime",
+          "name": "task_stop"
+        },
+        {
+          "type": "number",
+          "name": "task_user_created"
+        },
+        {
+          "type": "number",
+          "name": "task_user_concerned"
+        },
+        {
+          "type": "text",
+          "name": "task_notes"
+        },
+        {
+          "type": "text",
+          "name": "task_status"
+        },
+        {
+          "type": "datetime",
+          "name": "task_date_created"
+        },
+        {
+          "type": "number",
+          "name": "userCreatedID"
+        },
+        {
+          "type": "text",
+          "name": "userCratedName"
+        },
+        {
+          "type": "number",
+          "name": "userConcernedID"
+        },
+        {
+          "type": "text",
+          "name": "userConcernedName"
+        },
+        {
+          "type": "text",
+          "name": "task_description"
+        },
+        {
+          "type": "datetime",
+          "name": "task_date_completed"
+        }
+      ],
+      "outputType": "array"
+    },
+    "tableRepeat8": {
+      "meta": [
+        {
+          "type": "number",
+          "name": "task_id"
+        },
+        {
+          "type": "datetime",
+          "name": "task_start"
+        },
+        {
+          "type": "datetime",
+          "name": "task_stop"
+        },
+        {
+          "type": "number",
+          "name": "task_user_created"
+        },
+        {
+          "type": "number",
+          "name": "task_user_concerned"
+        },
+        {
+          "type": "text",
+          "name": "task_notes"
+        },
+        {
+          "type": "text",
+          "name": "task_status"
+        },
+        {
+          "type": "datetime",
+          "name": "task_date_created"
+        },
+        {
+          "type": "number",
+          "name": "userCreatedID"
+        },
+        {
+          "type": "text",
+          "name": "userCratedName"
+        },
+        {
+          "type": "number",
+          "name": "userConcernedID"
+        },
+        {
+          "type": "text",
+          "name": "userConcernedName"
+        },
+        {
+          "type": "text",
+          "name": "task_description"
+        },
+        {
+          "type": "datetime",
+          "name": "task_date_completed"
         }
       ],
       "outputType": "array"

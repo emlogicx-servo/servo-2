@@ -646,7 +646,7 @@ JSON
                     <td dmx-text="TotalSold" class="visually-hidden"></td>
                     <td dmx-text="TotalTransfered" class="visually-hidden"></td>
                     <td dmx-text="ReservedStock"></td>
-                    <td dmx-text="(TotalPurchased - TotalSold - TotalAdjusted)"></td>
+                    <td dmx-text="(TotalPurchased - DeliveredStock - TotalAdjusted)"></td>
                     <td>
                       <button id="btn24" class="btn bg-primary bg-opacity-10 text-primary" data-bs-toggle="modal" data-bs-target="#readItemProduct" dmx-on:click="read_product_data.load({product_id: po_product_id})">
                         <i class="fas fa-pencil-alt fa-sm"></i></button>

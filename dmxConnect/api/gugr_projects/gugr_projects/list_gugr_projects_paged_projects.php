@@ -569,20 +569,17 @@ $app->define(<<<'JSON'
               {
                 "table": "servo_projects",
                 "column": "project_status",
-                "direction": "DESC",
-                "recid": 1
+                "direction": "DESC"
               },
               {
                 "table": "servo_projects",
                 "column": "project_date_created",
-                "direction": "DESC",
-                "recid": 2
+                "direction": "DESC"
               },
               {
                 "table": "servo_projects",
                 "column": "project_code",
-                "direction": "DESC",
-                "recid": 3
+                "direction": "DESC"
               }
             ],
             "primary": "project_id",
@@ -616,7 +613,8 @@ $app->define(<<<'JSON'
                       "name": "project_status"
                     }
                   },
-                  "operation": "LIKE"
+                  "operation": "LIKE",
+                  "table": "servo_projects"
                 },
                 {
                   "id": "servo_projects.project_code",
@@ -637,14 +635,15 @@ $app->define(<<<'JSON'
                       "name": "project_code"
                     }
                   },
-                  "operation": "LIKE"
+                  "operation": "LIKE",
+                  "table": "servo_projects"
                 },
                 {
                   "id": "servo_projects.project_type",
                   "field": "servo_projects.project_type",
                   "type": "string",
                   "operator": "equal",
-                  "value": "Query",
+                  "value": "Work Order",
                   "data": {
                     "table": "servo_projects",
                     "column": "project_type",
@@ -663,7 +662,8 @@ $app->define(<<<'JSON'
                       "name": "project_type"
                     }
                   },
-                  "operation": "="
+                  "operation": "=",
+                  "table": "servo_projects"
                 }
               ],
               "conditional": null,
@@ -789,8 +789,7 @@ $app->define(<<<'JSON'
         ],
         "outputType": "object",
         "output": true,
-        "type": "dbconnector_paged_select",
-        "disabled": true
+        "type": "dbconnector_paged_select"
       }
     ]
   }

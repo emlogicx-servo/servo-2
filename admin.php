@@ -667,36 +667,18 @@ JSON
                     <button id="btn4" class="btn style12 fw-light text-warning" data-bs-toggle="modal" data-bs-target="#SelectTableModal" style="display: none !important; float: right;"><i class="fas fa-plus fa-2x "></i></button>
                 </div>
             </div>
-            <div class="row justify-content-between h-auto w-auto numbers mt-3 pt-3 pb-2 ps-1 pe-1 rounded shadow-sm bg-light">
-                <div class="col">
-                    <div class="row">
-                        <div class="col">
-                            <h6 dmx-text="shiftInfoVar.value" id="shiftInfo" class="text-body"></h6>
-                            <dmx-value id="shiftInfoVar"></dmx-value>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="d-flex justify-content-center justify-content-sm-start col-sm-6">
-                            <h4 class="text-danger"><i class="fas fa-arrow-alt-circle-up fa-2x" style="/* color: #F3426C !important */"></i></h4>
-                            <h3 class="ms-2 text-danger" style="/* color: #F3426C !important */">{{(total_sales_all_waiters_out_per_shift.data.query.sum(`(order_item_price * order_item_quantity)`)).formatNumber('0', ',', ',')}}</h3>
 
-                        </div>
-                        <div class="d-flex col-12 justify-content-center justify-content-sm-end col-sm-6">
-                            <h4 class="text-success"><i class="fas fa-arrow-alt-circle-down fa-2x" style="/* color: #89F387 !important */"></i></h4>
-                            <h3 class="ms-2 text-success" dmx-text="paymentsShift.data.TotalPaymentShift[0].TotalPaymentsShift.toNumber().formatNumber('0', ',', ',').default('0')" style="/* color: #89F387 !important */"></h3>
-                        </div>
-                    </div>
-
-                </div>
-
-
-            </div>
             <div class="row mt-2 rounded row-cols-12 bg-opacity-50" id="orders_table">
-                <div class="rounded col-12 col-md mt-1 me-2 pt-3 shadow-sm bg-light">
-                    <ul class="nav nav-tabs nav-fill" id="navTabs1_tabs" role="tablist">
+                <div class="rounded col-12 col-md shadow-sm mt-1 me-0 pt-3" style="height: 75vh !important;">
+                    <ul class="nav nav-tabs nav-fill d-flex flex-nowrap align-items-end" id="navTabs1_tabs" role="tablist" style="overflow-y: scroll;">
+
+                        <li class="nav-item flex-shrink-1 fw-bold">
+                            <a class="nav-link active" id="navTabs1_2_tab_1" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_2_1" role="tab" aria-controls="navTabs1_2" aria-selected="false"><i class="far fa-chart-bar" style="margin-right: 3px;"></i>{{trans.data.shiftReport[lang.value]}}
+                            </a>
+                        </li>
                         <li class="nav-item flex-shrink-1 fw-bold">
 
-                            <a class="nav-link active flex-shrink-1" id="navTabs1_1_tab_2" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_1_2" role="tab" aria-controls="navTabs1_1" aria-selected="true"><i class="fas fa-list-ol" style="margin-right: 3px;"></i>
+                            <a class="nav-link flex-shrink-1" id="navTabs1_1_tab_2" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_1_2" role="tab" aria-controls="navTabs1_1" aria-selected="true"><i class="fas fa-list-ol" style="margin-right: 3px;"></i>
 
                                 {{trans.data.orders[lang.value]}}
                             </a>
@@ -705,10 +687,7 @@ JSON
                             <a class="nav-link text-danger" id="navTabs1_2_tab_2" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_2_2" role="tab" aria-controls="navTabs1_2" aria-selected="false"><i class="fas fa-hand-holding-usd" style="margin-right: 3px;"></i>
                                 {{trans.data.credit[lang.value]}}</a>
                         </li>
-                        <li class="nav-item flex-shrink-1 fw-bold">
-                            <a class="nav-link" id="navTabs1_2_tab_1" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_2_1" role="tab" aria-controls="navTabs1_2" aria-selected="false"><i class="far fa-chart-bar" style="margin-right: 3px;"></i>{{trans.data.shiftReport[lang.value]}}
-                            </a>
-                        </li>
+
                         <li class="nav-item">
                             <a class="nav-link flex-shrink-1" id="navTabs1_2_tab_3" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_2_3" role="tab" aria-controls="navTabs1_2" aria-selected="false"><i class="fas fa-exclamation-triangle" style="margin-right: 5px;"></i>{{trans.data.lowStock[lang.value]}} <sup id="readyItems" dmx-text="list_low_stock.data.custom_get_stock_alerts.count()" class="sup-text text-danger" style="font-size:15px;"></sup></a>
                         </li>
@@ -717,105 +696,18 @@ JSON
                         </li>
                     </ul>
                     <div class="tab-content" id="navTabs1_content">
-                        <div class="tab-pane fade show active" id="navTabs1_1_2" role="tabpanel" aria-labelledby="navTabs1_1_tab_2">
-                            <div class="row mt-2">
-                                <div class="col rounded rounded-3 scrollable">
-                                    <div class="table-responsive">
-                                        <table class="table table-hover table-sm table-borderless" id="cashierorders">
-                                            <thead>
-                                                <tr>
-                                                    <th class="t_orderid">#</th>
-                                                    <th class="t_time">{{trans.data.dateTime[lang.value]}}</th>
+                        <div class="tab-pane fade scrollable show active" id="navTabs1_2_1" role="tabpanel" aria-labelledby="navTabs1_2_tab_1">
+                            <div class="row mt-2 ms-0 me-0 row-cols-12 justify-content-between">
+                                <div class="d-flex justify-content-sm-start col-auto col-sm-auto col-md-auto col-lg-auto col-xl-auto col-xxl-auto rounded me-xxl-2 pt-xxl-2 pb-xxl-2 ps-xxl-3 pe-xxl-3 bg-light">
+                                    <h4 class="text-danger"><i class="fas fa-arrow-alt-circle-up" style="/* color: #F3426C !important */"></i></h4>
+                                    <h3 class="ms-2 text-danger" style="/* color: #F3426C !important */">{{(total_sales_all_waiters_out_per_shift.data.query.sum(`(order_item_price * order_item_quantity)`)).formatNumber('0', ',', ',')}}</h3>
 
-                                                    <th class="t_table">{{trans.data.asset[lang.value]}}</th>
-                                                    <th class="t_table">{{trans.data.customer[lang.value]}}</th>
-                                                    <th class="t_table">{{trans.data.info[lang.value]}}</th>
-                                                    <th class="t_waiter">{{trans.data.waiter[lang.value]}}</th>
-                                                    <th class="t_status text-center">{{trans.data.status[lang.value]}}</th>
-                                                    <th></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="list_orders_all_shift.data.query" id="tableRepeat5">
-                                                <tr>
-                                                    <td dmx-text="order_id"></td>
-                                                    <td dmx-text="order_time"></td>
-
-
-                                                    <td dmx-text="table_name"></td>
-                                                    <td dmx-text="customer_first_name+' '+customer_last_name"></td>
-                                                    <td dmx-text="order_extra_info"></td>
-                                                    <td dmx-text="user_username"></td>
-                                                    <td>
-                                                        <h6 dmx-text="trans.data.getValueOrKey(order_status)[lang.value]" dmx-class:grey-state="(order_status == 'Pending')" dmx-class:red-state="(order_status == 'Credit')" class="text-center pt-1 pb-1 ps-2 pe-2 bg-light rounded" dmx-class:text-warning="(order_status == 'Ordered')" dmx-class:text-success="(order_status == 'Paid')">Fancy display heading</h6>
-                                                    </td>
-                                                    <td class="text-center">
-                                                        <button id="btn22" class="btn text-primary bg-primary bg-opacity-10" data-bs-target="#productInfo" dmx-on:click="session_variables.remove('current_order');session_variables.set('current_order',order_id);read_item_order.load({order_id: order_id});list_order_items.load({order_id: order_id})" dmx-bind:value="list_orders.data.query[0].order_id" style="/* color: #ff84ff !important */"><i class="fas fa-pencil-alt fa-sm"><br></i></button>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-sm-start col-auto col-sm-auto col-md-auto col-lg-auto col-xl-auto col-xxl-auto rounded me-xxl-2 pt-xxl-2 pb-xxl-2 ps-xxl-3 pe-xxl-3 bg-light">
+                                    <h4 class="text-success"><i class="fas fa-arrow-alt-circle-down" style="/* color: #89F387 !important */"></i></h4>
+                                    <h3 class="ms-2 text-success" dmx-text="paymentsShift.data.TotalPaymentShift[0].TotalPaymentsShift.toNumber().formatNumber('0', ',', ',').default('0')" style="/* color: #89F387 !important */"></h3>
                                 </div>
                             </div>
-
-                        </div>
-                        <div class="tab-pane fade" id="navTabs1_2_2" role="tabpanel" aria-labelledby="navTabs1_2_tab_2">
-                            <div class="row">
-                                <div class="col scrollable">
-                                    <div class="table-responsive">
-                                        <table class="table table-hover table-sm">
-                                            <thead>
-                                                <tr>
-                                                    <th>#</th>
-                                                    <th>{{trans.data.customer[lang.value]}}</th>
-                                                    <th class="text-end">{{trans.data.total[lang.value]}}</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="list_customer_debt.data.query_list_customer_debt_totals" id="tableRepeat9">
-                                                <tr>
-                                                    <td dmx-text="customer_id"></td>
-                                                    <td dmx-text="customer_first_name+' '+customer_last_name"></td>
-                                                    <td dmx-text="TotalDebt.toNumber().formatNumber('0',',',',')" class="text-end"></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <table class="table table-hover table-borderless mt-2" id="creditTable">
-                                <thead>
-                                    <tr>
-                                        <th>{{trans.data.orderId[lang.value]}}</th>
-                                        <th>{{trans.data.dateTime[lang.value]}}</th>
-                                        <th>{{trans.data.status[lang.value]}}</th>
-                                        <th>{{trans.data.notes[lang.value]}}</th>
-                                        <th>{{trans.data.shift[lang.value]}}</th>
-                                        <th>{{trans.data.table[lang.value]}}</th>
-                                        <th>{{trans.data.waiter[lang.value]}}</th>
-                                        <th>{{trans.data.customer[lang.value]}}</th>
-                                        <th>{{trans.data.contact[lang.value]}}</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="list_orders_credit.data.query" id="tableRepeat1">
-                                    <tr>
-                                        <td dmx-text="order_id"></td>
-                                        <td dmx-text="order_time"></td>
-                                        <td dmx-text="order_status"></td>
-                                        <td dmx-text="order_notes"></td>
-                                        <td dmx-text="servo_shift_shift_id"></td>
-                                        <td dmx-text="table_name"></td>
-                                        <td dmx-text="user_username"></td>
-                                        <td dmx-text="customer_first_name+' '+customer_last_name"></td>
-                                        <td dmx-text="customer_phone_number"></td>
-                                        <td>
-                                            <button dmx-class:order-paid="(order_status == 'Paid')" dmx-class:order-ordered="(order_status == 'Ordered')" dmx-class:order-credit="(order_status)=='Credit'" id="btn221" class="btn" data-bs-target="#readItemModal" dmx-on:click="session_variables.remove('current_order');session_variables.set('current_order',order_id);readItemModal.show();read_item_order.load({order_id: order_id})" dmx-bind:value="order_id" data-bs-toggle="modal"><i class="far fa-eye fa-lg"><br></i></button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="tab-pane fade scrollable" id="navTabs1_2_1" role="tabpanel" aria-labelledby="navTabs1_2_tab_1">
                             <div class="row justify-content-xxl-center mt-2 pt-3 pb-2 ps-2 pe-2 rounded-2 rounded border-primary">
                                 <div class="col rounded pt-3 pb-2 ps-3 pe-2 bg-secondary">
                                     <div class="row">
@@ -1035,6 +927,105 @@ JSON
 
                             </div>
                         </div>
+                        <div class="tab-pane fade" id="navTabs1_1_2" role="tabpanel" aria-labelledby="navTabs1_1_tab_2">
+                            <div class="row mt-2">
+                                <div class="col rounded rounded-3 " style="max-height: 65vh; overflow-y: scroll;">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover table-sm table-borderless" id="cashierorders">
+                                            <thead>
+                                                <tr>
+                                                    <th class="t_orderid">#</th>
+                                                    <th class="t_time">{{trans.data.dateTime[lang.value]}}</th>
+
+                                                    <th class="t_table">{{trans.data.asset[lang.value]}}</th>
+                                                    <th class="t_table">{{trans.data.customer[lang.value]}}</th>
+                                                    <th class="t_table">{{trans.data.info[lang.value]}}</th>
+                                                    <th class="t_waiter">{{trans.data.waiter[lang.value]}}</th>
+                                                    <th class="t_status text-center">{{trans.data.status[lang.value]}}</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="list_orders_all_shift.data.query" id="tableRepeat5" style="">
+                                                <tr>
+                                                    <td dmx-text="order_id"></td>
+                                                    <td dmx-text="order_time"></td>
+
+
+                                                    <td dmx-text="table_name"></td>
+                                                    <td dmx-text="customer_first_name+' '+customer_last_name"></td>
+                                                    <td dmx-text="order_extra_info"></td>
+                                                    <td dmx-text="user_username"></td>
+                                                    <td>
+                                                        <h6 dmx-text="trans.data.getValueOrKey(order_status)[lang.value]" dmx-class:grey-state="(order_status == 'Pending')" dmx-class:red-state="(order_status == 'Credit')" class="text-center pt-1 pb-1 ps-2 pe-2 bg-light rounded" dmx-class:text-warning="(order_status == 'Ordered')" dmx-class:text-success="(order_status == 'Paid')">Fancy display heading</h6>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <button id="btn22" class="btn text-primary bg-primary bg-opacity-10" data-bs-target="#productInfo" dmx-on:click="session_variables.remove('current_order');session_variables.set('current_order',order_id);read_item_order.load({order_id: order_id});list_order_items.load({order_id: order_id})" dmx-bind:value="list_orders.data.query[0].order_id" style="/* color: #ff84ff !important */"><i class="fas fa-pencil-alt fa-sm"><br></i></button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="tab-pane fade" id="navTabs1_2_2" role="tabpanel" aria-labelledby="navTabs1_2_tab_2">
+                            <div class="row">
+                                <div class="col scrollable">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover table-sm">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>{{trans.data.customer[lang.value]}}</th>
+                                                    <th class="text-end">{{trans.data.total[lang.value]}}</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="list_customer_debt.data.query_list_customer_debt_totals" id="tableRepeat9">
+                                                <tr>
+                                                    <td dmx-text="customer_id"></td>
+                                                    <td dmx-text="customer_first_name+' '+customer_last_name"></td>
+                                                    <td dmx-text="TotalDebt.toNumber().formatNumber('0',',',',')" class="text-end"></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <table class="table table-hover table-borderless mt-2" id="creditTable">
+                                <thead>
+                                    <tr>
+                                        <th>{{trans.data.orderId[lang.value]}}</th>
+                                        <th>{{trans.data.dateTime[lang.value]}}</th>
+                                        <th>{{trans.data.status[lang.value]}}</th>
+                                        <th>{{trans.data.notes[lang.value]}}</th>
+                                        <th>{{trans.data.shift[lang.value]}}</th>
+                                        <th>{{trans.data.table[lang.value]}}</th>
+                                        <th>{{trans.data.waiter[lang.value]}}</th>
+                                        <th>{{trans.data.customer[lang.value]}}</th>
+                                        <th>{{trans.data.contact[lang.value]}}</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="list_orders_credit.data.query" id="tableRepeat1">
+                                    <tr>
+                                        <td dmx-text="order_id"></td>
+                                        <td dmx-text="order_time"></td>
+                                        <td dmx-text="order_status"></td>
+                                        <td dmx-text="order_notes"></td>
+                                        <td dmx-text="servo_shift_shift_id"></td>
+                                        <td dmx-text="table_name"></td>
+                                        <td dmx-text="user_username"></td>
+                                        <td dmx-text="customer_first_name+' '+customer_last_name"></td>
+                                        <td dmx-text="customer_phone_number"></td>
+                                        <td>
+                                            <button dmx-class:order-paid="(order_status == 'Paid')" dmx-class:order-ordered="(order_status == 'Ordered')" dmx-class:order-credit="(order_status)=='Credit'" id="btn221" class="btn" data-bs-target="#readItemModal" dmx-on:click="session_variables.remove('current_order');session_variables.set('current_order',order_id);readItemModal.show();read_item_order.load({order_id: order_id})" dmx-bind:value="order_id" data-bs-toggle="modal"><i class="far fa-eye fa-lg"><br></i></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
                         <div class="tab-pane fade scrollable" id="navTabs1_2_3" role="tabpanel" aria-labelledby="navTabs1_2_tab_1">
                             <div class="row mt-3 justify-content-xxl-center">
                                 <div class="col-md-6 text-xxl-center">
@@ -1101,7 +1092,7 @@ JSON
                         </div>
                     </div>
                 </div>
-                <div class="rounded col-12 col-md col-md-4 mt-1 shadow-sm bg-light">
+                <div class="rounded col-12 col-md col-md-4 shadow-sm bg-light mt-1 ms-0" style="height: 80vh !important;">
                     <dmx-chart id="chart4" dmx-bind:data="payentMethodsShift.data.payment_methods_report_shift" point-size="" type="pie" dataset-1:label="Total" dataset-1:value="TotalPayments" labels="Method+' '+TotalPayments" legend="bottom" width="500" height="350" responsive="true" colors="colors9"></dmx-chart>
                 </div>
             </div>

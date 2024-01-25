@@ -182,7 +182,7 @@
   <dmx-value id="totalDepositPayments" dmx-bind:value="list_customer_transactions_amounts.data.custom_list_transaction_amounts[0].DepositPayments.toNumber()"></dmx-value>
   <dmx-value id="totalDeposits" dmx-bind:value="list_customer_transactions_amounts.data.custom_list_transaction_amounts[0].Deposits.toNumber()"></dmx-value>
   <dmx-value id="netDeposits" dmx-bind:value="(totalDeposits.value-(totalDepositPayments.value + totalDepositSettlements.value))"></dmx-value>
-  <main class="bg-light rounded mt-2 ms-2 me-2 pt-2 pb-3 ps-2 pe-2">
+  <main class="bg-light rounded mt-2 ms-2 me-2 pt-2 pb-3 ps-2 pe-2" style="height: 90vh !important;">
     <div class="mt-auto ms-2 me-2">
 
 
@@ -2214,7 +2214,7 @@
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" id="navTabs1_23_tab" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_23" role="tab" aria-controls="navTabs1_2" aria-selected="false" dmx-bs-tooltip="trans.data.orders[lang.value]" data-bs-trigger="hover" data-bs-placement="bottom"><i class="fas fa-cash-register fa-sm"></i>
+                    <a class="nav-link" id="navTabs1_23_tab" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_23" role="tab" aria-controls="navTabs1_2" aria-selected="false" dmx-bs-tooltip="trans.data.payment[lang.value]" data-bs-trigger="hover" data-bs-placement="bottom"><i class="fas fa-cash-register fa-sm"></i>
                     </a>
                   </li>
                   <li class="nav-item">
