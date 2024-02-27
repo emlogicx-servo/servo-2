@@ -390,7 +390,7 @@
                     <a class="nav-link fw-bold text-body" id="navTabs1_2_tab" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_2" role="tab" aria-controls="navTabs1_2" aria-selected="false"><i class="fas fa-coins fa-sm" style="margin-right: 5px;"></i>
                       {{trans.data.transactions[lang.value]}}</a>
                   </li>
-                  <li class="nav-item fw-bold">
+                  <li class="nav-item fw-bold" dmx-show="list_user_info.data.query_list_user_info.user_profile=='Admin'">
                     <a class="nav-link text-body" id="navTabs1_3_tab" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_3" role="tab" aria-controls="navTabs1_3" aria-selected="false"><i class="fas fa-info" style="margin-right: 5px;"></i>{{trans.data.info[lang.value]}}</a>
                   </li>
                   <li class="nav-item fw-bold" dmx-show="list_user_info.data.query_list_user_info.user_profile=='Admin'">
@@ -450,7 +450,7 @@
                             </div>
                           </div>
 
-                          <div id="totalSettlements" class="bg-info text-center mt-2 me-2 pt-4 pb-4 ps-4 pe-4 col rounded" style="background: #07b853 !important;">
+                          <div id="totalSettlements" class="bg-info text-center mt-2 me-2 pt-4 pb-4 ps-4 pe-4 col rounded" style="background: #07b853 !important;" dmx-hide="(read_wallet.data.read_wallet.wallet_name=='Bank'&amp;&amp; list_user_info.data.query_list_user_info.user_profile!=='Admin')">
                             <div class="row">
                               <div class="col text-white">
                                 <i class="fas fa-check"></i>
@@ -871,7 +871,7 @@
                     </div>
                   </div>
 
-                  <div class="tab-pane fade scrollable" id="navTabs1_3" role="tabpanel">
+                  <div class="tab-pane fade scrollable" id="navTabs1_3" role="tabpanel" dmx-show="list_user_info.data.query_list_user_info.user_profile=='Admin'">
                     <div class="row mt-2">
                       <div class="col d-flex flex-row-reverse"></div>
                     </div>

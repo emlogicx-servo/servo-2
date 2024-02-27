@@ -69,7 +69,7 @@
 
       <div class="justify-content-lg-start col-8 justify-content-start my-auto" style="padding-left: 3px;">
 
-        <button id="btn1" class="btn gy-0 btn-sm text-start" dmx-on:click="offcanvas1.toggle()" dmx-show="(list_user_info.data.query_list_user_info.user_profile == 'Admin')" style="margin-left: 2px !important; font-size:17px; "><i class="fas fa-th fa-1.5x" style="" dmx-animate-enter="pulse"></i></button>
+        <button id="btn1" class="btn gy-0 btn-sm text-start" dmx-on:click="offcanvas1.toggle()" dmx-show="(list_user_info.data.query_list_user_info.user_profile == 'Manager') || (list_user_info.data.query_list_user_info.user_profile == 'Admin') " style="margin-left: 2px !important; font-size:17px; "><i class="fas fa-th fa-1.5x" style="" dmx-animate-enter="pulse"></i></button>
         <span class="" style="font-family:'Josefin-Sans'; margin-left: 5px; font-size:15px;">SERVO</span>
            <span class="fw-bold text-success" style="font-family:'Josefin-Sans'; margin-left: 5px; font-size:18x;">{{pageName.value}}</span>
       </div>
@@ -97,7 +97,7 @@
         </button>
   
 
-        <button id="btn7" class="btn bg-white bg-opacity-25 text-white" data-bs-toggle="modal" data-bs-target="#shiftSelectModal" dmx-bind:disabled="(list_user_info.data.query_list_user_info.user_profile !== 'Admin')" dmx-on:click="list_shifts.load({})"><i class="fas fa-hourglass-half fa-sm" style="margin-right: 15px !important;"></i> {{list_user_shift_info.data.query_list_user_shift[0].servo_shifts_shift_id}}</button>
+        <button id="btn7" class="btn bg-white bg-opacity-25 text-white" data-bs-toggle="modal" data-bs-target="#shiftSelectModal" dmx-bind:disabled="(list_user_info.data.query_list_user_info.user_profile !== 'Admin')&&(list_user_info.data.query_list_user_info.user_profile !== 'Manager')" dmx-on:click="list_shifts.load({})"><i class="fas fa-hourglass-half fa-sm" style="margin-right: 15px !important;"></i> {{list_user_shift_info.data.query_list_user_shift[0].servo_shifts_shift_id}}</button>
       
         <button id="btn3" class="btn bg-white bg-opacity-25 text-white" dmx-on:click="browser1.goto(list_user_info.data.query_list_user_info.user_profile+'.php')" style="">
         <i class="fas fa-home fa-sm"></i>
@@ -240,7 +240,7 @@
               </a></div>
           </div>
         </div>
-        <div class="col" id="users">
+        <div class="col" id="users" dmx-show="(list_user_info.data.query_list_user_info.user_profile == 'Admin')">
           <div class="row">
             <div class="col w-auto h-auto mt-sm-1 mb-sm-2 ms-sm-1 me-sm-1 d-flex justify-content-sm-center justify-content-center mt-2 mb-2 ms-2 me-2 border-secondary rounded-2">
               <a href="users.php" class="badge style25 w-auto h-auto" style="text-decoration: unset;"><i class="fas fa-users fa-lg" style="color: #ffcd74 !important;"></i>

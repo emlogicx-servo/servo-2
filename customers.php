@@ -2133,7 +2133,7 @@
               <dmx-value id="variableCustomerTotalToPay" dmx-bind:value="(variableOrderPaid.value - variableCustomerTotal.value)"></dmx-value>
               <dmx-value id="variableCustomerOwing" dmx-bind:value="(((list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`))-((readCustomerOrder.data.query.coverage_percentage /100) * (list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`))))- ((list_customer_transactions_order.data.query.sum(`transaction_amount`))))"></dmx-value>
               <div class="col" style="">
-                <div class="row row-cols-12 justify-content-start rounded ms-0 me-0 pt-2 pb-2 ps-2 pe-2 bg-opacity-10 bg-primary" id="orderInfo">
+                <div class="row row-cols-12 justify-content-start rounded ms-0 me-0 pt-2 pb-2 ps-2 pe-2 bg-opacity-10 bg-primary" id="orderInfo" dmx-show="">
                   <div class="justify-content-xl-end col-xl-auto col-auto" id="total01">
                     <h6 class="ms-2 pt-2">{{trans.data.total[lang.value]}}:</h6>
                   </div>

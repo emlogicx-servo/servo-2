@@ -653,7 +653,7 @@ JSON
 
 
 
-            <div class="row  h-auto mt-4 visually-hidden">
+            <div class="row  h-auto visually-hidden row-cols-12 mt-2">
 
                 <div class="col style13 page-button justify-content-sm-end text-light" id="pagebuttons">
                     <h4 class="text-start text-body">{{trans.data.manager[lang.value]}} | {{trans.data.shift[lang.value]}} : {{session_variables.data.current_shift}}</h4>
@@ -668,12 +668,12 @@ JSON
                 </div>
             </div>
 
-            <div class="row mt-2 rounded row-cols-12 bg-opacity-50" id="orders_table">
-                <div class="rounded col-12 col-md shadow-sm mt-1 me-0 pt-3" style="height: 75vh !important;">
+            <div class="row rounded row-cols-12" id="orders_table">
+                <div class="col-md mt-1 pt-3 col" style="height: 75vh !important;">
                     <ul class="nav nav-tabs nav-fill d-flex flex-nowrap align-items-end" id="navTabs1_tabs" role="tablist" style="overflow-y: scroll;">
 
                         <li class="nav-item flex-shrink-1 fw-bold">
-                            <a class="nav-link active" id="navTabs1_2_tab_1" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_2_1" role="tab" aria-controls="navTabs1_2" aria-selected="false"><i class="far fa-chart-bar" style="margin-right: 3px;"></i>{{trans.data.shiftReport[lang.value]}}
+                            <a class="nav-link active " id="navTabs1_2_tab_1" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_2_1" role="tab" aria-controls="navTabs1_2" aria-selected="false"><i class="far fa-chart-bar" style="margin-right: 3px;"></i>{{trans.data.shiftReport[lang.value]}}
                             </a>
                         </li>
                         <li class="nav-item flex-shrink-1 fw-bold">
@@ -696,8 +696,8 @@ JSON
                         </li>
                     </ul>
                     <div class="tab-content" id="navTabs1_content">
-                        <div class="tab-pane fade scrollable show active" id="navTabs1_2_1" role="tabpanel" aria-labelledby="navTabs1_2_tab_1">
-                            <div class="row mt-2 ms-0 me-0 row-cols-12 justify-content-between">
+                        <div class="tab-pane fade show active" id="navTabs1_2_1" role="tabpanel" aria-labelledby="navTabs1_2_tab_1">
+                            <div class="row row-cols-12 justify-content-between mt-2">
                                 <div class="d-flex justify-content-sm-start col-auto col-sm-auto col-md-auto col-lg-auto col-xl-auto col-xxl-auto rounded me-xxl-2 pt-xxl-2 pb-xxl-2 ps-xxl-3 pe-xxl-3 bg-light">
                                     <h4 class="text-danger"><i class="fas fa-arrow-alt-circle-up" style="/* color: #F3426C !important */"></i></h4>
                                     <h3 class="ms-2 text-danger" style="/* color: #F3426C !important */">{{(total_sales_all_waiters_out_per_shift.data.query.sum(`(order_item_price * order_item_quantity)`)).formatNumber('0', ',', ',')}}</h3>
@@ -708,10 +708,10 @@ JSON
                                     <h3 class="ms-2 text-success" dmx-text="paymentsShift.data.TotalPaymentShift[0].TotalPaymentsShift.toNumber().formatNumber('0', ',', ',').default('0')" style="/* color: #89F387 !important */"></h3>
                                 </div>
                             </div>
-                            <div class="row justify-content-xxl-center mt-2 pt-3 pb-2 ps-2 pe-2 rounded-2 rounded border-primary">
-                                <div class="col rounded pt-3 pb-2 ps-3 pe-2 bg-secondary">
+                            <div class="row rounded-2 rounded mt-2 row-cols-12">
+                                <div class="rounded col-auto col-xxl-auto pt-3 pb-2 ps-3 pe-2 col-12 col-md-auto col-lg-auto col-xxl-12 col-lg-12">
                                     <div class="row">
-                                        <div class="col-xxl-auto col-xxl-5 col-auto">
+                                        <div class="col-xxl-auto col-xxl-5 col-auto col-lg">
                                             <form id="departentReportSelect1">
                                                 <select id="selectDepartment1" class="form-select" dmx-bind:options="list_departments.data.query_list_departments" optiontext="department_name" optionvalue="department_id">
                                                     <option selected="" value="%">----</option>
@@ -724,9 +724,10 @@ JSON
                                                 <h4 dmx-text="trans.data.volume[lang.value]+': '+SalesReportShift.data.product_report.sum(`Volume`).formatNumber('0',',',',')" class="fw-bold">{{trans.data.volume[lang.value]}}:</h4>
                                             </div>
                                         </div>
+
                                     </div>
                                     <div class="row">
-                                        <div class="text-xxl-center col-lg-auto col-auto rounded rounded-3 mt-2 pt-2 col-lg-6 col-md col">
+                                        <div class="text-xxl-center col-lg-auto col-auto rounded rounded-3 col-lg-6 col-md col bg-light mt-2 me-2 pt-2">
                                             <div class="row">
                                                 <div class="col">
                                                     <h4>{{trans.data.products[lang.value]}}</h4>
@@ -758,7 +759,7 @@ JSON
 
 
                                         </div>
-                                        <div class="text-xxl-center col-auto rounded rounded-3 mt-2 pt-2 pb-1 ps-1 pe-1 col-lg col-md col">
+                                        <div class="text-xxl-center col-auto rounded rounded-3 col-lg col-md col bg-light mt-2 me-2 pt-2 pb-1 ps-1 pe-1">
                                             <h4>{{trans.data.categories[lang.value]}}</h4>
                                             <div class="table-responsive">
                                                 <table class="table table-sm">
@@ -808,6 +809,9 @@ JSON
 
 
                                         </div>
+                                        <div class="rounded col-md col-md-4 bg-light mt-1 col-auto col-12 shadow-none" style="height: 80vh !important;">
+                                            <dmx-chart id="chart4" dmx-bind:data="payentMethodsShift.data.payment_methods_report_shift" point-size="" type="pie" dataset-1:label="Total" dataset-1:value="TotalPayments" labels="Method+' '+TotalPayments" legend="bottom" width="500" height="350" responsive="true" colors="colors9"></dmx-chart>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -815,7 +819,7 @@ JSON
 
 
                             </div>
-                            <div class="row mt-3 justify-content-xxl-center rounded rounded-3 scrollable-y pt-md-2 bg-light">
+                            <div class="row justify-content-xxl-center rounded rounded-3 scrollable-y pt-md-2 bg-light mt-3 row-cols-12">
                                 <div class="col-md-6 text-xxl-center col-lg-auto col-auto scrollable rounded rounded-3 ms-2 pt-1 pb-1 ps-1 pe-1">
 
                                     <h4 class="text-center">{{trans.data.sales[lang.value]}}</h4>
@@ -1092,9 +1096,7 @@ JSON
                         </div>
                     </div>
                 </div>
-                <div class="rounded col-12 col-md col-md-4 shadow-sm bg-light mt-1 ms-0" style="height: 80vh !important;">
-                    <dmx-chart id="chart4" dmx-bind:data="payentMethodsShift.data.payment_methods_report_shift" point-size="" type="pie" dataset-1:label="Total" dataset-1:value="TotalPayments" labels="Method+' '+TotalPayments" legend="bottom" width="500" height="350" responsive="true" colors="colors9"></dmx-chart>
-                </div>
+
             </div>
         </div>
     </main>
