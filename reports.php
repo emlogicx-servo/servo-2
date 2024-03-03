@@ -95,6 +95,7 @@ JSON
   <dmx-serverconnect id="load_product_categories" url="dmxConnect/api/servo_refered_fields_loading/load_product_categories.php"></dmx-serverconnect>
   <dmx-serverconnect id="product_report" url="dmxConnect/api/servo_reporting/product_report.php" dmx-param:user_id="" dmx-param:current_shift="session_variables.data.current_shift" dmx-param:sort="" dmx-param:dir="" dmx-param:datefrom="listOrdersFilters.date1.value" dmx-param:dateto="listOrdersFilters.date2.value" dmx-param:waiter="" dmx-param:order="" dmx-param:datestart="" dmx-param:datestop="" dmx-param:user="listOrdersFilters.waiterFilter.value" dmx-param:shift_id="listOrdersFilters.shiftSelect.value" dmx-param:service="listOrdersFilters.serviceSelect.value"></dmx-serverconnect>
   <dmx-serverconnect id="sales_report_export" url="dmxConnect/api/servo_reporting/sales_report_export.php" dmx-param:datefrom="listOrdersFilters.date1.value" dmx-param:dateto="listOrdersFilters.date2.value" dmx-param:user="listOrdersFilters.waiterFilter.value" dmx-param:service="listOrdersFilters.serviceSelect.value" dmx-on:error="notifies1.danger('Error!')" dmx-on:success="salesReportDownload.download()" noload="true"></dmx-serverconnect>
+  <dmx-serverconnect id="sales_report" url="dmxConnect/api/servo_reporting/sales_report.php" dmx-param:datefrom="listOrdersFilters.date1.value" dmx-param:dateto="listOrdersFilters.date2.value" dmx-param:user="listOrdersFilters.waiterFilter.value" dmx-param:service="listOrdersFilters.serviceSelect.value" dmx-on:error="notifies1.danger('Error!')"></dmx-serverconnect>
   <dmx-serverconnect id="product_sales_total" url="dmxConnect/api/servo_reporting/product_sales_total.php" dmx-param:user="listOrdersFilters.waiterFilter.selectedValue" dmx-param:service="listOrdersFilters.serviceSelect.selectedValue" dmx-param:datefrom="listOrdersFilters.date1.value" dmx-param:dateto="listOrdersFilters.date2.value"></dmx-serverconnect>
   <dmx-serverconnect id="product_purchases_report" url="dmxConnect/api/servo_reporting/product_purchases_report.php" dmx-param:user="purchaseReportFilter.userFilter_p.value" dmx-param:service="listOrdersFilters.serviceSelect.selectedValue" dmx-param:datefrom="purchaseReportFilter.date1_p.value" dmx-param:dateto="purchaseReportFilter.date2_p.value" dmx-param:department="purchaseReportFilter.departmentSelect_p.value"></dmx-serverconnect>
   <dmx-serverconnect id="product_purchases_export" url="dmxConnect/api/servo_reporting/product_purchases_export.php" dmx-param:user="listOrdersFilters1.waiterFilter1.value" dmx-param:service="listOrdersFilters.serviceSelect.selectedValue" dmx-param:datefrom="listOrdersFilters1.date3.value" dmx-param:dateto="listOrdersFilters1.date4.value" dmx-param:department="listOrdersFilters1.departmentSelect1.value" dmx-on:success="download2.download()" noload></dmx-serverconnect>
@@ -153,7 +154,7 @@ JSON
 
 
 
-      <div class="row servo-page-header rounded bg-light mt-2 ms-2 me-2 pt-2 ps-2 pe-2">
+      <div class="row servo-page-header rounded mt-2 ms-2 me-2 pt-2 ps-2 pe-2">
         <ul class="nav nav-tabs nav-fill" id="navTabs1_tabs" role="tablist">
           <li class="nav-item text-truncate">
             <a class="nav-link active text-break" id="navTabs1_1_tab" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_1" role="tab" aria-controls="navTabs1_1" aria-selected="true"><i class="fas fa-cash-register" style="margin-right: 5px;"></i>{{trans.data.sales[lang.value]}}</a>
@@ -197,7 +198,7 @@ JSON
                       </button>
                     </div>
                   </div>
-                  <div class="row pb-md-1 mt-2 pb-3 row-cols-sm-2 row-cols-md-2 row-cols-lg-6 justify-content-xxl-start justify-content-xl-start justify-content-lg-start justify-content-md-start row-cols-6 row-cols-xl-8 justify-content-start" style="position: ;" id="salesFilter">
+                  <div class="row  pb-md-1 mt-2 pb-3 row-cols-sm-2 row-cols-md-2 row-cols-lg-6 justify-content-xxl-start justify-content-xl-start justify-content-lg-start justify-content-md-start row-cols-6 row-cols-xl-8 justify-content-start" style="position: ;" id="salesFilter">
                     <div class="h-auto offset-0 col-sm-5 mb-1 d-flex align-items-center col-auto col-md-4 col-lg-3">
                       <i class="far fa-calendar-alt fa-sm" style="margin-right: 10px;"></i>
                       <input id="date1" name="datefrom" type="datetime-local" class="form-control form-control-sm" dmx-bind:max="date2.value">
@@ -233,40 +234,28 @@ JSON
 
             <div class="row rounded shadow-none bg-light">
               <div class="scrollable col-12 rounded shadow-none">
-                <div class="row justify-content-md-between justify-content-xxl-between g-0 row-cols-12 rounded shadow-none bg-opacity-10 bg-primary mt-0 pt-3 pb-3 ps-2 pe-2" id="row2">
+                <div class="row justify-content-md-between justify-content-xxl-between g-0 row-cols-12 rounded shadow-none bg-opacity-10 bg-primary mt-3 pt-2 pb-2 ps-2 pe-2" id="row2">
 
                   <div class="col-12 col-lg-4 align-self-center shadow-none">
                     <div class="row justify-content-center shadow-none">
                       <div class="text-center rounded-2 col-sm col-md col-xxl mt-1 me-2 pt-2 col-md-3 col-auto shadow-none col-5 col-lg-5">
-                        <h3 wappler-command="editContent" dmx-text="product_report_total_sales.data.query_product_report_total_sales[0].TotalSales.toNumber().formatNumber('0',',',',')" class="fw-bold text-success">0</h3>
+                        <h3 wappler-command="editContent" dmx-text="sales_report.data.sales_report.sum(`Total`).formatNumber('0',',',',')" class="fw-bold text-success">0</h3>
                         <h5 wappler-command="editContent" class="text-body">{{trans.data.totalSales[lang.value]}}</h5>
                       </div>
                       <div class="rounded-2 text-center col-sm col-md col-lg col-xxl mt-1 me-2 pt-2 pb-2 ps-2 pe-2 col-auto col-md-4 col-5 col-lg-6">
 
-                        <h3 dmx-text="product_report_total_sales.data.query_product_report_total_sales[0].Volume.toNumber().formatNumber('0',',',',')" class="fw-bold text-success"></h3>
+                        <h3 dmx-text="sales_report.data.sales_report.sum(`Volume`).formatNumber('0',',',',')" class="fw-bold text-success"></h3>
                         <h5 class="text-body">{{trans.data.totalSalesVolume[lang.value]}}</h5>
-                      </div>
-                      <div class="text-center rounded rounded-2 mt-1 me-2 pt-2 pb-2 ps-2 pe-2 col-md-4 col-sm-4 shadow-none col-5 col-lg-5">
-
-                        <h3 dmx-text="product_sales_credit_total.data.query_product_sale_credit_total[0].AMOUNT.toNumber().formatNumber(0, '.', ',').default(0)+' '" class="fw-bold text-danger"></h3>
-                        <h4 dmx-text="product_sales_credit_total_all_time.data.query_product_sale_credit_total[0].AMOUNT.toNumber().formatNumber(0, '.', ',').default(0)" class="fw-bold text-danger"></h4>
-                        <h5 class="text-danger">{{trans.data.totalCreditSales[lang.value]}}</h5>
-                      </div>
-                      <div class="text-center col-sm-12 col-xxl-5 rounded-2 col-auto mt-1 pt-2 pb-2 ps-2 pe-2 col-md-6 shadow-none col-5 col-lg-6">
-
-                        <h3 dmx-text="product_sales_credit_total.data.query_product_sale_credit_total[0].QUANTITY.toNumber().formatNumber(0, '.', ',').default(0)" class="fw-bold text-warning"></h3>
-                        <h4 dmx-text="product_sales_credit_total_all_time.data.query_product_sale_credit_total[0].QUANTITY.toNumber().formatNumber(0, '.', ',').default(0)" class="fw-bold text-warning"></h4>
-                        <h5 class="text-warning">{{trans.data.totalCreditSalesVolume[lang.value]}}</h5>
                       </div>
                     </div>
                   </div>
                   <div class="col-12 col-lg-8">
-                    <div class="row mt-1 mt-md-2 gx-lg-0 gy-lg-0 bg-secondary rounded" id="orders_table" style="">
+                    <div class="row mt-md-2 gx-lg-0 gy-lg-0 bg-secondary rounded mt-1 ms-0 me-0" id="orders_table" style="">
                       <div class="mw-100 col-lg-11 col-md-11 col-11" is="dmx-background-video" id="report">
                         <div class="row mb-2">
-                          <div class="col-xxl col-12 col-md-12 col-xxl-8 col-lg-12 y-scroll rounded ms-2 pt-2 pb-2 ps-2 pe-2">
+                          <div class="col-xxl col-lg-12 y-scroll rounded ms-2 pt-2 pb-2 ps-2 pe-2 col-sm-auto col-sm-12 col-md-auto col-md-12 col-xxl-12 col-auto">
 
-                            <dmx-chart id="chart1" point-size="" dmx-bind:data="product_report.data.product_report" smooth="true" dataset-1:value="Volume" dataset-1:tooltip="" legend="top" stacked="true" type="bar" multicolor="true" dataset-2:value="Total" dataset-1:label="Sales Volume Total" dataset-2:label="Sales Total" labels="product_name" dataset-1="" height="300" width="1000"></dmx-chart>
+                            <dmx-chart id="chart1" point-size="" smooth="true" dataset-1:value="Volume" dataset-1:tooltip="" legend="top" stacked="true" type="bar" multicolor="true" dataset-2:value="Total" dataset-1:label="Sales Volume Total" dataset-2:label="Sales Total" labels="product_name+' - '+Total+' / '+Volume" dataset-1="" height="300" width="1000" dmx-bind:data="sales_report.data.sales_report"></dmx-chart>
                             <h3 class="text-center">{{trans.data.products[lang.value]}}</h3>
 
                           </div>
@@ -287,27 +276,15 @@ JSON
 
                 </div>
 
-                <div class="row mt-xxl-2 row-cols-12 pt-2 ps-1 pe-1">
+                <div class="row mt-xxl-2 row-cols-12 pt-2 ps-0 pe-3">
 
-                  <div class="col-xxl offset-xxl-1 col-xxl-6 col-lg-6 rounded bg-secondary y-scroll mt-1 ms-1 col-md pt-lg-2 pb-lg-2 ps-lg-2 pe-lg-2">
-                    <dmx-chart id="chart2" point-size="" smooth="true" dataset-1:value="Volume" dmx-bind:data="product_category_report.data.product_category_report" dataset-1:tooltip="" legend="top" multicolor="true" colors="colors3" labels="product_category_name" cutout="" type="bar" dataset-2:label="Sales Total" dataset-1:label="Sales Volume Total" dataset-2:value="Total" stacked="true" width="1000" height="300"></dmx-chart>
+                  <div class="offset-xxl-1 rounded bg-secondary y-scroll pt-lg-2 pb-lg-2 ps-lg-2 pe-lg-2 col-auto mt-1 ms-2 me-2 col-12 col-sm-auto col-md-auto col-md-5 col-lg-auto col-xl-auto col-xxl-auto">
+                    <dmx-chart id="chart2" point-size="" smooth="true" dataset-1:value="Volume" dataset-1:tooltip="" legend="top" multicolor="true" colors="colors3" labels="product_category_name" cutout="" type="bar" dataset-2:label="Sales Total" dataset-1:label="Sales Volume Total" dataset-2:value="Total" stacked="true" width="1000" height="300" dmx-bind:data="sales_report.data.sales_report_categories"></dmx-chart>
                     <h3 class="text-center">{{trans.data.categories[lang.value]}}</h3>
                   </div>
-                  <div class="col-xxl y-scroll col-md-auto col-lg-5 col-xl-5 col-xxl-5">
-                    <dmx-chart id="payment_methods" point-size="" smooth="true" dataset-1:value="TotalPayments" dmx-bind:data="payment_methods_report.data.payment_methods_report" dataset-1:tooltip="" legend="top" multicolor="true" colors="colors3" cutout="" type="pie" dataset-2:label="Sales Total" dataset-1:label="Payment Methods" dataset-2:value="" stacked="true" labels="Method" width="" height="" responsive="true"></dmx-chart>
+                  <div class="y-scroll col-md-auto col-auto bg-primary bg-opacity-10 mt-1 rounded col-sm-auto col-12 col-md-6 col-lg-4 align-self-lg-start col-xl-auto col-xxl-auto">
+                    <dmx-chart id="payment_methods" point-size="" smooth="true" dataset-1:value="TotalPayments" dataset-1:tooltip="" legend="top" multicolor="true" colors="colors3" cutout="" type="pie" dataset-2:label="Sales Total" dataset-1:label="Payment Methods" dataset-2:value="" stacked="true" labels="Method" width="" height="" responsive="true" dmx-bind:data="sales_report.data.sales_report_payments"></dmx-chart>
                     <h3 class="text-center">{{trans.data.payments[lang.value]}}</h3>
-                  </div>
-
-                </div>
-                <div class="row mt-xxl-2 row-cols-12 ms-2 me-2 pt-2">
-
-                  <div class="col-lg-6 col-md-6">
-                    <dmx-chart id="salesCurve2" dmx-bind:data="product_sales_total.data.query_product_sale_total" dataset-1:value="AMOUNT" labels="order_time" dataset-1:tooltip="trans.data.sales[lang.value]" responsive="true" smooth="true" points="true" stacked="true" nogrid="true" colors="colors2" point-size="2" thickness="1"></dmx-chart>
-                    <h3 class="text-center">{{trans.data.performance[lang.value]}}</h3>
-                  </div>
-                  <div class="col-lg-6 col-md-6">
-                    <dmx-chart id="accessorySales2" dmx-bind:data="product_sales_accessories_total.data.product_report_accessories_total" dataset-1:value="_['SUM(order_item_quantity)']" dataset-1:tooltip="trans.data.quantity[lang.value]" responsive="true" smooth="true" points="true" nogrid="true" colors="colors2" labels="product_name+' * '+_['SUM(order_item_quantity)']+' *'+_['sum(order_item_quantity * order_item_price)']" point-size="" type="bar" multicolor="true"></dmx-chart>
-                    <h3 class="text-center">{{trans.data.accessories[lang.value]}}</h3>
                   </div>
 
                 </div>
@@ -321,20 +298,20 @@ JSON
                       <table class="table table-hover table-sm">
                         <thead>
                           <tr>
-                            <th>#</th>
                             <th>{{trans.data.product[lang.value]}}</th>
+                            <th>{{trans.data.customer[lang.value]}}</th>
                             <th>{{trans.data.category[lang.value]}}</th>
-                            <th>{{trans.data.volume[lang.value]}}</th>
-                            <th>{{trans.data.total[lang.value]}}</th>
+                            <th class="text-end">{{trans.data.volume[lang.value]}}</th>
+                            <th class="text-end">{{trans.data.total[lang.value]}}</th>
                           </tr>
                         </thead>
-                        <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="product_report.data.product_report" id="tableRepeat1">
+                        <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="sales_report.data.sales_report_export_table" id="tableRepeat6">
                           <tr>
-                            <td dmx-text="product_id"></td>
                             <td dmx-text="product_name"></td>
+                            <td dmx-text="customer_first_name+' '+customer_last_name"></td>
                             <td dmx-text="product_category_name"></td>
-                            <td dmx-text="Volume.toNumber().formatNumber(0, '.', ',')"></td>
-                            <td dmx-text="Total.toNumber().formatNumber(0, '.', ',') "></td>
+                            <td dmx-text="Volume.toNumber().formatNumber('0',',',',')" class="text-end"></td>
+                            <td dmx-text="Total.toNumber().formatNumber('0', ',', ',')" class="text-end"></td>
                           </tr>
                         </tbody>
                       </table>

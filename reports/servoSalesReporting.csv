@@ -1,3 +1,4 @@
-﻿product_name,customer_first_name,customer_last_name,Volume,Total
-"Special Burger","Mr Jones",Tamfu,19,475500
-"Special Burger",JOHN,FUH,11,352000
+﻿product_name,customer_first_name,customer_last_name,product_category_name,Volume,Total
+"Cement  Dangote","MR Anthony Che CUSTOMER","Che Alphone Chiambah","Building Material",46,1209500
+"Special Burger","Mr Jones",Tamfu,"Food and Drink",19,475500
+"Special Burger",JOHN,FUH,"Food and Drink",11,352000

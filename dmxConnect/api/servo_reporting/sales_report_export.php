@@ -129,7 +129,7 @@ $app->define(<<<'JSON'
         "module": "fs",
         "action": "exists",
         "options": {
-          "path": "/reports/servoSalesReport.csv",
+          "path": "/reports/servoSalesReporting.csv",
           "then": {
             "steps": [
               {
@@ -137,7 +137,7 @@ $app->define(<<<'JSON'
                 "module": "fs",
                 "action": "remove",
                 "options": {
-                  "path": "/reports/servoSalesReport.csv"
+                  "path": "/reports/servoSalesReporting.csv"
                 },
                 "outputType": "boolean",
                 "output": true
