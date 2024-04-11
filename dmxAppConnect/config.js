@@ -2612,6 +2612,27 @@ dmx.config({
         }
       ],
       "outputType": "array"
+    },
+    "productPricesTable1": {
+      "meta": [
+        {
+          "type": "number",
+          "name": "uom_multiple_id"
+        },
+        {
+          "type": "number",
+          "name": "uom_product_id"
+        },
+        {
+          "type": "text",
+          "name": "uom_name"
+        },
+        {
+          "type": "number",
+          "name": "uom_reference_multiple"
+        }
+      ],
+      "outputType": "array"
     }
   },
   "TestPage": {

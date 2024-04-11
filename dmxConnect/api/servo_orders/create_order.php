@@ -43,6 +43,10 @@ $app->define(<<<'JSON'
       {
         "type": "number",
         "name": "servo_service_service_id"
+      },
+      {
+        "type": "number",
+        "name": "order_pos"
       }
     ],
     "$_SESSION": [
@@ -116,11 +120,17 @@ $app->define(<<<'JSON'
                 "column": "order_customer",
                 "type": "number",
                 "value": "{{$_POST.order_customer.default(null)}}"
+              },
+              {
+                "table": "servo_orders",
+                "column": "order_pos",
+                "type": "number",
+                "value": "{{$_POST.order_pos}}"
               }
             ],
             "table": "servo_orders",
             "returning": "order_id",
-            "query": "insert into `servo_orders` (`order_customer`, `order_discount`, `order_status`, `order_time`, `servo_customer_table_table_id`, `servo_departments_department_id`, `servo_service_service_id`, `servo_shift_shift_id`, `servo_user_user_id`) values (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            "query": "insert into `servo_orders` (`order_customer`, `order_discount`, `order_pos`, `order_status`, `order_time`, `servo_customer_table_table_id`, `servo_departments_department_id`, `servo_service_service_id`, `servo_shift_shift_id`, `servo_user_user_id`) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
             "params": [
               {
                 "name": ":P1",
@@ -166,6 +176,12 @@ $app->define(<<<'JSON'
                 "name": ":P9",
                 "type": "expression",
                 "value": "{{$_POST.order_customer.default(null)}}"
+              },
+              {
+                "name": ":P10",
+                "type": "expression",
+                "value": "{{$_POST.order_pos}}",
+                "test": ""
               }
             ]
           }

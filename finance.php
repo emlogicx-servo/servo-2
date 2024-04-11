@@ -837,9 +837,12 @@
                                   <form id="updateTransactionApproved" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_wallet_transactions/update_wallet_transaction_approved.php" dmx-on:success="list_wallet_transactions.load({wallet_id: read_wallet.data.read_wallet.wallet_id});wallet_report_per_wallet.load({wallet_id: read_wallet.data.read_wallet.wallet_id})">
                                     <input id="transactionID" name="transaction_id" type="number" class="form-control visually-hidden" dmx-bind:value="transaction_id">
                                     <input id="transactionUserApproved" name="transaction_user_approved" type="number" class="form-control visually-hidden" dmx-bind:value="list_user_info.data.query_list_user_info.user_id">
+                                    <input id="transactionUserApproved1" name="transaction_time_approved" type="datetime-local" class="form-control visually-hidden" dmx-bind:value="dateTime.datetime">
+
                                     <button id="btn7" class="btn text-warning" type="submit" dmx-bind:disabled="(transaction_status=='Approved' || transaction_status == 'Received' || read_wallet.data.query_wallet_privileges_user[0].wallet_privilege_approve=='No')">
                                       <i class="far fa-thumbs-up"></i></button>
                                   </form><small class="text-muted" dmx-text="user_approved_username">With faded secondary text</small>
+                                  <small class="text-muted" dmx-text="transaction_time_approved">With faded secondary text</small>
 
 
 
@@ -848,9 +851,10 @@
                                   <form id="updateTransactionReceived" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_wallet_transactions/update_wallet_transaction_received.php" dmx-on:success="list_wallet_transactions.load({wallet_id: read_wallet.data.read_wallet.wallet_id});wallet_report_per_wallet.load({wallet_id: read_wallet.data.read_wallet.wallet_id})">
                                     <input id="transactionID1" name="transaction_id" type="number" class="form-control visually-hidden" dmx-bind:value="transaction_id">
                                     <input id="transactionUserReceived1" name="transaction_user_received" type="number" class="form-control visually-hidden" dmx-bind:value="list_user_info.data.query_list_user_info.user_id" dmx-bind:readonly="read_wallet.data.query_wallet_privileges_user[0].wallet_privilege_approve=='No'">
-                                    <button id="btn4" class="btn text-success" type="submit" dmx-bind:disabled="(transaction_status=='Pending' || transaction_status == 'Received' || read_wallet.data.query_wallet_privileges_user[0].wallet_privilege_receive=='No')||(destination_wallet_id !== read_wallet.data.read_wallet.wallet_id &amp;&amp; destination_wallet_id !== null) ">
+                                    <input id="transactionUserApproved2" name="transaction_time_received" type="datetime-local" class="form-control visually-hidden" dmx-bind:value="dateTime.datetime"><button id="btn4" class="btn text-success" type="submit" dmx-bind:disabled="(transaction_status=='Pending' || transaction_status == 'Received' || read_wallet.data.query_wallet_privileges_user[0].wallet_privilege_receive=='No')||(destination_wallet_id !== read_wallet.data.read_wallet.wallet_id &amp;&amp; destination_wallet_id !== null) ">
                                       <i class="far fa-thumbs-up"></i></button>
                                   </form><small class="text-muted" dmx-text="user_received_username">With faded secondary text</small>
+                                  <small class="text-muted" dmx-text="transaction_time_received">With faded secondary text</small>
 
                                 </td>
                                 <td class="text-success">

@@ -25,6 +25,10 @@ $app->define(<<<'JSON'
       {
         "type": "number",
         "name": "transaction_id"
+      },
+      {
+        "type": "datetime",
+        "name": "transaction_time_approved"
       }
     ]
   },
@@ -49,6 +53,12 @@ $app->define(<<<'JSON'
               "column": "transaction_user_approved",
               "type": "number",
               "value": "{{$_POST.transaction_user_approved}}"
+            },
+            {
+              "table": "servo_wallet_transactions",
+              "column": "transaction_time_approved",
+              "type": "datetime",
+              "value": "{{$_POST.transaction_time_approved}}"
             }
           ],
           "table": "servo_wallet_transactions",
@@ -68,7 +78,7 @@ $app->define(<<<'JSON'
             ]
           },
           "returning": "transaction_id",
-          "query": "UPDATE servo_wallet_transactions\nSET transaction_status = 'Approved', transaction_user_approved = :P1 /* {{$_POST.transaction_user_approved}} */\nWHERE transaction_id = :P2 /* {{$_POST.transaction_id}} */",
+          "query": "update `servo_wallet_transactions` set `transaction_status` = ?, `transaction_user_approved` = ?, `transaction_time_approved` = ? where `transaction_id` = ?",
           "params": [
             {
               "name": ":P1",
@@ -77,9 +87,15 @@ $app->define(<<<'JSON'
               "test": ""
             },
             {
+              "name": ":P2",
+              "type": "expression",
+              "value": "{{$_POST.transaction_time_approved}}",
+              "test": ""
+            },
+            {
               "operator": "equal",
               "type": "expression",
-              "name": ":P2",
+              "name": ":P3",
               "value": "{{$_POST.transaction_id}}",
               "test": ""
             }

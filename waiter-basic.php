@@ -570,18 +570,18 @@ JSON
 
                           </div>
                         </div>
-                        <div class="row row-cols-12">
+                        <div class="row mt-2 ms-1 me-1 mt-sm-1 ms-sm-1 me-sm-1 mt-md-1 ms-md-1 me-md-1 mt-lg-1 ms-lg-1 me-lg-1 mt-xxl-1 ms-xxl-1 me-xxl-1 mt-xl-1 me-xl-1 row-cols-xxl-12 row-cols-lg-10 row-cols-xl-12 row-cols-md-3 row-cols-12 align-items-center">
 
-                          <div class="col-xxl-6 col-xl-6 col-sm-6 col-md-12 rounded align-self-center bg-opacity-10 bg-primary col-lg-6 col-12 gx-2 mb-1 pt-1 pb-1 ps-1 pe-1" dmx-repeat:repeatproducts="load_products.data.repeat" style="padding-top: 0px !important;" id="SelectProductsRepeat">
-                            <form id="addItem2" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_order_items/create_order_item.php" dmx-on:success="addItem2.reset();list_order_items.load({order_id: session_variables.data.current_order});notifies1.success('Success:'+product_name+' Added to Order');showItemDetails.toggle()">
+                          <div class="offset-md-0 col-xxl-6 col-xl-6 col-12 col-sm-6 col-md-12 rounded col-lg-6 align-self-center bg-info bg-opacity-10 mb-1 pt-1 pb-1 ps-1 pe-1 gx-4" dmx-repeat:repeatproducts="load_products.data.repeat" style="padding-top: 0px !important;" id="SelectProductsRepeat">
+                            <form id="addItem2" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_order_items/create_order_item.php" dmx-on:success="addItem2.reset();list_order_items.load({order_id: session_variables.data.current_order});notifies1.success('Success:'+product_name+' Added to Order')">
                               <div class="row row-cols-md-12 row-cols-sm-12 row-cols-12 row-cols-lg-12 row-cols-xl-12 row-cols-xxl-12 pt-2 pb-2 ps-2 pe-2 align-items-center">
                                 <div class="col-auto">
                                   <div class="row" style="padding: 0px !important;" id="productPic2" dmx-hide="toggleProductPic2.toggleProductPictures2.checked">
-                                    <div class="text-center col-2" style="padding: 0px !important; height: 200px;" dmx-hide="product_picture==null">
-                                      <img dmx-bind:src="'/servo/uploads/product_pictures/'+product_picture" width="50px" height="50px" loading="lazy" style="object-fit: cover;" class="rounded-circle">
+                                    <div class="text-center col-auto" style="padding: 0px !important; height: 200px;" dmx-hide="product_picture==null">
+                                      <img dmx-bind:src="'/servo/uploads/product_pictures/'+product_picture" width="100%" height="95%" loading="lazy" style="object-fit: cover;">
                                     </div>
-                                    <div class="text-center col-2" style="padding: 0px !important; height: 200px;" dmx-hide="product_picture!==null">
-                                      <img width="50px" height="50px" loading="lazy" style="object-fit: cover;" src="uploads/servo_no_image2.jpg" class="rounded-circle">
+                                    <div class="text-center col-auto" style="padding: 0px !important; height: 200px;" dmx-hide="product_picture!==null">
+                                      <img width="100%" height="95%" loading="lazy" style="object-fit: cover;" src="uploads/servo_no_image2.jpg">
                                     </div>
 
                                   </div>
@@ -596,13 +596,32 @@ JSON
                                 </div>
                                 <div class="col-auto d-flex align-items-center">
                                   <button id="btn161" class="btn me-1 bg-opacity-10 text-body bg-info" dmx-on:click="addItem2.inp_order_item_quantity2.setValue((addItem2.inp_order_item_quantity2.value.toNumber()-1))"><i class="fas fa-minus fa-sm"></i>
-                                  </button><input id="inp_order_item_quantity2" name="order_item_quantity" type="number" step="any" class="form-control mb-sm-1 mb-2" min="0.01" data-rule-min="0.01" data-msg-min="Min. 1" style="width: 70px !important; border: none !important; font-family: 'Josefin-Sans'; font-size: 20px !important; text-align: center;" dmx-bind:value="1" dmx-bind:min="0.01" required="" data-msg-required="!"><button id="btn162" class="btn ms-1 me-4 bg-opacity-10 bg-info text-body" dmx-on:click="addItem2.inp_order_item_quantity2.setValue((addItem2.inp_order_item_quantity2.value.toNumber()+1))"><i class="fas fa-plus fa-sm"></i>
+                                  </button><input id="inp_order_item_quantity2" name="order_item_quantity" type="number" class="form-control mb-sm-1 mb-2" min="" data-rule-min="1" data-msg-min="Min. 1" style="width: 70px !important; border: none !important; font-family: 'Josefin-Sans'; font-size: 20px !important; text-align: center;" dmx-bind:value="1" dmx-bind:min="1" required="" data-msg-required="!"><button id="btn162" class="btn ms-1 me-4 bg-opacity-10 bg-info text-body" dmx-on:click="addItem2.inp_order_item_quantity2.setValue((addItem2.inp_order_item_quantity2.value.toNumber()+1))"><i class="fas fa-plus fa-sm"></i>
                                   </button>
                                   <dmx-toggle id="showItemDetails"></dmx-toggle><button id="btn14" class="btn text-danger bg-danger bg-opacity-10 me-4 btn-lg" dmx-on:click="showItemDetails.toggle()"><i class="fas fa-info fa-sm"></i>
                                   </button>
                                 </div>
                                 <div class="col-auto visually-hidden d-flex"><input id="orderitemDepartment1" name="servo_departments_department_id" class="form-control mb-sm-1 mb-2 visually-hidden" placeholder="1" dmx-bind:value="sdc_department_id" type="number"><input id="inp_order_item_user_ordered1" name="servo_users_user_ordered" class="form-control mb-sm-1 mb-2 visually-hidden" placeholder="1" dmx-bind:value="session_variables.data.user_id" type="number"><input id="inp_order_item_price2" name="order_item_price" type="number" class="form-control mb-sm-1 mb-2 visually-hidden" placeholder="1" dmx-bind:value="product_price"><input id="inp_order_product_id2" name="servo_products_product_id" type="number" class="form-control mb-sm-1 mb-2 visually-hidden" placeholder="1" dmx-bind:value="product_id"><input id="inp_order_time_ordered2" name="order_time_ordered" class="form-control mb-sm-1 mb-2 visually-hidden" type="datetime-local" dmx-bind:value="var1.datetime"><input id="inp_order_item_status2" name="order_item_status" class="form-control mb-sm-1 mb-2 visually-hidden" value="Pending"><input id="inp_order_id2" name="servo_orders_order_id" type="number" class="form-control mb-sm-1 mb-2 visually-hidden" dmx-bind:value="session_variables.data.current_order"><input id="inp_order_item_type1" name="order_item_type" class="form-control mb-sm-1 mb-2 visually-hidden" placeholder="1" dmx-bind:value="'Simple'"></div>
+                                <div class="col-auto col-sm-auto" id="orderItemDetails" dmx-show="showItemDetails.checked">
+                                  <div class="row">
+                                    <div class="col-auto"><textarea id="inp_order_notes2" class="form-control" name="order_item_notes" style="width: 200px;"></textarea></div>
+                                    <div class="d-flex flex-wrap">
 
+
+
+                                      <button id="btn45" class="add-item-button btn align-self-end btn-lg text-muted" dmx-on:click="addItem2.inp_order_notes2.setValue(null)">
+                                        <i class="fas fa-undo"></i>
+                                      </button>
+                                    </div>
+                                    <div class="w-25  d-flex flex-md-nowrap flex-md-row justify-content-md-start col-md flex-xxl-nowrap justify-content-xxl-start flex-xxl-row flex-xl-nowrap justify-content-xl-start flex-xl-row flex-lg-nowrap justify-content-lg-start flex-lg-row flex-sm-nowrap justify-content-sm-start flex-sm-row flex-nowrap justify-content-start flex-row col-xxl col-xl col-lg col-auto" style="">
+                                      <div id="repeatOptions1" is="dmx-repeat" dmx-bind:repeat="query_list_options">
+                                        <button class="btn mb-xxl-2 me-xxl-2 button-repeat bg-opacity-10 fw-bold text-primary bg-primary" dmx-text="category_option_option" dmx-bind:value="category_option_option" dmx-on:click="addItem2.inp_order_notes2.setValue(addItem2.inp_order_notes2.value+' '+optionsButton2.value+' ')" id="optionsButton2"></button>
+                                      </div>
+
+                                    </div>
+
+                                  </div>
+                                </div>
 
 
 
@@ -610,17 +629,6 @@ JSON
                                   <button id="btn44" class="add-item-button btn align-self-end btn-lg bg-opacity-10 bg-success text-success" type="submit">
                                     <i class="fas fa-check"></i>
                                   </button>
-                                </div>
-
-                              </div>
-                              <div class="row">
-                                <div class="col-auto d-flex pb-2" id="orderItemDetails" dmx-show="showItemDetails.checked">
-                                  <textarea id="inp_order_notes2" class="form-control" name="order_item_notes" style="width: 200px;"></textarea><button id="btn45" class="add-item-button btn align-self-end btn-lg text-muted" dmx-on:click="addItem2.inp_order_notes2.setValue(null)">
-                                    <i class="fas fa-undo"></i>
-                                  </button>
-                                  <div id="repeatOptions1" is="dmx-repeat" dmx-bind:repeat="query_list_options">
-                                    <button class="btn mb-xxl-2 me-xxl-2 button-repeat bg-opacity-10 fw-bold text-primary bg-primary" dmx-text="category_option_option" dmx-bind:value="category_option_option" dmx-on:click="addItem2.inp_order_notes2.setValue(addItem2.inp_order_notes2.value+' '+optionsButton2.value+' ')" id="optionsButton2"></button>
-                                  </div>
                                 </div>
                               </div>
 

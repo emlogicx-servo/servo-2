@@ -25,6 +25,11 @@
   src: url("/servo/css/fonts/Abel/abel-regular.ttf") format("truetype");
 }
 
+@font-face{
+  font-family: "Inter";
+  src: url("/servo/css/fonts/Inter/static/Inter_Light.ttf") format("truetype");
+}
+
 @media print
 
 {

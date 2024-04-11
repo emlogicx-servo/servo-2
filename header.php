@@ -103,7 +103,7 @@
         <i class="fas fa-home fa-sm"></i>
         </button>
 
-        <button id="themelight" class="btn  text-warning rounded"  dmx-on:click="themedark.hide();cookies.set('servotheme','bootstrap/5/servolight/bootstrap.min.css',{expires: 30})" dmx-hide="(cookies.data.servotheme =='bootstrap/5/servolight/bootstrap.min.css')" style="">
+        <button id="themelight" class="btn  bg-secondary rounded"  dmx-on:click="themedark.hide();cookies.set('servotheme','bootstrap/5/servolight/bootstrap.min.css',{expires: 30})" dmx-hide="(cookies.data.servotheme =='bootstrap/5/servolight/bootstrap.min.css')" style="">
                 <i class="fa fa-lightbulb fa-rotate-180"></i>
         </button>
               

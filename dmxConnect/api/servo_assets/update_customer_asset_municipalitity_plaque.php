@@ -44,10 +44,6 @@ $app->define(<<<'JSON'
       },
       {
         "type": "number",
-        "name": "neighbordhood_local_name"
-      },
-      {
-        "type": "number",
         "name": "street_name"
       },
       {
@@ -65,6 +61,10 @@ $app->define(<<<'JSON'
       {
         "type": "number",
         "name": "combined_surface_area"
+      },
+      {
+        "type": "text",
+        "name": "neighborhood_local_name"
       }
     ]
   },
@@ -116,12 +116,6 @@ $app->define(<<<'JSON'
             },
             {
               "table": "servo_asset_special_fields_municipality",
-              "column": "neighbordhood_local_name",
-              "type": "number",
-              "value": "{{$_POST.neighbordhood_local_name.default(null)}}"
-            },
-            {
-              "table": "servo_asset_special_fields_municipality",
               "column": "street_name",
               "type": "number",
               "value": "{{$_POST.street_name.default(null)}}"
@@ -143,6 +137,12 @@ $app->define(<<<'JSON'
               "column": "combined_surface_area",
               "type": "number",
               "value": "{{$_POST.combined_surface_area.default(null)}}"
+            },
+            {
+              "table": "servo_asset_special_fields_municipality",
+              "column": "neighborhood_local_name",
+              "type": "text",
+              "value": "{{$_POST.neighborhood_local_name}}"
             }
           ],
           "table": "servo_asset_special_fields_municipality",
@@ -164,7 +164,7 @@ $app->define(<<<'JSON'
             "conditional": null,
             "valid": true
           },
-          "query": "UPDATE servo_asset_special_fields_municipality\nSET permit_number = :P1 /* {{$_POST.permit_number.default(null)}} */, maitre_doeuvre = :P2 /* {{$_POST.maitre_doeuvre.default(null)}} */, maitre_douvrage = :P3 /* {{$_POST.maitre_douvrage.default(null)}} */, construction_type = :P4 /* {{$_POST.construction_type.default(null)}} */, district = :P5 /* {{$_POST.district.default(null)}} */, neighborhood = :P6 /* {{$_POST.neighborhood.default(null)}} */, neighbordhood_local_name = :P7 /* {{$_POST.neighbordhood_local_name.default(null)}} */, street_name = :P8 /* {{$_POST.street_name.default(null)}} */, project_purpose = :P9 /* {{$_POST.project_purpose.default(null)}} */, project_id = :P10 /* {{$_POST.project_id.default(null)}} */, combined_surface_area = :P11 /* {{$_POST.combined_surface_area.default(null)}} */\nWHERE asset = :P12 /* {{$_POST.asset}} */",
+          "query": "update `servo_asset_special_fields_municipality` set `permit_number` = ?, `maitre_doeuvre` = ?, `maitre_douvrage` = ?, `construction_type` = ?, `district` = ?, `neighborhood` = ?, `street_name` = ?, `project_purpose` = ?, `project_id` = ?, `combined_surface_area` = ?, `neighborhood_local_name` = ? where `asset` = ?",
           "params": [
             {
               "name": ":P1",
@@ -199,27 +199,27 @@ $app->define(<<<'JSON'
             {
               "name": ":P7",
               "type": "expression",
-              "value": "{{$_POST.neighbordhood_local_name.default(null)}}"
+              "value": "{{$_POST.street_name.default(null)}}"
             },
             {
               "name": ":P8",
               "type": "expression",
-              "value": "{{$_POST.street_name.default(null)}}"
+              "value": "{{$_POST.project_purpose.default(null)}}"
             },
             {
               "name": ":P9",
               "type": "expression",
-              "value": "{{$_POST.project_purpose.default(null)}}"
+              "value": "{{$_POST.project_id.default(null)}}"
             },
             {
               "name": ":P10",
               "type": "expression",
-              "value": "{{$_POST.project_id.default(null)}}"
+              "value": "{{$_POST.combined_surface_area.default(null)}}"
             },
             {
               "name": ":P11",
               "type": "expression",
-              "value": "{{$_POST.combined_surface_area.default(null)}}"
+              "value": "{{$_POST.neighborhood_local_name}}"
             },
             {
               "operator": "equal",

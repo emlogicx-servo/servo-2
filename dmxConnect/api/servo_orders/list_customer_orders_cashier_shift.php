@@ -31,6 +31,10 @@ $app->define(<<<'JSON'
       {
         "type": "text",
         "name": "shift_id"
+      },
+      {
+        "type": "text",
+        "name": "customer_id"
       }
     ]
   },
@@ -481,16 +485,17 @@ $app->define(<<<'JSON'
         "options": {
           "connection": "servodb",
           "sql": {
-            "query": "select\n(select COUNT(order_id)\nFROM servo_orders\nWHERE order_customer = :P1 /* {{$_GET.customer_id}} */ AND order_status = 'Ordered') as Ordered,\n\n(select COUNT(order_id)\nFROM servo_orders\nWHERE order_customer = :P1 /* {{$_GET.customer_id}} */ AND order_status = 'Paid') as Paid,\n\n(select COUNT(order_id)\nFROM servo_orders\nWHERE order_customer = :P1 /* {{$_GET.customer_id}} */ AND order_status = 'Pending') as Pending\n\nfrom servo_orders where order_customer = :P1\ngroup by order_customer",
+            "query": "select\n(select COUNT(order_id)\nFROM servo_orders\nWHERE order_customer = :P1 AND servo_shift_shift_id = :P2  AND order_status = 'Ordered') as Ordered,\n\n(select COUNT(order_id)\nFROM servo_orders\nWHERE order_customer = :P1 AND servo_shift_shift_id = :P2 AND order_status = 'Paid') as Paid,\n\n(select COUNT(order_id)\nFROM servo_orders\nWHERE order_customer = :P1 AND servo_shift_shift_id = :P2 AND order_status = 'Pending') as Pending\n\nfrom servo_orders where order_customer = :P1\ngroup by order_customer",
             "params": [
               {
                 "name": ":P1",
                 "value": "{{$_GET.customer_id}}",
-                "test": "7424"
+                "test": "7"
               },
               {
                 "name": ":P2",
-                "value": "{{$_GET.shift_id}}"
+                "value": "{{$_GET.shift_id}}",
+                "test": "202"
               }
             ]
           }
@@ -510,8 +515,7 @@ $app->define(<<<'JSON'
             "type": "text"
           }
         ],
-        "type": "dbcustom_query",
-        "outputType": "array"
+        "type": "dbcustom_query"
       }
     ]
   }

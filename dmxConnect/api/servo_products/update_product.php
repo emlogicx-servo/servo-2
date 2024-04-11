@@ -47,6 +47,10 @@ $app->define(<<<'JSON'
       {
         "type": "number",
         "name": "product_sub_category_sub_category_id"
+      },
+      {
+        "type": "text",
+        "name": "product_reference_uom"
       }
     ]
   },
@@ -101,6 +105,12 @@ $app->define(<<<'JSON'
               "column": "product_sub_category_sub_category_id",
               "type": "number",
               "value": "{{$_POST.product_sub_category_sub_category_id.default(null)}}"
+            },
+            {
+              "table": "servo_products",
+              "column": "product_reference_uom",
+              "type": "text",
+              "value": "{{$_POST.product_reference_uom}}"
             }
           ],
           "table": "servo_products",
@@ -119,7 +129,7 @@ $app->define(<<<'JSON'
               }
             ]
           },
-          "query": "UPDATE servo_products\nSET product_name = :P1 /* {{$_POST.product_name}} */, servo_product_brands_product_brand_id = :P2 /* {{$_POST.servo_product_brands_product_brand_id}} */, product_description = :P3 /* {{$_POST.product_description}} */, servo_product_category_product_category_id = :P4 /* {{$_POST.servo_product_category_product_category_id}} */, product_type = :P5 /* {{$_POST.product_type}} */, product_min_stock = :P6 /* {{$_POST.product_min_stock}} */, product_sub_category_sub_category_id = :P7 /* {{$_POST.product_sub_category_sub_category_id.default(null)}} */\nWHERE product_id = :P8 /* {{$_POST.product_id}} */",
+          "query": "update `servo_products` set `product_name` = ?, `servo_product_brands_product_brand_id` = ?, `product_description` = ?, `servo_product_category_product_category_id` = ?, `product_type` = ?, `product_min_stock` = ?, `product_sub_category_sub_category_id` = ?, `product_reference_uom` = ? where `product_id` = ?",
           "params": [
             {
               "name": ":P1",
@@ -157,10 +167,16 @@ $app->define(<<<'JSON'
               "value": "{{$_POST.product_sub_category_sub_category_id.default(null)}}"
             },
             {
+              "name": ":P8",
+              "type": "expression",
+              "value": "{{$_POST.product_reference_uom}}"
+            },
+            {
               "operator": "equal",
               "type": "expression",
-              "name": ":P8",
-              "value": "{{$_POST.product_id}}"
+              "name": ":P9",
+              "value": "{{$_POST.product_id}}",
+              "test": ""
             }
           ],
           "returning": "product_id"

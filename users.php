@@ -105,17 +105,18 @@ JSON
                   <label for="inp_servo_user_profile_user_profile_id" class="col-sm-2 col-form-label">{{trans.data.profile[lang.value]}}</label>
                   <div class="col-sm-10">
                     <select id="select5" class="form-select" name="user_profile">
-                      <option selected="" value="">------</option>
+                      <option value="">------</option>
                       <option value="Admin">{{trans.data.Admin[lang.value]}}</option>
                       <option value="Waiter">{{trans.data.Waiter[lang.value]}}</option>
                       <option value="Cashier">{{trans.data.Cashier[lang.value]}}</option>
                       <option value="Manager">{{trans.data.Manager[lang.value]}}</option>
                       <option value="Service">{{trans.data.Service[lang.value]}}</option>
                       <option value="Support">{{trans.data.Support[lang.value]}}</option>
-                      <option value="Smanager">{{trans.data.Smanager[lang.value]}}</option>
-                      <option value="Jmanager">{{trans.data.Jmanager[lang.value]}}</option>
-                      <option value="Pmanager">{{trans.data.Pmanager[lang.value]}}</option>
-                      <option value="Fmanager">{{trans.data.Fmanager[lang.value]}}</option>
+                      <option value="smanager">{{trans.data.smanager[lang.value]}}</option>
+                      <option value="jmanager">{{trans.data.jmanager[lang.value]}}</option>
+                      <option value="pmanager">{{trans.data.pmanager[lang.value]}}</option>
+                      <option value="fmanager">{{trans.data.fmanager[lang.value]}}</option>
+                      <option value="dmanager">{{trans.data.dmanager[lang.value]}}</option>
                     </select>
                   </div>
                 </div>
@@ -188,13 +189,14 @@ JSON
                     <option value="Manager">{{trans.data.Manager[lang.value]}}</option>
                     <option value="Service">{{trans.data.Service[lang.value]}}</option>
                     <option value="Support">{{trans.data.Support[lang.value]}}</option>
-                    <option value="Smanager">{{trans.data.Smanager[lang.value]}}</option>
-                    <option value="Jmanager">{{trans.data.Jmanager[lang.value]}}</option>
-                    <option value="Pmanager">{{trans.data.Pmanager[lang.value]}}</option>
-                    <option value="Fmanager">{{trans.data.Fmanager[lang.value]}}</option>
-                    <option value="Jmanager">{{trans.data.Jmanager[lang.value]}}</option>
-                    <option value="Pmanager">{{trans.data.Pmanager[lang.value]}}</option>
-                    <option value="Fmanager">{{trans.data.Fmanager[lang.value]}}</option>
+                    <option value="smanager">{{trans.data.smanager[lang.value]}}</option>
+                    <option value="jmanager">{{trans.data.jmanager[lang.value]}}</option>
+                    <option value="pmanager">{{trans.data.pmanager[lang.value]}}</option>
+                    <option value="fmanager">{{trans.data.fmanager[lang.value]}}</option>
+                    <option value="jmanager">{{trans.data.jmanager[lang.value]}}</option>
+                    <option value="pmanager">{{trans.data.pmanager[lang.value]}}</option>
+                    <option value="fmanager">{{trans.data.fmanager[lang.value]}}</option>
+                    <option value="dmanager">{{trans.data.dmanager[lang.value]}}</option>
                   </select>
                 </div>
               </div>
@@ -300,7 +302,7 @@ JSON
                   <td dmx-text="user_fname"></td>
                   <td dmx-text="user_lname"></td>
                   <td dmx-text="user_username"></td>
-                  <td dmx-text="trans.data.getValueOrKey(user_profile)[lang.value]" class="fw-normal"></td>
+                  <td dmx-text="trans.data.getValueOrKey(user_profile)[lang.value]"></td>
                   <td dmx-text="department_name"></td>
                   <td>
                     <button id="btn2" class="btn open" data-bs-target="#productInfo" dmx-on:click="readItemModal.show();read_item_user.load({user_id: user_id})" dmx-bind:value="serverconnectListUsers.data.query_list_users[0].user_id"><i class="far fa-edit"><br></i></button>

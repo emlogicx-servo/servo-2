@@ -132,10 +132,6 @@ $app->define(<<<'JSON'
       },
       {
         "type": "number",
-        "name": "neighbordhood_local_name"
-      },
-      {
-        "type": "number",
         "name": "street_name"
       },
       {
@@ -149,6 +145,10 @@ $app->define(<<<'JSON'
       {
         "type": "number",
         "name": "asset"
+      },
+      {
+        "type": "text",
+        "name": "neighborhood_local_name"
       }
     ]
   },
@@ -251,6 +251,12 @@ $app->define(<<<'JSON'
               "column": "observations",
               "type": "text",
               "value": "{{$_POST.observations.default(null)}}"
+            },
+            {
+              "table": "servo_asset_special_fields_municipality",
+              "column": "neighborhood_local_name",
+              "type": "text",
+              "value": "{{$_POST.neighborhood_local_name}}"
             }
           ],
           "table": "servo_asset_special_fields_municipality",
@@ -272,7 +278,7 @@ $app->define(<<<'JSON'
             "conditional": null,
             "valid": true
           },
-          "query": "UPDATE servo_asset_special_fields_municipality\nSET payment_status = :P1 /* {{$_POST.payment_status.default(null)}} */, project_status = :P2 /* {{$_POST.project_status.default(null)}} */, project_alert_status = :P3 /* {{$_POST.project_alert_status.default(null)}} */, title_deed_number = :P4 /* {{$_POST.title_deed_number.default(null)}} */, plot_number = :P5 /* {{$_POST.plot_number.default(null)}} */, block_number = :P6 /* {{$_POST.block_number.default(null)}} */, surface_area = :P7 /* {{$_POST.surface_area.default(null)}} */, commentaire_sur_decallage = :P8 /* {{$_POST.commentaire_sur_decallage.default(null)}} */, secteur_operationel = :P9 /* {{$_POST.secteur_operationel.default(null)}} */, servitude_publique = :P10 /* {{$_POST.servitude_publique.default(null)}} */, servitude_privee = :P11 /* {{$_POST.servitude_privee.default(null)}} */, project_entitlement = :P12 /* {{$_POST.project_entitlement.default(null)}} */, emprise_du_sol = :P13 /* {{$_POST.emprise_du_sol.default(null)}} */, cumul_de_plancees = :P14 /* {{$_POST.cumul_de_plancees.default(null)}} */, observations = :P15 /* {{$_POST.observations.default(null)}} */\nWHERE asset = :P16 /* {{$_POST.asset}} */",
+          "query": "update `servo_asset_special_fields_municipality` set `payment_status` = ?, `project_status` = ?, `project_alert_status` = ?, `title_deed_number` = ?, `plot_number` = ?, `block_number` = ?, `surface_area` = ?, `commentaire_sur_decallage` = ?, `secteur_operationel` = ?, `servitude_publique` = ?, `servitude_privee` = ?, `project_entitlement` = ?, `emprise_du_sol` = ?, `cumul_de_plancees` = ?, `observations` = ?, `neighborhood_local_name` = ? where `asset` = ?",
           "params": [
             {
               "name": ":P1",
@@ -350,10 +356,16 @@ $app->define(<<<'JSON'
               "value": "{{$_POST.observations.default(null)}}"
             },
             {
+              "name": ":P16",
+              "type": "expression",
+              "value": "{{$_POST.neighborhood_local_name}}"
+            },
+            {
               "operator": "equal",
               "type": "expression",
-              "name": ":P16",
-              "value": "{{$_POST.asset}}"
+              "name": ":P17",
+              "value": "{{$_POST.asset}}",
+              "test": ""
             }
           ],
           "returning": "asset_info_special_id"

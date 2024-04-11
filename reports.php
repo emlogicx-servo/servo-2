@@ -154,7 +154,7 @@ JSON
 
 
 
-      <div class="row servo-page-header rounded mt-2 ms-2 me-2 pt-2 ps-2 pe-2">
+      <div class="row servo-page-header rounded mt-2 ms-2 me-2 pt-2">
         <ul class="nav nav-tabs nav-fill" id="navTabs1_tabs" role="tablist">
           <li class="nav-item text-truncate">
             <a class="nav-link active text-break" id="navTabs1_1_tab" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_1" role="tab" aria-controls="navTabs1_1" aria-selected="true"><i class="fas fa-cash-register" style="margin-right: 5px;"></i>{{trans.data.sales[lang.value]}}</a>
@@ -167,160 +167,164 @@ JSON
           </li>
         </ul>
         <div class="tab-content" id="navTabs1_content">
-          <div class="tab-pane fade show active " id="navTabs1_1" role="tabpanel">
-            <div class="row rounded w-auto row-cols-sm-1 no-gutters text-body shadow-none mt-2 mb-2 pt-2 pb-2 border-primary row-cols-lg-6 row-cols-12 bg-light" id="row1">
-              <div class="col-12 col-xxl-12 col-lg-12">
+          <div class="tab-pane fade show active" id="navTabs1_1" role="tabpanel">
+            <main class="row bg-light rounded mt-2">
+              <div class="row rounded w-auto row-cols-sm-1 no-gutters text-body shadow-none mt-2 mb-2 pt-2 pb-2 border-primary row-cols-lg-6 row-cols-12" id="row1">
+                <div class="col-12 col-xxl-12 col-lg-12">
 
-                <form id="listOrdersFilters">
-                  <div class="row row-cols-12 row-cols-lg-12">
+                  <form id="listOrdersFilters">
+                    <div class="row row-cols-12 row-cols-lg-12">
 
-                    <div class="col-xxl col-md-12 col-12 col-sm-12 col-lg-12">
-                      <button id="btn5" class="btn mt-1 me-1 w-auto btn-sm text-body bg-secondary" dmx-on:click="date2.setValue(dateTime.datetime.addDays(1).addDays(-1));
+                      <div class="col-xxl col-md-12 col-12 col-sm-12 col-lg-12">
+                        <button id="btn5" class="btn mt-1 me-1 w-auto btn-sm text-body bg-secondary" dmx-on:click="date2.setValue(dateTime.datetime.addDays(1).addDays(-1));
                       date1.setValue(dateTime.datetime.formatDate('yyyy-MM-ddT00:00'))">{{trans.data.today[lang.value]}}</button>
-                      <button id="btn8" class="btn mt-1 me-1 w-auto btn-sm text-body bg-secondary" dmx-on:click="date2.setValue(dateTime.datetime.addDays(0).formatDate('yyyy-MM-ddT00:00'));
+                        <button id="btn8" class="btn mt-1 me-1 w-auto btn-sm text-body bg-secondary" dmx-on:click="date2.setValue(dateTime.datetime.addDays(0).formatDate('yyyy-MM-ddT00:00'));
                       date1.setValue(dateTime.datetime.addDays(-1).formatDate('yyyy-MM-ddT00:00'))">{{trans.data.yesterday[lang.value]}}</button>
-                      <button id="btn3" class="btn mt-1 me-1 w-auto btn-sm text-body bg-secondary" dmx-on:click="date1.setValue(dateTime.datetime); 
+                        <button id="btn3" class="btn mt-1 me-1 w-auto btn-sm text-body bg-secondary" dmx-on:click="date1.setValue(dateTime.datetime); 
                       date2.setValue(getDay(dateTime.datetime))">{{trans.data.thisWeek[lang.value]}}</button>
-                      <button id="btn9" class="btn mt-1 me-1 w-auto btn-sm text-body bg-secondary" dmx-on:click="date2.setValue(dateTime.datetime.addWeeks(-1).addDays(-1).formatDate('yyyy-MM-ddT00:00'));
+                        <button id="btn9" class="btn mt-1 me-1 w-auto btn-sm text-body bg-secondary" dmx-on:click="date2.setValue(dateTime.datetime.addWeeks(-1).addDays(-1).formatDate('yyyy-MM-ddT00:00'));
                       date1.setValue(dateTime.datetime.addWeeks(-2).addDays(-1).formatDate('yyyy-MM-ddT00:00'))">{{trans.data.lastWeek[lang.value]}}</button>
-                      <button id="btn4" class="btn mt-1 me-1 w-auto btn-sm text-body bg-secondary" dmx-on:click="date2.setValue(dateTime.datetime.addMonths(1).formatDate('yyyy-MM-01').addDays(-1));
+                        <button id="btn4" class="btn mt-1 me-1 w-auto btn-sm text-body bg-secondary" dmx-on:click="date2.setValue(dateTime.datetime.addMonths(1).formatDate('yyyy-MM-01').addDays(-1));
                       date1.setValue(dateTime.datetime.formatDate('yyyy-MM-01T00:00'))">{{trans.data.thisMonth[lang.value]}}</button>
-                      <button id="btn6" class="btn mt-1 me-1 w-auto btn-sm text-body bg-secondary" dmx-on:click="date2.setValue(dateTime.datetime.formatDate('yyyy-MM-01').addDays(-1));
+                        <button id="btn6" class="btn mt-1 me-1 w-auto btn-sm text-body bg-secondary" dmx-on:click="date2.setValue(dateTime.datetime.formatDate('yyyy-MM-01').addDays(-1));
                       date1.setValue(dateTime.datetime.addMonths(-1).formatDate('yyyy-MM-01T00:00'))">{{trans.data.lastMonth[lang.value]}}</button>
-                      <button id="btn7" class="btn mt-1 me-1 w-auto btn-sm text-body bg-secondary shadow-none" dmx-on:click="date2.setValue(dateTime.datetime.formatDate('yyyy-MM-01').addDays(-1));
+                        <button id="btn7" class="btn mt-1 me-1 w-auto btn-sm text-body bg-secondary shadow-none" dmx-on:click="date2.setValue(dateTime.datetime.formatDate('yyyy-MM-01').addDays(-1));
                       date1.setValue(dateTime.datetime.addMonths(-3).formatDate('yyyy-MM-01T00:00'))">{{trans.data.lastThreeMonths[lang.value]}}</button>
-                      <button id="btn10" class="btn" dmx-on:click="showSalesFilter.setValue('show')" dmx-hide="(showSalesFilter.value == 'show')">
-                        <i class="fas fa-chevron-up"></i></button>
-                      <button id="btn11" class="btn" dmx-on:click="showSalesFilter.setValue('hide')" dmx-hide="(showSalesFilter.value == 'hide')">
-                        <i class="fas fa-chevron-down"></i></button>
-                      <dmx-value id="showSalesFilter" dmx-bind:value="'hide'"></dmx-value><button id="btn12" class="btn" data-bs-toggle="modal" target="" data-bs-target="#reportTableSales">
-                        <i class="fas fa-table"></i>
+                        <button id="btn10" class="btn" dmx-on:click="showSalesFilter.setValue('show')" dmx-hide="(showSalesFilter.value == 'show')">
+                          <i class="fas fa-chevron-up"></i></button>
+                        <button id="btn11" class="btn" dmx-on:click="showSalesFilter.setValue('hide')" dmx-hide="(showSalesFilter.value == 'hide')">
+                          <i class="fas fa-chevron-down"></i></button>
+                        <dmx-value id="showSalesFilter" dmx-bind:value="'hide'"></dmx-value><button id="btn12" class="btn" data-bs-toggle="modal" target="" data-bs-target="#reportTableSales">
+                          <i class="fas fa-table"></i>
+                        </button>
+                      </div>
+                    </div>
+                    <div class="row  pb-md-1 mt-2 pb-3 row-cols-sm-2 row-cols-md-2 row-cols-lg-6 justify-content-xxl-start justify-content-xl-start justify-content-lg-start justify-content-md-start row-cols-6 row-cols-xl-8 justify-content-start" style="position: ;" id="salesFilter">
+                      <div class="h-auto offset-0 col-sm-5 mb-1 d-flex align-items-center col-auto col-md-4 col-lg-3">
+                        <i class="far fa-calendar-alt fa-sm" style="margin-right: 10px;"></i>
+                        <input id="date1" name="datefrom" type="datetime-local" class="form-control form-control-sm" dmx-bind:max="date2.value">
+                      </div>
+                      <div class="ms-lg-2 offset-0 mb-1 d-flex justify-content-start align-items-center col-auto col-sm-7 col-lg-3 offset-md-0 col-md-4">
+                        <i class="fas fa-calendar-alt fa-sm" style="margin-right: 10px;"></i>
+                        <input id="date2" name="dateto" utc="true" type="datetime-local" class="form-control form-control-sm" dmx-bind:min="date1.value">
+                      </div>
+                      <div class="ms-lg-2 col-sm offset-0 mb-1 d-flex justify-content-start align-items-center col-auto col-sm-5 col-md-4 col-lg-3">
+                        <i class="far fa-user fa-sm" style="margin-right: 10px;"></i>
+                        <select id="waiterFilter" class="form-select form-select-sm" dmx-bind:options="load_users_for_report.data.query_list_users" dmx-bind:value="'Select'" name="waiter" optiontext="user_username" optionvalue="user_id">
+                          <option selected="" value="%">----</option>
+                        </select>
+                      </div>
+                      <div class="offset-0 mb-1 d-flex align-items-center justify-content-start col-auto col-md-4 col-lg-2">
+                        <i class="fas fa-store fa-sm" style="margin-right: 
+                      10px;"></i>
+                        <select id="serviceSelect" class="form-select form-select-sm" dmx-bind:options="load_services.data.query_list_services" optiontext="service_name" optionvalue="service_id" name="service" dmx-bind:value="'Select'">
+                          <option selected="" value="%">----</option>
+                        </select>
+                      </div>
+
+
+
+
+
+                    </div>
+
+                  </form>
+
+                </div>
+              </div>
+              <div class="row rounded shadow-none">
+                <div class="scrollable col-12 rounded shadow-none">
+                  <div class="row justify-content-md-between justify-content-xxl-between g-0 row-cols-12 rounded shadow-none bg-opacity-10 bg-primary mt-3 pt-2 pb-2 ps-2 pe-2" id="row2">
+
+                    <div class="col-12 col-lg-4 align-self-center shadow-none">
+                      <div class="row justify-content-center shadow-none">
+                        <div class="text-center rounded-2 col-sm col-md col-xxl mt-1 me-2 pt-2 col-md-3 col-auto shadow-none col-5 col-lg-5">
+                          <h3 wappler-command="editContent" dmx-text="sales_report.data.sales_report.sum(`Total`).formatNumber('0',',',',')" class="fw-bold text-success">0</h3>
+                          <h5 wappler-command="editContent" class="text-body">{{trans.data.totalSales[lang.value]}}</h5>
+                        </div>
+                        <div class="rounded-2 text-center col-sm col-md col-lg col-xxl mt-1 me-2 pt-2 pb-2 ps-2 pe-2 col-auto col-md-4 col-5 col-lg-6">
+
+                          <h3 dmx-text="sales_report.data.sales_report.sum(`Volume`).formatNumber('0',',',',')" class="fw-bold text-success"></h3>
+                          <h5 class="text-body">{{trans.data.totalSalesVolume[lang.value]}}</h5>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 col-lg-8">
+                      <div class="row mt-md-2 gx-lg-0 gy-lg-0 bg-secondary rounded mt-1 ms-0 me-0" id="orders_table" style="">
+                        <div class="mw-100 col-lg-11 col-md-11 col-11" is="dmx-background-video" id="report">
+                          <div class="row mb-2">
+                            <div class="col-xxl col-lg-12 y-scroll rounded ms-2 pt-2 pb-2 ps-2 pe-2 col-sm-auto col-sm-12 col-md-auto col-md-12 col-xxl-12 col-auto">
+
+                              <dmx-chart id="chart1" point-size="" smooth="true" dataset-1:value="Volume" dataset-1:tooltip="" legend="top" stacked="true" type="bar" multicolor="true" dataset-2:value="Total" dataset-1:label="Sales Volume Total" dataset-2:label="Sales Total" labels="product_name+' - '+Total+' / '+Volume" dataset-1="" height="300" width="1000" dmx-bind:data="sales_report.data.sales_report"></dmx-chart>
+                              <h3 class="text-center">{{trans.data.products[lang.value]}}</h3>
+
+                            </div>
+                          </div>
+
+
+
+
+
+
+
+                        </div>
+                      </div>
+                    </div>
+
+
+
+
+                  </div>
+
+                  <div class="row mt-xxl-2 row-cols-12 pt-2 ps-0 pe-3">
+
+                    <div class="offset-xxl-1 rounded bg-secondary y-scroll pt-lg-2 pb-lg-2 ps-lg-2 pe-lg-2 col-auto mt-1 ms-2 me-2 col-12 col-sm-auto col-md-auto col-md-5 col-lg-auto col-xl-auto col-xxl-auto">
+                      <dmx-chart id="chart2" point-size="" smooth="true" dataset-1:value="Volume" dataset-1:tooltip="" legend="top" multicolor="true" colors="colors3" labels="product_category_name" cutout="" type="bar" dataset-2:label="Sales Total" dataset-1:label="Sales Volume Total" dataset-2:value="Total" stacked="true" width="1000" height="300" dmx-bind:data="sales_report.data.sales_report_categories"></dmx-chart>
+                      <h3 class="text-center">{{trans.data.categories[lang.value]}}</h3>
+                    </div>
+                    <div class="y-scroll col-md-auto col-auto bg-primary bg-opacity-10 mt-1 rounded col-sm-auto col-12 col-md-6 col-lg-4 align-self-lg-start col-xl-auto col-xxl-auto">
+                      <dmx-chart id="payment_methods" point-size="" smooth="true" dataset-1:value="TotalPayments" dataset-1:tooltip="" legend="top" multicolor="true" colors="colors3" cutout="" type="pie" dataset-2:label="Sales Total" dataset-1:label="Payment Methods" dataset-2:value="" stacked="true" labels="Method" width="" height="" responsive="true" dmx-bind:data="sales_report.data.sales_report_payments"></dmx-chart>
+                      <h3 class="text-center">{{trans.data.payments[lang.value]}}</h3>
+                    </div>
+
+                  </div>
+                  <div class="row mt-2" id="salesReportGroup2">
+                    <div class="col d-flex justify-content-xxl-end justify-content-xl-end justify-content-lg-end justify-content-md-end justify-content-sm-end justify-content-end">
+                      <button id="btn13" class="btn btn-secondary text-body shadow-none" dmx-on:click="sales_report_export.load({user: listOrdersFilters.waiterFilter.value, datefrom: listOrdersFilters.date1.value, dateto: listOrdersFilters.date2.value, service: listOrdersFilters.serviceSelect.value})">{{trans.data.download[lang.value]}}<i class="fas fa-download fa-sm" style="margin-left: 4px;"></i>
                       </button>
                     </div>
-                  </div>
-                  <div class="row  pb-md-1 mt-2 pb-3 row-cols-sm-2 row-cols-md-2 row-cols-lg-6 justify-content-xxl-start justify-content-xl-start justify-content-lg-start justify-content-md-start row-cols-6 row-cols-xl-8 justify-content-start" style="position: ;" id="salesFilter">
-                    <div class="h-auto offset-0 col-sm-5 mb-1 d-flex align-items-center col-auto col-md-4 col-lg-3">
-                      <i class="far fa-calendar-alt fa-sm" style="margin-right: 10px;"></i>
-                      <input id="date1" name="datefrom" type="datetime-local" class="form-control form-control-sm" dmx-bind:max="date2.value">
+                    <div class="col-xxl mt-lg-2 col-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12 mt-1" style="">
+                      <div class="table-responsive">
+                        <table class="table table-hover table-sm">
+                          <thead>
+                            <tr>
+                              <th>{{trans.data.product[lang.value]}}</th>
+                              <th>{{trans.data.customer[lang.value]}}</th>
+                              <th>{{trans.data.category[lang.value]}}</th>
+                              <th class="text-end">{{trans.data.volume[lang.value]}}</th>
+                              <th class="text-end">{{trans.data.total[lang.value]}}</th>
+                            </tr>
+                          </thead>
+                          <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="sales_report.data.sales_report_export_table" id="tableRepeat6">
+                            <tr>
+                              <td dmx-text="product_name"></td>
+                              <td dmx-text="customer_first_name+' '+customer_last_name"></td>
+                              <td dmx-text="product_category_name"></td>
+                              <td dmx-text="Volume.toNumber().formatNumber('0',',',',')" class="text-end"></td>
+                              <td dmx-text="Total.toNumber().formatNumber('0', ',', ',')" class="text-end"></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
                     </div>
-                    <div class="ms-lg-2 offset-0 mb-1 d-flex justify-content-start align-items-center col-auto col-sm-7 col-lg-3 offset-md-0 col-md-4">
-                      <i class="fas fa-calendar-alt fa-sm" style="margin-right: 10px;"></i>
-                      <input id="date2" name="dateto" utc="true" type="datetime-local" class="form-control form-control-sm" dmx-bind:min="date1.value">
-                    </div>
-                    <div class="ms-lg-2 col-sm offset-0 mb-1 d-flex justify-content-start align-items-center col-auto col-sm-5 col-md-4 col-lg-3">
-                      <i class="far fa-user fa-sm" style="margin-right: 10px;"></i>
-                      <select id="waiterFilter" class="form-select form-select-sm" dmx-bind:options="load_users_for_report.data.query_list_users" dmx-bind:value="'Select'" name="waiter" optiontext="user_username" optionvalue="user_id">
-                        <option selected="" value="%">----</option>
-                      </select>
-                    </div>
-                    <div class="offset-0 mb-1 d-flex align-items-center justify-content-start col-auto col-md-4 col-lg-2">
-                      <i class="fas fa-store fa-sm" style="margin-right: 
-                      10px;"></i>
-                      <select id="serviceSelect" class="form-select form-select-sm" dmx-bind:options="load_services.data.query_list_services" optiontext="service_name" optionvalue="service_id" name="service" dmx-bind:value="'Select'">
-                        <option selected="" value="%">----</option>
-                      </select>
-                    </div>
-
-
-
-
-
                   </div>
 
-                </form>
-
+                </div>
               </div>
-            </div>
-
-            <div class="row rounded shadow-none bg-light">
-              <div class="scrollable col-12 rounded shadow-none">
-                <div class="row justify-content-md-between justify-content-xxl-between g-0 row-cols-12 rounded shadow-none bg-opacity-10 bg-primary mt-3 pt-2 pb-2 ps-2 pe-2" id="row2">
-
-                  <div class="col-12 col-lg-4 align-self-center shadow-none">
-                    <div class="row justify-content-center shadow-none">
-                      <div class="text-center rounded-2 col-sm col-md col-xxl mt-1 me-2 pt-2 col-md-3 col-auto shadow-none col-5 col-lg-5">
-                        <h3 wappler-command="editContent" dmx-text="sales_report.data.sales_report.sum(`Total`).formatNumber('0',',',',')" class="fw-bold text-success">0</h3>
-                        <h5 wappler-command="editContent" class="text-body">{{trans.data.totalSales[lang.value]}}</h5>
-                      </div>
-                      <div class="rounded-2 text-center col-sm col-md col-lg col-xxl mt-1 me-2 pt-2 pb-2 ps-2 pe-2 col-auto col-md-4 col-5 col-lg-6">
-
-                        <h3 dmx-text="sales_report.data.sales_report.sum(`Volume`).formatNumber('0',',',',')" class="fw-bold text-success"></h3>
-                        <h5 class="text-body">{{trans.data.totalSalesVolume[lang.value]}}</h5>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-12 col-lg-8">
-                    <div class="row mt-md-2 gx-lg-0 gy-lg-0 bg-secondary rounded mt-1 ms-0 me-0" id="orders_table" style="">
-                      <div class="mw-100 col-lg-11 col-md-11 col-11" is="dmx-background-video" id="report">
-                        <div class="row mb-2">
-                          <div class="col-xxl col-lg-12 y-scroll rounded ms-2 pt-2 pb-2 ps-2 pe-2 col-sm-auto col-sm-12 col-md-auto col-md-12 col-xxl-12 col-auto">
-
-                            <dmx-chart id="chart1" point-size="" smooth="true" dataset-1:value="Volume" dataset-1:tooltip="" legend="top" stacked="true" type="bar" multicolor="true" dataset-2:value="Total" dataset-1:label="Sales Volume Total" dataset-2:label="Sales Total" labels="product_name+' - '+Total+' / '+Volume" dataset-1="" height="300" width="1000" dmx-bind:data="sales_report.data.sales_report"></dmx-chart>
-                            <h3 class="text-center">{{trans.data.products[lang.value]}}</h3>
-
-                          </div>
-                        </div>
+            </main>
 
 
 
-
-
-
-
-                      </div>
-                    </div>
-                  </div>
-
-
-
-
-                </div>
-
-                <div class="row mt-xxl-2 row-cols-12 pt-2 ps-0 pe-3">
-
-                  <div class="offset-xxl-1 rounded bg-secondary y-scroll pt-lg-2 pb-lg-2 ps-lg-2 pe-lg-2 col-auto mt-1 ms-2 me-2 col-12 col-sm-auto col-md-auto col-md-5 col-lg-auto col-xl-auto col-xxl-auto">
-                    <dmx-chart id="chart2" point-size="" smooth="true" dataset-1:value="Volume" dataset-1:tooltip="" legend="top" multicolor="true" colors="colors3" labels="product_category_name" cutout="" type="bar" dataset-2:label="Sales Total" dataset-1:label="Sales Volume Total" dataset-2:value="Total" stacked="true" width="1000" height="300" dmx-bind:data="sales_report.data.sales_report_categories"></dmx-chart>
-                    <h3 class="text-center">{{trans.data.categories[lang.value]}}</h3>
-                  </div>
-                  <div class="y-scroll col-md-auto col-auto bg-primary bg-opacity-10 mt-1 rounded col-sm-auto col-12 col-md-6 col-lg-4 align-self-lg-start col-xl-auto col-xxl-auto">
-                    <dmx-chart id="payment_methods" point-size="" smooth="true" dataset-1:value="TotalPayments" dataset-1:tooltip="" legend="top" multicolor="true" colors="colors3" cutout="" type="pie" dataset-2:label="Sales Total" dataset-1:label="Payment Methods" dataset-2:value="" stacked="true" labels="Method" width="" height="" responsive="true" dmx-bind:data="sales_report.data.sales_report_payments"></dmx-chart>
-                    <h3 class="text-center">{{trans.data.payments[lang.value]}}</h3>
-                  </div>
-
-                </div>
-                <div class="row mt-2" id="salesReportGroup2">
-                  <div class="col d-flex justify-content-xxl-end justify-content-xl-end justify-content-lg-end justify-content-md-end justify-content-sm-end justify-content-end">
-                    <button id="btn13" class="btn btn-secondary text-body shadow-none" dmx-on:click="sales_report_export.load({user: listOrdersFilters.waiterFilter.value, datefrom: listOrdersFilters.date1.value, dateto: listOrdersFilters.date2.value, service: listOrdersFilters.serviceSelect.value})">{{trans.data.download[lang.value]}}<i class="fas fa-download fa-sm" style="margin-left: 4px;"></i>
-                    </button>
-                  </div>
-                  <div class="col-xxl mt-lg-2 col-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12 mt-1" style="">
-                    <div class="table-responsive">
-                      <table class="table table-hover table-sm">
-                        <thead>
-                          <tr>
-                            <th>{{trans.data.product[lang.value]}}</th>
-                            <th>{{trans.data.customer[lang.value]}}</th>
-                            <th>{{trans.data.category[lang.value]}}</th>
-                            <th class="text-end">{{trans.data.volume[lang.value]}}</th>
-                            <th class="text-end">{{trans.data.total[lang.value]}}</th>
-                          </tr>
-                        </thead>
-                        <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="sales_report.data.sales_report_export_table" id="tableRepeat6">
-                          <tr>
-                            <td dmx-text="product_name"></td>
-                            <td dmx-text="customer_first_name+' '+customer_last_name"></td>
-                            <td dmx-text="product_category_name"></td>
-                            <td dmx-text="Volume.toNumber().formatNumber('0',',',',')" class="text-end"></td>
-                            <td dmx-text="Total.toNumber().formatNumber('0', ',', ',')" class="text-end"></td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            </div>
 
 
 

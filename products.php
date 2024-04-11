@@ -487,6 +487,10 @@ JSON
                       {{trans.data.prices[lang.value]}}</a>
                   </li>
                   <li class="nav-item">
+                    <a class="nav-link" id="navTabs2_2_tab1" data-bs-toggle="tab" href="#" data-bs-target="#navTabs2_4" role="tab" aria-controls="navTabs1_2" aria-selected="false"><i class="fas fa-balance-scale-left" style="margin-right: 2px"></i>
+                      {{trans.data.uom[lang.value]}}</a>
+                  </li>
+                  <li class="nav-item">
                     <a class="nav-link" id="navTabs2_3_tab" data-bs-toggle="tab" href="#" data-bs-target="#navTabs2_3" role="tab" aria-controls="navTabs1_3" aria-selected="false"><i class="fas fa-chart-line"></i></a>
                   </li>
                 </ul>
@@ -566,6 +570,11 @@ JSON
                             <label for="inp_product_description" class="col-sm-2 col-form-label">{{trans.data.description[lang.value]}}</label>
                             <div class="col-sm-10">
                               <input type="text" class="form-control" id="inp_product_description" name="product_description" dmx-bind:value="read_item_product.data.query_read_product.product_description" aria-describedby="inp_product_description_help" placeholder="Enter Description" style="}: ;">
+                            </div>
+                          </div>
+                          <div class="mb-3 row"><label for="inp_product_reference_uom" class="col-sm-2 col-form-label">{{trans.data.referenceuom[lang.value]}}</label>
+                            <div class="col-sm-10">
+                              <input type="text" class="form-control" id="inp_product_reference_uom" name="product_reference_uom" dmx-bind:value="read_item_product.data.query_read_product.product_reference_uom" aria-describedby="inp_product_description_help" placeholder="Enter Description" style="}: ;">
                             </div>
                           </div>
                           <div class="mb-3 row">
@@ -667,6 +676,86 @@ JSON
                                     <div class="row">
                                       <div class="col">
                                         <input id="productPriceId1" name="product_price_id" type="text" class="form-control visually-hidden" dmx-bind:value="product_price_id"><button id="btn8" class="btn text-muted ms-2" type="submit">
+                                          <i class="far fa-trash-alt fa-sm"></i>
+                                        </button>
+                                      </div>
+                                    </div>
+                                  </form>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="tab-pane fade mt-2" id="navTabs2_4" role="tabpanel">
+
+                    <div class="row justify-content-center row-cols-12 bg-secondary mt-3 pt-3 pb-2 ps-2 pe-2 rounded">
+                      <h4>{{trans.data.create[lang.value]}} {{trans.data.uom[lang.value]}}</h4>
+                      <form id="createUOM" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_uom/create_product_uom.php" dmx-on:success="createServicePrice.reset();notifies1.success('Success');read_item_product.load({product_id: read_item_product.data.query_read_product.product_id})" dmx-on:error="notifies1.danger('Error!')" class="d-flex">
+                        <div class="row justify-content-end">
+
+                          <div class="col">
+                            <div class="mb-3 row">
+                              <div class="col-sm-10">
+                                <input id="uomName" name="uom_name" type="text" class="form-control">
+                                <small id="select5Help1" class="form-text text-muted">{{trans.data.name[lang.value]}}</small>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col">
+                            <div class="mb-3 row">
+                              <div class="col-sm-10">
+                                <input type="number" class="form-control" id="uomRefereceMultiple" name="uom_reference_multiple" aria-describedby="input1_help" required="" data-msg-required="!" min="" data-rule-min="0">
+                                <small id="input1_help1" class="form-text text-muted">{{trans.data.referenceMultiple[lang.value]}}</small>
+                              </div>
+                            </div>
+                          </div>
+                          <input id="uomProductId" name="uom_product_id" type="text" class="form-control visually-hidden" dmx-bind:value="read_item_product.data.query_read_product.product_id">
+                          <div class="col">
+                            <button id="btn17" class="btn text-white bg-info" type="submit">
+                              <i class="fas fa-plus-circle"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+
+
+                    <div class="row">
+                      <div class="col">
+                        <div class="table-responsive">
+                          <table class="table table-hover table-sm">
+                            <thead>
+                              <tr>
+
+                                <th>{{trans.data.uom[lang.value]}}</th>
+                                <th></th>
+                              </tr>
+                            </thead>
+                            <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="read_item_product.data.query_read_product_uoms" id="productUOMTable">
+                              <tr>
+
+                                <td>
+                                  <form id="updateProductUOM" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_uom/update_product_uom.php" dmx-on:success="productPriceSet.reset();notifies1.success('Success!');load_product_prices.load({});load_departments.load({})" class="d-flex">
+                                    <div class="row">
+                                      <div class="col d-flex">
+                                        <input id="productUOMName" name="uom_name" class="form-control me-2" dmx-bind:value="uom_name" style="width: 500px !important;">
+                                        <input id="updateuomReferenceMultiple" name="uom_reference_multiple" type="number" class="form-control" dmx-bind:value="uom_reference_multiple">
+                                        <input id="updateUOMProduct" name="uom_multiple_id" type="number" class="form-control visually-hidden" dmx-bind:value="uom_multiple_id"><button id="btn171" class="btn text-success ms-2" type="submit">
+                                          <i class="fas fa-check"></i>
+                                        </button>
+                                      </div>
+                                    </div>
+                                  </form>
+                                </td>
+                                <td class="text-center">
+                                  <form id="deletePrice1" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_product_prices/delete_product_price.php" dmx-on:success="productPriceSet.reset();notifies1.success('Success!');load_product_prices.load({});load_departments.load({})">
+                                    <div class="row">
+                                      <div class="col">
+                                        <input id="productPriceId2" name="product_price_id1" type="text" class="form-control visually-hidden" dmx-bind:value="product_price_id"><button id="btn17" class="btn text-muted ms-2" type="submit">
                                           <i class="far fa-trash-alt fa-sm"></i>
                                         </button>
                                       </div>
@@ -966,6 +1055,12 @@ JSON
                         <label for="inp_product_description" class="col-sm-2 col-form-label">{{trans.data.description[lang.value]}}</label>
                         <div class="col-sm-10">
                           <input type="text" class="form-control" id="inp_product_description2" name="product_description" aria-describedby="inp_product_description_help">
+                        </div>
+                      </div>
+                      <div class="mb-3 row">
+                        <label for="inp_product_description" class="col-sm-2 col-form-label">{{trans.data.referenceuom[lang.value]}}</label>
+                        <div class="col-sm-10">
+                          <input type="text" class="form-control" id="inp_product_uom" name="product_reference_uom" aria-describedby="inp_product_description_help">
                         </div>
                       </div>
                       <div class="mb-3 row">

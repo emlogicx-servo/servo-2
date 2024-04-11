@@ -31,12 +31,12 @@ $app->define(<<<'JSON'
             {
               "name": ":P1",
               "value": "{{$_GET.customer_id}}",
-              "test": "7424"
+              "test": "4"
             },
             {
               "name": ":P2",
               "value": "{{$_GET.shift_id}}",
-              "test": "36"
+              "test": "202"
             }
           ]
         }

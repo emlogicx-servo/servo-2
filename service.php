@@ -333,11 +333,11 @@ JSON
                             <h6 dmx-text="order_time_processing" class="text-body fw-bold"></h6>
                           </div>
                         </div>
-                        <form id="update_order_item_to_ready1" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_order_items/update_order_item_to_ready.php" dmx-on:success="list_order_items_shift_all_processing.load();list_order_items_shift_all_ready.load();notifies1.success('Success')">
+                        <form id="update_order_item_to_ordered" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_order_items/update_order_item_to_ready.php" dmx-on:success="list_order_items_shift_all_processing.load({});list_order_items_shift_all.load({});notifies1.success('Success')">
 
                           <input id="OrderItemStatus4" name="order_item_status" type="text" class="form-control visually-hidden" dmx-bind:value="'Ordered'">
                           <input id="OrderItemId5" name="order_item_id" type="text" class="form-control visually-hidden" dmx-bind:value="order_item_id">
-                          <div class="row justify-content-end mb-1 ms-3 me-3"><button id="btn6" class="btn align-self-baseline bg-opacity-10 bg-primary text-primary" type="submit"><i class="far fa-bell fa-sm"></i>
+                          <div class="row justify-content-end mb-1 ms-3 me-3"><button id="btn6" class="btn align-self-baseline bg-opacity-10 text-danger bg-danger" type="submit"><i class="fas fa-ban"></i>
                             </button>
                           </div>
                         </form>

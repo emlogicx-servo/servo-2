@@ -210,7 +210,7 @@ JSON
 
   <dmx-preloader id="preloader" spinner="doubleBounce" bgcolor="#8A8686" ,255,255,0.99),255,255,0.97)=""></dmx-preloader>
 
-  <dmx-scheduler id="scheduler1" dmx-on:tick="load_products.load({service_id: list_user_shift_info.data.query_list_user_shift[0].servo_service_service_id, product_category: customerOrderModal.AddProductsToOrderOffCanvas.conditional33.repeatProductCategories[0].btn11.value});list_value_updates_per_order.load({order_id: readCustomerOrder.data.query.order_id});list_order_items_deleted.load({order_id: readCustomerOrder.data.query.order_id});list_order_items.load({order_id: readCustomerOrder.data.query.order_id});list_customer_orders.load({pos_id: list_user_shift_info.data.query_list_user_shift[0].servo_sales_point_sales_point_id, shift_id: list_user_shift_info.data.query_list_user_shift[0].servo_shifts_shift_id, limit: c_order_sort_limit.value});list_customer_orders_totals.load({customer_id: list_user_shift_info.data.query_list_user_shift[0].sales_point_customer_id});list_customer_transactions.load({shift_id: list_user_shift_info.data.query_list_user_shift[0].servo_shifts_shift_id, customer_id: list_user_shift_info.data.query_list_user_shift[0].sales_point_customer_id})" delay="15"></dmx-scheduler>
+  <dmx-scheduler id="scheduler1" dmx-on:tick="load_products.load({service_id: list_user_shift_info.data.query_list_user_shift[0].servo_service_service_id, search: customerOrderModal.AddProductsToOrderOffCanvas.searchProducts1.value, product_category: customerOrderModal.AddProductsToOrderOffCanvas.searchProductCategory.value});list_value_updates_per_order.load({order_id: readCustomerOrder.data.query.order_id});list_order_items_deleted.load({order_id: readCustomerOrder.data.query.order_id});list_order_items.load({order_id: readCustomerOrder.data.query.order_id});list_customer_orders.load({pos_id: list_user_shift_info.data.query_list_user_shift[0].servo_sales_point_sales_point_id, shift_id: list_user_shift_info.data.query_list_user_shift[0].servo_shifts_shift_id, limit: c_order_sort_limit.value});list_customer_orders_totals.load({customer_id: list_user_shift_info.data.query_list_user_shift[0].sales_point_customer_id});list_customer_transactions.load({shift_id: list_user_shift_info.data.query_list_user_shift[0].servo_shifts_shift_id, customer_id: list_user_shift_info.data.query_list_user_shift[0].sales_point_customer_id})" delay="15"></dmx-scheduler>
   <dmx-query-manager id="listCustomerOrders"></dmx-query-manager>
 
 
@@ -220,13 +220,13 @@ JSON
   <dmx-value id="lang" dmx-bind:value="browser1.language"></dmx-value>
   <dmx-json-datasource id="trans" is="dmx-serverconnect" url="assets/translation/translation.JSON"></dmx-json-datasource>
 
-  <dmx-serverconnect id="list_customer_orders" url="dmxConnect/api/servo_orders/list_customer_orders_cashier_shift.php" dmx-param:customer_id="session_variables.data.current_customer" dmx-param:offset="listCustomerOrders.data.customerOrdersOffset" dmx-param:limit="readItemModal.c_order_sort_limit.selectedValue" dmx-param:pos_id="list_user_shift_info.data.query_list_user_shift[0].servo_sales_point_sales_point_id" dmx-param:shift_id="list_user_shift_info.data.query_list_user_shift[0].servo_shifts_shift_id"></dmx-serverconnect>
+  <dmx-serverconnect id="list_customer_orders" url="dmxConnect/api/servo_orders/list_customer_orders_cashier_shift.php" dmx-param:customer_id="list_user_shift_info.data.pos_info[0].customer_id" dmx-param:offset="listCustomerOrders.data.customerOrdersOffset" dmx-param:limit="readItemModal.c_order_sort_limit.selectedValue" dmx-param:pos_id="list_user_shift_info.data.query_list_user_shift[0].servo_sales_point_sales_point_id" dmx-param:shift_id="list_user_shift_info.data.query_list_user_shift[0].servo_shifts_shift_id"></dmx-serverconnect>
   <dmx-serverconnect id="read_customer_data_reading_sessions" url="dmxConnect/api/servo_data_reading_session/read_data_reading_session.php" dmx-param:id="id" noload="" dmx-param:customer_id="session_variables.data.current_customer" dmx-param:offset="listCustomerOrders.data.offset" dmx-param:limit="c_order_sort_limit.value" dmx-param:data_reading_session_id="data_reading_session_id"></dmx-serverconnect>
   <dmx-serverconnect id="loadCompanyInfo" url="dmxConnect/api/servo_company_information/read_company_information.php" dmx-param:id="id" dmx-param:item_id="" dmx-param:user_id="" dmx-param:customer_id="session_variables.data.current_customer" dmx-param:offset="listCustomerOrders.data.offset" dmx-param:limit="c_order_sort_limit.value" dmx-param:company_info_id="1"></dmx-serverconnect>
   <dmx-serverconnect id="payment_methods" url="dmxConnect/api/servo_payment_methods/list_payment_methods.php" dmx-param:id="id" dmx-param:item_id="" dmx-param:user_id="" dmx-param:customer_id="session_variables.data.current_customer" dmx-param:offset="listCustomerOrders.data.offset" dmx-param:limit="c_order_sort_limit.value"></dmx-serverconnect>
   <dmx-serverconnect id="list_customer_transactions" url="dmxConnect/api/servo_customer_cash_transactions/list_transactions_shift_pos.php" dmx-param:id="id" dmx-param:item_id="" dmx-param:user_id="" dmx-param:customer_id="list_user_shift_info.data.query_list_user_shift[0].customer_id" dmx-param:shift_id="list_user_shift_info.data.query_list_user_shift[0].servo_shifts_shift_id"></dmx-serverconnect>
   <dmx-serverconnect id="list_expenses" url="dmxConnect/api/servo_expenses/list_expenses_paged.php" dmx-param:id="id" dmx-param:item_id="" dmx-param:user_id="" dmx-param:customer_id="session_variables.data.current_customer"></dmx-serverconnect>
-  <dmx-serverconnect id="list_customer_transactions_amounts" url="dmxConnect/api/servo_customer_cash_transactions/list_transactions_customer_amounts_shift.php" dmx-param:id="id" dmx-param:item_id="" dmx-param:user_id="" dmx-param:customer_id="list_user_shift_info.data.query_list_user_shift[0].customer_id" dmx-on:start="preloader.show()" dmx-on:done="preloader.hide();readItemModal.show()" dmx-param:shift_id="list_user_shift_info.data.query_list_user_shift[0].servo_shifts_shift_id"></dmx-serverconnect>
+  <dmx-serverconnect id="list_customer_transactions_amounts" url="dmxConnect/api/servo_customer_cash_transactions/list_transactions_customer_amounts_shift.php" dmx-param:id="id" dmx-param:item_id="" dmx-param:user_id="" dmx-param:customer_id="list_user_shift_info.data.query_list_user_shift[0].customer_id" dmx-param:shift_id="list_user_shift_info.data.query_list_user_shift[0].servo_shifts_shift_id"></dmx-serverconnect>
   <dmx-serverconnect id="list_customer_orders_totals" url="dmxConnect/api/servo_customer_cash_transactions/list_customer_orders_totals_shift.php" dmx-param:id="id" dmx-param:item_id="" dmx-param:user_id="" dmx-param:customer_id="list_user_shift_info.data.query_list_user_shift[0].customer_id" dmx-param:shift_id="list_user_shift_info.data.query_list_user_shift[0].servo_shifts_shift_id"></dmx-serverconnect>
   <dmx-serverconnect id="read_customer_transaction" url="dmxConnect/api/servo_customer_cash_transactions/read_transaction.php" dmx-param:id="id" noload="" dmx-param:item_id="" dmx-param:user_id="" dmx-param:customer_id="session_variables.data.current_customer" dmx-param:customer_cash_transaction_id="session_variables.data.current_transaction"></dmx-serverconnect>
   <dmx-serverconnect id="list_customer_transactions_order" url="dmxConnect/api/servo_customer_cash_transactions/list_transactions_customer_order.php" dmx-param:id="id" dmx-param:item_id="" dmx-param:user_id="" dmx-param:customer_id="session_variables.data.current_customer" dmx-param:order_id="session_variables.data.current_order" noload="true"></dmx-serverconnect>
@@ -239,7 +239,7 @@ JSON
   <dmx-serverconnect id="readCustomerOrder" url="dmxConnect/api/servo_orders/read_order.php" dmx-param:id="id" noload="" dmx-param:item_id="" dmx-param:branch_id="read_item_branch.data.queryReadBranch.branch_id" dmx-param:department_id="" dmx-param:order_id="readCustomerOrder.data.query.order_id"></dmx-serverconnect>
   <dmx-serverconnect id="list_order_items" url="dmxConnect/api/servo_order_items/list_order_items_current.php" dmx-param:order_id="readCustomerOrder.data.query.order_id" noload=""></dmx-serverconnect>
   <dmx-serverconnect id="list_order_items_deleted" url="dmxConnect/api/servo_order_items/list_order_items_deleted.php" dmx-param:order_id="" noload=""></dmx-serverconnect>
-  <dmx-serverconnect id="load_products" url="dmxConnect/api/servo_products/list_products_per_service.php" dmx-param:category="" dmx-param:name="" dmx-param:search="AddProductsToOrderOffCanvas.searchProducts2.value" dmx-param:department_id="list_user_shift_info.data.query_list_user_shift[0].user_shift_department_id" dmx-param:service_id="list_user_shift_info.data.query_list_user_shift[0].servo_service_service_id" dmx-param:product_filter=""></dmx-serverconnect>
+  <dmx-serverconnect id="load_products" url="dmxConnect/api/servo_products/list_products_per_service.php" dmx-param:category="" dmx-param:name="" dmx-param:search="customerOrderModal.AddProductsToOrderOffCanvas.searchProducts1.value" dmx-param:department_id="list_user_shift_info.data.query_list_user_shift[0].user_shift_department_id" dmx-param:service_id="list_user_shift_info.data.query_list_user_shift[0].servo_service_service_id" dmx-param:product_filter="" dmx-param:product_category="customerOrderModal.AddProductsToOrderOffCanvas.searchProductCategory.value"></dmx-serverconnect>
   <dmx-serverconnect id="load_product_groups" url="dmxConnect/api/servo_product_groups/list_product_groups.php" dmx-param:category="" dmx-param:name="" dmx-param:search="searchProduct.value" dmx-param:department_id="list_user_shift_info.data.query_list_user_shift[0].user_shift_department_id" dmx-param:product_group_id="load_product_groups.data.list_product_groups[0].product_group_id"></dmx-serverconnect>
   <dmx-serverconnect id="list_users" url="dmxConnect/api/servo_users/list_users.php" dmx-param:category="" dmx-param:name="" dmx-param:search="searchProduct.value" dmx-param:department_id="list_user_shift_info.data.query_list_user_shift[0].user_shift_department_id" dmx-param:product_group_id="load_product_groups.data.list_product_groups[0].product_group_id"></dmx-serverconnect>
   <dmx-serverconnect id="list_departments" url="dmxConnect/api/servo_departments/list_departments.php" dmx-param:category="" dmx-param:name="" dmx-param:search="searchProduct.value" dmx-param:department_id="list_user_shift_info.data.query_list_user_shift[0].user_shift_department_id" dmx-param:product_group_id="load_product_groups.data.list_product_groups[0].product_group_id"></dmx-serverconnect>
@@ -257,7 +257,7 @@ JSON
   <dmx-value id="totalDepositPayments" dmx-bind:value="list_customer_transactions_amounts.data.custom_list_transaction_amounts[0].DepositPayments.toNumber()"></dmx-value>
   <dmx-value id="totalDeposits" dmx-bind:value="list_customer_transactions_amounts.data.custom_list_transaction_amounts[0].Deposits.toNumber()"></dmx-value>
   <dmx-value id="netDeposits" dmx-bind:value="(totalDeposits.value-(totalDepositPayments.value + totalDepositSettlements.value))"></dmx-value>
-  <main class="bg-light mt-2 ms-2 me-2 pt-2 rounded">
+  <main class="mt-2 ms-2 me-2 pt-2 rounded">
     <div class="mt-auto ms-2 me-2">
 
 
@@ -265,19 +265,20 @@ JSON
 
       <div class="d-block d-flex justify-content-between">
         <div class="d-block">
-          <h5 class="modal-title text-primary bg-primary rounded bg-opacity-10 fw-bold me-2 pt-1 pb-1 ps-3 pe-3"><i class="fas fa-cash-register fa-sm" style="margin-right:6px"></i>
+          <h5 class="modal-title rounded fw-bold me-2 pt-1 pb-1 ps-3 pe-3 text-body bg-light"><i class="fas fa-cash-register fa-sm" style="margin-right:6px"></i>
             {{list_user_shift_info.data.query_list_user_shift[0].sales_point_name}}</h5>
         </div>
         <div class="d-block ">
           <div class="d-flex justify-content-start justify-content-lg-start flex-lg-wrap flex-wrap">
-            <form is="dmx-serverconnect-form" id="create_order_form" method="post" action="dmxConnect/api/servo_orders/create_order.php" dmx-on:success="notifies1.success('Order #'+create_order_form.data.custom[0]['last_insert_id()']+' Created');readCustomerOrder.load({order_id: create_order_form.data.custom[0]['last_insert_id()']});list_order_items.load({order_id: create_order_form.data.custom[0]['last_insert_id()']});session_variables.set('current_order',create_order_form.data.custom[0]['last_insert_id()']);list_customer_orders.load({customer_id: session_variables.data.current_customer, offset: listCustomerOrders.data.offset, limit: c_order_sort_limit.value});create_order_form.reset();customerOrderModal.show();list_customer_transactions_order.load({order_id: create_order_form.data.custom[0]['last_insert_id()']});list_order_items_deleted.load({order_id: create_order_form.data.custom[0]['last_insert_id()']});list_customer_transactions_order_totals.load({order_id: last_insert_id()})">
+            <form is="dmx-serverconnect-form" id="create_order_form" method="post" action="dmxConnect/api/servo_orders/create_order.php" dmx-on:success="notifies1.success('Order #'+create_order_form.data.custom[0]['last_insert_id()']+' Created');readCustomerOrder.load({order_id: create_order_form.data.custom[0]['last_insert_id()']});list_order_items.load({order_id: create_order_form.data.custom[0]['last_insert_id()']});session_variables.set('current_order',create_order_form.data.custom[0]['last_insert_id()']);list_customer_orders.load({customer_id: session_variables.data.current_customer, offset: listCustomerOrders.data.offset, limit: c_order_sort_limit.value});create_order_form.reset();customerOrderModal.show();list_customer_transactions_order.load({order_id: create_order_form.data.custom[0]['last_insert_id()']});list_order_items_deleted.load({order_id: create_order_form.data.custom[0]['last_insert_id()']});list_customer_transactions_order_totals.load({order_id: last_insert_id()});customerOrderModal.AddProductsToOrderOffCanvas.show()">
               <input id="order_time" name="order_time" type="datetime-local" class="form-control visually-hidden" dmx-bind:value="dateTime.datetime">
-              <input id="orderCustomer" name="order_customer" class="form-control visually-hidden" dmx-bind:value="list_user_shift_info.data.query_list_user_shift[0].customer_id">
+              <input id="orderCustomer" name="order_customer" class="form-control visually-hidden" dmx-bind:value="list_user_shift_info.data.pos_info[0].customer_id">
               <input id="order_discount" name="order_discount" type="hidden" class="form-control visually-hidden" dmx-bind:value="0">
               <input id="order_status" name="order_status" type="hidden" class="form-control visually-hidden" dmx-bind:value="'Ordered'">
               <input id="user_id" name="servo_user_user_id" type="hidden" class="form-control visually-hidden" dmx-bind:value="session_variables.data.user_id">
               <input id="shift_id" name="servo_shift_shift_id" type="hidden" class="form-control visually-hidden" dmx-bind:value="session1.data.current_shift">
               <input id="serviceId" name="servo_service_service_id" type="hidden" class="form-control visually-hidden" dmx-bind:value="list_user_shift_info.data.query_list_user_shift[0].servo_service_service_id">
+              <input id="orderpos" name="order_pos" type="hidden" class="form-control visually-hidden" dmx-bind:value="list_user_shift_info.data.pos_info[0].sales_point_id">
 
               <div class="row row-cols-1 justify-content-end">
                 <div class="d-flex border-warning col ms-sm-3 ms-md-3 ms-lg-3 justify-content-end" is="dmx-if" id="conditional1" dmx-bind:condition="profile_privileges.data.profile_privileges[0].create_order=='Yes'">
@@ -333,9 +334,9 @@ JSON
                     <div id="totalDebt" class="text-center mt-2 me-2 pt-4 pb-4 ps-4 pe-4 rounded text-white bg-secondary col">
                       <div class="row mt-2 row-cols-12 justify-content-center" dmx-hide="">
                         <div class="d-flex flex-sm-wrap col-md-auto col-5 col-sm-6 col-xl-auto col-lg-auto justify-content-center">
-                          <button id="btn40" class="btn fw-bold me-md-1 bg-light text-danger mb-1 me-1">{{trans.data.Ordered[lang.value]}}: {{list_customer_orders_cashier_shift.data.customer_order_stats[0].Ordered}}</button>
-                          <button id="btn401" class="btn fw-bold me-md-2 text-success bg-light mb-1 me-1">{{trans.data.Paid[lang.value]}}: {{list_customer_orders_cashier_shift.data.customer_order_stats[0].Paid}}</button>
-                          <button id="btn40" class="btn fw-bold me-md-2 bg-light text-muted mb-1 me-1">{{trans.data.pending[lang.value]}}: {{list_customer_orders_cashier_shift.data.customer_order_stats[0].Pending}}</button>
+                          <button id="btn40" class="btn fw-bold me-md-1 bg-light text-danger mb-1 me-1">{{trans.data.Ordered[lang.value]}}: {{list_customer_orders.data.customer_order_stats[0].Ordered}}</button>
+                          <button id="btn401" class="btn fw-bold me-md-2 text-success bg-light mb-1 me-1">{{trans.data.Paid[lang.value]}}: {{list_customer_orders.data.customer_order_stats[0].Paid}}</button>
+                          <button id="btn40" class="btn fw-bold me-md-2 bg-light text-muted mb-1 me-1">{{trans.data.pending[lang.value]}}: {{list_customer_orders.data.customer_order_stats[0].Pending}}</button>
                         </div>
                       </div>
                     </div>
@@ -352,7 +353,7 @@ JSON
                       </div>
                       <div class="row">
                         <div class="col">
-                          <h4 dmx-text="trans.data.totalDebt[lang.value]">{{trans.data.totalOrders[lang.value]}}</h4>
+                          <h4 dmx-text="trans.data.totalDebt[lang.value]" class="fw-light">{{trans.data.totalOrders[lang.value]}}</h4>
                         </div>
                       </div>
                     </div>
@@ -371,7 +372,7 @@ JSON
                       </div>
                       <div class="row">
                         <div class="col">
-                          <h4>{{trans.data.totalSettlements[lang.value]}}</h4>
+                          <h4 class="fw-light">{{trans.data.totalSettlements[lang.value]}}</h4>
                         </div>
                       </div>
                     </div>
@@ -388,7 +389,7 @@ JSON
                       <div class="row">
                         <div class="col">
 
-                          <h4 dmx-text="trans.data.totalDeposits[lang.value]"></h4>
+                          <h4 dmx-text="trans.data.totalDeposits[lang.value]" class="fw-light"></h4>
                         </div>
                       </div>
                     </div>
@@ -405,7 +406,7 @@ JSON
                       </div>
                       <div class="row">
                         <div class="col">
-                          <h4>{{trans.data.totalPayout[lang.value]}}</h4>
+                          <h4 class="fw-light">{{trans.data.totalPayout[lang.value]}}</h4>
                         </div>
                       </div>
                     </div>
@@ -424,7 +425,7 @@ JSON
 
                         <div class="col">
 
-                          <h4 dmx-text="trans.data.orders[lang.value]"></h4>
+                          <h4 dmx-text="trans.data.orders[lang.value]" class="fw-light"></h4>
                         </div>
                       </div>
                     </div>
@@ -442,7 +443,7 @@ JSON
                       <div class="row">
                         <div class="col">
 
-                          <h4 dmx-text="trans.data.totalCoverage[lang.value]"></h4>
+                          <h4 dmx-text="trans.data.totalCoverage[lang.value]" class="fw-light"></h4>
                         </div>
                       </div>
                     </div>
@@ -460,7 +461,7 @@ JSON
                       <div class="row">
                         <div class="col">
 
-                          <h4 dmx-text="trans.data.totalCovered[lang.value]"></h4>
+                          <h4 dmx-text="trans.data.totalCovered[lang.value]" class="fw-light"></h4>
                         </div>
                       </div>
                     </div>
@@ -469,7 +470,7 @@ JSON
                 <div class="mt-3 col-lg-6">
                   <div class="row me-2">
 
-                    <div class="col bg-secondary rounded ms-2 me-2 pt-5 pb-2 ps-2 pe-2">
+                    <div class="col rounded ms-2 me-2 pt-5 pb-2 ps-2 pe-2 bg-light">
                       <dmx-chart id="chart1" responsive="true" dataset-1:value="Total" smooth="true" thickness="3" height="350" colors="colors9" point-size="" type="pie" dataset-1="" labels="payment_method_name+' '+Total.toNumber().formatNumber('0',',',',')" legend="top" dmx-bind:data="list_customer_transactions.data.transactions_shift_pos_payment_methods"></dmx-chart>
                     </div>
                   </div>
@@ -485,10 +486,10 @@ JSON
 
             <div class="tab-pane fade" id="navTabs1_1" role="tabpanel">
               <div class="row mt-2 ms-0 me-0">
-                <div class="col rounded bg-secondary">
-                  <div class="row justify-content-sm-between justify-content-md-between justify-content-lg-between justify-content-xl-between justify-content-xxl-between mt-2 justify-content-between">
-                    <div class="col-lg-3 d-flex flex-sm-wrap col-6 col-md-auto col-sm-6 col-xl-auto"><input id="customerorderfilter" name="customerorderfilter" type="text" class="form-control mb-2 form-control-sm" dmx-bind:placeholder="trans.data.search[lang.value]+'  '"></div>
-                    <div class="d-flex flex-sm-wrap col-md-auto col-5 col-sm-6 col-xl-auto col-lg-auto">
+                <div class="col rounded bg-light">
+                  <div class="row d-flex justify-content-sm-between justify-content-md-between justify-content-lg-between justify-content-xl-between justify-content-xxl-between mt-2 row-cols-12 align-items-baseline">
+                    <div class="col-lg-3 d-flex flex-sm-wrap col-md-auto col-sm-6 col-xl-auto col-auto"><input id="customerorderfilter" name="customerorderfilter" type="text" class="form-control mb-2 form-control-sm" dmx-bind:placeholder="trans.data.search[lang.value]+'  '"></div>
+                    <div class="d-flex flex-sm-wrap col-md-auto col-sm-6 col-xl-auto col-lg-auto col-auto">
                       <button id="btn37" class="btn fw-bold me-md-1 bg-light text-danger">{{trans.data.Ordered[lang.value]}}: {{list_customer_orders.data.customer_order_stats[0].Ordered}}</button>
                       <button id="btn38" class="btn fw-bold me-md-2 text-success bg-light">{{trans.data.Paid[lang.value]}}: {{list_customer_orders.data.customer_order_stats[0].Paid}}</button>
                       <button id="btn39" class="btn fw-bold me-md-2 bg-light text-muted">{{trans.data.pending[lang.value]}}: {{list_customer_orders.data.customer_order_stats[0].Pending}}</button>
@@ -555,7 +556,7 @@ JSON
                               <td class="text-center " dmx-text="order_notes">
                               </td>
                               <td>
-                                <button id="btn81" class="btn btn-sm bg-opacity-10 bg-info text-info" data-bs-target="#customerOrderModal" dmx-on:click="session_variables.set('current_order',order_id);list_order_items.load({order_id: order_id});readCustomerOrder.load({order_id: order_id});list_customer_transactions_order.load({order_id: order_id});list_customer_transactions_order_totals.load({order_id: order_id});list_order_items_deleted.load({order_id: order_id})" dmx-bind:value="order_id" data-bs-toggle="modal"><i class="far fa-edit fa-sm"></i>
+                                <button id="btn81" class="btn btn-sm rounded text-body bg-secondary" data-bs-target="#customerOrderModal" dmx-on:click="session_variables.set('current_order',order_id);list_order_items.load({order_id: order_id});readCustomerOrder.load({order_id: order_id});list_customer_transactions_order.load({order_id: order_id});list_customer_transactions_order_totals.load({order_id: order_id});list_order_items_deleted.load({order_id: order_id})" dmx-bind:value="order_id" data-bs-toggle="modal"><i class="fas fa-pencil-alt fa-sm"></i>
                                 </button>
                               </td>
                             </tr>
@@ -601,7 +602,7 @@ JSON
 
                 </form>
               </div>
-              <div class="row mt-lg-2 mt-2">
+              <div class="row mt-lg-2 rounded mt-2 ms-0 me-0 bg-light">
                 <div class="col">
                   <div class="table-responsive">
                     <table class="table table-hover table-sm">
@@ -1278,13 +1279,13 @@ JSON
           <div class="modal-header mt-0 mb-0 pb-0">
             <div class="d-block d-flex flex-wrap flex-sm-wrap flex-md-wrap flex-lg-wrap flex-xl-wrap flex-xxl-wrap">
               <div class="d-block">
-                <h5 class="fw-bold text-white rounded me-3 pt-2 pb-2 ps-3 pe-3" dmx-class:bg-danger="readCustomerOrder.data.query.order_status!=='Paid'" dmx-class:bg-success="readCustomerOrder.data.query.order_status=='Paid'">{{trans.data.order[lang.value]}} : {{readCustomerOrder.data.query.order_id}}</h5>
+                <h6 class="text-white rounded me-3 pt-2 pb-2 ps-3 pe-3" dmx-class:bg-danger="readCustomerOrder.data.query.order_status!=='Paid'" dmx-class:bg-success="readCustomerOrder.data.query.order_status=='Paid'">{{trans.data.order[lang.value]}} : {{readCustomerOrder.data.query.order_id}}</h6>
               </div>
               <div class="d-block">
-                <button id="btn13" class="btn rounded text-body bg-light me-3" data-bs-target="#printReceipt" dmx-on:click="printReceipt.show()" dmx-animate-enter.duration:20000.delay:100="pulse" dmx-class:show-print-2="(readCustomerOrder.data.query.order_status == 'Paid')" data-bs-toggle="modal" dmx-bs-tooltip="trans.data.print[lang.value]" data-bs-placement="bottom" data-bs-trigger="hover">
-                  <i class="fas fa-print"></i>
-                </button><button id="btn10" class="btn rounded me-3 bg-success text-success bg-opacity-10" data-bs-toggle="offcanvas" data-bs-target="#AddProductsToOrderOffCanvas" dmx-hide="(readCustomerOrder.data.query.order_status=='Paid')||(profile_privileges.data.profile_privileges[0].create_order=='No')" style="/*color: #ffec66 !important;*/" dmx-bs-tooltip="trans.data.addProducts[lang.value]" data-bs-trigger="hover" data-bs-placement="bottom">
-                  <i class="fas fa-cart-plus"></i>
+                <button id="btn13" class="btn rounded me-3 bg-info text-white" data-bs-target="#printReceipt" dmx-on:click="printReceipt.show()" dmx-animate-enter.duration:20000.delay:100="pulse" dmx-class:show-print-2="(readCustomerOrder.data.query.order_status == 'Paid')" data-bs-toggle="modal" dmx-bs-tooltip="trans.data.print[lang.value]" data-bs-placement="bottom" data-bs-trigger="hover">
+                  <i class="fas fa-print fa-sm"></i>
+                </button><button id="btn10" class="btn rounded me-3 bg-info text-white" data-bs-toggle="offcanvas" data-bs-target="#AddProductsToOrderOffCanvas" dmx-hide="(readCustomerOrder.data.query.order_status=='Paid')||(profile_privileges.data.profile_privileges[0].create_order=='No')" style="/*color: #ffec66 !important;*/" dmx-bs-tooltip="trans.data.addProducts[lang.value]" data-bs-trigger="hover" data-bs-placement="bottom">
+                  <i class="fas fa-cart-plus fa-sm"></i>
                 </button>
               </div>
               <form id="close_order" is="dmx-serverconnect-form" method="post" action="dmxConnect/api/servo_orders/close_customer_order.php" dmx-on:success="notifies1.success('Success!');list_customer_orders.load({customer_id: session_variables.data.current_customer, offset: listCustomerOrders.data.offset, limit: c_order_sort_limit.value});list_order_items.load({order_id: session_variables.data.current_order});readCustomerOrder.load({order_id: session_variables.data.current_order})">
@@ -1292,7 +1293,7 @@ JSON
                 <input id="update_order_user_id" name="servo_users_cashier_id" type="text" class="form-control visually-hidden" dmx-bind:value="session_variables.data.user_id">
                 <input id="update_order_status" name="order_status" type="text" class="form-control visually-hidden" dmx-bind:value="'Paid'">
                 <input id="update_order_time_paid" name="order_time_paid" type="datetime-local" class="form-control visually-hidden" dmx-bind:value="dateTime.datetime">
-                <button id="btn18" class="btn float-right text-danger bg-success bg-opacity-10 me-3" data-bs-target="#AddProductsToOrderOffCanvas" dmx-show="(variableCustomerTotalToPay.value =='0')&amp;&amp;(OrderTotal.value !== '0')" style="color: #9bff66 !important;" type="submit" dmx-bind:hidden="(readCustomerOrder.data.query.order_status == 'Paid')" dmx-bs-tooltip="trans.data.edit[lang.value]" data-bs-placement="bottom" data-bs-trigger="hover">
+                <button id="btn18" class="btn float-right me-3 bg-opacity-10 bg-success text-success" data-bs-target="#AddProductsToOrderOffCanvas" dmx-show="(variableCustomerTotalToPay.value =='0')&amp;&amp;(OrderTotal.value !== '0')" type="submit" dmx-bind:hidden="(readCustomerOrder.data.query.order_status == 'Paid')" dmx-bs-tooltip="trans.data.edit[lang.value]" data-bs-placement="bottom" data-bs-trigger="hover">
                   <i class="fas fa-lock"></i>
                 </button>
               </form>
@@ -1307,10 +1308,10 @@ JSON
               <form id="updateItemsToOrdered2" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_order_items/update_order_item_to_ordered.php">
                 <input id="orderId2" name="servo_orders_order_id" type="number" class="form-control visually-hidden" dmx-bind:value="session_variables.data.current_order">
                 <input id="orderItemStatus3" name="order_item_status" class="form-control visually-hidden" dmx-bind:value="'Ordered'">
-                <button id="sendOrderItems2" class="btn text-info me-3" dmx-on:click="run({'bootbox.confirm':{message:'\n',buttons:{confirm:{label:'Confirm',className:'btn-primary'},cancel:{label:'Cancel',className:'btn-secondary'}},centerVertical:true,then:{steps:[{run:{action:`updateItemsToOrdered2.submit()`,outputType:'text'}},{run:{action:`list_order_items.load({order_id: readCustomerOrder.data.query.order_id})`,outputType:'text'}},{run:{action:`notifies1.success(\'Success!\')`,outputType:'text'}}]},name:'confirmOrders'}})" dmx-bs-tooltip="trans.data.send[lang.value]" data-bs-placement="bottom" data-bs-trigger="hover focus" dmx-hide="(list_order_items.data.query.where(`order_item_status`, 'Pending', '=='))==0"><i class="fas fa-paper-plane fa-lg"></i></button>
+                <button id="sendOrderItems2" class="btn text-info me-3 bg-info bg-opacity-10" dmx-on:click="run({'bootbox.confirm':{message:'\n',buttons:{confirm:{label:'Confirm',className:'btn-primary'},cancel:{label:'Cancel',className:'btn-secondary'}},centerVertical:true,then:{steps:[{run:{action:`updateItemsToOrdered2.submit()`,outputType:'text'}},{run:{action:`list_order_items.load({order_id: readCustomerOrder.data.query.order_id})`,outputType:'text'}},{run:{action:`notifies1.success(\'Success!\')`,outputType:'text'}}]},name:'confirmOrders'}})" dmx-bs-tooltip="trans.data.send[lang.value]" data-bs-placement="bottom" data-bs-trigger="hover focus" dmx-hide="(list_order_items.data.query.where(`order_item_status`, 'Pending', '=='))==0"><i class="fas fa-paper-plane fa-sm"></i></button>
               </form>
               <div class="d-block">
-                <h3 class="fw-bold text-primary bg-primary bg-opacity-10 rounded mt-1 pt-1 pb-1 ps-3 pe-3">{{(variableCustomerTotalToPay.value).formatNumber('0',',',',')}}</h3>
+                <h5 class="fw-bold text-primary bg-primary bg-opacity-10 rounded pt-1 pb-1 ps-3 pe-3">{{(variableCustomerTotalToPay.value).formatNumber('0',',',',')}}</h5>
               </div>
             </div>
 
@@ -1329,7 +1330,7 @@ JSON
 
           </div>
 
-          <div class="modal-body ">
+          <div class="modal-body pb-3">
             <div class="offcanvas offcanvas-start" id="AddProductsToOrderOffCanvas" is="dmx-bs5-offcanvas" tabindex="-1" style="width: 99%;">
               <div class="offcanvas-header mb-0 pb-0">
                 <h4 class="offcanvas-title">{{trans.data.addProducts[lang.value]}}</h4>
@@ -1353,7 +1354,8 @@ JSON
                     <div class="tab-content" id="navTabs1_1content">
                       <div class="tab-pane fade show active" id="navTabs1_1_1" role="tabpanel">
                         <div class="row mt-1">
-                          <div class="d-flex col-auto flex-wrap"><input id="searchProducts1" name="text1" type="text" class="form-control mb-1" dmx-bind:value="searchProducts1.value" dmx-on:changed="load_products.load({service_id: list_user_shift_info.data.query_list_user_shift[0].servo_service_service_id, search: searchProducts1.value})" dmx-bind:placeholder="trans.data.search[lang.value]"><button id="btn17" class="btn btn-info text-white ms-2 me-2" dmx-on:click="searchProducts1.setValue(null);load_products.load({service_id: list_user_shift_info.data.query_list_user_shift[0].servo_service_service_id})">
+                          <div class="d-flex col-auto flex-wrap"><input id="searchProducts1" name="text1" type="text" class="form-control mb-1" dmx-bind:value="searchProducts1.value" dmx-on:changed="load_products.load({service_id: list_user_shift_info.data.query_list_user_shift[0].servo_service_service_id, search: searchProducts1.value})" dmx-bind:placeholder="trans.data.search[lang.value]">
+                            <input id="searchProductCategory" name="text2" type="text" class="form-control mb-1 visually-hidden"><button id="btn17" class="btn btn-info text-white ms-2 me-2" dmx-on:click="searchProducts1.setValue(null);searchProductCategory.setValue(null);load_products.load({service_id: list_user_shift_info.data.query_list_user_shift[0].servo_service_service_id})">
                               <i class="fas fa-backspace"></i>
                             </button>
                             <button id="btn181" class="btn btn-info text-white me-2" dmx-on:click="AddProductsToOrderOffCanvas.btn181.toggleCategorySelect2.toggle()"> Categories
@@ -1367,7 +1369,9 @@ JSON
                         </div>
                         <div class="row mt-2">
                           <div class="col" is="dmx-if" id="conditional33" dmx-bind:condition="btn181.toggleCategorySelect2.checked">
-                            <div id="repeatProductCategories" is="dmx-repeat" dmx-bind:repeat="load_product_categories.data.query"><button id="btn11" class="btn mb-1 me-1 text-white bg-info" dmx-text="product_category_name" dmx-on:click="searchProductCategories.setValue(product_categories_id);load_products.load({product_category: product_categories_id})"></button></div>
+                            <div id="repeatProductCategories" is="dmx-repeat" dmx-bind:repeat="load_product_categories.data.query"><button id="btn11" class="btn mb-1 me-1 text-white bg-info" dmx-text="product_category_name" dmx-on:click="AddProductsToOrderOffCanvas.searchProductCategory.setValue(product_categories_id);load_products.load({product_category: searchProductCategory.value})"></button>
+
+                            </div>
 
                           </div>
                         </div>
@@ -1394,14 +1398,14 @@ JSON
                               </div>
 
 
-                              <div class="row justify-content-between text-center mb-2 ms-1 me-1">
-                                <div class="col-4">
+                              <div class="row text-center mb-2 ms-1 me-1 row-cols-12 justify-content-around">
+                                <div class="col-3">
                                   <button id="btn5" class="btn btn-lg shadow-none text-muted" dmx-on:click="form3.inp_order_item_quantity.setValue((inp_order_item_quantity.value.toNumber()-1) )"><i class="fas fa-minus"></i>
                                   </button>
                                 </div>
 
-                                <div class="col-4 text-center" style="padding: 0px !important;"><input id="inp_order_item_quantity" name="order_item_quantity" type="number" class="form-control mb-sm-1 mb-2 form-control-lg" placeholder="1" min="" data-rule-min="1" data-msg-min="Min. 1" style="width: 100% !important; border: 1px solid #696969 !important; border: none; background-color: transparent !important; color: #a1a1a1 !important;" dmx-bind:value="1"></div>
-                                <div class="col-4">
+                                <div class="text-center col-6" style="padding: 0px !important;"><input id="inp_order_item_quantity" name="order_item_quantity" type="number" class="form-control mb-sm-1 mb-2" placeholder="1" min="0.01" data-rule-min="0.01" data-msg-min="Min. 0.01" style="width: 100% !important; border: 1px solid #696969 !important; border: none; background-color: transparent !important; float: right; /* color: #a1a1a1 !important */" dmx-bind:value="1"></div>
+                                <div class="col-3">
                                   <button id="btn16" class="btn btn-lg text-muted shadow-none" dmx-on:click="form3.inp_order_item_quantity.setValue((inp_order_item_quantity.value.toNumber()+1) )"><i class="fas fa-plus"></i>
                                   </button>
                                 </div>
@@ -1495,7 +1499,7 @@ JSON
                 </div>
               </div>
             </div>
-            <div class="row" id="customerOrderHeader">
+            <div class="row row-cols-12" id="customerOrderHeader">
               <dmx-value id="variableOrderTotal" dmx-bind:value="(list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`))"></dmx-value>
               <dmx-value id="variableOrderPaid" dmx-bind:value="list_customer_transactions_order_totals.data.custom_list_customer_transactions_order_totals[0].Settlements"></dmx-value>
               <dmx-value id="variableOrderDiscount" dmx-bind:value="list_order_items.data.query[0].order_discount"></dmx-value>
@@ -1505,8 +1509,8 @@ JSON
               <dmx-value id="variableCustomerTotal" dmx-bind:value="{{(variableOrderTotal.value * ((100 - variableOrderDiscount.value)/100) * ((100 - variableOrderCoverage.value)/100))}}"></dmx-value>
               <dmx-value id="variableCustomerTotalToPay" dmx-bind:value="(variableOrderPaid.value - variableCustomerTotal.value)"></dmx-value>
               <dmx-value id="variableCustomerOwing" dmx-bind:value="(((list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`))-((readCustomerOrder.data.query.coverage_percentage /100) * (list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`))))- ((list_customer_transactions_order.data.query.sum(`transaction_amount`))))"></dmx-value>
-              <div class="col" style="">
-                <div class="row row-cols-12 justify-content-start bg-light rounded ms-0 me-0 pt-2 pb-2 ps-2 pe-2" id="orderInfo">
+              <div class="bg-secondary rounded col-auto mt-1 me-2 pt-2 pb-2 ps-2 pe-3 col-5 col-sm-auto col-sm-7 col-lg-auto col-md-auto col-xl-auto col-xl-4 col-xxl-auto" style="" id="orderTotal">
+                <div class="row row-cols-12 rounded" id="orderInfo">
                   <div class="justify-content-xl-end col-xl-auto col-auto" id="total01">
                     <h6 class="ms-2 pt-2">{{trans.data.total[lang.value]}}:</h6>
                   </div>
@@ -1524,18 +1528,34 @@ JSON
 
 
 
-                  <div class="justify-content-xl-end col-xl-auto col-auto" id="coverge">
-                    <h6 class="ms-2 pt-2">{{trans.data.coverage[lang.value]}}:</h6>
-                  </div>
-                  <div class="justify-content-xl-end col-xl-auto offset-xl-0 col-auto rounded-pill rounded-2 align-self-center align-self-xxl-center align-self-xl-center align-self-lg-center align-self-md-center pt-2 bg-body" id="coverageAmount">
-                    <h6>{{readCustomerOrder.data.query.coverage_percentage}}%</h6>
-                  </div>
+
+
                   <div class="justify-content-xl-end col-xl-auto col-auto" id="toPay">
                     <h6 class="ms-2 pt-2">{{trans.data.customerTotal[lang.value]}}:</h6>
                   </div>
                   <div class="justify-content-xl-end col-xl-auto offset-xl-0 col-auto rounded-pill rounded-2 align-self-center align-self-xxl-center align-self-xl-center align-self-lg-center align-self-md-center pt-2 bg-body" id="toPayAmount">
                     <h6 class="fw-bold text-success">{{(variableOrderTotal.value * ((100 - variableOrderDiscount.value)/100) * ((100 - variableOrderCoverage.value)/100)).formatNumber('0',',',',')}}</h6>
                   </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                </div>
+              </div>
+              <div class="bg-secondary rounded col-auto mt-1 me-2 pt-2 pb-2 ps-2 pe-3 col-3 col-sm-auto col-md-5 col-lg-auto col-xl-auto col-xxl-auto">
+                <div class="row">
                   <div class="justify-content-xl-end col-xl-auto offset-0 col-auto" id="paid">
                     <h6 class="ms-2 pt-2">{{trans.data.Paid[lang.value]}}:</h6>
                   </div>
@@ -1548,10 +1568,19 @@ JSON
                   <div class="justify-content-xl-end col-xl-auto offset-xl-0 col-auto rounded-pill rounded-2 align-self-center align-self-xxl-center align-self-xl-center align-self-lg-center align-self-md-center pt-2 bg-danger text-secondary" id="owingAmount">
                     <h6 class="fw-bold">{{(variableCustomerTotalToPay.value).formatNumber('0',',',',')}}</h6>
                   </div>
+                </div>
+              </div>
+              <div class="bg-secondary rounded col-auto mt-1 pt-2 pb-2 ps-2 pe-2 col-10 col-sm-auto col-sm-11 col-lg-auto col-md-auto col-lg-4 col-xl-auto col-xl-5 col-xxl-auto col-xxl-6">
+                <div class="row">
+                  <div class="justify-content-xl-end col-xl-auto col-auto" id="coverge">
+                    <h6 class="ms-2 pt-2">{{trans.data.coverage[lang.value]}}:</h6>
+                  </div>
+                  <div class="justify-content-xl-end col-xl-auto offset-xl-0 col-auto rounded-pill rounded-2 align-self-center align-self-xxl-center align-self-xl-center align-self-lg-center align-self-md-center pt-2 bg-body" id="coverageAmount">
+                    <h6>{{readCustomerOrder.data.query.coverage_percentage}}%</h6>
+                  </div>
                   <div class="justify-content-xl-end col-xl-auto col-auto fw-bold" id="coverageToPay6">
                     <h6 class="ms-2 pt-2 text-warning fw-bold">{{trans.data.coverageTotal[lang.value]}}:</h6>
                   </div>
-
                   <div class="justify-content-xl-end col-xl-auto offset-xl-0 col-auto rounded-pill rounded-2 align-self-center align-self-xxl-center align-self-xl-center align-self-lg-center align-self-md-center pt-2 border-warning bg-transparent text-warning border" id="coverageToPayAmount">
                     <h6 dmx-text="variableOrderCoverageTotal.value.formatNumber('0',',',',').default(0)" class="fw-bold">{{list_customer_transactions_order.data.query.sum(`transaction_amount`)}}</h6>
                   </div>
@@ -1567,11 +1596,6 @@ JSON
                   <div class="justify-content-xl-end col-xl-auto offset-xl-0 col-auto rounded-pill rounded-2 align-self-center align-self-xxl-center align-self-xl-center align-self-lg-center align-self-md-center pt-2 bg-warning text-secondary" id="coverageOwingAmount">
                     <h6 dmx-text="(variableOrderCoveragePaid.value  -variableOrderCoverageTotal.value).formatNumber('0',',',',').default(0)" class="fw-bold">{{list_customer_transactions_order.data.query.sum(`transaction_amount`)}}</h6>
                   </div>
-
-
-
-
-
                 </div>
               </div>
             </div>
@@ -1583,26 +1607,26 @@ JSON
                 <ul class="nav nav-tabs nav-fill flex-nowrap align-items-end" id="navTabs1_tabs" role="tablist">
                   <li class="nav-item">
                     <a class="nav-link active" id="navTabs1_13_tab" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_13" role="tab" aria-controls="navTabs1_1" aria-selected="true" dmx-bs-tooltip="trans.data.overview[lang.value]" data-bs-trigger="hover" data-bs-placement="bottom">
-                      <i class="fas fa-eye fa-lg"></i>
+                      <i class="fas fa-eye"></i>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" id="navTabs1_23_tab" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_23" role="tab" aria-controls="navTabs1_2" aria-selected="false" dmx-bs-tooltip="trans.data.orders[lang.value]" data-bs-trigger="hover" data-bs-placement="bottom"><i class="fas fa-cash-register fa-lg"></i>
+                    <a class="nav-link" id="navTabs1_23_tab" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_23" role="tab" aria-controls="navTabs1_2" aria-selected="false" dmx-bs-tooltip="trans.data.orders[lang.value]" data-bs-trigger="hover" data-bs-placement="bottom"><i class="fas fa-cash-register"></i>
                     </a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" id="navTabs1_23_tab1" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_4" role="tab" aria-controls="navTabs1_2" aria-selected="false" dmx-bs-tooltip="trans.data.transactions[lang.value]" data-bs-trigger="hover" internal data-bs-placement="bottom">
-                      <i class="fas fa-coins fa-lg"></i>
+                      <i class="fas fa-coins"></i>
                     </a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link text-warning" id="navTabs1_23_tab2" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_5" role="tab" aria-controls="navTabs1_2" aria-selected="false" dmx-bs-tooltip="trans.data.coverage[lang.value]" data-bs-trigger="hover" data-bs-placement="bottom">
-                      <i class="fas fa-people-arrows fa-lg"></i>
+                      <i class="fas fa-people-arrows"></i>
                     </a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" id="navTabs1_23_tab5" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_10" role="tab" aria-controls="navTabs1_2" aria-selected="false" dmx-on:click="list_order_items_deleted.load({order_id: session_variables.data.current_order})" dmx-bs-tooltip="trans.data.deleted[lang.value]" data-bs-trigger="hover" data-bs-placement="bottom">
-                      <i class="fas fa-trash-alt fa-sm"></i>
+                      <i class="fas fa-trash-alt"></i>
                       <span id="btn30" class="badge text-white fw-bold mb-n1 bg-danger" dmx-text="list_order_items_deleted.data.list_order_items_deleted.count()">
                       </span>
                     </a>
@@ -1610,7 +1634,7 @@ JSON
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" id="navTabs1_23_tab6" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_11" role="tab" aria-controls="navTabs1_2" aria-selected="false" dmx-on:click="list_order_items_deleted.load({order_id: session_variables.data.current_order})" dmx-bs-tooltip="trans.data.history[lang.value]" data-bs-trigger="hover focus" data-bs-placement="bottom">
-                      <i class="fas fa-history fa-sm"></i>
+                      <i class="fas fa-history"></i>
                       <span id="btn34" class="badge text-white fw-bold mb-n1 bg-danger" dmx-text="list_value_updates_per_order.data.query_list_updates_per_order.count()">
                       </span>
                     </a>
@@ -1650,7 +1674,7 @@ JSON
 
                                   <form id="editQuantity" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_order_items/update_order_item_quantity.php" dmx-on:success="create_value_update_order_item_quantity.submit();notifies1.success('Success');list_order_items.load({order_id: session_variables.data.current_order});list_value_updates_per_order.load({order_id: readCustomerOrder.data.query.order_id})">
                                     <div class="row">
-                                      <div class="col d-flex"><input id="newQuantity" name="order_item_quantity" type="number" class="form-control inline-edit" dmx-bind:value="order_item_quantity" dmx-bind:disabled="(readCustomerOrder.data.query.order_status == 'Paid')" min="" data-rule-min="1" data-msg-min="Min. 1" dmx-on:updated="create_value_update_order_item_quantity.quantityUpdateNew.setValue(editQuantity.newQuantity.value)">
+                                      <div class="col d-flex"><input id="newQuantity" name="order_item_quantity" type="number" class="form-control inline-edit" dmx-bind:value="order_item_quantity" dmx-bind:disabled="(readCustomerOrder.data.query.order_status == 'Paid')" min="0.01" data-rule-min="0.01" data-msg-min="Min. 0.01" dmx-on:updated="create_value_update_order_item_quantity.quantityUpdateNew.setValue(editQuantity.newQuantity.value)">
                                         <input id="editOrderId" name="order_item_id" type="number" class="form-control inline-edit visually-hidden" dmx-bind:value="order_item_id"><button id="btn21" class="btn text-success ms-3" data-bs-target="#productInfo" type="submit" dmx-hide="(readCustomerOrder.data.query.order_status == 'Paid')" dmx-bind:disabled="(readCustomerOrder.data.query.order_status == 'Paid' ||editQuantity.newQuantity.value == order_item_quantity )"><i class="fas fa-check"><br></i></button>
                                       </div>
                                     </div>
@@ -1731,7 +1755,7 @@ JSON
                       </div>
 
                     </div>
-                    <div class="row mt-3 ms-0 me-0 pt-2 pb-2 ps-2 pe-2" id="orderUpdate">
+                    <div class="row bg-secondary rounded mt-3 mb-2 ms-0 me-0 pt-4 pb-2 ps-2 pe-2" id="orderUpdate">
                       <form is="dmx-serverconnect-form" id="updateOrderCashierStandard" method="post" action="dmxConnect/api/servo_orders/update_order_discount_note.php" dmx-generator="bootstrap5" dmx-form-type="horizontal" dmx-populate="readCustomerOrder.data.query" dmx-on:success="notifies1.success('Success');list_order_items.load({order_id: session_variables.data.current_order});readCustomerOrder.load({order_id: session_variables.data.current_order})">
 
 

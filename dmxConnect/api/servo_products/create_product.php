@@ -66,6 +66,10 @@ $app->define(<<<'JSON'
       {
         "type": "number",
         "name": "product_sub_category_sub_category_id"
+      },
+      {
+        "type": "text",
+        "name": "product_reference_uom"
       }
     ]
   },
@@ -169,11 +173,17 @@ $app->define(<<<'JSON'
                 "column": "product_sub_category_sub_category_id",
                 "type": "number",
                 "value": "{{$_POST.product_sub_category_sub_category_id.default(NULL)}}"
+              },
+              {
+                "table": "servo_products",
+                "column": "product_reference_uom",
+                "type": "text",
+                "value": "{{$_POST.product_reference_uom}}"
               }
             ],
             "table": "servo_products",
             "returning": "product_id",
-            "query": "INSERT INTO servo_products\n(product_name, product_picture, servo_product_brands_product_brand_id, product_description, servo_product_category_product_category_id, product_discount, product_type, product_min_stock, product_sub_category_sub_category_id) VALUES (:P1 /* {{$_POST.product_name}} */, :P2 /* {{upload_product_picture.name}} */, :P3 /* {{$_POST.servo_product_brands_product_brand_id.default(NULL)}} */, :P4 /* {{$_POST.product_description}} */, :P5 /* {{$_POST.servo_product_category_product_category_id.default(NULL)}} */, :P6 /* {{$_POST.product_discount}} */, :P7 /* {{$_POST.product_type}} */, :P8 /* {{$_POST.product_min_stock}} */, :P9 /* {{$_POST.product_sub_category_sub_category_id.default(NULL)}} */)",
+            "query": "insert into `servo_products` (`product_description`, `product_discount`, `product_min_stock`, `product_name`, `product_picture`, `product_reference_uom`, `product_sub_category_sub_category_id`, `product_type`, `servo_product_brands_product_brand_id`, `servo_product_category_product_category_id`) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
             "params": [
               {
                 "name": ":P1",
@@ -219,6 +229,12 @@ $app->define(<<<'JSON'
                 "name": ":P9",
                 "type": "expression",
                 "value": "{{$_POST.product_sub_category_sub_category_id.default(NULL)}}"
+              },
+              {
+                "name": ":P10",
+                "type": "expression",
+                "value": "{{$_POST.product_reference_uom}}",
+                "test": ""
               }
             ]
           }

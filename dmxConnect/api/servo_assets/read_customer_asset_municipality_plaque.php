@@ -54,7 +54,7 @@ $app->define(<<<'JSON'
             },
             {
               "table": "servo_asset_special_fields_municipality",
-              "column": "neighbordhood_local_name"
+              "column": "payment_status"
             },
             {
               "table": "servo_asset_special_fields_municipality",
@@ -75,6 +75,10 @@ $app->define(<<<'JSON'
             {
               "table": "servo_asset_special_fields_municipality",
               "column": "combined_surface_area"
+            },
+            {
+              "table": "servo_asset_special_fields_municipality",
+              "column": "neighborhood_local_name"
             }
           ],
           "table": {
@@ -129,7 +133,7 @@ $app->define(<<<'JSON'
             "conditional": null,
             "valid": true
           },
-          "query": "SELECT servo_assets.asset_id, servo_asset_special_fields_municipality.permit_number, servo_asset_special_fields_municipality.maitre_doeuvre, servo_asset_special_fields_municipality.maitre_douvrage, servo_asset_special_fields_municipality.construction_type, servo_asset_special_fields_municipality.district, servo_asset_special_fields_municipality.neighborhood, servo_asset_special_fields_municipality.neighbordhood_local_name, servo_asset_special_fields_municipality.street_name, servo_asset_special_fields_municipality.project_purpose, servo_asset_special_fields_municipality.project_id, servo_asset_special_fields_municipality.asset, servo_asset_special_fields_municipality.combined_surface_area\nFROM servo_assets\nLEFT JOIN servo_asset_special_fields_municipality ON (servo_asset_special_fields_municipality.asset = servo_assets.asset_id)\nWHERE servo_assets.asset_id = :P1 /* {{$_GET.asset_id}} */",
+          "query": "select `servo_assets`.`asset_id`, `servo_asset_special_fields_municipality`.`permit_number`, `servo_asset_special_fields_municipality`.`maitre_doeuvre`, `servo_asset_special_fields_municipality`.`maitre_douvrage`, `servo_asset_special_fields_municipality`.`construction_type`, `servo_asset_special_fields_municipality`.`district`, `servo_asset_special_fields_municipality`.`neighborhood`, `servo_asset_special_fields_municipality`.`payment_status`, `servo_asset_special_fields_municipality`.`street_name`, `servo_asset_special_fields_municipality`.`project_purpose`, `servo_asset_special_fields_municipality`.`project_id`, `servo_asset_special_fields_municipality`.`asset`, `servo_asset_special_fields_municipality`.`combined_surface_area`, `servo_asset_special_fields_municipality`.`neighborhood_local_name` from `servo_assets` left join `servo_asset_special_fields_municipality` on `servo_asset_special_fields_municipality`.`asset` = `servo_assets`.`asset_id` where `servo_assets`.`asset_id` = ?",
           "params": [
             {
               "operator": "equal",
@@ -172,7 +176,7 @@ $app->define(<<<'JSON'
         },
         {
           "type": "text",
-          "name": "neighbordhood_local_name"
+          "name": "payment_status"
         },
         {
           "type": "text",
@@ -193,6 +197,10 @@ $app->define(<<<'JSON'
         {
           "type": "number",
           "name": "combined_surface_area"
+        },
+        {
+          "type": "text",
+          "name": "neighborhood_local_name"
         }
       ],
       "outputType": "object"

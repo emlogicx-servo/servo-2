@@ -89,6 +89,21 @@
                 "en-US": "NID N°",
                 "fr-FR": "N° CNI"
             },
+    "uom": 
+            {
+                "en-US": "Unit of Measure",
+                "fr-FR": "Unité de Mesure"
+            },
+    "referenceMultiple": 
+            {
+                "en-US": "Multiple of Reference",
+                "fr-FR": "Multiple de la Référence"
+            },
+    "referenceuom": 
+            {
+                "en-US": "Reference Unit of Measure",
+                "fr-FR": "Unité de Mesure de Référence"
+            },
     "taxPayerNumber": 
             {
                 "en-US": "Tax Payer Number",
@@ -1021,6 +1036,11 @@
                 "en-US":"Service", 
                 "fr-FR":"Service"
             },
+    "Service": 
+            {
+                "en-US":"Service", 
+                "fr-FR":"Service"
+            },
     "services": 
             {
                 "en-US":"Services", 
@@ -1416,25 +1436,30 @@
                 "en-US": "Supervisor",
                 "fr-FR": "Gérant"
             },
-    "Smanager": 
+    "smanager": 
             {
                 "en-US": "Senior Manager",
                 "fr-FR": "Gérant Supérieur"
             },
-    "Jmanager": 
+    "jmanager": 
             {
                 "en-US": "Junior Manager",
                 "fr-FR": "Gérant Assistant"
             },
-    "Pmanager": 
+    "pmanager": 
             {
                 "en-US": "Procurement Manager",
                 "fr-FR": "Gestionnaire des Achats"
             },
-    "Fmanager": 
+    "fmanager": 
             {
                 "en-US": "Finance Manager",
                 "fr-FR": "Gestionnaire des Finances"
+            },
+    "dmanager": 
+            {
+                "en-US": "Department Manager",
+                "fr-FR": "Gestionnaire de Département"
             },
     "Admin": 
             {
@@ -1683,8 +1708,8 @@
             },
     "cumulDePlancees": 
             {
-                "en-US": "Cumul De Plancees (m2)",
-                "fr-FR": "Cumul De Plancees (m2)"
+                "en-US": "Cumul De Plancher (m2)",
+                "fr-FR": "Cumul De Plancher (m2)"
             },
     "observations": 
             {
