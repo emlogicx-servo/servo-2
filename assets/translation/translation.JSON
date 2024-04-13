@@ -593,12 +593,12 @@
     "myAssignments": 
             {
                 "en-US": "My Assignments",
-                "fr-FR": "Mes Assignements"
+                "fr-FR": "Mes Assignations"
             },
     "allAssignments": 
             {
                 "en-US": "All Assignments",
-                "fr-FR": "Toutes Assignements"
+                "fr-FR": "Toutes Assignations"
             },
     "queryManagement": 
             {
@@ -1459,7 +1459,7 @@
     "dmanager": 
             {
                 "en-US": "Department Manager",
-                "fr-FR": "Gestionnaire de Département"
+                "fr-FR": "Chef de Département"
             },
     "Admin": 
             {
@@ -1534,12 +1534,12 @@
     "login": 
             {
                 "en-US": "Login To SERVO",
-                "fr-FR": "Connection à SERVO"
+                "fr-FR": "Connexion à SERVO"
             },
     "logout": 
             {
                 "en-US": "Logout",
-                "fr-FR": "Déconnection"
+                "fr-FR": "Déconnexion"
             },
     "logo": 
             {
@@ -1654,7 +1654,7 @@
     "projectAlertStatus": 
             {
                 "en-US": "Alerted",
-                "fr-FR": "Signalée"
+                "fr-FR": "Signalé"
             },
     "titleDeedNumber": 
             {
@@ -1674,7 +1674,7 @@
     "surfaceArea": 
             {
                 "en-US": "Surface Area(m2)",
-                "fr-FR": "Superficie(m2)"
+                "fr-FR": "Superficie (m2)"
             },
     "commentaireSurD": 
             {
@@ -1684,7 +1684,7 @@
     "secteurOperationel": 
             {
                 "en-US": "Operational Sector",
-                "fr-FR": "Secteur Operationnel"
+                "fr-FR": "Secteur Opérationnel"
             },
     "servitudePublique": 
             {
@@ -1749,12 +1749,12 @@
     "neighborhoodLocalName": 
             {
                 "en-US": "Local Name",
-                "fr-FR": "Quartier(Lieu Dit)"
+                "fr-FR": "Quartier (Lieu Dit)"
             },
     "streetName": 
             {
                 "en-US": "Street Name or Number",
-                "fr-FR": "Numero ou Nom de la Rue"
+                "fr-FR": "Numéro ou Nom de la Rue"
             },
     "projectPurpose": 
             {
@@ -1970,7 +1970,7 @@
     "info": 
             {
                 "en-US": "Information",
-                "fr-FR": "Information"
+                "fr-FR": "Informations"
             },
     "surname": 
             {

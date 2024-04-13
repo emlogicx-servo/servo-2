@@ -11,7 +11,7 @@ $app->exec(<<<'JSON'
 		{
 			"module": "auth",
 			"action": "restrict",
-			"options": {"permissions":"Manager","loginUrl":"login.php","forbiddenUrl":"login.php","provider":"servo_login"}
+			"options": {"permissions":"dmanager","loginUrl":"login.php","forbiddenUrl":"login.php","provider":"servo_login"}
 		}
 	]
 }
@@ -19,7 +19,7 @@ JSON
 , TRUE);
 ?>
 <!doctype html>
-<html data-bs-theme="dark">
+<html>
 
 <head>
   <style>
@@ -125,11 +125,11 @@ JSON
   <link rel="stylesheet" href="bootstrap/5/css/bootstrap.min.css" />
 </head>
 
-<body id="procurement" is="dmx-app" dmx-on:ready="preloader.hide();readItemModal.preloader1.hide()">
+<body id="dmanager" is="dmx-app" dmx-on:ready="preloader.hide();readItemModal.preloader1.hide()">
   <div style="z-index: 1000000000 !important;">
   </div>
 
-  <dmx-value id="pageName" dmx-bind:value="trans.data.procurement[lang.value]"></dmx-value>
+  <dmx-value id="pageName" dmx-bind:value="trans.data.department[lang.value]+' : '+list_user_info.data.query_list_user_info.department_name"></dmx-value>
   <dmx-data-iterator id="iterator1"></dmx-data-iterator>
 
   <dmx-query-manager id="listPurchaseOrders"></dmx-query-manager>
@@ -141,7 +141,7 @@ JSON
   <dmx-serverconnect id="list_value_updates_per_po" url="dmxConnect/api/servo_value_updates/list_value_updates_per_purchase_order.php" dmx-param:po_id="read_purchase_order.data.query.po_id"></dmx-serverconnect>
   <dmx-serverconnect id="procurement_information" url="dmxConnect/api/servo_reporting/purchasing_report_vendors.php"></dmx-serverconnect>
   <dmx-serverconnect id="procurement_information_products" url="dmxConnect/api/servo_reporting/purchasing_report_products.php"></dmx-serverconnect>
-  <dmx-serverconnect id="productstockvalues" url="dmxConnect/api/servo_stock/get_stock_values_2.php" dmx-param:limit="productStockSortLimit.value" dmx-param:offset="query.stock_value_offset"></dmx-serverconnect>
+  <dmx-serverconnect id="productstockvalues" url="dmxConnect/api/servo_stock/get_stock_values_2_department.php" dmx-param:limit="productStockSortLimit.value" dmx-param:offset="query.stock_value_offset" dmx-param:department_id="list_user_info.data.query_list_user_info.servo_user_departments_department_id"></dmx-serverconnect>
   <dmx-serverconnect id="list_vendors" url="dmxConnect/api/servo_vendors/list_vendors.php"></dmx-serverconnect>
   <dmx-value id="TO" dmx-bind:value="O +AO"></dmx-value>
   <dmx-serverconnect id="list_ao_items" url="dmxConnect/api/servo_order_items/list_ao_items.php" dmx-param:order_id="session_variables.data.current_adjustment_order" dmx-on:start="readAOModal.preloader_ao.show()" dmx-on:done="readAOModal.preloader_ao.hide()"></dmx-serverconnect>
@@ -154,7 +154,7 @@ JSON
   <dmx-json-datasource id="trans" is="dmx-serverconnect" url="assets/translation/translation.JSON"></dmx-json-datasource>
 
   <dmx-serverconnect id="query_po_items" url="dmxConnect/api/servo_purchase_order_items/list_po_items.php" dmx-param:po_id="session_variables.data.current_purchase_order" noload="" dmx-on:start="readItemModal.preloader1.show()" dmx-on:done="readItemModal.preloader1.hide()"></dmx-serverconnect>
-  <dmx-scheduler id="scheduler1" dmx-on:tick="list_purchase_order_items_current.load({order_id: read_purchase_order.data.query.po_id});read_purchase_order.load({po_id: read_purchase_order.data.query.po_id})" delay="5"></dmx-scheduler>
+  <dmx-scheduler id="scheduler1" dmx-on:tick="list_purchase_order_items_current.load({order_id: read_purchase_order.data.query.po_id, po_id: read_purchase_order.data.query.po_id});read_purchase_order.load({po_id: read_purchase_order.data.query.po_id})" delay="5"></dmx-scheduler>
   <dmx-datetime id="var1"></dmx-datetime>
   <dmx-serverconnect id="delete_purchase_order" url="dmxConnect/api/servo_purchase_orders/delete_purchase_order.php" dmx-param:po_id="tableRepeat5[0].po_id"></dmx-serverconnect>
   <dmx-serverconnect id="list_purchase_order_items_current" url="dmxConnect/api/servo_purchase_order_items/list_po_items.php" dmx-param:order_id="session_variables.data.current_order" noload=""></dmx-serverconnect>
@@ -167,29 +167,25 @@ JSON
   <dmx-serverconnect id="load_departments" url="dmxConnect/api/servo_departments/list_departments.php"></dmx-serverconnect>
 
   <dmx-serverconnect id="load_product_categories" url="dmxConnect/api/servo_refered_fields_loading/load_product_categories.php" noload></dmx-serverconnect>
-  <dmx-serverconnect id="read_purchase_order" url="dmxConnect/api/servo_purchase_orders/read_purchase_order.php" dmx-param:id="id" noload="" dmx-param:item_id="" dmx-param:branch_id="read_item_branch.data.queryReadBranch.branch_id" dmx-param:department_id="" dmx-param:order_id="tableRepeat2[0].order_id" dmx-param:po_id=""></dmx-serverconnect>
+  <dmx-serverconnect id="read_purchase_order" url="dmxConnect/api/servo_purchase_orders/read_purchase_order.php" dmx-param:id="id" dmx-param:item_id="" dmx-param:branch_id="read_item_branch.data.queryReadBranch.branch_id" dmx-param:department_id="" dmx-param:order_id="tableRepeat2[0].order_id" dmx-param:po_id="read_purchase_order.data.query.po_id"></dmx-serverconnect>
   <dmx-serverconnect id="delete_item_order" url="dmxConnect/api/servo_departments/delete_department.php"></dmx-serverconnect>
-  <dmx-serverconnect id="list_purchase_orders" url="dmxConnect/api/servo_purchase_orders/list_purchase_orders_paged.php" dmx-param:user_id="" dmx-param:current_shift="session_variables.data.current_shift" dmx-param:offset="listPurchaseOrders.data.offset_po" dmx-param:limit="poSortLimit.value" dmx-param:po_filter="poFilter.value" dmx-param:sort="query.sort_po" dmx-param:dir="query.dir_po"></dmx-serverconnect>
+  <dmx-serverconnect id="list_purchase_orders" url="dmxConnect/api/servo_purchase_orders/list_purchase_orders_paged.php" dmx-param:user_id="" dmx-param:current_shift="session_variables.data.current_shift" dmx-param:offset="listPurchaseOrders.data.offset_po" dmx-param:limit="poSortLimit.value" dmx-param:po_filter="poFilter.value" dmx-param:sort="query.sort_po" dmx-param:dir="query.dir_po" dmx-param:department_id="list_user_info.data.query_list_user_info.servo_user_departments_department_id"></dmx-serverconnect>
   <dmx-serverconnect id="list_transfer_orders_in" url="dmxConnect/api/servo_purchase_orders/list_transfer_orders_in_paged.php" dmx-param:offset="listTransferOrders.data.offset_to" dmx-param:limit="toSortLimitIn.value" dmx-param:sort="list_transfer_orders.data.list_purchase_orders_paged.data[0].servo_departments_department_id" dmx-param:dir="" dmx-param:to_filter="toFilterIn.value" dmx-on:success="" dmx-param:department_source="list_user_info.data.query_list_user_info.servo_user_departments_department_id"></dmx-serverconnect>
   <dmx-serverconnect id="list_transfer_orders_out" url="dmxConnect/api/servo_purchase_orders/list_transfer_orders_out_paged.php" dmx-param:offset="listTransferOrders.data.offset_to_out" dmx-param:limit="toSortLimitOut.value" dmx-param:sort="list_transfer_orders.data.list_purchase_orders_paged.data[0].servo_departments_department_id" dmx-param:dir="" dmx-param:to_filter="toFilterOut.value" dmx-on:success="" dmx-param:department_source="list_user_info.data.query_list_user_info.servo_user_departments_department_id"></dmx-serverconnect>
   <dmx-serverconnect id="read_product_data" url="dmxConnect/api/servo_products/list_product_purchases.php" dmx-on:start="preloader.show()" dmx-on:done="preloader.hide()"></dmx-serverconnect>
   <div is="dmx-browser" id="browser1"></div>
   <dmx-notifications id="notifies1" timeout="100" position="bottom" extended-timeout="200"></dmx-notifications>
-  <main class="rounded mt-2 ms-2 me-2 pt-2 pb-2 ps-2 pe-2 bg-light" id="MainBody">
+  <?php require 'header.php'; ?>
+  <main class="rounded mt-2 mb-0 ms-2 me-2 pt-2 pb-2 ps-2 pe-2" id="MainBody">
     <div>
 
-
-      <div class="row">
-        <div class="col style13 page-button d-flex justify-content-sm-end justify-content-end" id="pagebuttons">
-
-          <button id="btn1" class="btn style12 fw-light add-button pill text-info bg-info bg-opacity-10" data-bs-toggle="modal" data-bs-target="#CreateOrderModal" style="float: right;"><i class="fas fa-plus"></i></button>
-        </div>
-      </div>
     </div>
     <ul class="nav nav-tabs nav-fill scrollable flex-nowrap align-items-end fw-bold" id="navTabs1_tabs" role="tablist">
 
-      <li class="nav-item" style="">
-        <a class="nav-link active" id="navTabs1_2_tab" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_2" role="tab" aria-controls="navTabs1_2" aria-selected="false" dmx-on:click="procurement_information.load();procurement_information_products.load()" style="">{{trans.data.overview[lang.value]}}<i class="far fa-eye" style="margin-left: 5px;"></i></a>
+      <li class="nav-item">
+        <a class="nav-link active" id="navTabs1_2_tab" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_2" role="tab" aria-controls="navTabs1_2" aria-selected="false" dmx-on:click="procurement_information.load();procurement_information_products.load()">
+
+          {{trans.data.overview[lang.value]}}<i class="far fa-eye" style="margin-left: 5px;"></i></a>
       </li>
       <li class="nav-item">
         <a class="nav-link" id="navTabs1_2_tab2" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_4" role="tab" aria-controls="navTabs1_2" aria-selected="false">
@@ -210,7 +206,7 @@ JSON
     <div class="tab-content" id="navTabs1_content">
 
       <div class="tab-pane fade active show" id="navTabs1_2" role="tabpanel">
-        <div class="row mt-xxl-2 rounded rounded-2 border-secondary bg-light mt-2 mb-2 ms-0 me-0 pt-4" id="procurement_reports_" style="height: 450px; overflow: scroll;">
+        <div class="row mt-xxl-2 rounded rounded-2 border-secondary bg-light mt-1 mb-2 ms-0 me-0 pt-2" id="procurement_reports_" style="height: 450px; overflow: scroll;">
           <h3 class="text-body">{{trans.data.products[lang.value]}}</h3>
           <div class="col-sm col-md-6">
 
@@ -266,7 +262,7 @@ JSON
           </div>
         </div>
         <div class="row rounded ms-0 me-0 pt-3 bg-light ">
-          <div class="col y-scroll">
+          <div class="col y-scroll text-primary fw-bold">
             <dmx-chart id="chart5" height="400" dmx-bind:data="productstockvalues.data.getStockValues2" dataset-1:value="(TotalPurchased - TotalSold - TotalAdjusted)" point-size="" type="bar" multicolor="true" colors="colors1" dataset-1:label="Quantities" labels="product_name+'('+(TotalPurchased - TotalSold - TotalAdjusted)+')'" dataset-1:tooltip="" width="1300"></dmx-chart>
           </div>
 
@@ -311,73 +307,81 @@ JSON
           </div>
         </div>
       </div>
-      <div class="tab-pane fade" id="navTabs1_4" role="tabpanel">
-        <div class="row justify-content-sm-between justify-content-md-between justify-content-lg-between justify-content-xl-between justify-content-xxl-between justify-content-between sorter rounded mt-2 mb-2 ms-auto me-auto bg-secondary">
-          <div class="d-flex col-auto flex-wrap col-sm-auto col-md-auto col-lg-auto col-xxl-auto col-xl-auto align-items-baseline"><input id="poFilter" name="poFilter" type="search" class="form-control search mb-2 me-2" placeholder="ID"><button id="btn299" class="btn align-self-lg-start btn-outline-secondary me-2 align-self-baseline bg-info text-white" dmx-on:click="poFilter.setValue(NULL)">
-              <i class="fas fa-backspace fa-sm"></i>
-            </button>
-            <ul class="pagination me-2 bg-opacity-10 rounded d-flex flex-wrap bg-primary" dmx-populate="list_purchase_orders.data.list_purchase_orders_paged" dmx-state="listPurchaseOrders" dmx-offset="offset_po" dmx-generator="bs5paging">
-              <li class="page-item" dmx-class:disabled="list_purchase_orders.data.list_purchase_orders_paged.page.current == 1" aria-label="First">
-                <a href="javascript:void(0)" class="page-link" dmx-on:click="listPurchaseOrders.set('offset_po',list_purchase_orders.data.list_purchase_orders_paged.page.offset.first)"><span aria-hidden="true">&lsaquo;&lsaquo;</span></a>
-              </li>
-              <li class="page-item" dmx-class:disabled="list_purchase_orders.data.list_purchase_orders_paged.page.current == 1" aria-label="Previous">
-                <a href="javascript:void(0)" class="page-link" dmx-on:click="listPurchaseOrders.set('offset_po',list_purchase_orders.data.list_purchase_orders_paged.page.offset.prev)"><span aria-hidden="true">&lsaquo;</span></a>
-              </li>
-              <li class="page-item" dmx-class:active="title == list_purchase_orders.data.list_purchase_orders_paged.page.current" dmx-class:disabled="!active" dmx-repeat="list_purchase_orders.data.list_purchase_orders_paged.getServerConnectPagination(2,1,'...')">
-                <a href="javascript:void(0)" class="page-link text-body" dmx-on:click="listPurchaseOrders.set('offset_po',(page-1)*list_purchase_orders.data.list_purchase_orders_paged.limit)">{{title}}</a>
-              </li>
-              <li class="page-item" dmx-class:disabled="list_purchase_orders.data.list_purchase_orders_paged.page.current ==  list_purchase_orders.data.list_purchase_orders_paged.page.total" aria-label="Next">
-                <a href="javascript:void(0)" class="page-link" dmx-on:click="listPurchaseOrders.set('offset_po',list_purchase_orders.data.list_purchase_orders_paged.page.offset.next)"><span aria-hidden="true">&rsaquo;</span></a>
-              </li>
-              <li class="page-item" dmx-class:disabled="list_purchase_orders.data.list_purchase_orders_paged.page.current ==  list_purchase_orders.data.list_purchase_orders_paged.page.total" aria-label="Last">
-                <a href="javascript:void(0)" class="page-link" dmx-on:click="listPurchaseOrders.set('offset_po',list_purchase_orders.data.list_purchase_orders_paged.page.offset.last)"><span aria-hidden="true">&rsaquo;&rsaquo;</span></a>
-              </li>
-            </ul><select id="poSortLimit" class="form-select" name="po_sort_limit" style="width: 150px !important">
-              <option value="5">5</option>
-              <option selected="" value="25">25</option>
-              <option value="50">50</option>
-              <option value="100">100</option>
-              <option value="'250">250</option>
-              <option value="500">500</option>
-            </select>
-          </div>
+      <div class="tab-pane fade rounded" id="navTabs1_4" role="tabpanel">
+        <div class="row mt-2 ms-auto me-auto">
+          <div class="col bg-light rounded">
+            <div class="row justify-content-sm-between justify-content-md-between justify-content-lg-between justify-content-xl-between justify-content-xxl-between justify-content-between sorter rounded mt-2 ms-auto me-auto pt-3 pb-2 bg-transparent">
+              <div class="d-flex col-auto flex-wrap col-sm-auto col-md-auto col-lg-auto col-xxl-auto col-xl-auto align-items-baseline"><input id="poFilter" name="poFilter" type="search" class="form-control search mb-2 me-2" placeholder="ID"><button id="btn299" class="btn btn-outline-secondary text-primary bg-opacity-10 me-2 align-self-baseline bg-primary" dmx-on:click="poFilter.setValue(NULL)">
+                  <i class="fas fa-backspace fa-sm"></i>
+                </button>
+                <ul class="pagination me-2 rounded d-flex flex-wrap bg-secondary" dmx-populate="list_purchase_orders.data.list_purchase_orders_paged" dmx-state="listPurchaseOrders" dmx-offset="offset_po" dmx-generator="bs5paging">
+                  <li class="page-item" dmx-class:disabled="list_purchase_orders.data.list_purchase_orders_paged.page.current == 1" aria-label="First">
+                    <a href="javascript:void(0)" class="page-link" dmx-on:click="listPurchaseOrders.set('offset_po',list_purchase_orders.data.list_purchase_orders_paged.page.offset.first)"><span aria-hidden="true">&lsaquo;&lsaquo;</span></a>
+                  </li>
+                  <li class="page-item" dmx-class:disabled="list_purchase_orders.data.list_purchase_orders_paged.page.current == 1" aria-label="Previous">
+                    <a href="javascript:void(0)" class="page-link" dmx-on:click="listPurchaseOrders.set('offset_po',list_purchase_orders.data.list_purchase_orders_paged.page.offset.prev)"><span aria-hidden="true">&lsaquo;</span></a>
+                  </li>
+                  <li class="page-item" dmx-class:active="title == list_purchase_orders.data.list_purchase_orders_paged.page.current" dmx-class:disabled="!active" dmx-repeat="list_purchase_orders.data.list_purchase_orders_paged.getServerConnectPagination(2,1,'...')">
+                    <a href="javascript:void(0)" class="page-link text-body" dmx-on:click="listPurchaseOrders.set('offset_po',(page-1)*list_purchase_orders.data.list_purchase_orders_paged.limit)">{{title}}</a>
+                  </li>
+                  <li class="page-item" dmx-class:disabled="list_purchase_orders.data.list_purchase_orders_paged.page.current ==  list_purchase_orders.data.list_purchase_orders_paged.page.total" aria-label="Next">
+                    <a href="javascript:void(0)" class="page-link" dmx-on:click="listPurchaseOrders.set('offset_po',list_purchase_orders.data.list_purchase_orders_paged.page.offset.next)"><span aria-hidden="true">&rsaquo;</span></a>
+                  </li>
+                  <li class="page-item" dmx-class:disabled="list_purchase_orders.data.list_purchase_orders_paged.page.current ==  list_purchase_orders.data.list_purchase_orders_paged.page.total" aria-label="Last">
+                    <a href="javascript:void(0)" class="page-link" dmx-on:click="listPurchaseOrders.set('offset_po',list_purchase_orders.data.list_purchase_orders_paged.page.offset.last)"><span aria-hidden="true">&rsaquo;&rsaquo;</span></a>
+                  </li>
+                </ul><select id="poSortLimit" class="form-select me-3" name="po_sort_limit" style="width: 150px !important">
+                  <option value="5">5</option>
+                  <option selected="" value="25">25</option>
+                  <option value="50">50</option>
+                  <option value="100">100</option>
+                  <option value="'250">250</option>
+                  <option value="500">500</option>
+                </select>
+                <button id="btn1" class="btn style12 add-button pill fw-light text-body bg-secondary" data-bs-toggle="modal" data-bs-target="#CreatePOModal" style="float: right;"><i class="fas fa-plus"></i>
+                </button>
+              </div>
 
 
-        </div>
-        <div class="row mt-1" id="orders_table1" style="height: 450px; overflow: scroll;">
-          <div class="col bg-secondary rounded ms-3 me-3">
+            </div>
+            <div class="row rounded ms-auto me-auto" id="orders_table1" style="height: 98vh; overflow: scroll;">
+              <div class="col rounded ms-3 me-3">
 
 
-            <div class="table-responsive">
-              <table class="table table-hover table-sm table-borderless">
-                <thead>
-                  <tr>
-                    <th class="sorting" dmx-on:click="listPurchaseOrders.set('sort_po','po_id');listPurchaseOrders.set('dir_po',listPurchaseOrders.data.dir_po == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="listPurchaseOrders.data.sort_po=='po_id' && listPurchaseOrders.data.dir_po == 'asc'" dmx-class:sorting_desc="listPurchaseOrders.data.sort_po=='po_id' && listPurchaseOrders.data.dir_po == 'desc'">#</th>
-                    <th class="sorting" dmx-on:click="listPurchaseOrders.set('sort_po','user_username');listPurchaseOrders.set('dir_po',listPurchaseOrders.data.dir_po == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="listPurchaseOrders.data.sort_po=='user_username' && listPurchaseOrders.data.dir_po == 'asc'" dmx-class:sorting_desc="listPurchaseOrders.data.sort_po=='user_username' && listPurchaseOrders.data.dir_po == 'desc'">{{trans.data.attention[lang.value]}}</th>
-                    <th class="sorting" dmx-on:click="listPurchaseOrders.set('sort_po','time_ordered');listPurchaseOrders.set('dir_po',listPurchaseOrders.data.dir_po == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="listPurchaseOrders.data.sort_po=='time_ordered' && listPurchaseOrders.data.dir_po == 'asc'" dmx-class:sorting_desc="listPurchaseOrders.data.sort_po=='time_ordered' && listPurchaseOrders.data.dir_po == 'desc'">{{trans.data.timeOrdered[lang.value]}}</th>
-                    <th class="sorting" dmx-on:click="listPurchaseOrders.set('sort_po','department_name');listPurchaseOrders.set('dir_po',listPurchaseOrders.data.dir_po == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="listPurchaseOrders.data.sort_po=='department_name' && listPurchaseOrders.data.dir_po == 'asc'" dmx-class:sorting_desc="listPurchaseOrders.data.sort_po=='department_name' && listPurchaseOrders.data.dir_po == 'desc'">{{trans.data.department[lang.value]}}</th>
-                    <th class="sorting" dmx-on:click="listPurchaseOrders.set('sort_po','vendor_name');listPurchaseOrders.set('dir_po',listPurchaseOrders.data.dir_po == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="listPurchaseOrders.data.sort_po=='vendor_name' && listPurchaseOrders.data.dir_po == 'asc'" dmx-class:sorting_desc="listPurchaseOrders.data.sort_po=='vendor_name' && listPurchaseOrders.data.dir_po == 'desc'">{{trans.data.vendor[lang.value]}}</th>
-                    <th class="sorting text-center" dmx-on:click="listPurchaseOrders.set('sort_po','po_status');listPurchaseOrders.set('dir_po',listPurchaseOrders.data.dir_po == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="listPurchaseOrders.data.sort_po=='po_status' && listPurchaseOrders.data.dir_po == 'asc'" dmx-class:sorting_desc="listPurchaseOrders.data.sort_po=='po_status' && listPurchaseOrders.data.dir_po == 'desc'">{{trans.data.status[lang.value]}}</th>
-                    <th class="sorting" dmx-on:click="listPurchaseOrders.set('sort_po','null');listPurchaseOrders.set('dir_po',listPurchaseOrders.data.dir_po == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="listPurchaseOrders.data.sort_po=='null' && listPurchaseOrders.data.dir_po == 'asc'" dmx-class:sorting_desc="listPurchaseOrders.data.sort_po=='null' && listPurchaseOrders.data.dir_po == 'desc'"></th>
-                  </tr>
-                </thead>
-                <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="list_purchase_orders.data.list_purchase_orders_paged.data" id="tableRepeat5" dmx-state="listPurchaseOrders" dmx-sort="sort_po" dmx-order="dir_po" class="scrollable">
-                  <tr>
-                    <td dmx-text="po_id"></td>
-                    <td dmx-text="user_username"></td>
-                    <td dmx-text="time_ordered"></td>
-                    <td dmx-text="department_name"></td>
-                    <td dmx-text="vendor_name"></td>
-                    <td>
-                      <h6 dmx-text="trans.data.getValueOrKey(po_status)[lang.value]" class="text-center pt-1 pb-1 ps-2 pe-2 rounded bg-light fw-bold" dmx-class:text-success="(po_status=='Received')" dmx-class:text-danger="(po_status=='Requested')" dmx-class:text-warning="(po_status=='Approved')">Fancy display heading</h6>
-                    </td>
-                    <td class="text-center"><button id="btn16" class="btn open text-primary bg-primary bg-opacity-10" data-bs-target="#readItemModal" dmx-on:click="readItemModal.show();session_variables.set('current_purchase_order',po_id);read_purchase_order.load({po_id: po_id});query_po_items.load({po_id: po_id})" dmx-bind:value="list_purchase_orders.data.query[0].po_id" data-bs-toggle="modal"><i class="fas fa-pencil-alt fa-sm"><br></i></button></td>
-                  </tr>
-                </tbody>
-              </table>
+                <div class="table-responsive">
+                  <table class="table table-hover table-sm">
+                    <thead class="text-center">
+                      <tr>
+                        <th class="sorting" dmx-on:click="listPurchaseOrders.set('sort_po','po_id');listPurchaseOrders.set('dir_po',listPurchaseOrders.data.dir_po == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="listPurchaseOrders.data.sort_po=='po_id' && listPurchaseOrders.data.dir_po == 'asc'" dmx-class:sorting_desc="listPurchaseOrders.data.sort_po=='po_id' && listPurchaseOrders.data.dir_po == 'desc'">#</th>
+                        <th class="sorting" dmx-on:click="listPurchaseOrders.set('sort_po','user_username');listPurchaseOrders.set('dir_po',listPurchaseOrders.data.dir_po == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="listPurchaseOrders.data.sort_po=='user_username' && listPurchaseOrders.data.dir_po == 'asc'" dmx-class:sorting_desc="listPurchaseOrders.data.sort_po=='user_username' && listPurchaseOrders.data.dir_po == 'desc'">{{trans.data.attention[lang.value]}}</th>
+                        <th class="sorting" dmx-on:click="listPurchaseOrders.set('sort_po','time_ordered');listPurchaseOrders.set('dir_po',listPurchaseOrders.data.dir_po == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="listPurchaseOrders.data.sort_po=='time_ordered' && listPurchaseOrders.data.dir_po == 'asc'" dmx-class:sorting_desc="listPurchaseOrders.data.sort_po=='time_ordered' && listPurchaseOrders.data.dir_po == 'desc'">{{trans.data.timeOrdered[lang.value]}}</th>
+                        <th class="sorting" dmx-on:click="listPurchaseOrders.set('sort_po','department_name');listPurchaseOrders.set('dir_po',listPurchaseOrders.data.dir_po == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="listPurchaseOrders.data.sort_po=='department_name' && listPurchaseOrders.data.dir_po == 'asc'" dmx-class:sorting_desc="listPurchaseOrders.data.sort_po=='department_name' && listPurchaseOrders.data.dir_po == 'desc'">{{trans.data.department[lang.value]}}</th>
+                        <th class="sorting" dmx-on:click="listPurchaseOrders.set('sort_po','vendor_name');listPurchaseOrders.set('dir_po',listPurchaseOrders.data.dir_po == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="listPurchaseOrders.data.sort_po=='vendor_name' && listPurchaseOrders.data.dir_po == 'asc'" dmx-class:sorting_desc="listPurchaseOrders.data.sort_po=='vendor_name' && listPurchaseOrders.data.dir_po == 'desc'">{{trans.data.vendor[lang.value]}}</th>
+                        <th class="sorting text-center" dmx-on:click="listPurchaseOrders.set('sort_po','po_status');listPurchaseOrders.set('dir_po',listPurchaseOrders.data.dir_po == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="listPurchaseOrders.data.sort_po=='po_status' && listPurchaseOrders.data.dir_po == 'asc'" dmx-class:sorting_desc="listPurchaseOrders.data.sort_po=='po_status' && listPurchaseOrders.data.dir_po == 'desc'">{{trans.data.status[lang.value]}}</th>
+                        <th class="sorting" dmx-on:click="listPurchaseOrders.set('sort_po','null');listPurchaseOrders.set('dir_po',listPurchaseOrders.data.dir_po == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="listPurchaseOrders.data.sort_po=='null' && listPurchaseOrders.data.dir_po == 'asc'" dmx-class:sorting_desc="listPurchaseOrders.data.sort_po=='null' && listPurchaseOrders.data.dir_po == 'desc'"></th>
+                      </tr>
+                    </thead>
+                    <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="list_purchase_orders.data.list_purchase_orders_paged.data" id="tableRepeat5" dmx-state="listPurchaseOrders" dmx-sort="sort_po" dmx-order="dir_po" class="scrollable">
+                      <tr>
+                        <td dmx-text="po_id"></td>
+                        <td dmx-text="user_username" class="text-center"></td>
+                        <td dmx-text="time_ordered" class="text-center"></td>
+                        <td dmx-text="department_name" class="text-center"></td>
+                        <td dmx-text="vendor_name" class="text-center"></td>
+                        <td class="text-center">
+                          <p dmx-text="trans.data.getValueOrKey(po_status)[lang.value]" class="text-center pt-1 pb-1 ps-2 pe-2 rounded" dmx-class:text-success="(po_status=='Received')" dmx-class:text-danger="(po_status=='Requested')" dmx-class:text-warning="(po_status=='Approved')">Fancy display heading</p>
+                        </td>
+                        <td class="text-center"><button id="btn16" class="btn open text-primary bg-primary bg-opacity-10" data-bs-target="#readItemModal" dmx-on:click="readItemModal.show();session_variables.set('current_purchase_order',po_id);read_purchase_order.load({po_id: po_id});query_po_items.load({po_id: po_id})" dmx-bind:value="list_purchase_orders.data.query[0].po_id" data-bs-toggle="modal"><i class="fas fa-pencil-alt fa-sm"><br></i></button></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
           </div>
         </div>
+
+
       </div>
       <div class="tab-pane fade" id="navTabs1_5" role="tabpanel">
         <div class="row mt-2">
@@ -393,18 +397,18 @@ JSON
         </div>
         <div class="row" id="transferOrdersIn" dmx-show="(transferOrderDirection.value == 'In')">
           <div class="col">
-            <div class="row justify-content-sm-between justify-content-md-between justify-content-lg-between justify-content-xl-between justify-content-xxl-between justify-content-between sorter mt-2 mb-2 ms-0 me-0 bg-secondary rounded">
-              <div class="col-auto col-9 col-sm-9 col-lg-3 d-flex col-xxl align-items-baseline">
+            <div class="row justify-content-sm-between justify-content-md-between justify-content-lg-between justify-content-xl-between justify-content-xxl-between sorter mt-2 mb-2 ms-0 me-0 rounded bg-transparent row-cols-12">
+              <div class="col-sm-9 col-lg-3 d-flex col-xxl align-items-baseline col-auto">
 
-                <input id="toFilterIn" name="toFilterIn" type="search" class="form-control search form-control-sm mb-2 me-2" placeholder="ID"><button id="btn26" class="btn align-self-lg-start btn-outline-secondary btn-sm ms-xxl-1 bg-info text-white me-2" dmx-on:click="poFilter.setValue(NULL)">
-                  <i class="fas fa-backspace"></i>
+                <input id="toFilterIn" name="toFilterIn" type="search" class="form-control search mb-2 me-2" placeholder="ID"><button id="btn26" class="btn align-self-lg-start btn-outline-secondary ms-xxl-1 me-2 text-primary bg-primary bg-opacity-10" dmx-on:click="poFilter.setValue(NULL)">
+                  <i class="fas fa-backspace fa-sm"></i>
 
 
 
 
 
                 </button>
-                <ul class="pagination me-2 rounded bg-dark bg-opacity-10 flex-wrap" dmx-populate="list_transfer_orders_in.data.list_purchase_orders_paged" dmx-generator="bs5paging">
+                <ul class="pagination me-2 rounded bg-opacity-10 flex-wrap bg-primary" dmx-populate="list_transfer_orders_in.data.list_purchase_orders_paged" dmx-generator="bs5paging">
                   <li class="page-item" dmx-class:disabled="list_transfer_orders_in.data.list_purchase_orders_paged.page.current == 1" aria-label="First">
                     <a href="javascript:void(0)" class="page-link" dmx-on:click="list_transfer_orders_in.load({offset: list_transfer_orders_in.data.list_purchase_orders_paged.page.offset.first})"><span aria-hidden="true">&lsaquo;&lsaquo;</span></a>
                   </li>
@@ -420,7 +424,7 @@ JSON
                   <li class="page-item" dmx-class:disabled="list_transfer_orders_in.data.list_purchase_orders_paged.page.current ==  list_transfer_orders_in.data.list_purchase_orders_paged.page.total" aria-label="Last">
                     <a href="javascript:void(0)" class="page-link" dmx-on:click="list_transfer_orders_in.load({offset: list_transfer_orders_in.data.list_purchase_orders_paged.page.offset.last})"><span aria-hidden="true">&rsaquo;&rsaquo;</span></a>
                   </li>
-                </ul><select id="toSortLimitIn" class="form-select" name="to_sort_limit_in" style="width: 150px !important" dmx-on:updated="list_transfer_orders.load({limit: value, to_filter: toFilter.value, to_destination: transferDirection.value});listTransferOrders.set('offset_to',0)">
+                </ul><select id="toSortLimitIn" class="form-select me-3" name="to_sort_limit_in" style="width: 150px !important" dmx-on:updated="list_transfer_orders.load({limit: value, to_filter: toFilter.value, to_destination: transferDirection.value});listTransferOrders.set('offset_to',0)">
                   <option value="5">5</option>
                   <option selected="" value="25">25</option>
                   <option value="50">50</option>
@@ -428,6 +432,9 @@ JSON
                   <option value="'250">250</option>
                   <option value="500">500</option>
                 </select>
+                <button id="btn5" class="btn text-success bg-success bg-opacity-10 active" data-bs-toggle="modal" data-bs-target="#CreateTOModal">
+                  <i class="fas fa-plus fa-sm"></i>
+                </button>
               </div>
 
 
@@ -436,8 +443,8 @@ JSON
               <div class="col">
 
 
-                <div class="table-responsive bg-secondary">
-                  <table class="table table-hover table-sm table-borderless">
+                <div class="table-responsive">
+                  <table class="table table-hover table-sm">
                     <thead>
                       <tr>
                         <th class="sorting" dmx-on:click="listPurchaseOrders.set('sort_po','po_id');listPurchaseOrders.set('dir_po',listPurchaseOrders.data.dir_po == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="listPurchaseOrders.data.sort_po=='po_id' &amp;&amp; listPurchaseOrders.data.dir_po == 'asc'" dmx-class:sorting_desc="listPurchaseOrders.data.sort_po=='po_id' &amp;&amp; listPurchaseOrders.data.dir_po == 'desc'">#</th>
@@ -460,7 +467,7 @@ JSON
                           <h6 dmx-text="trans.data.getValueOrKey(po_status)[lang.value]" class="text-center pt-1 pb-1 ps-2 pe-2" dmx-class:red-state="(po_status=='Requested')" dmx-class:green-state="(po_status=='Received')" dmx-class:yellow-state="(po_status=='Approved')">Fancy display heading</h6>
                         </td>
                         <td>
-                          <button id="btn22" class="btn open" data-bs-target="#readItemModal" dmx-on:click="readItemModal.show();session_variables.set('current_purchase_order',po_id);read_purchase_order.load({po_id: po_id});list_purchase_order_items_current.load({po_id: po_id})" dmx-bind:value="list_purchase_orders.data.query[0].po_id" data-bs-toggle="modal"><i class="far fa-edit"><br></i></button>
+                          <button id="btn22" class="btn open text-primary bg-primary bg-opacity-10" data-bs-target="#readItemModal" dmx-on:click="readItemModal.show();session_variables.set('current_purchase_order',po_id);read_purchase_order.load({po_id: po_id});list_purchase_order_items_current.load({po_id: po_id})" dmx-bind:value="list_purchase_orders.data.query[0].po_id" data-bs-toggle="modal"><i class="fas fa-pencil-alt"><br></i></button>
                         </td>
                       </tr>
                     </tbody>
@@ -472,18 +479,18 @@ JSON
         </div>
         <div class="row" id="transferOrdersOut" dmx-show="(transferOrderDirection.value == 'Out')">
           <div class="col">
-            <div class="row justify-content-sm-between justify-content-md-between justify-content-lg-between justify-content-xl-between justify-content-xxl-between justify-content-between sorter mt-2 mb-2 ms-0 me-0 bg-secondary rounded">
+            <div class="row justify-content-sm-between justify-content-md-between justify-content-lg-between justify-content-xl-between justify-content-xxl-between sorter mt-2 mb-2 ms-0 me-0 rounded bg-transparent">
               <div class="d-flex align-items-baseline col-auto col-sm-auto col-md-auto col-lg-auto col-xl-auto col-xxl-auto">
 
-                <input id="toFilterOut" name="toFilterOut" type="text" class="form-control search form-control-sm mb-2 me-2" placeholder="ID"><button id="btn23" class="btn align-self-lg-start btn-sm ms-xxl-1 bg-info text-white me-2" dmx-on:click="poFilter.setValue(NULL)">
-                  <i class="fas fa-backspace"></i>
+                <input id="toFilterOut" name="toFilterOut" type="text" class="form-control search mb-2 me-2" placeholder="ID"><button id="btn23" class="btn align-self-lg-start ms-xxl-1 me-2 bg-opacity-10 bg-primary text-primary" dmx-on:click="poFilter.setValue(NULL)">
+                  <i class="fas fa-backspace fa-sm"></i>
 
 
 
 
 
                 </button>
-                <ul class="pagination me-2 rounded bg-dark bg-opacity-10 flex-wrap" dmx-populate="list_transfer_orders_out.data.list_purchase_orders_paged" dmx-generator="bs5paging">
+                <ul class="pagination me-2 rounded bg-opacity-10 flex-wrap bg-primary text-primary" dmx-populate="list_transfer_orders_out.data.list_purchase_orders_paged" dmx-generator="bs5paging">
                   <li class="page-item" dmx-class:disabled="list_transfer_orders_out.data.list_purchase_orders_paged.page.current == 1" aria-label="First">
                     <a href="javascript:void(0)" class="page-link" dmx-on:click="list_transfer_orders_out.load({offset: list_transfer_orders_out.data.list_purchase_orders_paged.page.offset.first})"><span aria-hidden="true">&lsaquo;&lsaquo;</span></a>
                   </li>
@@ -499,7 +506,7 @@ JSON
                   <li class="page-item" dmx-class:disabled="list_transfer_orders_out.data.list_purchase_orders_paged.page.current ==  list_transfer_orders_out.data.list_purchase_orders_paged.page.total" aria-label="Last">
                     <a href="javascript:void(0)" class="page-link" dmx-on:click="list_transfer_orders_out.load({offset: list_transfer_orders_out.data.list_purchase_orders_paged.page.offset.last})"><span aria-hidden="true">&rsaquo;&rsaquo;</span></a>
                   </li>
-                </ul><select id="toSortLimitOut" class="form-select" name="to_sort_limit1_out" style="width: 150px !important" dmx-on:updated="list_transfer_orders.load({limit: value, to_filter: toFilter.value, to_destination: transferDirection.value});listTransferOrders.set('offset_to',0)">
+                </ul><select id="toSortLimitOut" class="form-select me-3" name="to_sort_limit1_out" style="width: 150px !important" dmx-on:updated="list_transfer_orders.load({limit: value, to_filter: toFilter.value, to_destination: transferDirection.value});listTransferOrders.set('offset_to',0)">
                   <option value="5">5</option>
                   <option selected="" value="25">25</option>
                   <option value="50">50</option>
@@ -507,16 +514,19 @@ JSON
                   <option value="'250">250</option>
                   <option value="500">500</option>
                 </select>
+                <button id="btn5" class="btn text-success bg-success bg-opacity-10 active" data-bs-toggle="modal" data-bs-target="#CreateTOModal">
+                  <i class="fas fa-plus fa-sm"></i>
+                </button>
               </div>
 
 
             </div>
             <div class="row mt-1" id="transfer_orders_table1" style="height: 450px; overflow: scroll;">
-              <div class="col bg-secondary rounded">
+              <div class="col rounded ms-3 me-3">
 
 
                 <div class="table-responsive">
-                  <table class="table table-hover table-sm table-borderless">
+                  <table class="table table-hover table-sm">
                     <thead>
                       <tr>
                         <th class="sorting" dmx-on:click="listPurchaseOrders.set('sort_po','po_id');listPurchaseOrders.set('dir_po',listPurchaseOrders.data.dir_po == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="listPurchaseOrders.data.sort_po=='po_id' &amp;&amp; listPurchaseOrders.data.dir_po == 'asc'" dmx-class:sorting_desc="listPurchaseOrders.data.sort_po=='po_id' &amp;&amp; listPurchaseOrders.data.dir_po == 'desc'">#</th>
@@ -539,7 +549,7 @@ JSON
                           <h6 dmx-text="trans.data.getValueOrKey(po_status)[lang.value]" class="text-center pt-1 pb-1 ps-2 pe-2" dmx-class:red-state="(po_status=='Requested')" dmx-class:green-state="(po_status=='Received')" dmx-class:yellow-state="(po_status=='Approved')">Fancy display heading</h6>
                         </td>
                         <td>
-                          <button id="btn231" class="btn open" data-bs-target="#readItemModal" dmx-on:click="readItemModal.show();session_variables.set('current_purchase_order',po_id);read_purchase_order.load({po_id: po_id});list_purchase_order_items.load({po_id: po_id})" dmx-bind:value="list_purchase_orders.data.query[0].po_id" data-bs-toggle="modal"><i class="fas fa-expand-alt fa-lg"><br></i></button>
+                          <button id="btn231" class="btn open text-primary bg-primary bg-opacity-10" data-bs-target="#readItemModal" dmx-on:click="readItemModal.show();session_variables.set('current_purchase_order',po_id);read_purchase_order.load({po_id: po_id});list_purchase_order_items.load({po_id: po_id})" dmx-bind:value="list_purchase_orders.data.query[0].po_id" data-bs-toggle="modal"><i class="fas fa-pencil-alt fa-sm"><br></i></button>
                         </td>
                       </tr>
                     </tbody>
@@ -556,7 +566,7 @@ JSON
         <div class="row">
           <div class="col rounded mt-2 ms-3 me-3 bg-secondary">
             <div class="table-responsive mt-1" id="stockadjustments">
-              <table class="table table-hover table-sm table-borderless" id="stockadjustmentsTable">
+              <table class="table table-hover table-sm" id="stockadjustmentsTable">
                 <thead>
                   <tr>
                     <th>#</th>
@@ -571,7 +581,7 @@ JSON
                     <td dmx-text="order_time"></td>
                     <td dmx-text="user_username"></td>
                     <td>
-                      <button id="btn2" class="btn open" data-bs-target="#readAOModal" dmx-on:click="session_variables.set('current_adjustment_order',order_id);read_adjustment_order.load({order_id: session_variables.data.current_adjustment_order});list_ao_items.load({order_id: read_adjustment_order.data.query.order_id})" dmx-bind:value="order_id" data-bs-toggle="modal"><i class="far fa-edit"><br></i></button>
+                      <button id="btn2" class="btn open text-primary bg-primary text-truncate bg-opacity-10" data-bs-target="#readAOModal" dmx-on:click="session_variables.set('current_adjustment_order',order_id);read_adjustment_order.load({order_id: session_variables.data.current_adjustment_order});list_ao_items.load({order_id: read_adjustment_order.data.query.order_id})" dmx-bind:value="order_id" data-bs-toggle="modal"><i class="fas fa-pencil-alt fa-sm"><br></i></button>
                     </td>
                   </tr>
                 </tbody>
@@ -636,10 +646,10 @@ JSON
                     <td dmx-text="TotalSold" class="visually-hidden"></td>
                     <td dmx-text="TotalTransfered" class="visually-hidden"></td>
                     <td dmx-text="ReservedStock"></td>
-                    <td dmx-text="(TotalPurchased - TotalSold - TotalAdjusted)"></td>
+                    <td dmx-text="(TotalReceived + TotalTransferedIn - DeliveredStock - TotalAdjusted - TotalTransfered - ReservedStock)"></td>
                     <td>
-                      <button id="btn24" class="btn" data-bs-toggle="modal" data-bs-target="#readItemProduct" dmx-on:click="read_product_data.load({product_id: po_product_id})">
-                        <i class="far fa-edit"></i></button>
+                      <button id="btn24" class="btn bg-primary bg-opacity-10 text-primary" data-bs-toggle="modal" data-bs-target="#readItemProduct" dmx-on:click="read_product_data.load({product_id: po_product_id})">
+                        <i class="fas fa-pencil-alt fa-sm"></i></button>
                     </td>
                   </tr>
                 </tbody>
@@ -818,22 +828,18 @@ JSON
         </div>
       </div>
     </div>
-    <div class="modal" id="CreateOrderModal" is="dmx-bs5-modal" tabindex="-1">
+    <div class="modal" id="CreatePOModal" is="dmx-bs5-modal" tabindex="-1">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header border-0">
+            <h4 class="modal-title">{{trans.data.purchaseOrder[lang.value]}}</h4>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
             <div class="container ps-3 pe-3">
               <div class="row row-cols-12">
-                <div class="text-center ms-1 me-1 pt-3 pb-3 ps-2 pe-2 rounded rounded-3 border-secondary bg-secondary col" id="createpo">
-                  <div class="row row-cols-12 justify-content-center">
-                    <div class="col fw-bold">
-                      <h4 class="fw-bold">{{trans.data.purchaseOrder[lang.value]}}</h4>
-                    </div>
-                  </div>
-                  <div class="row row-cols-12">
+                <div class="ms-1 me-1 pt-3 pb-3 ps-2 pe-2 rounded rounded-3 border-secondary bg-secondary col" id="createpo">
+                  <div class="row row-cols-12 text-center">
                     <form is="dmx-serverconnect-form" id="create_purchase_order_form" method="post" action="dmxConnect/api/servo_purchase_orders/create_purchase_order.php" dmx-on:success="notifies1.success('PO #'+createPurchaseOrder.data.custom[0]['last_insert_id()']+' Created');session_variables.set('current_purchase_order',create_purchase_order_form.data.custom[0]['last_insert_id()']);create_purchase_order_form.reset();list_purchase_orders.load();CreateOrderModal.hide();read_purchase_order.load({po_id: create_purchase_order_form.data.custom[0]['last_insert_id()']});readItemModal.show()">
                       <input id="timeOrdered" name="time_ordered" class="form-control visually-hidden" type="datetime-local" dmx-bind:value="var1.datetime">
                       <input id="userOrdered" name="servo_users_user_ordered_id" type="hidden" class="form-control visually-hidden" dmx-bind:value="session_variables.data.user_id">
@@ -843,22 +849,25 @@ JSON
 
 
 
-                      <div class="row mt-2 mb-3 row-cols-12">
-                        <div class="col-sm-10 opacity-50 offset-0 col">
+                      <div class="row mt-2 mb-3 row-cols-12 justify-content-center">
+                        <div class="col-auto">
                           <select id="select3" class="form-select" name="servo_vendors_vendor_id" dmx-bind:options="list_vendors.data.query_list_vendors" optiontext="vendor_name" optionvalue="vendor_id" required="" data-msg-required="!">
-                            <option value="">{{trans.data.vendor[lang.value]}}</option>
-                          </select>
+                            <option value="">-----</option>
+                          </select><small>{{trans.data.vendor[lang.value]}}</small>
+
                         </div>
                       </div>
-                      <div class="row mt-2 mb-3 row-cols-12">
-                        <div class="col-sm-10 offset-0">
-                          <select id="select5" class="form-select" name="servo_departments_department_id" optionvalue="department_id" dmx-bind:options="load_departments.data.query_list_departments" optiontext="department_name" dmx-bind:value="session_variables.data.user_department_id">
-                            <option value="">{{trans.data.department[lang.value]}}</option>
+                      <div class="row mt-2 mb-3 row-cols-12 justify-content-center">
+                        <div class="col-auto">
+                          <select id="select5" class="form-select" name="servo_departments_department_id" optionvalue="department_id" dmx-bind:options="load_departments.data.query_list_departments" optiontext="department_name" required="" data-msg-required="!">
+                            <option selected="" value="">-----</option>
                           </select>
+
+                          <small>{{trans.data.destination[lang.value]}}</small>
                         </div>
                       </div>
-                      <div class="row row-cols-12 me-3">
-                        <div class="col"><button id="btn7" class="btn text-white bg-info ps-5 pe-5" type="submit"><i class="fas fa-cart-plus fa-lg"></i></button></div>
+                      <div class="row row-cols-12 me-3 justify-content-center">
+                        <div class="col-auto"><button id="btn7" class="btn text-white bg-info ps-5 pe-5" type="submit"><i class="fas fa-cart-plus fa-lg"></i></button></div>
 
                       </div>
                     </form>
@@ -869,19 +878,36 @@ JSON
 
 
               </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal" id="CreateTOModal" is="dmx-bs5-modal" tabindex="-1">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header border-0">
+            <h4>{{trans.data.transfer[lang.value]}}</h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="container ps-3 pe-3">
               <div class="row">
-                <div class="col text-center mt-4 ms-1 me-1 pt-3 pb-3 ps-2 pe-2 rounded rounded-3 border-secondary bg-secondary" id="createTO">
+                <div class="col text-center mt-4 ms-1 me-1 pt-3 pb-3 ps-2 pe-2 rounded rounded-3 border-secondary bg-secondary" id="createTO1">
                   <div class="row">
                     <div class="col">
                       <h4 class="fw-bold">{{trans.data.transferOrder[lang.value]}}</h4>
                     </div>
                   </div>
                   <div class="row">
-                    <form is="dmx-serverconnect-form" id="create_transfer_order_form" method="post" action="dmxConnect/api/servo_purchase_orders/create_transfer_order.php" dmx-on:success="notifies1.success('TO # '+create_transfer_order_form.data.last_insert_to[0]['last_insert_id()']+'Created');session_variables.set('current_purchase_order',create_transfer_order_form.data.last_insert_to[0]['last_insert_id()']);create_transfer_order_form.reset();list_transfer_orders.load({});CreateOrderModal.hide();read_purchase_order.load({po_id: create_transfer_order_form.data.last_insert_to[0]['last_insert_id()']});readItemModal.show();list_transfer_orders_in.load({sort: query.sort_to_in, offset: query.offset_to_in, limit: toSortLimitIn.value, to_filter: toFilterIn.value});list_transfer_orders_out.load({sort: query.offset_to_out, offset: query.offset_to_out, limit: toSortLimitOut.value, to_filter: toFilterOut.value, department_source: list_user_info.data.query_list_user_info.servo_user_departments_department_id})" dmx-on:error="notifies1.warning('Error')">
-                      <input id="timeOrdered1" name="time_ordered" class="form-control visually-hidden" type="datetime-local" dmx-bind:value="var1.datetime">
-                      <input id="userOrdered1" name="servo_users_user_ordered_id" type="hidden" class="form-control visually-hidden" dmx-bind:value="session_variables.data.user_id">
-                      <input id="poStatus3" name="po_status" type="hidden" class="form-control visually-hidden" dmx-bind:value="'Requested'">
-                      <input id="poType" name="po_type" type="hidden" class="form-control visually-hidden" dmx-bind:value="'Transfer'">
+                    <form is="dmx-serverconnect-form" id="create_transfer_order_form1" method="post" action="dmxConnect/api/servo_purchase_orders/create_transfer_order.php" dmx-on:success="notifies1.success('TO # '+create_transfer_order_form1.data.last_insert_to[0]['last_insert_id()']+'Created');session_variables.set('current_purchase_order',create_transfer_order_form.data.last_insert_to[0]['last_insert_id()']);create_transfer_order_form.reset();list_transfer_orders.load({});read_purchase_order.load({po_id: create_transfer_order_form1.data.last_insert_to[0]['last_insert_id()']});readItemModal.show();list_transfer_orders_in.load({sort: query.sort_to_in, offset: query.offset_to_in, limit: toSortLimitIn.value, to_filter: toFilterIn.value});list_transfer_orders_out.load({sort: query.offset_to_out, offset: query.offset_to_out, limit: toSortLimitOut.value, to_filter: toFilterOut.value, department_source: list_user_info.data.query_list_user_info.servo_user_departments_department_id});CreateTOModal.hide()" dmx-on:error="notifies1.warning('Error')">
+                      <input id="timeOrdered2" name="time_ordered" class="form-control visually-hidden" type="datetime-local" dmx-bind:value="var1.datetime">
+                      <input id="userOrdered2" name="servo_users_user_ordered_id" type="hidden" class="form-control visually-hidden" dmx-bind:value="session_variables.data.user_id">
+                      <input id="poStatus6" name="po_status" type="hidden" class="form-control visually-hidden" dmx-bind:value="'Requested'">
+                      <input id="poType1" name="po_type" type="hidden" class="form-control visually-hidden" dmx-bind:value="'Transfer'">
 
 
 
@@ -889,7 +915,7 @@ JSON
                       <div class="row mt-2 mb-3 row-cols-12">
                         <div class="d-flex col-sm-10 offset-0 col">
                           <h5 class="me-2">{{trans.data.source[lang.value]}}</h5>
-                          <select id="select6" class="form-select" name="transfer_source_department_id" optionvalue="department_id" dmx-bind:options="load_departments.data.query_list_departments" optiontext="department_name" dmx-bind:value="session_variables.data.user_department_id">
+                          <select id="select1" class="form-select" name="transfer_source_department_id" optionvalue="department_id" dmx-bind:options="load_departments.data.query_list_departments" optiontext="department_name" dmx-bind:value="session_variables.data.user_department_id">
                             <option value="">{{trans.data.department[lang.value]}}</option>
                           </select>
                         </div>
@@ -897,37 +923,13 @@ JSON
                       <div class="row mt-2 mb-3">
                         <div class="d-flex col-sm-10 offset-0">
                           <h5 class="me-2">{{trans.data.destination[lang.value]}}</h5>
-                          <select id="select7" class="form-select" name="servo_departments_department_id" optionvalue="department_id" dmx-bind:options="load_departments.data.query_list_departments" optiontext="department_name" dmx-bind:value="session_variables.data.user_department_id">
+                          <select id="select1" class="form-select" name="servo_departments_department_id" optionvalue="department_id" dmx-bind:options="load_departments.data.query_list_departments" optiontext="department_name" dmx-bind:value="session_variables.data.user_department_id">
                             <option value="">{{trans.data.department[lang.value]}}</option>
                           </select>
                         </div>
                       </div>
                       <div class="row row-cols-1">
-                        <div class="border-warning offset-0 col"><button id="btn20" class="btn btn-lg bg-warning text-white me-1 ps-5 pe-5" type="submit"><i class="fas fa-exchange-alt fa-lg"></i></button>
-                        </div>
-                      </div>
-                    </form>
-                  </div>
-
-
-                </div>
-              </div>
-              <div class="row row-cols-12">
-                <div class="col mt-4 ms-1 me-1 pt-3 pb-3 ps-2 pe-2 border-secondary bg-secondary rounded" id="createao">
-                  <div class="row justify-content-center row-cols-12">
-                    <div class="col text-center">
-                      <h4 class="fw-bold">{{trans.data.stockAdjustment[lang.value]}}</h4>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <form is="dmx-serverconnect-form" id="create_adjustment_order" method="post" action="dmxConnect/api/servo_orders/create_adjustment_order.php" dmx-on:success="notifies1.success('Success!');session_variables.set('current_adjustment_order',create_adjustment_order.data.custom[0]['last_insert_id()']);list_adjustment_orders.load({});CreateOrderModal.hide();read_adjustment_order.load({order_id: create_adjustment_order.data.custom[0]['last_insert_id()']});readAOModal.show()">
-                      <input id="order_time" name="order_time" class="form-control visually-hidden" type="datetime-local" dmx-bind:value="var1.datetime">
-                      <input id="order_status" name="order_status" type="hidden" class="form-control visually-hidden" dmx-bind:value="session_variables.data.user_id">
-                      <input id="user_ordered" name="servo_user_user_id" type="hidden" class="form-control visually-hidden" dmx-bind:value="session_variables.data.user_id">
-
-                      <input id="aoDepartment" name="servo_departments_department_id" type="hidden" class="form-control" dmx-bind:value="session_variables.data.user_department_id">
-                      <div class="row row-cols-1">
-                        <div class="d-flex border-warning col offset-0 justify-content-center"><button id="btn5" class="btn btn-lg text-white bg-danger pt-1 pb-1 ps-5 pe-5" type="submit"><i class="far fa-minus-square fa-lg"></i></button>
+                        <div class="border-warning offset-0 col"><button id="btn27" class="btn btn-lg me-1 ps-5 pe-5 text-success lh-base bg-opacity-10 bg-success" type="submit"><i class="fas fa-exchange-alt fa-lg"></i></button>
                         </div>
                       </div>
                     </form>
@@ -944,6 +946,20 @@ JSON
         </div>
       </div>
     </div>
+    <div class="modal" id="CreateSAModal" is="dmx-bs5-modal" tabindex="-1">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header border-0">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+          </div>
+          <div class="modal-footer">
+
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="modal readitem" id="readItemModal" is="dmx-bs5-modal" tabindex="-1" dmx-on:hidden-bs-modal="session_variables.remove('current_purchase_order')">
       <div class="modal-dialog modal-xl" role="document" style="margin: 3px !important; width: 99.5% !important; height: 99% !important; max-width: 99.5% !important; max-height: 99% !important;">
         <div class="modal-content">
@@ -952,9 +968,19 @@ JSON
           <dmx-preloader id="preloader1" spinner="pulse" bgcolor="#8A8686" ,255,255,0.99),255,255,0.97)=""></dmx-preloader>
 
           <div class="modal-header border-0">
-            <div class="d-block d-flex"><button id="btn10" class="btn float-right bg-opacity-10 me-3 text-info bg-info" data-bs-toggle="offcanvas" data-bs-target="#AddProductsToOrderOffCanvas" dmx-on:click="" dmx-hide="(read_purchase_order.data.query.po_status == 'Received')||(profile_privileges.data.profile_privileges[0].delete_po=='No')"><i class="fas fa-cart-plus fa-sm"></i></button>
+            <div class="d-block d-flex align-items-center flex-wrap">
+              <button id="btn32" class="btn float-right bg-primary text-primary bg-opacity-10 mt-1 me-2" data-bs-target="#printInvoiceModal" dmx-show="read_purchase_order.data.query.po_type=='Purchase'">{{trans.data.purchaseOrder[lang.value]}}: {{read_purchase_order.data.query.po_id}}
+              </button>
+              <button id="btn33" class="btn float-right bg-primary text-primary mt-1 me-2 bg-opacity-10" data-bs-target="#printInvoiceModal" dmx-show="read_purchase_order.data.query.po_type=='Transfer'">{{trans.data.transferOrder[lang.value]}}: {{read_purchase_order.data.query.po_id}}
+              </button>
+              <button id="btn34" class="btn float-right bg-primary text-primary mt-1 me-2 bg-opacity-25" data-bs-target="#printInvoiceModal" dmx-text="read_purchase_order.data.query.vendor_name" dmx-show="read_purchase_order.data.query.po_type=='Purchase'">
+              </button><button id="btn20" class="btn float-right bg-primary text-primary mt-1 me-2 bg-opacity-25" data-bs-target="#printInvoiceModal" dmx-text="read_purchase_order.data.query.department_source" dmx-show="read_purchase_order.data.query.po_type=='Transfer'">
+              </button><button id="btn29" class="btn float-right bg-primary text-primary bg-opacity-10 mt-1 me-2" data-bs-target="#printInvoiceModal">
+                <i class="fas fa-arrow-right"></i>
+              </button><button id="btn28" class="btn float-right mt-1 me-2 bg-secondary" data-bs-target="#printInvoiceModal" dmx-text="read_purchase_order.data.query.department_destination" dmx-class:text-success="read_purchase_order.data.query.po_status=='Received'" dmx-class:text-danger="read_purchase_order.data.query.po_status!=='Received'">
+              </button><button id="btn10" class="btn float-right bg-opacity-10 text-success bg-success mt-1 me-3" data-bs-toggle="offcanvas" data-bs-target="#AddProductsToOrderOffCanvas" dmx-on:click="" dmx-hide="(read_purchase_order.data.query.po_status == 'Received')||(profile_privileges.data.profile_privileges[0].delete_po=='No')"><i class="fas fa-cart-plus fa-sm"></i></button>
               <div id="conditional1" is="dmx-if" dmx-bind:condition="(profile_privileges.data.profile_privileges[0].approve_po == 'Yes')">
-                <main>
+                <main class="mt-1">
                   <div class="row">
                     <div class="col d-flex">
                       <form id="approvePO" is="dmx-serverconnect-form" method="post" action="dmxConnect/api/servo_purchase_orders/approve_po.php" dmx-on:success="notifies1.success('Success!');list_purchase_orders.load({});list_transfer_orders.load({});read_purchase_order.load({po_id: read_purchase_order.data.query.po_id})" dmx-hide="(read_purchase_order.data.query.po_status == 'Approved');">
@@ -981,7 +1007,7 @@ JSON
 
               </div>
               <div id="conditional5" is="dmx-if" dmx-bind:condition="(profile_privileges.data.profile_privileges[0].approve_po == 'Yes')">
-                <main>
+                <main class="mt-1">
                   <div class="row">
                     <div class="col d-flex">
                       <form id="closePO" is="dmx-serverconnect-form" method="post" action="dmxConnect/api/servo_purchase_orders/close_purchase_order.php" dmx-on:success="notifies1.success('Success!');read_purchase_order.load({po_id: read_purchase_order.data.query.po_id})" dmx-hide="(read_purchase_order.data.query.po_status == 'Approved');">
@@ -1006,9 +1032,13 @@ JSON
                   </div>
                 </main>
 
-              </div><button id="btn19" class="btn float-right bg-primary text-primary bg-opacity-10" data-bs-toggle="modal" data-bs-target="#printInvoiceModal">
+              </div><button id="btn19" class="btn float-right bg-primary text-primary bg-opacity-10 mt-1 me-2" data-bs-toggle="modal" data-bs-target="#printInvoiceModal">
                 <i class="fas fa-file-invoice fa-sm"></i>
               </button>
+
+
+
+
             </div>
 
 
@@ -1039,8 +1069,8 @@ JSON
                       <i class="fas fa-backspace"></i>
                     </button></div>
                 </div>
-                <div class="row justify-content-xxl-center me-2 row-cols-12 row-cols-xl-10">
-                  <div class="flex-md-wrap flex-md-row justify-content-md-center align-content-center offset-md-1 col-12 col-sm-5 col-xxl-1 col-md-5 col-lg-2 bg-light rounded-bottom mt-2 mb-2 ms-1 me-0 pt-3 pb-3 ps-3 pe-3" id="repeatProducts" style="margin-top: 0px !important; padding-top: 0px !important; /* position: relative */ /* height: auto */" dmx-repeat:repeatproducts="load_products.data.repeat">
+                <div class="row justify-content-xxl-center me-2 row-cols-12 row-cols-xl-10 row-cols-lg-12 justify-content-start">
+                  <div class="flex-md-wrap flex-md-row justify-content-md-center align-content-center offset-md-1 col-sm-5 bg-light rounded-bottom mt-2 mb-2 ms-1 me-0 pt-3 pb-3 ps-3 pe-3 col-xxl-auto col-md-3 col-lg-2 col-xl-2 col-2" id="repeatProducts" style="margin-top: 0px !important; padding-top: 0px !important; /* position: relative */ /* height: auto */" dmx-repeat:repeatproducts="load_products.data.repeat">
 
                     <div class="row mt-2">
                       <div class="col text-center" style="padding: 0px !important; height: 200px;" dmx-hide="product_picture==null">
@@ -1075,30 +1105,27 @@ JSON
             </div>
             <div class="row">
               <div class="d-flex col justify-content-start flex-wrap">
-                <div class="d-block">
-                  <h6 dmx-show="(read_purchase_order.data.query.po_type == 'Purchase')" class="rounded pt-2 pb-2 ps-3 pe-3 bg-secondary">{{trans.data.purchaseOrder[lang.value]}}: {{read_purchase_order.data.query.po_id}}</h6>
-                  <h6 dmx-show="(read_purchase_order.data.query.po_type == 'Transfer')" class="rounded bg-primary bg-opacity-10 pt-2 pb-2 ps-3 pe-3">{{trans.data.transferOrder[lang.value]}}: {{read_purchase_order.data.query.po_id}}</h6>
-                </div>
 
-                <div class="d-block ms-2">
-                  <h6 class="ms-2 pt-2 pb-2 ps-3 pe-3 rounded fw-bold text-primary bg-secondary" dmx-text="trans.data.getValueOrKey(read_purchase_order.data.query.po_status)[lang.value]
+
+                <div class="d-block">
+                  <h6 class="rounded fw-bold bg-secondary pt-2 pb-2 ps-3 pe-3" dmx-text="trans.data.getValueOrKey(read_purchase_order.data.query.po_status)[lang.value]
                                     " dmx-class:text-success="read_purchase_order.data.query.po_status=='Received'" dmx-class:text-danger="read_purchase_order.data.query.po_status=='Requested'" dmx-class:text-warning="read_purchase_order.data.query.po_status=='Approved'"><i class="fas fa-check fa-sm" style="margin-right: 10px"></i>
 
                   </h6>
                 </div>
-                <div class="d-block text-danger ms-2 d-flex flex-wrap">
+                <div class="d-block text-danger ms-2 d-flex flex-wrap" dmx-hide="read_purchase_order.data.query.po_type=='Transfer'">
                   <dmx-value id="poTotal" dmx-bind:value="(read_purchase_order.data.read_po_totals[0].POTotal).toNumber().formatNumber('O',',',',').default(0)"></dmx-value>
                   <dmx-value id="poTotalPaid" dmx-bind:value="(read_purchase_order.data.read_po_totals[0].POTotalPaid).toNumber().formatNumber('O',',',',').default(0)"></dmx-value>
                   <dmx-value id="poTotalOwing" dmx-bind:value="((read_purchase_order.data.read_po_totals[0].POTotalPaid).toNumber() - read_purchase_order.data.read_po_totals[0].POTotal).toNumber().formatNumber('0',',',',')"></dmx-value>
                   <dmx-value id="poTotalOwing2" dmx-bind:value="((read_purchase_order.data.read_po_totals[0].POTotalPaid).toNumber() - read_purchase_order.data.read_po_totals[0].POTotal).toNumber()"></dmx-value>
 
-                  <h6 class="fw-bold ms-2 pt-2 pb-2 ps-3 pe-3 rounded bg-opacity-10 text-info bg-info"><i class="fas fa-cash-register fa-sm" style="margin-right:10px"></i>
+                  <h6 class="fw-bold ms-2 pt-2 pb-2 ps-3 pe-3 rounded bg-opacity-10 bg-primary text-primary"><i class="fas fa-cash-register fa-sm" style="margin-right:10px"></i>
                     {{poTotal.value}}
                   </h6>
                   <h6 class="fw-bold ms-2 pt-2 pb-2 ps-3 pe-3 rounded bg-opacity-10 text-success bg-success"><i class="fas fa-arrow-circle-up fa-sm" style="margin-right:10px"></i>{{poTotalPaid.value}}
 
                   </h6>
-                  <h6 class="fw-bold ms-2 pt-2 pb-2 ps-3 pe-3 rounded bg-opacity-10 text-warning bg-warning"><i class="fas fa-arrow-circle-down fa-sm" style="margin-right:10px"></i>
+                  <h6 class="fw-bold text-danger ms-2 pt-2 pb-2 ps-3 pe-3 rounded bg-danger bg-opacity-10"><i class="fas fa-arrow-circle-down fa-sm" style="margin-right:10px"></i>
                     {{poTotalOwing.value}}
                   </h6>
                 </div>
@@ -1114,12 +1141,12 @@ JSON
                   <li class="nav-item" id="poOverview"><a class="nav-link active" id="navTabs1_1_tab" data-bs-toggle="tab" href="#" data-bs-target="#poOverview_1" role="tab" aria-controls="navTabs1_1" aria-selected="true"><i class="far fa-eye" style="margin-right: 3px;"></i>{{trans.data.overview[lang.value]}}
 
                     </a></li>
-                  <li class="nav-item" id="poCash">
+                  <li class="nav-item" id="poCash" dmx-hide="(read_purchase_order.data.query.po_payment_status=='Paid');(read_purchase_order.data.query.po_type=='Transfer')">
                     <a class="nav-link" id="navTabs1_2_tab" data-bs-toggle="tab" href="#" data-bs-target="#poCash_1" role="tab" aria-controls="navTabs1_2" aria-selected="false"><i class="fas fa-cash-register" style="margin-right: 3px;"></i>{{trans.data.payment[lang.value]}}
 
                     </a>
                   </li>
-                  <li class="nav-item" id="poTransactions">
+                  <li class="nav-item" id="poTransactions" dmx-hide="read_purchase_order.data.query.po_type=='Transfer'">
                     <a class="nav-link" id="navTabs1_3_tab2" data-bs-toggle="tab" href="#" data-bs-target="#poTransactions_1" role="tab" aria-controls="navTabs1_3" aria-selected="false"><i class="fas fa-coins"></i>
                     </a>
                   </li>
@@ -1148,20 +1175,20 @@ JSON
                               <tr>
                                 <th>{{trans.data.product[lang.value]}}</th>
                                 <th>{{trans.data.quantity[lang.value]}}</th>
-                                <th>{{trans.data.unitPrice[lang.value]}}</th>
-                                <th class="text-center">{{trans.data.total[lang.value]}}</th>
+                                <th dmx-hide="read_purchase_order.data.query.po_type=='Transfer'">{{trans.data.unitPrice[lang.value]}}</th>
+                                <th class="text-center" dmx-hide="read_purchase_order.data.query.po_type=='Transfer'">{{trans.data.total[lang.value]}}</th>
                                 <th>{{trans.data.note[lang.value]}}</th>
 
-                                <th></th>
+                                <th class="text-center"></th>
                               </tr>
                             </thead>
                             <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="list_purchase_order_items.data.query" id="tableRepeat2">
                               <tr>
                                 <td dmx-text="product_name"></td>
                                 <td class="text-end">
-                                  <form id="editQuantity" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_purchase_order_items/update_po_item_quantity.php" dmx-on:success="notifies1.success('Success');list_purchase_order_items.load({po_id: session_variables.data.current_purchase_order});create_value_update_po_item_quantity.submit()">
+                                  <form id="editQuantity" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_purchase_order_items/update_po_item_quantity.php" dmx-on:success="notifies1.success('Success');list_purchase_order_items.load({po_id: session_variables.data.current_purchase_order});create_value_update_po_item_quantity.submit();read_purchase_order.load({})">
                                     <div class="row">
-                                      <div class="col d-flex"><input id="newQuantity" name="po_item_quantity" type="number" class="form-control inline-edit" dmx-bind:value="po_item_quantity" dmx-bind:disabled="(profile_privileges.data.profile_privileges[0].edit_po_item_quantity == 'No')||read_purchase_order.data.query.po_status=='Received'" min="" data-rule-min="1" data-msg-min="Min. 1" dmx-on:updated="create_value_update_po_item_quantity.quantityUpdateNew.setValue(editQuantity.newQuantity.value)" dmx-disabled="(profile_privileges.data.profile_privileges[0].edit_po_item_quantity == 'No')">
+                                      <div class="col d-flex text-end"><input id="newQuantity" name="po_item_quantity" type="number" class="form-control inline-edit" dmx-bind:value="po_item_quantity" dmx-bind:disabled="(profile_privileges.data.profile_privileges[0].edit_po_item_quantity == 'No')||read_purchase_order.data.query.po_status=='Received'" min="" data-rule-min="1" data-msg-min="Min. 1" dmx-on:updated="create_value_update_po_item_quantity.quantityUpdateNew.setValue(editQuantity.newQuantity.value)" dmx-disabled="(profile_privileges.data.profile_privileges[0].edit_po_item_quantity == 'No')">
                                         <input id="editPOId" name="po_item_id" type="number" class="form-control inline-edit visually-hidden" dmx-bind:value="po_item_id">
                                         <button id="btn21" class="btn text-success ms-3" data-bs-target="#productInfo" type="submit" dmx-bind:disabled="(profile_privileges.data.profile_privileges[0].edit_po_item_quantity == 'No')||read_purchase_order.data.query.po_status=='Received'|| editQuantity.newQuantity.value == po_item_quantity"><i class="fas fa-check"><br></i></button>
                                       </div>
@@ -1186,11 +1213,11 @@ JSON
 
 
                                 </td>
-                                <td class="text-end">
+                                <td class="text-end" dmx-hide="read_purchase_order.data.query.po_type=='Transfer'">
                                   <form id="editPrice" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_purchase_order_items/update_po_item_price.php" dmx-on:success="notifies1.success('Success');list_purchase_order_items.load({po_id: session_variables.data.current_purchase_order});create_value_update_po_item_price.submit()">
-                                    <div class="row">
-                                      <div class="col d-flex">
-                                        <input id="newPrice" name="po_item_price" type="number" class="form-control inline-edit" dmx-bind:value="po_item_price" dmx-bind:disabled="(profile_privileges.data.profile_privileges[0].edit_po_item_price == 'No') || read_purchase_order.data.query.po_status=='Received'" min="" data-rule-min="1" data-msg-min="Min. 1" dmx-on:updated="create_value_update_po_item_price.priceUpdateNew.setValue(editPrice.newPrice.value)">
+                                    <div class="row" dmx-show="(list_user_info.data.query_list_user_info.user_profile == 'Administrator');(list_user_info.data.query_list_user_info.user_profile == 'pmanager');(list_user_info.data.query_list_user_info.user_profile == 'smanager')">
+                                      <div class="col d-flex text-end">
+                                        <input id="newPrice" name="po_item_price" type="number" class="form-control inline-edit" dmx-bind:value="po_item_price" dmx-bind:disabled="(profile_privileges.data.profile_privileges[0].edit_po_item_price == 'No') || read_purchase_order.data.query.po_status=='Received'" min="" data-rule-min="1" data-msg-min="Min. 1" dmx-on:updated="create_value_update_po_item_price.priceUpdateNew.setValue(editPrice.newPrice.value);read_purchase_order.load({})">
                                         <input id="editPOId1" name="po_item_id" type="number" class="form-control inline-edit visually-hidden" dmx-bind:value="po_item_id"><button id="btn4" class="btn text-success ms-3" data-bs-target="#productInfo" type="submit" dmx-bind:disabled="(profile_privileges.data.profile_privileges[0].edit_po_item_price == 'No') || read_purchase_order.data.query.po_status=='Received'|| editPrice.newPrice.value == po_item_price"><i class="fas fa-check"><br></i></button>
                                       </div>
                                     </div>
@@ -1209,11 +1236,11 @@ JSON
                                     </div>
                                   </form>
                                 </td>
-                                <td dmx-text="(po_item_quantity * po_item_price).formatNumber(0, '.', ',')" class="text-end"></td>
+                                <td dmx-text="(po_item_quantity * po_item_price).formatNumber(0, '.', ',')" class="text-end" dmx-hide="read_purchase_order.data.query.po_type=='Transfer'"></td>
                                 <td dmx-text="po_item_notes"></td>
 
 
-                                <td>
+                                <td class="text-center">
                                   <div class="row" is="dmx-if" id="conditional3" dmx-bind:condition="(profile_privileges.data.profile_privileges[0].delete_po_item == 'Yes')">
                                     <form id="deletePOItem" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_purchase_order_items/delete_po_item.php" dmx-on:success="notifies1.success('Success!');list_purchase_order_items.load({po_id: read_purchase_order.data.query.po_id});createPOItemDelete.submit()">
                                       <input id="poItemDelete" name="po_item_id" type="text" class="form-control visually-hidden" dmx-bind:value="po_item_id">
@@ -1241,7 +1268,7 @@ JSON
                       </div>
                     </div>
                     <div class="row rounded mt-2 ms-0 me-0 pt-2 pb-2 ps-2 pe-2 bg-opacity-10">
-                      <form is="dmx-serverconnect-form" id="updatePurchaseOrder" method="post" action="dmxConnect/api/servo_purchase_orders/update_purchase_order.php" dmx-generator="bootstrap5" dmx-form-type="horizontal" dmx-populate="read_purchase_order.data.query">
+                      <form is="dmx-serverconnect-form" id="updatePurchaseOrder" method="post" action="dmxConnect/api/servo_purchase_orders/update_purchase_order.php" dmx-generator="bootstrap5" dmx-form-type="horizontal" dmx-populate="read_purchase_order.data.query" dmx-on:success="read_purchase_order.load({po_id: read_purchase_order.data.query.po_id});notifies1.success('Success!')">
                         <div class="mb-3 row visually-hidden">
                           <label for="inp_po_id" class="col-sm-2 col-form-label visually-hidden" wappler-command="editContent">PO</label>
                           <div class="col-sm-10">
@@ -1260,11 +1287,26 @@ JSON
                             <input id="poDiscount" name="po_discount" type="number" class="form-control" dmx-bind:disabled="read_purchase_order.data.query.po_status=='Received'&amp;&amp;profile_privileges.data.profile_privileges[0].create_po=='No'">
                           </div>
                         </div>
-                        <div class="row mb-3 text-danger fw-bold">
+                        <div class="row mb-3 fw-bold" dmx-show="read_purchase_order.data.query.po_type=='Purchase'">
                           <label for="inp_payment_method" class="col-sm-2 col-form-label" wappler-command="editContent">{{trans.data.vendor[lang.value]}}</label>
                           <div class="col-sm-10">
-                            <select id="select4" class="form-select" name="servo_vendors_vendor_id" dmx-bind:disabled="read_purchase_order.data.query.po_status=='Received'&amp;&amp;profile_privileges.data.profile_privileges[0].create_po=='No'" dmx-bind:options="list_vendors.data.query_list_vendors" optiontext="vendor_name" optionvalue="vendor_id" dmx-bind:value="read_purchase_order.data.query.servo_vendors_vendor_id" required="" data-msg-required="!">
-                              <option selected="" value="%">{{trans.data.vendor[lang.value]}}</option>
+                            <select id="select4" class="form-select" name="servo_vendors_vendor_id" dmx-bind:disabled="read_purchase_order.data.query.po_status=='Received'&amp;&amp;profile_privileges.data.profile_privileges[0].create_po=='No'" dmx-bind:options="list_vendors.data.query_list_vendors" optiontext="vendor_name" optionvalue="vendor_id" dmx-bind:value="read_purchase_order.data.query.servo_vendors_vendor_id">
+                              <option selected="" value="">-----</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="row mb-3 fw-bold" dmx-show="read_purchase_order.data.query.po_type=='Transfer'">
+                          <label for="inp_payment_method" class="col-sm-2 col-form-label" wappler-command="editContent">{{trans.data.source[lang.value]}}</label>
+                          <div class="col-sm-10">
+                            <select id="select2" class="form-select" name="transfer_source_department_id" dmx-bind:disabled="read_purchase_order.data.query.po_status=='Received'&amp;&amp;profile_privileges.data.profile_privileges[0].create_po=='No'" dmx-bind:options="load_departments.data.query_list_departments" optiontext="department_name" optionvalue="department_id" dmx-bind:value="read_purchase_order.data.query.transfer_source_department_id">
+                              <option selected="" value="">-----</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="row mb-3 fw-bold"><label for="inp_payment_method" class="col-sm-2 col-form-label">{{trans.data.destination[lang.value]}}</label>
+                          <div class="col-sm-10">
+                            <select id="select6" class="form-select" name="servo_departments_department_id" dmx-bind:disabled="read_purchase_order.data.query.po_status=='Received'&amp;&amp;profile_privileges.data.profile_privileges[0].create_po=='No'" dmx-bind:options="load_departments.data.query_list_departments.where(`department_id`, select2.value, '!==')" optiontext="department_name" optionvalue="department_id" dmx-bind:value="read_purchase_order.data.query.servo_departments_department_id">
+                              <option selected="" value="">-----</option>
                             </select>
                           </div>
                         </div>
@@ -1283,7 +1325,7 @@ JSON
                       </form>
                     </div>
                   </div>
-                  <div class="tab-pane fade" id="poCash_1" role="tabpanel">
+                  <div class="tab-pane fade" id="poCash_1" role="tabpanel" dmx-hide="(read_purchase_order.data.query.po_payment_status=='Paid' || read_purchase_order.data.query.po_type=='Transfer')">
 
 
 
@@ -1338,7 +1380,7 @@ JSON
                       </form>
                     </div>
                   </div>
-                  <div class="tab-pane fade" id="poTransactions_1" role="tabpanel">
+                  <div class="tab-pane fade" id="poTransactions_1" role="tabpanel" dmx-hide="read_purchase_order.data.query.po_type=='Transfer'">
                     <div class="row mt-2 ms-0 me-0">
                       <div class="col bg-secondary rounded">
                         <div class="table-responsive">
@@ -1473,8 +1515,8 @@ JSON
             <form id="form1" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_purchase_orders/delete_purchase_order.php" dmx-on:success="notifies1.success('Success');readItemModal.hide();list_purchase_orders.load({})" onsubmit=" return confirm('CONFIRM DELETE?');" dmx-show="(profile_privileges.data.profile_privileges[0].delete_po == 'Yes')">
               <input id="text1" name="po_id" class="form-control visually-hidden" dmx-bind:value="read_purchase_order.data.query.po_id">
 
-              <button id="btn6" class="btn text-body" type="submit">
-                <i class="far fa-trash-alt fa-lg"></i>
+              <button id="btn6" class="btn text-muted" type="submit">
+                <i class="far fa-trash-alt"></i>
               </button>
             </form>
           </div>
@@ -1885,22 +1927,22 @@ JSON
                 <div class="col">
                 </div>
                 <div class="col">
-                  <h5 class="text-info fw-bolder" dmx-text="companyInfo.data.query.company_address"></h5>
+                  <h5 class="fw-bolder text-primary" dmx-text="companyInfo.data.query.company_address"></h5>
                 </div>
               </div>
               <div class="row justify-content-center row-cols-1" id="receiptNumber">
 
                 <div class="col">
-                  <h4 class="text-info fw-bolder text-center" dmx-text="trans.data.purchaseOrder[lang.value]+' : '+read_purchase_order.data.query.po_id" id="poTitle" dmx-show="read_purchase_order.data.query.po_type=='Purchase'"></h4>
-                  <h4 class="text-info fw-bolder text-center" dmx-text="trans.data.transferOrder[lang.value]+' : '+read_purchase_order.data.query.po_id" id="toTitle" dmx-show="read_purchase_order.data.query.po_type=='Transfer'"></h4>
+                  <h4 class="fw-bolder text-center text-primary" dmx-text="trans.data.purchaseOrder[lang.value]+' : '+read_purchase_order.data.query.po_id" id="poTitle" dmx-show="read_purchase_order.data.query.po_type=='Purchase'"></h4>
+                  <h4 class="fw-bolder text-center text-primary" dmx-text="trans.data.transferOrder[lang.value]+' : '+read_purchase_order.data.query.po_id" id="toTitle" dmx-show="read_purchase_order.data.query.po_type=='Transfer'"></h4>
                 </div>
               </div>
               <div class="row justify-content-center row-cols-1" id="receiptInformation">
 
                 <div class="col" dmx-hide="read_purchase_order.data.query.po_type=='Transfer'">
-                  <h6 class="text-info fw-bolder text-start" dmx-text="trans.data.vendor[lang.value]+' : '"></h6>
+                  <h6 class="fw-bolder text-start text-primary" dmx-text="trans.data.vendor[lang.value]+' : '"></h6>
                   <p dmx-html="read_purchase_order.data.query.vendor_name+' &lt;br&gt;'+read_purchase_order.data.query.vendor_address+'&lt;br&gt;'+read_purchase_order.data.query.vendor_phone_number" dmx-hide="read_purchase_order.data.query.po_type=='Transfer'"></p>
-                  <h5 class="text-info fw-bolder text-start" dmx-text="trans.data.name[lang.value]+' : '+read_customer.data.query_read_customer.customer_first_name+' '+read_customer.data.query_read_customer.customer_last_name"></h5>
+                  <h5 class="fw-bolder text-start text-primary" dmx-text="trans.data.name[lang.value]+' : '+read_customer.data.query_read_customer.customer_first_name+' '+read_customer.data.query_read_customer.customer_last_name"></h5>
                 </div>
               </div>
               <div class="row justify-content-center row-cols-1" id="transferInformation" dmx-show="read_purchase_order.data.query.po_type=='Transfer'">
@@ -1947,10 +1989,10 @@ JSON
               </div>
               <div class="row justify-content-end">
                 <div class="col">
-                  <h5 dmx-text="trans.data.total[lang.value]">Fancy display heading</h5>
+                  <h5 dmx-text="trans.data.total[lang.value]" class="text-primary">Fancy display heading</h5>
                 </div>
                 <div class="col">
-                  <h5 dmx-text="">Fancy display heading</h5>
+                  <h5 dmx-text="" class="text-primary">Fancy display heading</h5>
                 </div>
               </div>
             </div>
@@ -1969,7 +2011,7 @@ JSON
 
 
 
-  <script src="bootstrap/5/js/bootstrap.bundle.min.js"></script>
+  <script src="bootstrap/5/js/bootstrap.min.js"></script>
 </body>
 
 </html>

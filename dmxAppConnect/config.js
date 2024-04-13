@@ -3030,7 +3030,61 @@ dmx.config({
       }
     ]
   },
-  "procurement": {
+  "cashier": {
+    "query": [
+      {
+        "type": "text",
+        "name": "customerOrdersOffset"
+      },
+      {
+        "type": "text",
+        "name": "orders_sort"
+      },
+      {
+        "type": "text",
+        "name": "orders_dir"
+      },
+      {
+        "type": "text",
+        "name": "listDataOffset"
+      }
+    ],
+    "sessionStorage": [
+      {
+        "type": "text",
+        "name": "current_customer"
+      }
+    ]
+  },
+  "Customers": {
+    "query": [
+      {
+        "type": "text",
+        "name": "customerTransactionsOffset"
+      }
+    ]
+  },
+  "index": {
+    "cookies": [
+      {
+        "type": "text",
+        "name": "cookie1"
+      }
+    ]
+  },
+  "brands": {
+    "query": [
+      {
+        "type": "text",
+        "name": "ListTransactionsLimit"
+      },
+      {
+        "type": "text",
+        "name": "ListTransactionsOffset"
+      }
+    ]
+  },
+  "dmanager": {
     "products": {
       "meta": [
         {
@@ -3317,60 +3371,10 @@ dmx.config({
         }
       ],
       "outputType": "array"
+    },
+    "pageName": {
+      "meta": null,
+      "outputType": "text"
     }
-  },
-  "cashier": {
-    "query": [
-      {
-        "type": "text",
-        "name": "customerOrdersOffset"
-      },
-      {
-        "type": "text",
-        "name": "orders_sort"
-      },
-      {
-        "type": "text",
-        "name": "orders_dir"
-      },
-      {
-        "type": "text",
-        "name": "listDataOffset"
-      }
-    ],
-    "sessionStorage": [
-      {
-        "type": "text",
-        "name": "current_customer"
-      }
-    ]
-  },
-  "Customers": {
-    "query": [
-      {
-        "type": "text",
-        "name": "customerTransactionsOffset"
-      }
-    ]
-  },
-  "index": {
-    "cookies": [
-      {
-        "type": "text",
-        "name": "cookie1"
-      }
-    ]
-  },
-  "brands": {
-    "query": [
-      {
-        "type": "text",
-        "name": "ListTransactionsLimit"
-      },
-      {
-        "type": "text",
-        "name": "ListTransactionsOffset"
-      }
-    ]
   }
 });

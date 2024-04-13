@@ -127,7 +127,8 @@ $app->define(<<<'JSON'
                     "name": "asset_id"
                   }
                 },
-                "operation": "="
+                "operation": "=",
+                "table": "servo_assets"
               }
             ],
             "conditional": null,

@@ -202,7 +202,7 @@ $app->define(<<<'JSON'
                 "primary": "department_id"
               }
             ],
-            "query": "SELECT servo_purchase_orders.po_id, servo_purchase_orders.time_ordered, servo_purchase_orders.time_approved, servo_purchase_orders.po_status, servo_purchase_orders.po_notes, servo_purchase_orders.po_need_by_date, servo_user.user_username, servo_vendors.vendor_name, servo_purchase_orders.servo_users_user_received_id, servo_purchase_orders.po_type, servo_purchase_orders.transfer_source_department_id, servo_department.department_name, source_department.department_name AS source_department_name, source_department.department_id AS source_department_id, servo_department.department_id, servo_purchase_orders.servo_departments_department_id\nFROM servo_purchase_orders\nLEFT JOIN servo_user ON (servo_user.user_id = servo_purchase_orders.servo_users_user_ordered_id) LEFT JOIN servo_vendors ON (servo_vendors.vendor_id = servo_purchase_orders.servo_vendors_vendor_id) LEFT JOIN servo_department AS source_department ON (source_department.department_id = servo_purchase_orders.transfer_source_department_id) LEFT JOIN servo_department ON (servo_department.department_id = servo_purchase_orders.servo_departments_department_id)\nWHERE servo_purchase_orders.po_id >= :P1 /* {{$_GET.to_filter}} */ AND servo_purchase_orders.po_type = 'Transfer' AND servo_purchase_orders.servo_departments_department_id = :P2 /* {{$_GET.department_source}} */\nORDER BY servo_purchase_orders.time_ordered DESC, servo_purchase_orders.po_id DESC, servo_user.user_username ASC, servo_department.department_name ASC, servo_vendors.vendor_name ASC, servo_purchase_orders.po_status ASC",
+            "query": "select `servo_purchase_orders`.`po_id`, `servo_purchase_orders`.`time_ordered`, `servo_purchase_orders`.`time_approved`, `servo_purchase_orders`.`po_status`, `servo_purchase_orders`.`po_notes`, `servo_purchase_orders`.`po_need_by_date`, `servo_user`.`user_username`, `servo_vendors`.`vendor_name`, `servo_purchase_orders`.`servo_users_user_received_id`, `servo_purchase_orders`.`po_type`, `servo_purchase_orders`.`transfer_source_department_id`, `servo_department`.`department_name`, `source_department`.`department_name` as `source_department_name`, `source_department`.`department_id` as `source_department_id`, `servo_department`.`department_id`, `servo_purchase_orders`.`servo_departments_department_id` from `servo_purchase_orders` left join `servo_user` on `servo_user`.`user_id` = `servo_purchase_orders`.`servo_users_user_ordered_id` left join `servo_vendors` on `servo_vendors`.`vendor_id` = `servo_purchase_orders`.`servo_vendors_vendor_id` left join `servo_department` as `source_department` on `source_department`.`department_id` = `servo_purchase_orders`.`transfer_source_department_id` left join `servo_department` on `servo_department`.`department_id` = `servo_purchase_orders`.`servo_departments_department_id` where `servo_purchase_orders`.`po_id` >= ? and `servo_purchase_orders`.`po_type` = ? and `servo_purchase_orders`.`servo_departments_department_id` = ? order by `servo_purchase_orders`.`time_ordered` DESC, `servo_purchase_orders`.`po_id` DESC, `servo_user`.`user_username` ASC, `servo_department`.`department_name` ASC, `servo_vendors`.`vendor_name` ASC, `servo_purchase_orders`.`po_status` ASC",
             "params": [
               {
                 "operator": "greater_or_equal",
@@ -295,6 +295,7 @@ $app->define(<<<'JSON'
                         "Purchase",
                         "Transfer"
                       ],
+                      "default": "",
                       "maxLength": 8,
                       "primary": false,
                       "nullable": true,
@@ -315,6 +316,7 @@ $app->define(<<<'JSON'
                     "type": "number",
                     "columnObj": {
                       "type": "reference",
+                      "default": "",
                       "primary": false,
                       "nullable": true,
                       "references": "department_id",
@@ -328,7 +330,7 @@ $app->define(<<<'JSON'
                   "operation": "="
                 }
               ],
-              "conditional": null,
+              "conditional": "{{$_GET.department_source}}",
               "valid": true
             }
           }
@@ -567,6 +569,14 @@ $app->define(<<<'JSON'
           {
             "type": "text",
             "name": "po_type"
+          },
+          {
+            "type": "number",
+            "name": "po_discount"
+          },
+          {
+            "type": "text",
+            "name": "po_payment_status"
           }
         ],
         "outputType": "array",

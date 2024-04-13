@@ -116,7 +116,21 @@ $exports = <<<'JSON'
           {
             "column": "user_profile",
             "operator": "=",
-            "value": "Smanager"
+            "value": "smanager"
+          }
+        ]
+      },
+      "dmanager": {
+        "table": "servo_user",
+        "identity": "user_id",
+        "conditions": [
+          {
+            "column": "user_profile",
+            "operator": "in",
+            "value": [
+              "dmanager",
+              "Admin"
+            ]
           }
         ]
       }

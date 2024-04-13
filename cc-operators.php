@@ -140,7 +140,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="row">
-                            <form is="dmx-serverconnect-form" id="serverconnectFormCreateUser" method="post" action="dmxConnect/api/servo_customers/create_customer_operator.php" dmx-generator="bootstrap5" dmx-form-type="horizontal" dmx-on:success="notifies1.success('Success!');list_customers.load();serverconnectFormCreateUser.reset()">
+                            <form is="dmx-serverconnect-form" id="serverconnectFormCreateUser" method="post" action="dmxConnect/api/servo_customers/create_customer_operator.php" dmx-generator="bootstrap5" dmx-form-type="horizontal" dmx-on:success="notifies1.success('Success!');createItemModal.hide();list_customers.load();serverconnectFormCreateUser.reset();read_customer.load({customer_id: serverconnectFormCreateUser.data.custom_get_last_customer[0]['last_insert_id()']});readItemModal.show()">
                                 <div class="mb-3 row">
                                     <label for="inp_customer_first_name1" class="col-sm-2 col-form-label">{{trans.data.name[lang.value]}}</label>
                                     <div class="col-sm-10">
@@ -181,14 +181,14 @@
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
-                                    <label for="inp_customer_phone_number1" class="col-sm-2 col-form-label">{{trans.data.iDCardNumber[lang.value]}}</label>
+                                    <label for="inp_customer_phone_number1" class="col-sm-2 col-form-label">{{trans.data.phoneNumber[lang.value]}}</label>
 
                                     <div class="col-sm-10">
                                         <input type="number" class="form-control" id="customerphonenumber" name="customer_phone_number" aria-describedby="inp_customer_phone_number_help">
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
-                                    <label for="inp_customer_phone_number1" class="col-sm-2 col-form-label">{{trans.data.phoneNumber[lang.value]}}</label>
+                                    <label for="inp_customer_phone_number1" class="col-sm-2 col-form-label">{{trans.data.idCardNumber[lang.value]}}</label>
 
                                     <div class="col-sm-10">
                                         <input class="form-control" id="idCardNumber" name="id_card_number" aria-describedby="inp_customer_phone_number_help">
@@ -233,31 +233,24 @@
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
-                                    <label for="inp_customer_phone_number1" class="col-sm-2 col-form-label">{{trans.data.idCard[lang.value]}}</label>
+                                    <label for="inp_customer_phone_number1" class="col-sm-2 col-form-label">{{trans.data.idCardNumber[lang.value]}}</label>
 
                                     <div class="col-sm-10">
                                         <input class="form-control" id="repID" name="customer_rep_id_card" aria-describedby="inp_customer_phone_number_help">
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
+                                    <label for="inp_customer_phone_number1" class="col-sm-2 col-form-label">{{trans.data.phoneNumber[lang.value]}}</label>
+
+                                    <div class="col-sm-10">
+                                        <input class="form-control" id="repID2" name="customer_rep_phone" aria-describedby="inp_customer_phone_number_help">
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
                                     <label for="inp_customer_phone_number1" class="col-sm-2 col-form-label">{{trans.data.address[lang.value]}}</label>
 
                                     <div class="col-sm-10">
-                                        <input class="form-control" id="repPhone" name="customer_rep_phone" aria-describedby="inp_customer_phone_number_help">
-                                    </div>
-                                </div>
-                                <div class="mb-3 row">
-                                    <label for="inp_customer_phone_number1" class="col-sm-2 col-form-label">{{trans.data.legalStatus[lang.value]}}</label>
-
-                                    <div class="col-sm-10">
-                                        <input class="form-control" id="customerLegalStatus5" name="customer_legal_status5" aria-describedby="inp_customer_phone_number_help">
-                                    </div>
-                                </div>
-                                <div class="mb-3 row">
-                                    <label for="inp_customer_phone_number1" class="col-sm-2 col-form-label">{{trans.data.legalStatus[lang.value]}}</label>
-
-                                    <div class="col-sm-10">
-                                        <input class="form-control" id="customerLegalStatus6" name="customer_legal_status6" aria-describedby="inp_customer_phone_number_help">
+                                        <textarea class="form-control" id="repPhone" name="customer_rep_address" aria-describedby="inp_customer_phone_number_help"></textarea>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -976,12 +969,6 @@
                                                         </div>
                                                     </div>
                                                     <div class="mb-3 row">
-                                                        <label for="inp_customer_phone_number1" class="col-sm-2 col-form-label">{{trans.data.phoneNumber[lang.value]}}</label>
-                                                        <div class="col-sm-10">
-                                                            <input type="number" class="form-control" id="inp_customer_phone_number1" name="customer_phone_number" dmx-bind:value="read_customer.data.query_read_customer.customer_phone_number" aria-describedby="inp_customer_phone_number_help">
-                                                        </div>
-                                                    </div>
-                                                    <div class="mb-3 row">
                                                         <label for="inp_customer_last_name1" class="col-sm-2 col-form-label">{{trans.data.sex[lang.value]}}</label>
                                                         <div class="col-sm-10">
                                                             <select id="select63" class="form-select" name="customer_sex" dmx-bind:value="read_customer.data.query_read_customer.customer_sex">
@@ -1020,7 +1007,7 @@
                                                         <label for="inp_customer_phone_number1" class="col-sm-2 col-form-label">{{trans.data.idCardNumber[lang.value]}}</label>
 
                                                         <div class="col-sm-10">
-                                                            <input class="form-control" id="idCardNumber1" name="id_card_number" aria-describedby="inp_customer_phone_number_help" dmx-bind:value="read_customer.data.query_read_customer.customer_id_card_number">
+                                                            <input class="form-control" id="idCardNumber1" name="id_card_number" aria-describedby="inp_customer_phone_number_help" dmx-bind:value="read_customer.data.query_read_customer.id_card_number">
                                                         </div>
                                                     </div>
                                                     <div class="mb-3 row">
@@ -1072,7 +1059,7 @@
                                                         <label for="inp_customer_phone_number1" class="col-sm-2 col-form-label">{{trans.data.address[lang.value]}}</label>
 
                                                         <div class="col-sm-10">
-                                                            <input class="form-control" id="repAddress1" name="stomer_rep_adress" aria-describedby="inp_customer_phone_number_help" dmx-bind:value="read_customer.data.query_read_customer.customer_rep_address">
+                                                            <input class="form-control" id="repAddress1" name="customer_rep_address" aria-describedby="inp_customer_phone_number_help" dmx-bind:value="read_customer.data.query_read_customer.customer_rep_address">
                                                         </div>
                                                     </div>
                                                     <div class="mb-3 row">
@@ -1187,16 +1174,16 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <div id="conditional2" is="dmx-if" dmx-bind:condition="(profile_privileges.data.profile_privileges[0].delete_customer == 'Yes')">
-                            <form id="deleteCustomer" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_customers/delete_customer.php" dmx-on:success="notifies1.success('Success');list_customers.load({});readItemModal.hide()" onsubmit=" return confirm('CONFIRM DELETE?');" dmx-on:error="notifies1.warning('Error!')">
+                        <div id="conditional2" <form id="deleteCustomer" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_customers/delete_customer.php" dmx-on:success="notifies1.success('Success');list_customers.load({});readItemModal.hide()" onsubmit=" return confirm('CONFIRM DELETE?');" dmx-on:error="notifies1.warning('Error!')">
 
-                                <input id="text1" name="customer_id" type="hidden" class="form-control" dmx-bind:value="read_customer.data.query_read_customer.customer_id">
+                            <form id="form6" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_customers/delete_customer.php" onsubmit=" return confirm('CONFIRM DELETE?');" dmx-on:success="readItemModal.hide();list_customers.load({})"><input id="text1" name="customer_id" type="hidden" class="form-control" dmx-bind:value="read_customer.data.query_read_customer.customer_id"><button id="btn6" class="btn text-body" type="submit">
+                                    <i class="far fa-trash-alt"></i>
+                                </button></form>
 
-                                <button id="btn6" class="btn text-secondary" type="submit">
-                                    <i class="far fa-trash-alt fa-lg"></i>
-                                </button>
+
                             </form>
                         </div>
+
                     </div>
                 </div>
             </div>

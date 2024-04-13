@@ -395,7 +395,7 @@ JSON
 
                       <div class="row">
                         <div class="rounded-2 rounded col-lg-auto mt-3 ms-1 pt-3 pb-2 ps-3 pe-3 offset-lg-1 col-lg-12 col-md-12">
-                          <form id="updateAssetInfoPlaque" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_assets/update_customer_asset_municipalitity_plaque.php" dmx-on:success="assetNotification.success('Success!');read_asset.load({asset_id: read_asset.data.query_read_customer_asset.asset_id})" dmx-on:error="assetNotification.danger('Error!')" dmx-on:start="preloader1.show()" dmx-on:done="preloader1.hide()">
+                          <form id="updateAssetInfoPlaque" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_assets/update_customer_asset_municipality_plaque.php" dmx-on:success="assetNotification.success('Success!');read_asset.load({asset_id: read_asset.data.query_read_customer_asset.asset_id})" dmx-on:error="assetNotification.danger('Error!')" dmx-on:start="preloader1.show()" dmx-on:done="preloader1.hide()">
                             <div class="form-group mb-3 row" id="numero_de_permis">
                               <label for="permitNumber" class="col-form-label col-sm-4 col-4" wappler-command="editContent">{{trans.data.permitNumber[lang.value]}}</label>
                               <div class="col-sm-6 offset-sm-1 col-auto col-md-7">
@@ -449,7 +449,7 @@ JSON
                             <div class="form-group mb-3 row" id="neighborhoodLocalName">
                               <label for="neighborhoodLocalName1" class="col-form-label col-sm-4 col-4" wappler-command="editContent">{{trans.data.neighborhoodLocalName[lang.value]}}</label>
                               <div class="col-sm-6 offset-sm-1 col-6">
-                                <input type="text" class="form-control" id="neighborhoodLocalName1" name="neighborhood_local_name" aria-describedby="input1_help" dmx-bind:value="read_asset.data.query_read_customer_asset.neighbordhood_local_name">
+                                <input type="text" class="form-control" id="neighborhoodLocalName1" name="neighborhood_local_name" aria-describedby="input1_help" dmx-bind:value="read_asset.data.query_read_customer_asset.neighborhood_local_name">
                               </div>
                             </div>
                             <div class="form-group mb-3 row" id="streetName">

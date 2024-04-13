@@ -63,6 +63,10 @@ $app->define(<<<'JSON'
             {
               "table": "servo_user_shifts",
               "column": "time_checkin"
+            },
+            {
+              "table": "servo_department",
+              "column": "department_name"
             }
           ],
           "table": {
@@ -90,9 +94,30 @@ $app->define(<<<'JSON'
                 ]
               },
               "primary": "user_shift_id"
+            },
+            {
+              "table": "servo_department",
+              "column": "*",
+              "type": "LEFT",
+              "clauses": {
+                "condition": "AND",
+                "rules": [
+                  {
+                    "table": "servo_department",
+                    "column": "department_id",
+                    "operator": "equal",
+                    "operation": "=",
+                    "value": {
+                      "table": "servo_user",
+                      "column": "servo_user_departments_department_id"
+                    }
+                  }
+                ]
+              },
+              "primary": "department_id"
             }
           ],
-          "query": "SELECT servo_user.user_id, servo_user.user_fname, servo_user.user_lname, servo_user.user_username, servo_user.user_profile, servo_user.servo_user_departments_department_id, servo_user_shifts.servo_shifts_shift_id, servo_user_shifts.time_checkin\nFROM servo_user\nLEFT JOIN servo_user_shifts ON (servo_user_shifts.servo_user_user_id = servo_user.user_id)\nWHERE servo_user.user_id = :P1 /* {{$_GET.user_id}} */",
+          "query": "select `servo_user`.`user_id`, `servo_user`.`user_fname`, `servo_user`.`user_lname`, `servo_user`.`user_username`, `servo_user`.`user_profile`, `servo_user`.`servo_user_departments_department_id`, `servo_user_shifts`.`servo_shifts_shift_id`, `servo_user_shifts`.`time_checkin`, `servo_department`.`department_name` from `servo_user` left join `servo_user_shifts` on `servo_user_shifts`.`servo_user_user_id` = `servo_user`.`user_id` left join `servo_department` on `servo_department`.`department_id` = `servo_user`.`servo_user_departments_department_id` where `servo_user`.`user_id` = ?",
           "params": [
             {
               "operator": "equal",
@@ -161,6 +186,10 @@ $app->define(<<<'JSON'
         {
           "type": "datetime",
           "name": "time_checkin"
+        },
+        {
+          "type": "text",
+          "name": "department_name"
         }
       ],
       "outputType": "object",

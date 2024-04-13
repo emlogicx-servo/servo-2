@@ -79,10 +79,6 @@ $app->define(<<<'JSON'
       },
       {
         "type": "number",
-        "name": "id_card_number"
-      },
-      {
-        "type": "number",
         "name": "customer_city"
       },
       {
@@ -120,6 +116,10 @@ $app->define(<<<'JSON'
       {
         "type": "text",
         "name": "customer_rep_phone"
+      },
+      {
+        "type": "text",
+        "name": "id_card_number"
       }
     ]
   },
@@ -221,12 +221,6 @@ $app->define(<<<'JSON'
               },
               {
                 "table": "servo_customers",
-                "column": "id_card_number",
-                "type": "number",
-                "value": "{{$_POST.id_card_number}}"
-              },
-              {
-                "table": "servo_customers",
                 "column": "customer_email",
                 "type": "text",
                 "value": "{{$_POST.customer_email}}"
@@ -272,11 +266,17 @@ $app->define(<<<'JSON'
                 "column": "customer_rep_phone",
                 "type": "text",
                 "value": "{{$_POST.customer_rep_phone}}"
+              },
+              {
+                "table": "servo_customers",
+                "column": "id_card_number",
+                "type": "text",
+                "value": "{{$_POST.id_card_number}}"
               }
             ],
             "table": "servo_customers",
             "returning": "customer_id",
-            "query": "INSERT INTO servo_customers\n(customer_first_name, customer_last_name, customer_phone_number, customer_picture, customer_sex, customer_dob, customer_age, customer_address, id_card_number, customer_email, customer_legal_status, customer_tax_payer_number, customer_rep_name, customer_rep_surname, customer_rep_id_card, customer_rep_address, customer_rep_phone) VALUES (:P1 /* {{$_POST.customer_first_name}} */, :P2 /* {{$_POST.customer_last_name}} */, :P3 /* {{$_POST.customer_phone_number}} */, :P4 /* {{upload_customer_picture.name}} */, :P5 /* {{$_POST.customer_sex}} */, :P6 /* {{$_POST.customer_dob}} */, :P7 /* {{$_POST.customer_age}} */, :P8 /* {{$_POST.customer_address}} */, :P9 /* {{$_POST.id_card_number}} */, :P10 /* {{$_POST.customer_email}} */, :P11 /* {{$_POST.customer_legal_status}} */, :P12 /* {{$_POST.customer_tax_payer_number}} */, :P13 /* {{$_POST.customer_rep_name}} */, :P14 /* {{$_POST.customer_rep_surname}} */, :P15 /* {{$_POST.customer_rep_id_card}} */, :P16 /* {{$_POST.customer_rep_address}} */, :P17 /* {{$_POST.customer_rep_phone}} */)",
+            "query": "insert into `servo_customers` (`customer_address`, `customer_age`, `customer_dob`, `customer_email`, `customer_first_name`, `customer_last_name`, `customer_legal_status`, `customer_phone_number`, `customer_picture`, `customer_rep_address`, `customer_rep_id_card`, `customer_rep_name`, `customer_rep_phone`, `customer_rep_surname`, `customer_sex`, `customer_tax_payer_number`, `id_card_number`) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
             "params": [
               {
                 "name": ":P1",
@@ -321,47 +321,47 @@ $app->define(<<<'JSON'
               {
                 "name": ":P9",
                 "type": "expression",
-                "value": "{{$_POST.id_card_number}}"
+                "value": "{{$_POST.customer_email}}"
               },
               {
                 "name": ":P10",
                 "type": "expression",
-                "value": "{{$_POST.customer_email}}"
+                "value": "{{$_POST.customer_legal_status}}"
               },
               {
                 "name": ":P11",
                 "type": "expression",
-                "value": "{{$_POST.customer_legal_status}}"
+                "value": "{{$_POST.customer_tax_payer_number}}"
               },
               {
                 "name": ":P12",
                 "type": "expression",
-                "value": "{{$_POST.customer_tax_payer_number}}"
+                "value": "{{$_POST.customer_rep_name}}"
               },
               {
                 "name": ":P13",
                 "type": "expression",
-                "value": "{{$_POST.customer_rep_name}}"
+                "value": "{{$_POST.customer_rep_surname}}"
               },
               {
                 "name": ":P14",
                 "type": "expression",
-                "value": "{{$_POST.customer_rep_surname}}"
+                "value": "{{$_POST.customer_rep_id_card}}"
               },
               {
                 "name": ":P15",
                 "type": "expression",
-                "value": "{{$_POST.customer_rep_id_card}}"
+                "value": "{{$_POST.customer_rep_address}}"
               },
               {
                 "name": ":P16",
                 "type": "expression",
-                "value": "{{$_POST.customer_rep_address}}"
+                "value": "{{$_POST.customer_rep_phone}}"
               },
               {
                 "name": ":P17",
                 "type": "expression",
-                "value": "{{$_POST.customer_rep_phone}}"
+                "value": "{{$_POST.id_card_number}}"
               }
             ]
           }
@@ -374,6 +374,25 @@ $app->define(<<<'JSON'
           {
             "name": "affected",
             "type": "number"
+          }
+        ]
+      },
+      {
+        "name": "custom_get_last_customer",
+        "module": "dbupdater",
+        "action": "custom",
+        "options": {
+          "connection": "servodb",
+          "sql": {
+            "query": "SELECT last_insert_id()",
+            "params": []
+          }
+        },
+        "output": true,
+        "meta": [
+          {
+            "name": "last_insert_id()",
+            "type": "text"
           }
         ]
       }

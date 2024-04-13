@@ -27,6 +27,14 @@ $app->define(<<<'JSON'
       {
         "type": "number",
         "name": "po_discount"
+      },
+      {
+        "type": "number",
+        "name": "transfer_source_department_id"
+      },
+      {
+        "type": "number",
+        "name": "servo_departments_department_id"
       }
     ]
   },
@@ -44,7 +52,7 @@ $app->define(<<<'JSON'
               "table": "servo_purchase_orders",
               "column": "servo_vendors_vendor_id",
               "type": "number",
-              "value": "{{$_POST.servo_vendors_vendor_id}}"
+              "value": "{{$_POST.servo_vendors_vendor_id.default(null)}}"
             },
             {
               "table": "servo_purchase_orders",
@@ -69,6 +77,18 @@ $app->define(<<<'JSON'
               "column": "po_discount",
               "type": "number",
               "value": "{{$_POST.po_discount}}"
+            },
+            {
+              "table": "servo_purchase_orders",
+              "column": "transfer_source_department_id",
+              "type": "number",
+              "value": "{{$_POST.transfer_source_department_id.default(null)}}"
+            },
+            {
+              "table": "servo_purchase_orders",
+              "column": "servo_departments_department_id",
+              "type": "number",
+              "value": "{{$_POST.servo_departments_department_id.default(null)}}"
             }
           ],
           "table": "servo_purchase_orders",
@@ -87,12 +107,12 @@ $app->define(<<<'JSON'
               }
             ]
           },
-          "query": "update `servo_purchase_orders` set `servo_vendors_vendor_id` = ?, `po_notes` = ?, `po_id` = ?, `po_need_by_date` = ?, `po_discount` = ? where `po_id` = ?",
+          "query": "update `servo_purchase_orders` set `servo_vendors_vendor_id` = ?, `po_notes` = ?, `po_id` = ?, `po_need_by_date` = ?, `po_discount` = ?, `transfer_source_department_id` = ?, `servo_departments_department_id` = ? where `po_id` = ?",
           "params": [
             {
               "name": ":P1",
               "type": "expression",
-              "value": "{{$_POST.servo_vendors_vendor_id}}"
+              "value": "{{$_POST.servo_vendors_vendor_id.default(null)}}"
             },
             {
               "name": ":P2",
@@ -115,10 +135,22 @@ $app->define(<<<'JSON'
               "value": "{{$_POST.po_discount}}"
             },
             {
+              "name": ":P6",
+              "type": "expression",
+              "value": "{{$_POST.transfer_source_department_id.default(null)}}"
+            },
+            {
+              "name": ":P7",
+              "type": "expression",
+              "value": "{{$_POST.servo_departments_department_id.default(null)}}",
+              "test": ""
+            },
+            {
               "operator": "equal",
               "type": "expression",
-              "name": ":P6",
-              "value": "{{$_POST.po_id}}"
+              "name": ":P8",
+              "value": "{{$_POST.po_id}}",
+              "test": ""
             }
           ],
           "returning": "po_id"

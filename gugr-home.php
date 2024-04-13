@@ -505,7 +505,7 @@ JSON
                         <input id="taskStatus" name="task_status" class="form-control visually-hidden" dmx-bind:value="'Pending'">
                         <input id="taskUserCreated" name="task_user_created" class="form-control visually-hidden" dmx-bind:value="list_user_info.data.query_list_user_info.user_id" type="number">
                         <input id="taskUserConcerned" name="task_user_concerned" class="form-control visually-hidden" dmx-bind:value="list_user_info.data.query_list_user_info.user_id" type="number">
-                        <input id="taskProject" name="task_project" class="form-control visually-hidden" dmx-bind:value="list_user_info.data.query_list_user_info.user_id" type="number">
+                        <input id="taskProject" name="task_project" class="form-control visually-hidden" dmx-bind:value="" type="number">
                         <div class="row justify-content-end mt-1 ps-2 pe-2">
                           <small class="text-muted">{{trans.data.createNewTAsk[lang.value]}}</small>
                           <button id="btn15" class="btn mt-1 mb-2 w-25 btn-primary visually-hidden" type="submit">
