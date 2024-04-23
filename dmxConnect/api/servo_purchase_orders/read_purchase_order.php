@@ -152,6 +152,10 @@ $app->define(<<<'JSON'
               {
                 "table": "servo_purchase_orders",
                 "column": "po_payment_status"
+              },
+              {
+                "table": "servo_purchase_orders",
+                "column": "po_discount"
               }
             ],
             "table": {
@@ -312,7 +316,7 @@ $app->define(<<<'JSON'
               "conditional": null,
               "valid": true
             },
-            "query": "select `servo_purchase_orders`.`po_id`, `servo_purchase_orders`.`servo_vendors_vendor_id`, `servo_purchase_orders`.`servo_users_user_ordered_id`, `servo_purchase_orders`.`servo_users_user_approved_id`, `servo_purchase_orders`.`servo_users_user_received_id`, `servo_purchase_orders`.`time_ordered`, `servo_purchase_orders`.`time_approved`, `servo_purchase_orders`.`time_received`, `servo_purchase_orders`.`po_status`, `servo_purchase_orders`.`payment_method`, `servo_purchase_orders`.`payment_status`, `servo_purchase_orders`.`po_notes`, `servo_purchase_orders`.`servo_departments_department_id`, `servo_purchase_orders`.`po_need_by_date`, `servo_purchase_orders`.`transfer_source_department_id`, `servo_purchase_orders`.`po_type`, `servo_vendors`.`vendor_name`, `servo_vendors`.`vendor_address`, `servo_vendors`.`vendor_phone_number`, `source_dept`.`department_name` as `department_source`, `dest_dept`.`department_name` as `department_destination`, `user_ordered`.`user_fname` as `ordered_fname`, `user_ordered`.`user_lname` as `ordered_lname`, `user_ordered`.`user_username` as `ordered_username`, `user_ordered`.`user_fname` as `approved_fname`, `user_ordered`.`user_lname` as `approved_lname`, `user_ordered`.`user_username` as `approved_username`, `servo_purchase_orders`.`po_payment_status` from `servo_purchase_orders` as `servo_purchase_orders` left join `servo_vendors` on `servo_vendors`.`vendor_id` = `servo_purchase_orders`.`servo_vendors_vendor_id` left join `servo_department` as `source_dept` on `source_dept`.`department_id` = `servo_purchase_orders`.`transfer_source_department_id` left join `servo_department` as `dest_dept` on `dest_dept`.`department_id` = `servo_purchase_orders`.`servo_departments_department_id` left join `servo_user` as `user_ordered` on `user_ordered`.`user_id` = `servo_purchase_orders`.`servo_users_user_ordered_id` left join `servo_user` as `user_approved` on `user_approved`.`user_id` = `servo_purchase_orders`.`servo_users_user_received_id` left join `servo_user` as `user_received` on `user_received`.`user_id` = `servo_purchase_orders`.`servo_users_user_received_id` where `servo_purchase_orders`.`po_id` = ?",
+            "query": "select `servo_purchase_orders`.`po_id`, `servo_purchase_orders`.`servo_vendors_vendor_id`, `servo_purchase_orders`.`servo_users_user_ordered_id`, `servo_purchase_orders`.`servo_users_user_approved_id`, `servo_purchase_orders`.`servo_users_user_received_id`, `servo_purchase_orders`.`time_ordered`, `servo_purchase_orders`.`time_approved`, `servo_purchase_orders`.`time_received`, `servo_purchase_orders`.`po_status`, `servo_purchase_orders`.`payment_method`, `servo_purchase_orders`.`payment_status`, `servo_purchase_orders`.`po_notes`, `servo_purchase_orders`.`servo_departments_department_id`, `servo_purchase_orders`.`po_need_by_date`, `servo_purchase_orders`.`transfer_source_department_id`, `servo_purchase_orders`.`po_type`, `servo_vendors`.`vendor_name`, `servo_vendors`.`vendor_address`, `servo_vendors`.`vendor_phone_number`, `source_dept`.`department_name` as `department_source`, `dest_dept`.`department_name` as `department_destination`, `user_ordered`.`user_fname` as `ordered_fname`, `user_ordered`.`user_lname` as `ordered_lname`, `user_ordered`.`user_username` as `ordered_username`, `user_ordered`.`user_fname` as `approved_fname`, `user_ordered`.`user_lname` as `approved_lname`, `user_ordered`.`user_username` as `approved_username`, `servo_purchase_orders`.`po_payment_status`, `servo_purchase_orders`.`po_discount` from `servo_purchase_orders` as `servo_purchase_orders` left join `servo_vendors` on `servo_vendors`.`vendor_id` = `servo_purchase_orders`.`servo_vendors_vendor_id` left join `servo_department` as `source_dept` on `source_dept`.`department_id` = `servo_purchase_orders`.`transfer_source_department_id` left join `servo_department` as `dest_dept` on `dest_dept`.`department_id` = `servo_purchase_orders`.`servo_departments_department_id` left join `servo_user` as `user_ordered` on `user_ordered`.`user_id` = `servo_purchase_orders`.`servo_users_user_ordered_id` left join `servo_user` as `user_approved` on `user_approved`.`user_id` = `servo_purchase_orders`.`servo_users_user_received_id` left join `servo_user` as `user_received` on `user_received`.`user_id` = `servo_purchase_orders`.`servo_users_user_received_id` where `servo_purchase_orders`.`po_id` = ?",
             "params": [
               {
                 "operator": "equal",
@@ -438,6 +442,10 @@ $app->define(<<<'JSON'
           {
             "type": "text",
             "name": "po_payment_status"
+          },
+          {
+            "type": "number",
+            "name": "po_discount"
           }
         ],
         "outputType": "object"

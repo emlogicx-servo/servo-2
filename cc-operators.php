@@ -296,13 +296,13 @@
                                     <label for="assetLat" class="col-sm-2 col-form-label">{{trans.data.latitude[lang.value]}}</label>
 
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="assetLat" name="asset_lat" aria-describedby="input1_help" placeholder="Enter some text" readonly="true">
+                                        <input type="number" class="form-control" id="assetLat" name="asset_lat" aria-describedby="input1_help">
 
                                     </div>
                                     <label for="assetLat" class="col-sm-2 col-form-label">{{trans.data.longitude[lang.value]}}</label>
                                     <div class="col">
 
-                                        <input type="text" class="form-control mt-2" id="assetLon" name="asset_long" aria-describedby="input1_help" placeholder="Enter some text" readonly="true">
+                                        <input type="number" class="form-control mt-2" id="assetLon" name="asset_long" aria-describedby="input1_help">
                                     </div>
                                 </div>
                                 <input id="assetOwner" name="asset_owner" type="text" class="form-control visually-hidden" dmx-bind:value="read_customer.data.query_read_customer.customer_id">

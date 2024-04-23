@@ -180,6 +180,10 @@ $app->define(<<<'JSON'
               {
                 "table": "servo_orders",
                 "column": "order_extra_info"
+              },
+              {
+                "table": "servo_orders",
+                "column": "order_total_adjustment"
               }
             ],
             "table": {
@@ -273,13 +277,14 @@ $app->define(<<<'JSON'
               "conditional": null,
               "valid": true
             },
-            "query": "select `servo_orders`.`order_id`, `servo_orders`.`order_time`, `servo_orders`.`order_customer`, `servo_orders`.`order_discount`, `servo_orders`.`order_status`, `servo_orders`.`servo_user_user_id`, `servo_orders`.`servo_customer_table_table_id`, `servo_customer_table`.`table_name`, `servo_orders`.`order_notes`, `servo_orders`.`servo_shift_shift_id`, `servo_orders`.`order_amount_tendered`, `servo_orders`.`order_balance`, `servo_orders`.`servo_users_cashier_id`, `servo_orders`.`servo_payment_methods_payment_method`, `servo_orders`.`servo_departments_department_id`, `servo_orders`.`servo_service_service_id`, `servo_orders`.`coverage_percentage`, `servo_orders`.`coverage_partner`, `servo_orders`.`coverage_payment_status`, `servo_orders`.`order_time_paid`, `servo_user`.`user_id`, `servo_user`.`user_fname`, `servo_user`.`user_lname`, `servo_user`.`user_username`, `servo_user`.`servo_user_departments_department_id`, `servo_user`.`user_profile`, `servo_customers`.`customer_id`, `servo_customers`.`customer_first_name`, `servo_customers`.`customer_last_name`, `servo_customers`.`customer_phone_number`, `servo_customers`.`customer_picture`, `servo_customers`.`customer_class`, `servo_customers`.`customer_sex`, `servo_customers`.`customer_dob`, `servo_customers`.`customer_age`, `servo_customers`.`customer_address`, `servo_orders`.`order_extra_info` from `servo_orders` as `servo_orders` left join `servo_user` as `servo_user` on `servo_user`.`user_id` = `servo_orders`.`servo_user_user_id` left join `servo_customers` as `servo_customers` on `servo_customers`.`customer_id` = `servo_orders`.`order_customer` left join `servo_customer_table` on `servo_customer_table`.`table_id` = `servo_orders`.`servo_customer_table_table_id` where `servo_orders`.`order_id` = ?",
+            "query": "select `servo_orders`.`order_id`, `servo_orders`.`order_time`, `servo_orders`.`order_customer`, `servo_orders`.`order_discount`, `servo_orders`.`order_status`, `servo_orders`.`servo_user_user_id`, `servo_orders`.`servo_customer_table_table_id`, `servo_customer_table`.`table_name`, `servo_orders`.`order_notes`, `servo_orders`.`servo_shift_shift_id`, `servo_orders`.`order_amount_tendered`, `servo_orders`.`order_balance`, `servo_orders`.`servo_users_cashier_id`, `servo_orders`.`servo_payment_methods_payment_method`, `servo_orders`.`servo_departments_department_id`, `servo_orders`.`servo_service_service_id`, `servo_orders`.`coverage_percentage`, `servo_orders`.`coverage_partner`, `servo_orders`.`coverage_payment_status`, `servo_orders`.`order_time_paid`, `servo_user`.`user_id`, `servo_user`.`user_fname`, `servo_user`.`user_lname`, `servo_user`.`user_username`, `servo_user`.`servo_user_departments_department_id`, `servo_user`.`user_profile`, `servo_customers`.`customer_id`, `servo_customers`.`customer_first_name`, `servo_customers`.`customer_last_name`, `servo_customers`.`customer_phone_number`, `servo_customers`.`customer_picture`, `servo_customers`.`customer_class`, `servo_customers`.`customer_sex`, `servo_customers`.`customer_dob`, `servo_customers`.`customer_age`, `servo_customers`.`customer_address`, `servo_orders`.`order_extra_info`, `servo_orders`.`order_total_adjustment` from `servo_orders` as `servo_orders` left join `servo_user` as `servo_user` on `servo_user`.`user_id` = `servo_orders`.`servo_user_user_id` left join `servo_customers` as `servo_customers` on `servo_customers`.`customer_id` = `servo_orders`.`order_customer` left join `servo_customer_table` on `servo_customer_table`.`table_id` = `servo_orders`.`servo_customer_table_table_id` where `servo_orders`.`order_id` = ?",
             "params": [
               {
                 "operator": "equal",
                 "type": "expression",
                 "name": ":P1",
-                "value": "{{$_GET.order_id}}"
+                "value": "{{$_GET.order_id}}",
+                "test": "1"
               }
             ],
             "primary": "order_id"
@@ -433,6 +438,10 @@ $app->define(<<<'JSON'
           {
             "type": "text",
             "name": "order_extra_info"
+          },
+          {
+            "type": "number",
+            "name": "order_total_adjustment"
           }
         ],
         "outputType": "object",

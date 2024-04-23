@@ -269,6 +269,11 @@
                 "en-US": "Total Settled",
                 "fr-FR": "Total Reglé"
             },
+    "totalPayments": 
+            {
+                "en-US": "Total Payments Received",
+                "fr-FR": "Total Paiements Réçu"
+            },
     "standard": 
             {
                 "en-US": "Standard",
@@ -479,6 +484,11 @@
             {
                 "en-US": "Received",
                 "fr-FR": "Réceptionnée"
+            },
+    "receivable": 
+            {
+                "en-US": "Receivable",
+                "fr-FR": "Recevable"
             },
     "receive": 
             {
@@ -810,6 +820,11 @@
                 "en-US": "Adjustments",
                 "fr-FR": "Adjustements"
             },
+    "adjustment": 
+            {
+                "en-US": "Adjustment",
+                "fr-FR": "Adjustement"
+            },
     "averagePurchasePrice": 
             {
                 "en-US": "Average Price",
@@ -959,6 +974,17 @@
             {
                 "en-US":"Purchase Orders", 
                 "fr-FR":"Bons D'Achats"
+            },
+    "newPO": 
+            {
+                "en-US":"New Purchase Order", 
+                "fr-FR":"Nouvelle Bon D'Achat"
+            },
+
+    "newTO": 
+            {
+                "en-US":"New Transfer Order", 
+                "fr-FR":"Nouveau Bon De Transfert"
             },
     "transferOrders": 
             {
@@ -1560,6 +1586,11 @@
             {
                 "en-US": "Create New Purchase Request",
                 "fr-FR": "Créer Nouvelle Demande de Commande"
+            },
+    "newShift": 
+            {
+                "en-US": "New Shift",
+                "fr-FR": "Nouveau Quart"
             },
     "purchaseOrder": 
             {

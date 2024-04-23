@@ -55,6 +55,10 @@ $app->define(<<<'JSON'
       {
         "type": "number",
         "name": "servo_departments_department_id"
+      },
+      {
+        "type": "datetime",
+        "name": "po_need_by_date"
       }
     ],
     "$_SESSION": [
@@ -152,11 +156,17 @@ $app->define(<<<'JSON'
                 "column": "po_type",
                 "type": "text",
                 "value": "Purchase"
+              },
+              {
+                "table": "servo_purchase_orders",
+                "column": "po_need_by_date",
+                "type": "datetime",
+                "value": "{{$_POST.po_need_by_date.default(null)}}"
               }
             ],
             "table": "servo_purchase_orders",
             "returning": "po_id",
-            "query": "INSERT INTO servo_purchase_orders\n(servo_vendors_vendor_id, servo_users_user_ordered_id, servo_users_user_approved_id, servo_users_user_received_id, time_ordered, time_approved, time_received, po_status, payment_method, payment_status, po_notes, servo_departments_department_id, po_type) VALUES (:P1 /* {{$_POST.servo_vendors_vendor_id}} */, :P2 /* {{$_POST.servo_users_user_ordered_id}} */, :P3 /* {{$_POST.servo_users_user_approved_id}} */, :P4 /* {{$_POST.servo_users_user_received_id}} */, :P5 /* {{$_POST.time_ordered}} */, :P6 /* {{$_POST.time_approved}} */, :P7 /* {{$_POST.time_received}} */, :P8 /* {{$_POST.po_status}} */, :P9 /* {{$_POST.payment_method}} */, :P10 /* {{$_POST.payment_status}} */, :P11 /* {{$_POST.po_notes}} */, :P12 /* {{$_POST.servo_departments_department_id}} */, 'Purchase')",
+            "query": "insert into `servo_purchase_orders` (`payment_method`, `payment_status`, `po_need_by_date`, `po_notes`, `po_status`, `po_type`, `servo_departments_department_id`, `servo_users_user_approved_id`, `servo_users_user_ordered_id`, `servo_users_user_received_id`, `servo_vendors_vendor_id`, `time_approved`, `time_ordered`, `time_received`) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
             "params": [
               {
                 "name": ":P1",
@@ -217,6 +227,12 @@ $app->define(<<<'JSON'
                 "name": ":P12",
                 "type": "expression",
                 "value": "{{$_POST.servo_departments_department_id}}"
+              },
+              {
+                "name": ":P13",
+                "type": "expression",
+                "value": "{{$_POST.po_need_by_date.default(null)}}",
+                "test": ""
               }
             ]
           }

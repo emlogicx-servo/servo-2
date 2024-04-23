@@ -67,16 +67,19 @@
   <main>
     <div id="top-bar" class="row row-cols-12 justify-content-xl-between justify-content-between mt-2 me-0 ps-0 pe-1">
 
-      <div class="justify-content-lg-start col-8 justify-content-start my-auto" style="padding-left: 3px;">
+      <div class="w-auto col justify-content-start my-auto" style="padding-left: 3px;">
 
-        <button id="btn1" class="btn gy-0 btn-sm text-start" dmx-on:click="offcanvas1.toggle()" dmx-show="(list_user_info.data.query_list_user_info.user_profile == 'Manager') || (list_user_info.data.query_list_user_info.user_profile == 'Admin') " style="margin-left: 2px !important; font-size:17px; "><i class="fas fa-th fa-1.5x" style="" dmx-animate-enter="pulse"></i></button>
+        <button id="btn1" class="btn gy-0 btn-sm text-start" dmx-on:click="offcanvas1.toggle()" dmx-show="(list_user_info.data.query_list_user_info.user_profile == 'Manager') || (list_user_info.data.query_list_user_info.user_profile == 'Admin')||(list_user_info.data.query_list_user_info.user_profile == 'pmanager') || (list_user_info.data.query_list_user_info.user_profile == 'fmanager')||(list_user_info.data.query_list_user_info.user_profile == 'Manager') || (list_user_info.data.query_list_user_info.user_profile == 'smanager') " style="margin-left: 2px !important; font-size:17px; "><i class="fas fa-th fa-1.5x" style="" dmx-animate-enter="pulse"></i></button>
         <span class="" style="font-family:'Josefin-Sans'; margin-left: 5px; font-size:15px;">SERVO</span>
-           <span class="fw-bold text-success" style="font-family:'Josefin-Sans'; margin-left: 5px; font-size:18x;">{{pageName.value}}</span>
+           <span class="fw-bold text-body" style="font-family:'Josefin-Sans'; margin-left: 5px; font-size:18x;">{{pageName.value}}</span>
       </div>
 
       <div class="col-auto justify-content-end" id="headerbuttons" style="/* font-size: 16px !important */">
 
-        <button id="toggleSubMenu" class="btn bg-secondary text-primary" dmx-on:click="offcanvas2.toggle()" dmx-text="session_variables.data.current_user.capitalize().substr(0, 1)"</button>
+
+         <button id="btn7" class="btn bg-light text-body" data-bs-toggle="modal" data-bs-target="#shiftSelectModal" dmx-bind:disabled="(list_user_info.data.query_list_user_info.user_profile !== 'Admin')&&(list_user_info.data.query_list_user_info.user_profile !== 'Manager')" dmx-on:click="list_shifts.load({})"><i class="fas fa-clock fa-sm" style="margin-right: 5px !important;"></i> {{list_user_shift_info.data.query_list_user_shift[0].servo_shifts_shift_id}}</button>
+        <button id="toggleSubMenu" class="btn bg-light text-primary" dmx-on:click="offcanvas2.toggle()" dmx-text="session_variables.data.current_user.capitalize().substr(0, 1)"</button>
+
     </div>
       <div class="row" style="margin:3px;">
         <div id="submenuoptions" class="collapse bg-secondary rounded" is="dmx-bs5-collapse" style="padding:5px; margin-bottom:3px; margin-top:3px;">
@@ -166,7 +169,7 @@
           </div>
         </div>
 
-        <div class="col" id="finance">
+        <div class="col" id="finance" dmx-show="(list_user_info.data.query_list_user_info.user_profile == 'Admin')||(list_user_info.data.query_list_user_info.user_profile == 'fmanager')||(list_user_info.data.query_list_user_info.user_profile == 'smanager')">
           <div class="row">
             <div class="col w-auto h-auto mt-sm-1 mb-sm-2 ms-sm-1 me-sm-1 d-flex justify-content-sm-center justify-content-center mt-2 mb-2 ms-2 me-2 border-secondary rounded-2"><a href="finance.php" class="badge style25 w-auto h-auto" style="text-decoration: unset;"><i class="fas fa-coins fa-lg" style="color: #ff1847 !important;"></i>
                 <h6 class="mt-lg-3 text-white">{{trans.data.finance[lang.value]}}</h6>
@@ -197,9 +200,6 @@
               </a></div>
           </div>
         </div>
-
-
-
 
 
         <div class="col" id="brands">
@@ -233,6 +233,7 @@
               </a></div>
           </div>
         </div>
+        
         <div class="col" id="assets">
           <div class="row">
             <div class="col w-auto h-auto mt-sm-1 mb-sm-2 ms-sm-1 me-sm-1 d-flex justify-content-sm-center justify-content-center mt-2 mb-2 ms-2 me-2 border-secondary rounded-2"><a href="tables.php" class="badge style25 w-auto h-auto" style="text-decoration: unset;"><i class="fas fa-key fa-lg" style="color: #afff18 !important;"></i>
@@ -240,6 +241,7 @@
               </a></div>
           </div>
         </div>
+
         <div class="col" id="users" dmx-show="(list_user_info.data.query_list_user_info.user_profile == 'Admin')">
           <div class="row">
             <div class="col w-auto h-auto mt-sm-1 mb-sm-2 ms-sm-1 me-sm-1 d-flex justify-content-sm-center justify-content-center mt-2 mb-2 ms-2 me-2 border-secondary rounded-2">
@@ -249,28 +251,32 @@
             </div>
           </div>
         </div>
-        <div class="col" id="profiles">
+
+        <div class="col" id="profiles" dmx-show="(list_user_info.data.query_list_user_info.user_profile == 'Admin')">
           <div class="row">
             <div class="col w-auto h-auto mt-sm-1 mb-sm-2 ms-sm-1 me-sm-1 d-flex justify-content-sm-center justify-content-center mt-2 mb-2 ms-2 me-2 border-secondary rounded-2"><a href="user-profiles.php" class="badge style25 w-auto h-auto" style="text-decoration: unset;"><i class="fas fa-id-badge fa-lg" style="color: #189aff !important;"></i>
                 <h6 class="mt-lg-3 text-white" style="">{{trans.data.profiles[lang.value]}}</h6>
               </a></div>
           </div>
         </div>
-        <div class="col" id="dataFields">
+
+        <div class="col" id="dataFields" dmx-show="(list_user_info.data.query_list_user_info.user_profile == 'Admin')">
           <div class="row">
             <div class="col w-auto h-auto mt-sm-1 mb-sm-2 ms-sm-1 me-sm-1 d-flex justify-content-sm-center justify-content-center mt-2 mb-2 ms-2 me-2 border-secondary rounded-2"><a href="data-fields.php" class="badge style25 w-auto h-auto" style="text-decoration: unset;"><i class="fas fa-database fa-lg" style="color: #ff18f2 !important;"></i>
                 <h6 class="mt-lg-3 text-white" style="">{{trans.data.dataFields[lang.value]}}</h6>
               </a></div>
           </div>
         </div>
-        <div class="col" id="companyInformation">
+
+        <div class="col" id="companyInformation" dmx-show="(list_user_info.data.query_list_user_info.user_profile == 'Admin')">
           <div class="row">
             <div class="col w-auto h-auto mt-sm-1 mb-sm-2 ms-sm-1 me-sm-1 d-flex justify-content-sm-center justify-content-center mt-2 mb-2 ms-2 me-2 border-secondary rounded-2"><a href="company-info.php" class="badge style25 w-auto h-auto" style="text-decoration: unset;"><i class="fas fa-info-circle fa-lg" style="color: #ff1847 !important;"></i>
                 <h6 class="mt-lg-3 text-white">{{trans.data.companyInformation[lang.value]}}</h6>
               </a></div>
           </div>
         </div>
-        <div class="col" id="permissions">
+
+        <div class="col" id="permissions" dmx-show="(list_user_info.data.query_list_user_info.user_profile == 'Admin')">
           <div class="row">
             <div class="col w-auto h-auto mt-sm-1 mb-sm-2 ms-sm-1 me-sm-1 d-flex justify-content-sm-center justify-content-center mt-2 mb-2 ms-2 me-2 border-secondary rounded-2"><a href="configuration.php" class="badge style25 w-auto h-auto" style="text-decoration: unset;"><i class="fas fa-user-cog fa-lg" style="color: #18ffef !important;"></i>
                 <h6 class="mt-lg-3 text-white">{{trans.data.userPrivileges[lang.value]}}</h6>

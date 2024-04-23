@@ -429,7 +429,7 @@
                 </div>
                 <div class="col style13 page-button d-flex justify-content-sm-end justify-content-end" id="pagebuttons">
 
-                    <button id="btn1" class="btn style12 fw-light add-button rounded bg-info text-white" data-bs-toggle="modal" data-bs-target="#createItemModal" style="float: right;"><i class="fas fa-plus style14 fa-sm"></i></button>
+                    <button id="btn1" class="btn style12 fw-light add-button rounded bg-info text-white" data-bs-toggle="modal" data-bs-target="#createItemModal" style="float: right;"><i class="fas fa-plus-circle" style="margin-right: 5px;"></i>{{trans.data.newShift[lang.value]}}</button>
                 </div>
             </div>
             <div class="row">

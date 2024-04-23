@@ -372,9 +372,9 @@
                 <div class="col rounded">
 
                   <div class="row justify-content-sm-between justify-content-md-between justify-content-lg-between justify-content-xl-between justify-content-xxl-between justify-content-between sorter shadow-none mt-2 mb-2 rounded bg-primary bg-opacity-10">
-                    <div class="d-flex col-xxl flex-wrap col-auto col-sm-auto col-md col-lg-auto align-items-baseline"><input id="customerfilter" name="customerfilter" type="text" class="form-control search mb-2 me-2 form-control-sm" dmx-bind:placeholder="trans.data.name[lang.value]+'  '">
-                      <input id="customerfilter2" name="customerfilter1" type="text" class="form-control search form-control-sm mb-2 me-2" dmx-bind:placeholder="trans.data.surname[lang.value]+'  '">
-                      <button id="btn29" class="btn align-self-lg-start bg-opacity-10 me-2 bg-body" dmx-on:click="customerfilter.setValue(NULL); customerfilter2.setValue(NULL)">
+                    <div class="d-flex col-xxl flex-wrap col-auto col-sm-auto col-md col-lg-auto align-items-baseline"><input id="customerfilter" name="customerfilter" type="search" class="form-control search mb-2 me-2" dmx-bind:placeholder="trans.data.name[lang.value]+'  '">
+                      <input id="customerfilter2" name="customerfilter1" type="search" class="form-control search mb-2 me-2" dmx-bind:placeholder="trans.data.surname[lang.value]+'  '">
+                      <button id="btn29" class="btn align-self-lg-start bg-opacity-10 me-2 bg-body visually-hidden" dmx-on:click="customerfilter.setValue(NULL); customerfilter2.setValue(NULL)">
                         <i class="fas fa-backspace fa-sm"></i>
                       </button>
                       <ul class="pagination flex-xl-wrap flex-xxl-wrap flex-lg-wrap flex-md-wrap flex-sm-wrap flex-wrap rounded me-2 bg-dark bg-opacity-10" dmx-populate="list_customers.data.query_list_customers" dmx-state="listcustomers" dmx-offset="offset" dmx-generator="bs5paging">

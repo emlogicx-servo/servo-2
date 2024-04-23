@@ -208,7 +208,7 @@ JSON
           <i class="bi-truck" style="font-size:30px;"></i>
         </div>
         <div class="col-auto page-heading">
-          <h3 class="servo-page-heading fw-lighter">{{trans.data.vendors[lang.value]}}</h3>
+          <h3 class="servo-page-heading fw-light">{{trans.data.vendors[lang.value]}}</h3>
         </div>
         <div class="col style13 page-button" id="pagebuttons">
           <button id="btn1" class="btn style12 fw-light add-button text-body bg-secondary ps-4 pe-4" data-bs-toggle="modal" data-bs-target="#createItemModal" style="float: right;"><i class="bi-plus" style="font-size:20px;"></i></button>

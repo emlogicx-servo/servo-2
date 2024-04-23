@@ -1507,7 +1507,7 @@ JSON
               <dmx-value id="variableOrderCoverageTotal" dmx-bind:value="((list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`))-(((100 - readCustomerOrder.data.query.coverage_percentage) /100) * (list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`))))"></dmx-value>
               <dmx-value id="variableOrderCoveragePaid" dmx-bind:value="list_customer_transactions_order_totals.data.custom_list_customer_transactions_order_totals[0]['Coverage Settlements']"></dmx-value>
               <dmx-value id="variableCustomerTotal" dmx-bind:value="{{(variableOrderTotal.value * ((100 - variableOrderDiscount.value)/100) * ((100 - variableOrderCoverage.value)/100))}}"></dmx-value>
-              <dmx-value id="variableCustomerTotalToPay" dmx-bind:value="(variableOrderPaid.value - variableCustomerTotal.value)"></dmx-value>
+              <dmx-value id="variableCustomerTotalToPay" dmx-bind:value="(variableOrderPaid.value - variableCustomerTotal.value - readCustomerOrder.data.query.order_total_adjustment)"></dmx-value>
               <dmx-value id="variableCustomerOwing" dmx-bind:value="(((list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`))-((readCustomerOrder.data.query.coverage_percentage /100) * (list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`))))- ((list_customer_transactions_order.data.query.sum(`transaction_amount`))))"></dmx-value>
               <div class="bg-secondary rounded col-auto mt-1 me-2 pt-2 pb-2 ps-2 pe-3 col-5 col-sm-auto col-sm-7 col-lg-auto col-md-auto col-xl-auto col-xl-4 col-xxl-auto" style="" id="orderTotal">
                 <div class="row row-cols-12 rounded" id="orderInfo">
@@ -1535,6 +1535,12 @@ JSON
                   </div>
                   <div class="justify-content-xl-end col-xl-auto offset-xl-0 col-auto rounded-pill rounded-2 align-self-center align-self-xxl-center align-self-xl-center align-self-lg-center align-self-md-center pt-2 bg-body" id="toPayAmount">
                     <h6 class="fw-bold text-success">{{(variableOrderTotal.value * ((100 - variableOrderDiscount.value)/100) * ((100 - variableOrderCoverage.value)/100)).formatNumber('0',',',',')}}</h6>
+                  </div>
+                  <div class="justify-content-xl-end col-xl-auto col-auto" id="adjustment">
+                    <h6 class="ms-2 pt-2">{{trans.data.adjustment[lang.value]}}:</h6>
+                  </div>
+                  <div class="justify-content-xl-end col-xl-auto offset-xl-0 col-auto rounded-pill rounded-2 align-self-center align-self-xxl-center align-self-xl-center align-self-lg-center align-self-md-center pt-2 bg-body" id="toPayAmount">
+                    <h6 class="fw-bold text-success">{{readCustomerOrder.data.query.order_total_adjustment}}</h6>
                   </div>
 
 
@@ -1775,19 +1781,23 @@ JSON
                         </div><input id="order_id3" name="order_id" class="form-control visually-hidden" dmx-bind:value="readCustomerOrder.data.query.order_id">
 
                         <div class="row">
-                          <label for="inp_order_extra_info" class="col-sm-2 col-form-label">{{trans.data.discount[lang.value]}}</label>
-                          <div class="col"><input id="orderDiscount" name="order_discount" class="form-control" dmx-bind:value="readCustomerOrder.data.query.order_discount" required="" type="number" data-msg-required="!" min="" data-rule-min="0" data-msg-min="Min 0!" dmx-bind:max="100" dmx-bind:disabled="(readCustomerOrder.data.query.order_status=='Paid')">
+                          <label for="inp_order_extra_info" class="col-sm-2 col-form-label">{{trans.data.adjustment[lang.value]}}</label>
+                          <div class="col"><input id="orderTotalAdjustment" name="order_total_adjustment" class="form-control" dmx-bind:value="readCustomerOrder.data.query.order_total_adjustment" type="number" dmx-bind:disabled="(readCustomerOrder.data.query.order_status=='Paid')" placeholder="0">
                             <input id="orderCustomer" name="order_customer" class="form-control visually-hidden" dmx-bind:value="readCustomerOrder.data.query.order_customer">
+                          </div>
+                        </div>
+                        <div class="row mt-2">
+                          <label for="inp_order_extra_info" class="col-sm-2 col-form-label">{{trans.data.discount[lang.value]}}</label>
+                          <div class="col"><input id="orderDiscount1" name="order_discount1" class="form-control" dmx-bind:value="readCustomerOrder.data.query.order_discount" type="number" min="" data-rule-min="0" data-msg-min="Min 0!" dmx-bind:max="100" dmx-bind:disabled="(readCustomerOrder.data.query.order_status=='Paid')" placeholder="0">
+                            <input id="orderCustomer1" name="order_customer1" class="form-control visually-hidden" dmx-bind:value="readCustomerOrder.data.query.order_customer">
                           </div>
                         </div>
                         <div class="row mt-2 mb-3">
 
                           <label for="inp_order_extra_info" class="col-sm-2 col-form-label"></label>
-                          <div class="col-sm-10 d-flex justify-content-start">
-                            <button class="btn me-md-1 pt-md-2 pb-md-2 ps-md-2 pe-md-2 me-2 bg-info" dmx-bind:value="readCustomerOrder.data.query.Save" type="submit" dmx-hide="(readCustomerOrder.data.query.order_status == 'Paid')">
+                          <div class="col-sm-10 d-flex justify-content-start"><button class="btn me-md-1 pt-md-2 pb-md-2 ps-md-2 pe-md-2 me-2 bg-info" dmx-bind:value="readCustomerOrder.data.query.Save" type="submit" dmx-hide="(readCustomerOrder.data.query.order_status == 'Paid')">
                               <i class="fas fa-check fa-2x"></i>
-                            </button>
-                          </div>
+                            </button></div>
 
                         </div>
                       </form>

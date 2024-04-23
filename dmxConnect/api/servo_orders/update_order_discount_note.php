@@ -31,6 +31,10 @@ $app->define(<<<'JSON'
       {
         "type": "text",
         "name": "order_extra_info"
+      },
+      {
+        "type": "number",
+        "name": "order_total_adjustment"
       }
     ]
   },
@@ -67,6 +71,12 @@ $app->define(<<<'JSON'
               "column": "order_extra_info",
               "type": "text",
               "value": "{{$_POST.order_extra_info}}"
+            },
+            {
+              "table": "servo_orders",
+              "column": "order_total_adjustment",
+              "type": "number",
+              "value": "{{$_POST.order_total_adjustment}}"
             }
           ],
           "table": "servo_orders",
@@ -85,7 +95,7 @@ $app->define(<<<'JSON'
               }
             ]
           },
-          "query": "UPDATE servo_orders\nSET order_notes = :P1 /* {{$_POST.order_notes}} */, order_customer = :P2 /* {{$_POST.order_customer}} */, order_discount = :P3 /* {{$_POST.order_discount}} */, order_extra_info = :P4 /* {{$_POST.order_extra_info}} */\nWHERE order_id = :P5 /* {{$_POST.order_id}} */",
+          "query": "update `servo_orders` set `order_notes` = ?, `order_customer` = ?, `order_discount` = ?, `order_extra_info` = ?, `order_total_adjustment` = ? where `order_id` = ?",
           "params": [
             {
               "name": ":P1",
@@ -108,9 +118,15 @@ $app->define(<<<'JSON'
               "value": "{{$_POST.order_extra_info}}"
             },
             {
+              "name": ":P5",
+              "type": "expression",
+              "value": "{{$_POST.order_total_adjustment}}",
+              "test": ""
+            },
+            {
               "operator": "equal",
               "type": "expression",
-              "name": ":P5",
+              "name": ":P6",
               "value": "{{$_POST.order_id}}",
               "test": ""
             }

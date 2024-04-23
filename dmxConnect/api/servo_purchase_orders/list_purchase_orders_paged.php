@@ -31,6 +31,10 @@ $app->define(<<<'JSON'
       {
         "type": "text",
         "name": "department_id"
+      },
+      {
+        "type": "text",
+        "name": "vendor_id"
       }
     ]
   },
@@ -321,20 +325,27 @@ $app->define(<<<'JSON'
                 "primary": "department_id"
               }
             ],
-            "query": "select `servo_purchase_orders`.`po_id`, `servo_purchase_orders`.`time_ordered`, `servo_purchase_orders`.`time_approved`, `servo_purchase_orders`.`po_status`, `servo_purchase_orders`.`po_notes`, `servo_purchase_orders`.`po_need_by_date`, `servo_user`.`user_username`, `servo_vendors`.`vendor_name`, `servo_purchase_orders`.`servo_users_user_received_id`, `servo_purchase_orders`.`po_type`, `servo_purchase_orders`.`transfer_source_department_id`, `servo_department`.`department_name`, `source_department`.`department_name` as `source_department_name`, `source_department`.`department_id` as `source_department_id`, `servo_department`.`department_id` from `servo_purchase_orders` left join `servo_user` on `servo_user`.`user_id` = `servo_purchase_orders`.`servo_users_user_ordered_id` left join `servo_vendors` on `servo_vendors`.`vendor_id` = `servo_purchase_orders`.`servo_vendors_vendor_id` left join `servo_department` as `source_department` on `source_department`.`department_id` = `servo_purchase_orders`.`transfer_source_department_id` left join `servo_department` on `servo_department`.`department_id` = `servo_purchase_orders`.`servo_departments_department_id` where `servo_purchase_orders`.`po_id` >= ? and `servo_purchase_orders`.`po_type` = ? and `servo_purchase_orders`.`servo_departments_department_id` = ? order by `servo_purchase_orders`.`time_ordered` DESC, `servo_purchase_orders`.`po_id` DESC, `servo_user`.`user_username` ASC, `servo_department`.`department_name` ASC, `servo_vendors`.`vendor_name` ASC, `servo_purchase_orders`.`po_status` ASC",
+            "query": "select `servo_purchase_orders`.`po_id`, `servo_purchase_orders`.`time_ordered`, `servo_purchase_orders`.`time_approved`, `servo_purchase_orders`.`po_status`, `servo_purchase_orders`.`po_notes`, `servo_purchase_orders`.`po_need_by_date`, `servo_user`.`user_username`, `servo_vendors`.`vendor_name`, `servo_purchase_orders`.`servo_users_user_received_id`, `servo_purchase_orders`.`po_type`, `servo_purchase_orders`.`transfer_source_department_id`, `servo_department`.`department_name`, `source_department`.`department_name` as `source_department_name`, `source_department`.`department_id` as `source_department_id`, `servo_department`.`department_id` from `servo_purchase_orders` left join `servo_user` on `servo_user`.`user_id` = `servo_purchase_orders`.`servo_users_user_ordered_id` left join `servo_vendors` on `servo_vendors`.`vendor_id` = `servo_purchase_orders`.`servo_vendors_vendor_id` left join `servo_department` as `source_department` on `source_department`.`department_id` = `servo_purchase_orders`.`transfer_source_department_id` left join `servo_department` on `servo_department`.`department_id` = `servo_purchase_orders`.`servo_departments_department_id` where `servo_purchase_orders`.`po_type` = ? and (`servo_purchase_orders`.`servo_departments_department_id` = ?) and (`servo_purchase_orders`.`po_id` = ?) and (`servo_purchase_orders`.`servo_vendors_vendor_id` = ?) order by `servo_purchase_orders`.`time_ordered` DESC, `servo_purchase_orders`.`po_id` DESC, `servo_user`.`user_username` ASC, `servo_department`.`department_name` ASC, `servo_vendors`.`vendor_name` ASC, `servo_purchase_orders`.`po_status` ASC",
             "params": [
               {
-                "operator": "greater_or_equal",
+                "operator": "equal",
                 "type": "expression",
                 "name": ":P1",
-                "value": "{{$_GET.po_filter}}",
+                "value": "{{$_GET.department_id}}",
                 "test": ""
               },
               {
                 "operator": "equal",
                 "type": "expression",
                 "name": ":P2",
-                "value": "{{$_GET.department_id}}",
+                "value": "{{$_GET.po_filter}}",
+                "test": ""
+              },
+              {
+                "operator": "equal",
+                "type": "expression",
+                "name": ":P3",
+                "value": "{{$_GET.vendor_id}}",
                 "test": ""
               }
             ],
@@ -381,25 +392,6 @@ $app->define(<<<'JSON'
               "condition": "AND",
               "rules": [
                 {
-                  "id": "servo_purchase_orders.po_id",
-                  "field": "servo_purchase_orders.po_id",
-                  "type": "double",
-                  "operator": "greater_or_equal",
-                  "value": "{{$_GET.po_filter}}",
-                  "data": {
-                    "table": "servo_purchase_orders",
-                    "column": "po_id",
-                    "type": "number",
-                    "columnObj": {
-                      "type": "integer",
-                      "primary": true,
-                      "nullable": false,
-                      "name": "po_id"
-                    }
-                  },
-                  "operation": ">="
-                },
-                {
                   "id": "servo_purchase_orders.po_type",
                   "field": "servo_purchase_orders.po_type",
                   "type": "string",
@@ -425,32 +417,94 @@ $app->define(<<<'JSON'
                   "operation": "="
                 },
                 {
-                  "id": "servo_purchase_orders.servo_departments_department_id",
-                  "field": "servo_purchase_orders.servo_departments_department_id",
-                  "type": "double",
-                  "operator": "equal",
-                  "value": "{{$_GET.department_id}}",
-                  "data": {
-                    "table": "servo_purchase_orders",
-                    "column": "servo_departments_department_id",
-                    "type": "number",
-                    "columnObj": {
-                      "type": "reference",
-                      "default": "",
-                      "primary": false,
-                      "nullable": true,
-                      "references": "department_id",
-                      "inTable": "servo_department",
-                      "referenceType": "integer",
-                      "onUpdate": "RESTRICT",
-                      "onDelete": "RESTRICT",
-                      "name": "servo_departments_department_id"
+                  "condition": "AND",
+                  "rules": [
+                    {
+                      "id": "servo_purchase_orders.servo_departments_department_id",
+                      "field": "servo_purchase_orders.servo_departments_department_id",
+                      "type": "double",
+                      "operator": "equal",
+                      "value": "{{$_GET.department_id}}",
+                      "data": {
+                        "table": "servo_purchase_orders",
+                        "column": "servo_departments_department_id",
+                        "type": "number",
+                        "columnObj": {
+                          "type": "reference",
+                          "default": "",
+                          "primary": false,
+                          "nullable": true,
+                          "references": "department_id",
+                          "inTable": "servo_department",
+                          "referenceType": "integer",
+                          "onUpdate": "RESTRICT",
+                          "onDelete": "RESTRICT",
+                          "name": "servo_departments_department_id"
+                        }
+                      },
+                      "operation": "="
                     }
-                  },
-                  "operation": "="
+                  ],
+                  "conditional": "{{$_GET.department_id}}"
+                },
+                {
+                  "condition": "AND",
+                  "rules": [
+                    {
+                      "id": "servo_purchase_orders.po_id",
+                      "field": "servo_purchase_orders.po_id",
+                      "type": "double",
+                      "operator": "equal",
+                      "value": "{{$_GET.po_filter}}",
+                      "data": {
+                        "table": "servo_purchase_orders",
+                        "column": "po_id",
+                        "type": "number",
+                        "columnObj": {
+                          "type": "increments",
+                          "primary": true,
+                          "nullable": false,
+                          "name": "po_id"
+                        }
+                      },
+                      "operation": "="
+                    }
+                  ],
+                  "conditional": "{{$_GET.po_filter}}"
+                },
+                {
+                  "condition": "AND",
+                  "rules": [
+                    {
+                      "id": "servo_purchase_orders.servo_vendors_vendor_id",
+                      "field": "servo_purchase_orders.servo_vendors_vendor_id",
+                      "type": "double",
+                      "operator": "equal",
+                      "value": "{{$_GET.vendor_id}}",
+                      "data": {
+                        "table": "servo_purchase_orders",
+                        "column": "servo_vendors_vendor_id",
+                        "type": "number",
+                        "columnObj": {
+                          "type": "reference",
+                          "default": "",
+                          "primary": false,
+                          "nullable": true,
+                          "references": "vendor_id",
+                          "inTable": "servo_vendors",
+                          "referenceType": "integer",
+                          "onUpdate": "RESTRICT",
+                          "onDelete": "RESTRICT",
+                          "name": "servo_vendors_vendor_id"
+                        }
+                      },
+                      "operation": "="
+                    }
+                  ],
+                  "conditional": "{{$_GET.vendor_id}}"
                 }
               ],
-              "conditional": "{{$_GET.department_id}}",
+              "conditional": null,
               "valid": true
             }
           }

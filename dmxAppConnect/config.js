@@ -1966,7 +1966,91 @@ dmx.config({
     "tableRepeat2": {
       "meta": [
         {
-          "name": "product_name",
+          "name": "$index",
+          "type": "number"
+        },
+        {
+          "name": "$key",
+          "type": "text"
+        },
+        {
+          "name": "$value",
+          "type": "object"
+        },
+        {
+          "name": "order_item_id",
+          "type": "number"
+        },
+        {
+          "name": "order_time_ordered",
+          "type": "datetime"
+        },
+        {
+          "name": "order_time_ready",
+          "type": "datetime"
+        },
+        {
+          "name": "order_time_delivered",
+          "type": "datetime"
+        },
+        {
+          "name": "order_item_status",
+          "type": "text"
+        },
+        {
+          "name": "servo_orders_order_id",
+          "type": "number"
+        },
+        {
+          "name": "servo_products_product_id",
+          "type": "number"
+        },
+        {
+          "name": "servo_user_user_prepared_id",
+          "type": "number"
+        },
+        {
+          "name": "order_item_notes",
+          "type": "file"
+        },
+        {
+          "name": "order_item_quantity",
+          "type": "text"
+        },
+        {
+          "name": "order_item_price",
+          "type": "text"
+        },
+        {
+          "name": "order_item_discount",
+          "type": "number"
+        },
+        {
+          "name": "order_time_processing",
+          "type": "datetime"
+        },
+        {
+          "name": "order_item_type",
+          "type": "file"
+        },
+        {
+          "name": "servo_users_user_ordered",
+          "type": "number"
+        },
+        {
+          "name": "order_item_group_type",
+          "type": "file"
+        },
+        {
+          "name": "servo_departments_department_id",
+          "type": "number"
+        },
+        {
+          "name": "order_item_group_id",
+          "type": "number"
+        },
+        {
+          "name": "order_item_group_reference",
           "type": "text"
         },
         {
@@ -1974,15 +2058,159 @@ dmx.config({
           "type": "number"
         },
         {
+          "name": "product_name",
+          "type": "text"
+        },
+        {
+          "name": "product_picture",
+          "type": "text"
+        },
+        {
+          "name": "servo_product_brands_product_brand_id",
+          "type": "number"
+        },
+        {
+          "name": "product_description",
+          "type": "file"
+        },
+        {
+          "name": "servo_product_category_product_category_id",
+          "type": "number"
+        },
+        {
+          "name": "product_standard_price",
+          "type": "number"
+        },
+        {
+          "name": "product_discount",
+          "type": "number"
+        },
+        {
+          "name": "product_type",
+          "type": "file"
+        },
+        {
+          "name": "product_stock_value",
+          "type": "number"
+        },
+        {
           "name": "product_min_stock",
           "type": "number"
         },
         {
-          "name": "TotalStock",
+          "name": "product_expiration_date",
+          "type": "datetime"
+        },
+        {
+          "name": "product_sub_category_sub_category_id",
+          "type": "number"
+        },
+        {
+          "name": "product_reference_uom",
+          "type": "file"
+        },
+        {
+          "name": "product_categories_id",
+          "type": "number"
+        },
+        {
+          "name": "product_category_name",
+          "type": "text"
+        },
+        {
+          "name": "order_id",
+          "type": "number"
+        },
+        {
+          "name": "order_time",
+          "type": "datetime"
+        },
+        {
+          "name": "order_customer",
+          "type": "number"
+        },
+        {
+          "name": "order_discount",
+          "type": "number"
+        },
+        {
+          "name": "order_status",
+          "type": "text"
+        },
+        {
+          "name": "servo_user_user_id",
+          "type": "number"
+        },
+        {
+          "name": "servo_customer_table_table_id",
+          "type": "number"
+        },
+        {
+          "name": "order_notes",
+          "type": "file"
+        },
+        {
+          "name": "servo_shift_shift_id",
+          "type": "number"
+        },
+        {
+          "name": "order_amount_tendered",
+          "type": "number"
+        },
+        {
+          "name": "order_balance",
+          "type": "number"
+        },
+        {
+          "name": "servo_users_cashier_id",
+          "type": "number"
+        },
+        {
+          "name": "servo_payment_methods_payment_method",
+          "type": "number"
+        },
+        {
+          "name": "servo_departments_department_id",
+          "type": "number"
+        },
+        {
+          "name": "servo_service_service_id",
+          "type": "number"
+        },
+        {
+          "name": "coverage_percentage",
+          "type": "number"
+        },
+        {
+          "name": "coverage_partner",
+          "type": "number"
+        },
+        {
+          "name": "coverage_payment_status",
+          "type": "file"
+        },
+        {
+          "name": "order_time_paid",
+          "type": "datetime"
+        },
+        {
+          "name": "order_extra_info",
+          "type": "file"
+        },
+        {
+          "name": "order_pos",
+          "type": "number"
+        },
+        {
+          "name": "Volume",
+          "type": "text"
+        },
+        {
+          "name": "Total",
           "type": "text"
         }
       ],
-      "outputType": "array"
+      "outputType": "text"
     },
     "stockvals": {
       "meta": [
@@ -2027,7 +2255,244 @@ dmx.config({
         "type": "text",
         "name": "servotheme"
       }
-    ]
+    ],
+    "tableRepeat7": {
+      "meta": [
+        {
+          "name": "order_item_id",
+          "type": "number"
+        },
+        {
+          "name": "order_time_ordered",
+          "type": "datetime"
+        },
+        {
+          "name": "order_time_ready",
+          "type": "datetime"
+        },
+        {
+          "name": "order_time_delivered",
+          "type": "datetime"
+        },
+        {
+          "name": "order_item_status",
+          "type": "text"
+        },
+        {
+          "name": "servo_orders_order_id",
+          "type": "number"
+        },
+        {
+          "name": "servo_products_product_id",
+          "type": "number"
+        },
+        {
+          "name": "servo_user_user_prepared_id",
+          "type": "number"
+        },
+        {
+          "name": "order_item_notes",
+          "type": "file"
+        },
+        {
+          "name": "order_item_quantity",
+          "type": "text"
+        },
+        {
+          "name": "order_item_price",
+          "type": "text"
+        },
+        {
+          "name": "order_item_discount",
+          "type": "number"
+        },
+        {
+          "name": "order_time_processing",
+          "type": "datetime"
+        },
+        {
+          "name": "order_item_type",
+          "type": "file"
+        },
+        {
+          "name": "servo_users_user_ordered",
+          "type": "number"
+        },
+        {
+          "name": "order_item_group_type",
+          "type": "file"
+        },
+        {
+          "name": "servo_departments_department_id",
+          "type": "number"
+        },
+        {
+          "name": "order_item_group_id",
+          "type": "number"
+        },
+        {
+          "name": "order_item_group_reference",
+          "type": "text"
+        },
+        {
+          "name": "product_id",
+          "type": "number"
+        },
+        {
+          "name": "product_name",
+          "type": "text"
+        },
+        {
+          "name": "product_picture",
+          "type": "text"
+        },
+        {
+          "name": "servo_product_brands_product_brand_id",
+          "type": "number"
+        },
+        {
+          "name": "product_description",
+          "type": "file"
+        },
+        {
+          "name": "servo_product_category_product_category_id",
+          "type": "number"
+        },
+        {
+          "name": "product_standard_price",
+          "type": "number"
+        },
+        {
+          "name": "product_discount",
+          "type": "number"
+        },
+        {
+          "name": "product_type",
+          "type": "file"
+        },
+        {
+          "name": "product_stock_value",
+          "type": "number"
+        },
+        {
+          "name": "product_min_stock",
+          "type": "number"
+        },
+        {
+          "name": "product_expiration_date",
+          "type": "datetime"
+        },
+        {
+          "name": "product_sub_category_sub_category_id",
+          "type": "number"
+        },
+        {
+          "name": "product_reference_uom",
+          "type": "file"
+        },
+        {
+          "name": "product_categories_id",
+          "type": "number"
+        },
+        {
+          "name": "product_category_name",
+          "type": "text"
+        },
+        {
+          "name": "order_id",
+          "type": "number"
+        },
+        {
+          "name": "order_time",
+          "type": "datetime"
+        },
+        {
+          "name": "order_customer",
+          "type": "number"
+        },
+        {
+          "name": "order_discount",
+          "type": "number"
+        },
+        {
+          "name": "order_status",
+          "type": "text"
+        },
+        {
+          "name": "servo_user_user_id",
+          "type": "number"
+        },
+        {
+          "name": "servo_customer_table_table_id",
+          "type": "number"
+        },
+        {
+          "name": "order_notes",
+          "type": "file"
+        },
+        {
+          "name": "servo_shift_shift_id",
+          "type": "number"
+        },
+        {
+          "name": "order_amount_tendered",
+          "type": "number"
+        },
+        {
+          "name": "order_balance",
+          "type": "number"
+        },
+        {
+          "name": "servo_users_cashier_id",
+          "type": "number"
+        },
+        {
+          "name": "servo_payment_methods_payment_method",
+          "type": "number"
+        },
+        {
+          "name": "servo_departments_department_id",
+          "type": "number"
+        },
+        {
+          "name": "servo_service_service_id",
+          "type": "number"
+        },
+        {
+          "name": "coverage_percentage",
+          "type": "number"
+        },
+        {
+          "name": "coverage_partner",
+          "type": "number"
+        },
+        {
+          "name": "coverage_payment_status",
+          "type": "file"
+        },
+        {
+          "name": "order_time_paid",
+          "type": "datetime"
+        },
+        {
+          "name": "order_extra_info",
+          "type": "file"
+        },
+        {
+          "name": "order_pos",
+          "type": "number"
+        },
+        {
+          "name": "Volume",
+          "type": "text"
+        },
+        {
+          "name": "Total",
+          "type": "text"
+        }
+      ],
+      "outputType": "text"
+    }
   },
   "products": {
     "sessionStorage": [
@@ -3054,7 +3519,10 @@ dmx.config({
         "type": "text",
         "name": "current_customer"
       }
-    ]
+    ],
+    "variableCustomerTotalToPay": {
+      "outputType": "number"
+    }
   },
   "Customers": {
     "query": [

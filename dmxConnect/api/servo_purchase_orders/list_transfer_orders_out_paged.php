@@ -567,6 +567,14 @@ $app->define(<<<'JSON'
           {
             "type": "text",
             "name": "po_type"
+          },
+          {
+            "type": "number",
+            "name": "po_discount"
+          },
+          {
+            "type": "text",
+            "name": "po_payment_status"
           }
         ],
         "outputType": "array",

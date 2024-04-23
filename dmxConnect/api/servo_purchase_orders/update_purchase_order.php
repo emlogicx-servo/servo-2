@@ -21,7 +21,7 @@ $app->define(<<<'JSON'
         "name": "po_id"
       },
       {
-        "type": "datetime",
+        "type": "date",
         "name": "po_need_by_date"
       },
       {
@@ -70,7 +70,7 @@ $app->define(<<<'JSON'
               "table": "servo_purchase_orders",
               "column": "po_need_by_date",
               "type": "datetime",
-              "value": "{{$_POST.po_need_by_date}}"
+              "value": "{{$_POST.po_need_by_date.default(null)}}"
             },
             {
               "table": "servo_purchase_orders",
@@ -127,7 +127,7 @@ $app->define(<<<'JSON'
             {
               "name": ":P4",
               "type": "expression",
-              "value": "{{$_POST.po_need_by_date}}"
+              "value": "{{$_POST.po_need_by_date.default(null)}}"
             },
             {
               "name": ":P5",

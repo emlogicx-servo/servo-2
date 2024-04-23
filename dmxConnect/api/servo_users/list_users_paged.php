@@ -99,7 +99,7 @@ $app->define(<<<'JSON'
               "primary": "department_id"
             }
           ],
-          "query": "SELECT servo_user.user_id, servo_user.user_fname, servo_user.user_lname, servo_user.user_username, servo_user.servo_user_departments_department_id, servo_user.user_profile, servo_department.department_id, servo_department.department_name\nFROM servo_user\nLEFT JOIN servo_department ON (servo_department.department_id = servo_user.servo_user_departments_department_id)\nWHERE servo_user.user_fname LIKE :P1 /* {{$_GET.userfilter}} */ OR servo_user.user_lname LIKE :P2 /* {{$_GET.userfilter}} */ OR servo_user.user_profile LIKE :P3 /* {{$_GET.userfilter}} */ OR servo_user.user_username LIKE :P4 /* {{$_GET.userfilter}} */\nORDER BY servo_user.user_fname ASC",
+          "query": "select `servo_user`.`user_id`, `servo_user`.`user_fname`, `servo_user`.`user_lname`, `servo_user`.`user_username`, `servo_user`.`servo_user_departments_department_id`, `servo_user`.`user_profile`, `servo_department`.`department_id`, `servo_department`.`department_name` from `servo_user` left join `servo_department` on `servo_department`.`department_id` = `servo_user`.`servo_user_departments_department_id` where `servo_user`.`user_fname` like ? or `servo_user`.`user_lname` like ? or `servo_user`.`user_username` like ? order by `servo_user`.`user_fname` ASC",
           "params": [
             {
               "operator": "contains",
@@ -117,12 +117,6 @@ $app->define(<<<'JSON'
               "operator": "contains",
               "type": "expression",
               "name": ":P3",
-              "value": "{{$_GET.userfilter}}"
-            },
-            {
-              "operator": "contains",
-              "type": "expression",
-              "name": ":P4",
               "value": "{{$_GET.userfilter}}"
             }
           ],
@@ -150,9 +144,10 @@ $app->define(<<<'JSON'
                   "type": "text",
                   "columnObj": {
                     "type": "string",
+                    "default": "",
+                    "nullable": true,
                     "maxLength": 45,
                     "primary": false,
-                    "nullable": true,
                     "name": "user_fname"
                   }
                 },
@@ -170,30 +165,11 @@ $app->define(<<<'JSON'
                   "type": "text",
                   "columnObj": {
                     "type": "string",
+                    "default": "",
+                    "nullable": true,
                     "maxLength": 45,
                     "primary": false,
-                    "nullable": true,
                     "name": "user_lname"
-                  }
-                },
-                "operation": "LIKE"
-              },
-              {
-                "id": "servo_user.user_profile",
-                "field": "servo_user.user_profile",
-                "type": "string",
-                "operator": "contains",
-                "value": "{{$_GET.userfilter}}",
-                "data": {
-                  "table": "servo_user",
-                  "column": "user_profile",
-                  "type": "text",
-                  "columnObj": {
-                    "type": "enum",
-                    "maxLength": 7,
-                    "primary": false,
-                    "nullable": false,
-                    "name": "user_profile"
                   }
                 },
                 "operation": "LIKE"
