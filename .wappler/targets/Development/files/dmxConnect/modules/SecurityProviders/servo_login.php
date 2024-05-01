@@ -133,6 +133,22 @@ $exports = <<<'JSON'
             ]
           }
         ]
+      },
+      "finance": {
+        "table": "servo_user",
+        "identity": "user_id",
+        "conditions": [
+          {
+            "column": "user_profile",
+            "operator": "in",
+            "value": [
+              "smanager",
+              "Admin",
+              "Manager",
+              "fmanager"
+            ]
+          }
+        ]
       }
     }
   },

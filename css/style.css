@@ -46,7 +46,7 @@
 
 h1, h2, h3, h4, h5, h6, button
 {
-    font-family: 'Nunito' !important;
+    font-family: 'Roboto' !important;
     font-weight: 400 !important;
 }
 
@@ -304,12 +304,12 @@ input[type='datetime-local']
 
 *::-webkit-scrollbar {
   width: 0.5px;
-  height: 0.5px;
+  height: 0.2px;
   background-color: rgb(85, 85, 85); /* or add it to the track */
 }
 
 *::-webkit-scrollbar-thumb{
-  background: rgb(161, 161, 161);
+  background:transparent /* rgb(161, 161, 161);*/
 }
 
 
@@ -433,8 +433,8 @@ tbody
 }
 .nav-item, .nav-link
 {
-    font-family: 'Nunito' !important;
-    font-weight: 600 !important;
+    font-family: 'Roboto' !important;
+    font-weight: 400 !important;
     font-size: 15px !important;
 }
 

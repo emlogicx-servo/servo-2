@@ -1,6 +1,2142 @@
 {
   "schema": {
     "tables": {
+      "servo_services": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "columns": {
+          "service_id": {
+            "db": {
+              "type": "increments",
+              "primary": true,
+              "nullable": false
+            }
+          },
+          "service_name": {
+            "db": {
+              "type": "string",
+              "maxLength": 128,
+              "primary": false,
+              "nullable": false
+            }
+          },
+          "servo_service_sales_point": {
+            "db": {
+              "type": "reference",
+              "default": "",
+              "nullable": true,
+              "primary": false,
+              "references": "sales_point_id",
+              "inTable": "servo_sales_point",
+              "referenceType": "integer",
+              "onUpdate": "RESTRICT",
+              "onDelete": "RESTRICT"
+            }
+          }
+        },
+        "sub": {
+          "servo_service_department_category": "sdc_service_id"
+        },
+        "refs": {
+          "servo_user_shifts": "servo_service_service_id",
+          "servo_product_price": "servo_service_service_id",
+          "servo_orders": "servo_service_service_id"
+        }
+      },
+      "servo_department": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "columns": {
+          "department_id": {
+            "db": {
+              "type": "increments",
+              "primary": true,
+              "nullable": false
+            }
+          },
+          "department_name": {
+            "db": {
+              "type": "string",
+              "maxLength": 45,
+              "primary": false,
+              "nullable": false
+            }
+          }
+        },
+        "refs": {
+          "servo_product_groups": "group_product_department",
+          "servo_vendor_cash_transaction": "transaction_department_received",
+          "servo_user_tenure": "servo_department_department_id",
+          "servo_service_department_category": "sdc_department_id",
+          "servo_sales_point_departments": "servo_departments_department_id",
+          "servo_customer_cash_transaction": "transaction_department_received",
+          "servo_project_step": "step_department_concerned",
+          "servo_order_items": "servo_departments_department_id",
+          "servo_expenses": "expense_department",
+          "servo_user": "servo_user_departments_department_id",
+          "servo_purchase_orders": "servo_departments_department_id"
+        },
+        "sub": {
+          "servo_department_categories": "department_id"
+        }
+      },
+      "servo_product_groups": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "columns": {
+          "product_group_id": {
+            "db": {
+              "type": "increments",
+              "primary": true,
+              "nullable": false
+            }
+          },
+          "product_group_name": {
+            "db": {
+              "type": "text",
+              "maxLength": 65535,
+              "primary": false,
+              "nullable": false
+            }
+          },
+          "group_product_department": {
+            "db": {
+              "type": "reference",
+              "default": "",
+              "primary": false,
+              "nullable": true,
+              "references": "department_id",
+              "inTable": "servo_department",
+              "referenceType": "integer",
+              "onUpdate": "RESTRICT",
+              "onDelete": "RESTRICT"
+            }
+          }
+        },
+        "refs": {
+          "servo_product_group_items": "product_group_product_group_id",
+          "servo_order_items": "order_item_group_id"
+        }
+      },
+      "servo_sales_point": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "columns": {
+          "sales_point_id": {
+            "db": {
+              "type": "increments",
+              "primary": true,
+              "nullable": false
+            }
+          },
+          "sales_point_name": {
+            "db": {
+              "type": "string",
+              "maxLength": 128,
+              "primary": false,
+              "nullable": false
+            }
+          },
+          "sales_point_customer_id": {
+            "db": {
+              "type": "reference",
+              "default": "",
+              "primary": false,
+              "nullable": true,
+              "references": "customer_id",
+              "inTable": "servo_customers",
+              "referenceType": "integer",
+              "onUpdate": "RESTRICT",
+              "onDelete": "RESTRICT"
+            }
+          }
+        },
+        "refs": {
+          "servo_services": "servo_service_sales_point",
+          "servo_user_shifts": "servo_sales_point_sales_point_id",
+          "servo_orders": "order_pos"
+        },
+        "sub": {
+          "servo_sales_point_departments": "servo_sales_point_sales_point_id"
+        }
+      },
+      "servo_data_field_readings": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "columns": {
+          "data_field_reading_id": {
+            "db": {
+              "type": "increments",
+              "primary": true,
+              "nullable": false
+            }
+          },
+          "data_field_reading_data_field": {
+            "db": {
+              "type": "reference",
+              "primary": false,
+              "nullable": false,
+              "references": "data_field_id",
+              "inTable": "servo_data_fields",
+              "referenceType": "integer",
+              "onUpdate": "RESTRICT",
+              "onDelete": "RESTRICT"
+            }
+          },
+          "data_field_reading_date": {
+            "db": {
+              "type": "datetime",
+              "primary": false,
+              "nullable": false
+            }
+          },
+          "data_field_reading_value": {
+            "db": {
+              "type": "decimal",
+              "default": "",
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "data_field_reading_user": {
+            "db": {
+              "type": "reference",
+              "default": "",
+              "primary": false,
+              "nullable": true,
+              "references": "user_id",
+              "inTable": "servo_user",
+              "referenceType": "integer",
+              "onUpdate": "RESTRICT",
+              "onDelete": "RESTRICT"
+            }
+          },
+          "data_field_reading_note": {
+            "db": {
+              "type": null,
+              "default": "",
+              "maxLength": 4294967295,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "data_reading_session_id": {
+            "db": {
+              "type": "reference",
+              "default": "",
+              "primary": false,
+              "nullable": true,
+              "references": "data_reading_session_id",
+              "inTable": "servo_data_reading_session",
+              "referenceType": "integer",
+              "onUpdate": "RESTRICT",
+              "onDelete": "RESTRICT"
+            }
+          }
+        },
+        "parent": "servo_data_fields"
+      },
+      "servo_product_category_options": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "columns": {
+          "category_option_id": {
+            "db": {
+              "type": "increments",
+              "primary": true,
+              "nullable": false
+            }
+          },
+          "category_option_category_id": {
+            "db": {
+              "type": "reference",
+              "primary": false,
+              "nullable": false,
+              "references": "product_categories_id",
+              "inTable": "servo_product_categories",
+              "referenceType": "integer",
+              "onUpdate": "RESTRICT",
+              "onDelete": "RESTRICT"
+            }
+          },
+          "category_option_option": {
+            "db": {
+              "type": "text",
+              "maxLength": 65535,
+              "primary": false,
+              "nullable": false
+            }
+          }
+        },
+        "parent": "servo_product_categories"
+      },
+      "servo_customer_table": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "columns": {
+          "table_id": {
+            "db": {
+              "type": "increments",
+              "primary": true,
+              "nullable": false
+            }
+          },
+          "table_name": {
+            "db": {
+              "type": "string",
+              "default": "",
+              "nullable": true,
+              "maxLength": 45,
+              "primary": false
+            }
+          }
+        },
+        "refs": {
+          "servo_data_reading_session": "data_reading_session_asset",
+          "servo_orders": "servo_customer_table_table_id"
+        }
+      },
+      "servo_product_brands": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "columns": {
+          "product_brand_id": {
+            "db": {
+              "type": "increments",
+              "primary": true,
+              "nullable": false
+            }
+          },
+          "product_brand_name": {
+            "db": {
+              "type": "string",
+              "default": "",
+              "maxLength": 45,
+              "primary": false,
+              "nullable": true
+            }
+          }
+        },
+        "refs": {
+          "servo_products": "servo_product_brands_product_brand_id"
+        }
+      },
+      "servo_wallet_privileges": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "columns": {
+          "wallet_privilege_id": {
+            "db": {
+              "type": "increments",
+              "primary": true,
+              "nullable": false
+            }
+          },
+          "wallet_privilege_wallet_id": {
+            "db": {
+              "type": "reference",
+              "default": "",
+              "primary": false,
+              "nullable": true,
+              "references": "wallet_id",
+              "inTable": "servo_wallets",
+              "referenceType": "integer",
+              "onUpdate": "RESTRICT",
+              "onDelete": "RESTRICT"
+            }
+          },
+          "wallet_privilege_user_id": {
+            "db": {
+              "type": "reference",
+              "default": "",
+              "primary": false,
+              "nullable": true,
+              "references": "user_id",
+              "inTable": "servo_user",
+              "referenceType": "integer",
+              "onUpdate": "RESTRICT",
+              "onDelete": "RESTRICT"
+            }
+          },
+          "wallet_privilege_deposit": {
+            "db": {
+              "type": "enum",
+              "enumValues": [
+                "Yes",
+                "No"
+              ],
+              "default": "'No'",
+              "maxLength": 3,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "wallet_privilege_transfer": {
+            "db": {
+              "type": "enum",
+              "enumValues": [
+                "Yes",
+                "No"
+              ],
+              "default": "'No'",
+              "maxLength": 3,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "wallet_privilege_payout": {
+            "db": {
+              "type": "enum",
+              "enumValues": [
+                "Yes",
+                "No"
+              ],
+              "default": "'No'",
+              "maxLength": 3,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "wallet_privilege_approve": {
+            "db": {
+              "type": "enum",
+              "enumValues": [
+                "Yes",
+                "No"
+              ],
+              "default": "'No'",
+              "maxLength": 3,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "wallet_privilege_receive": {
+            "db": {
+              "type": "enum",
+              "enumValues": [
+                "Yes",
+                "No"
+              ],
+              "default": "'No'",
+              "maxLength": 3,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "wallet_privilege_transfer_to": {
+            "db": {
+              "type": "enum",
+              "enumValues": [
+                "Yes",
+                "No"
+              ],
+              "default": "'No'",
+              "maxLength": 3,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "wallet_privilege_user_access": {
+            "db": {
+              "type": "enum",
+              "enumValues": [
+                "Yes",
+                "No"
+              ],
+              "default": "'No'",
+              "maxLength": 3,
+              "primary": false,
+              "nullable": true
+            }
+          }
+        },
+        "parent": "servo_wallets"
+      },
+      "servo_customers": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "columns": {
+          "customer_id": {
+            "db": {
+              "type": "increments",
+              "primary": true,
+              "nullable": false
+            }
+          },
+          "customer_first_name": {
+            "db": {
+              "type": "text",
+              "maxLength": 65535,
+              "primary": false,
+              "nullable": false
+            }
+          },
+          "customer_last_name": {
+            "db": {
+              "type": "text",
+              "default": "",
+              "maxLength": 65535,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "customer_phone_number": {
+            "db": {
+              "type": "string",
+              "default": "",
+              "maxLength": 128,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "customer_picture": {
+            "db": {
+              "type": "string",
+              "default": "",
+              "maxLength": 128,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "customer_class": {
+            "db": {
+              "type": "text",
+              "default": "",
+              "maxLength": 65535,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "customer_sex": {
+            "db": {
+              "type": "text",
+              "default": "",
+              "maxLength": 65535,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "customer_dob": {
+            "db": {
+              "type": "datetime",
+              "default": "",
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "customer_age": {
+            "db": {
+              "type": "integer",
+              "default": "",
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "customer_address": {
+            "db": {
+              "type": "text",
+              "default": "",
+              "maxLength": 65535,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "id_card_number": {
+            "db": {
+              "type": "string",
+              "default": "",
+              "primary": false,
+              "nullable": true,
+              "maxLength": 128
+            }
+          },
+          "location_lat": {
+            "db": {
+              "type": "text",
+              "default": "",
+              "maxLength": 65535,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "locatio_lon": {
+            "db": {
+              "type": "text",
+              "default": "",
+              "maxLength": 65535,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "customer_city": {
+            "db": {
+              "type": "integer",
+              "default": "",
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "customer_building_photo": {
+            "db": {
+              "type": "string",
+              "default": "",
+              "maxLength": 128,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "customer_location_diretions": {
+            "db": {
+              "type": "text",
+              "default": "",
+              "maxLength": 65535,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "customer_nationality": {
+            "db": {
+              "type": "integer",
+              "default": "",
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "customer_email": {
+            "db": {
+              "type": "string",
+              "default": "",
+              "maxLength": 128,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "customer_legal_status": {
+            "db": {
+              "type": "text",
+              "default": "",
+              "maxLength": 65535,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "customer_tax_payer_number": {
+            "db": {
+              "type": "string",
+              "default": "",
+              "maxLength": 11,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "customer_rep_name": {
+            "db": {
+              "type": "text",
+              "default": "",
+              "maxLength": 65535,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "customer_rep_surname": {
+            "db": {
+              "type": "text",
+              "default": "",
+              "maxLength": 65535,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "customer_rep_id_card": {
+            "db": {
+              "type": "string",
+              "default": "",
+              "maxLength": 128,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "customer_rep_address": {
+            "db": {
+              "type": "text",
+              "default": "",
+              "maxLength": 65535,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "customer_rep_phone": {
+            "db": {
+              "type": "string",
+              "default": "",
+              "maxLength": 128,
+              "primary": false,
+              "nullable": true
+            }
+          }
+        },
+        "refs": {
+          "servo_sales_point": "sales_point_customer_id",
+          "servo_data_reading_session": "data_reading_session_customer",
+          "servo_projects": "project_customer",
+          "servo_assets": "asset_owner",
+          "servo_orders": "order_customer",
+          "servo_files": "file_customer_id"
+        },
+        "sub": {
+          "servo_customer_cash_transaction": "customer_id"
+        }
+      },
+      "servo_vendor_cash_transaction": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "columns": {
+          "vendor_transaction_id": {
+            "db": {
+              "type": "increments",
+              "primary": true,
+              "nullable": false
+            }
+          },
+          "transaction_amount": {
+            "db": {
+              "type": "integer",
+              "primary": false,
+              "nullable": false
+            }
+          },
+          "transaction_type": {
+            "db": {
+              "type": "text",
+              "maxLength": 65535,
+              "primary": false,
+              "nullable": false
+            }
+          },
+          "user_approved_id": {
+            "db": {
+              "type": "reference",
+              "primary": false,
+              "nullable": false,
+              "references": "user_id",
+              "inTable": "servo_user",
+              "referenceType": "integer",
+              "onUpdate": "RESTRICT",
+              "onDelete": "RESTRICT"
+            }
+          },
+          "transaction_date": {
+            "db": {
+              "type": "datetime",
+              "default": "",
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "transaction_payment_method": {
+            "db": {
+              "type": "reference",
+              "primary": false,
+              "nullable": false,
+              "references": "payment_method_id",
+              "inTable": "servo_payment_methods",
+              "referenceType": "integer",
+              "onUpdate": "RESTRICT",
+              "onDelete": "RESTRICT"
+            }
+          },
+          "transaction_status": {
+            "db": {
+              "type": "text",
+              "default": "",
+              "maxLength": 65535,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "transaction_note": {
+            "db": {
+              "type": "text",
+              "default": "",
+              "maxLength": 65535,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "transaction_order": {
+            "db": {
+              "type": "integer",
+              "default": "",
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "transaction_balance": {
+            "db": {
+              "type": "integer",
+              "default": "",
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "transaction_amount_tendered": {
+            "db": {
+              "type": "integer",
+              "default": "",
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "transaction_user_received": {
+            "db": {
+              "type": "reference",
+              "default": "",
+              "primary": false,
+              "nullable": true,
+              "references": "user_id",
+              "inTable": "servo_user",
+              "referenceType": "integer",
+              "onUpdate": "RESTRICT",
+              "onDelete": "RESTRICT"
+            }
+          },
+          "transaction_department_received": {
+            "db": {
+              "type": "reference",
+              "default": "",
+              "primary": false,
+              "nullable": true,
+              "references": "department_id",
+              "inTable": "servo_department",
+              "referenceType": "integer",
+              "onUpdate": "RESTRICT",
+              "onDelete": "RESTRICT"
+            }
+          },
+          "transaction_vendor_id": {
+            "db": {
+              "type": "reference",
+              "default": "",
+              "primary": false,
+              "nullable": true,
+              "references": "vendor_id",
+              "inTable": "servo_vendors",
+              "referenceType": "integer",
+              "onUpdate": "RESTRICT",
+              "onDelete": "RESTRICT"
+            }
+          }
+        },
+        "parent": "servo_vendors"
+      },
+      "servo_company_info": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "columns": {
+          "company_info_id": {
+            "db": {
+              "type": "increments",
+              "primary": true,
+              "nullable": false
+            }
+          },
+          "company_name": {
+            "db": {
+              "type": "text",
+              "maxLength": 65535,
+              "primary": false,
+              "nullable": false
+            }
+          },
+          "company_address": {
+            "db": {
+              "type": "text",
+              "default": "",
+              "maxLength": 65535,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "company_phone_number": {
+            "db": {
+              "type": "string",
+              "default": "",
+              "maxLength": 128,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "company_payment_numbers": {
+            "db": {
+              "type": "text",
+              "default": "",
+              "maxLength": 65535,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "company_message": {
+            "db": {
+              "type": "text",
+              "default": "",
+              "maxLength": 65535,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "company_logo": {
+            "db": {
+              "type": "string",
+              "default": "",
+              "maxLength": 128,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "company_receipt_footer": {
+            "db": {
+              "type": "text",
+              "default": "",
+              "maxLength": 65535,
+              "primary": false,
+              "nullable": true
+            }
+          }
+        }
+      },
+      "servo_user_tenure": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "columns": {
+          "user_tenure_id": {
+            "db": {
+              "type": "increments",
+              "primary": true,
+              "nullable": false
+            }
+          },
+          "user_tenure_start_date": {
+            "db": {
+              "type": "datetime",
+              "default": "",
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "user_tenure_end_date": {
+            "db": {
+              "type": "datetime",
+              "default": "",
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "servo_user_user_id": {
+            "db": {
+              "type": "integer",
+              "primary": false,
+              "nullable": false
+            }
+          },
+          "servo_branches_branch_id": {
+            "db": {
+              "type": "reference",
+              "primary": false,
+              "nullable": false,
+              "references": "branch_id",
+              "inTable": "servo_branches",
+              "referenceType": "integer",
+              "onUpdate": "NO ACTION",
+              "onDelete": "NO ACTION"
+            }
+          },
+          "servo_department_department_id": {
+            "db": {
+              "type": "reference",
+              "primary": false,
+              "nullable": false,
+              "references": "department_id",
+              "inTable": "servo_department",
+              "referenceType": "integer",
+              "onUpdate": "NO ACTION",
+              "onDelete": "NO ACTION"
+            }
+          }
+        }
+      },
+      "servo_order_item_deletes": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "columns": {
+          "time_deleted": {
+            "db": {
+              "type": "datetime",
+              "primary": false,
+              "nullable": false
+            }
+          },
+          "user_deleted": {
+            "db": {
+              "type": "reference",
+              "default": "",
+              "primary": false,
+              "nullable": true,
+              "references": "user_id",
+              "inTable": "servo_user",
+              "referenceType": "integer",
+              "onUpdate": "RESTRICT",
+              "onDelete": "RESTRICT"
+            }
+          },
+          "order_item_delete_id": {
+            "db": {
+              "type": "increments",
+              "primary": true,
+              "nullable": false
+            }
+          },
+          "order_id": {
+            "db": {
+              "type": "reference",
+              "primary": false,
+              "nullable": false,
+              "references": "order_id",
+              "inTable": "servo_orders",
+              "referenceType": "integer",
+              "onUpdate": "RESTRICT",
+              "onDelete": "RESTRICT"
+            }
+          },
+          "deleted_product_id": {
+            "db": {
+              "type": "reference",
+              "primary": false,
+              "nullable": false,
+              "references": "product_id",
+              "inTable": "servo_products",
+              "referenceType": "integer",
+              "onUpdate": "RESTRICT",
+              "onDelete": "RESTRICT"
+            }
+          },
+          "deleted_item_quantity": {
+            "db": {
+              "type": "integer",
+              "default": "",
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "deleted_order_item_id": {
+            "db": {
+              "type": "integer",
+              "default": "",
+              "primary": false,
+              "nullable": true
+            }
+          }
+        },
+        "parent": "servo_orders"
+      },
+      "servo_project_files": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "columns": {
+          "project_file_id": {
+            "db": {
+              "type": "increments",
+              "primary": true,
+              "nullable": false
+            }
+          },
+          "project_file": {
+            "db": {
+              "type": "string",
+              "default": "",
+              "maxLength": 128,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "project_file_type": {
+            "db": {
+              "type": "text",
+              "default": "",
+              "maxLength": 65535,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "project_file_description": {
+            "db": {
+              "type": "text",
+              "default": "",
+              "maxLength": 16777215,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "project_file_creator": {
+            "db": {
+              "type": "reference",
+              "default": "",
+              "primary": false,
+              "nullable": true,
+              "references": "user_id",
+              "inTable": "servo_user",
+              "referenceType": "integer",
+              "onUpdate": "RESTRICT",
+              "onDelete": "RESTRICT"
+            }
+          },
+          "project_file_date_created": {
+            "db": {
+              "type": "datetime",
+              "default": "current_timestamp()",
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "project_file_status": {
+            "db": {
+              "type": "text",
+              "default": "",
+              "maxLength": 65535,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "project_file_project_id": {
+            "db": {
+              "type": "reference",
+              "primary": false,
+              "nullable": false,
+              "references": "project_id",
+              "inTable": "servo_projects",
+              "referenceType": "integer",
+              "onUpdate": "RESTRICT",
+              "onDelete": "RESTRICT"
+            }
+          }
+        },
+        "parent": "servo_projects"
+      },
+      "servo_branches": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "columns": {
+          "branch_id": {
+            "db": {
+              "type": "increments",
+              "primary": true,
+              "nullable": false
+            }
+          },
+          "branch_name": {
+            "db": {
+              "type": "string",
+              "default": "",
+              "maxLength": 45,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "branch_date_registered": {
+            "db": {
+              "type": "datetime",
+              "default": "",
+              "primary": false,
+              "nullable": true
+            }
+          }
+        },
+        "refs": {
+          "servo_user_tenure": "servo_branches_branch_id",
+          "servo_shifts": "servo_branches_branch_id"
+        }
+      },
+      "servo_user_profile": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "columns": {
+          "user_profile_id": {
+            "db": {
+              "type": "increments",
+              "primary": true,
+              "nullable": false
+            }
+          },
+          "user_profile_name": {
+            "db": {
+              "type": "text",
+              "default": "",
+              "maxLength": 65535,
+              "primary": false,
+              "nullable": true
+            }
+          }
+        }
+      },
+      "servo_profile_settings": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "columns": {
+          "profile_settings_id": {
+            "db": {
+              "type": "increments",
+              "primary": true,
+              "nullable": false
+            }
+          },
+          "profile": {
+            "db": {
+              "type": "text",
+              "maxLength": 65535,
+              "primary": false,
+              "nullable": false
+            }
+          },
+          "create_po": {
+            "db": {
+              "type": "text",
+              "maxLength": 65535,
+              "primary": false,
+              "nullable": false
+            }
+          },
+          "delete_po": {
+            "db": {
+              "type": "text",
+              "maxLength": 65535,
+              "primary": false,
+              "nullable": false
+            }
+          },
+          "edit_po_item_quantity": {
+            "db": {
+              "type": "text",
+              "maxLength": 65535,
+              "primary": false,
+              "nullable": false
+            }
+          },
+          "edit_po_item_price": {
+            "db": {
+              "type": "text",
+              "maxLength": 65535,
+              "primary": false,
+              "nullable": false
+            }
+          },
+          "create_order": {
+            "db": {
+              "type": "text",
+              "maxLength": 65535,
+              "primary": false,
+              "nullable": false
+            }
+          },
+          "delete_order": {
+            "db": {
+              "type": "text",
+              "maxLength": 65535,
+              "primary": false,
+              "nullable": false
+            }
+          },
+          "edit_order_item_quantity": {
+            "db": {
+              "type": "text",
+              "maxLength": 65535,
+              "primary": false,
+              "nullable": false
+            }
+          },
+          "edit_order_item_price": {
+            "db": {
+              "type": "text",
+              "maxLength": 65535,
+              "primary": false,
+              "nullable": false
+            }
+          },
+          "create_customer": {
+            "db": {
+              "type": "text",
+              "maxLength": 65535,
+              "primary": false,
+              "nullable": false
+            }
+          },
+          "delete_customer": {
+            "db": {
+              "type": "text",
+              "maxLength": 65535,
+              "primary": false,
+              "nullable": false
+            }
+          },
+          "edit_customer": {
+            "db": {
+              "type": "text",
+              "maxLength": 65535,
+              "primary": false,
+              "nullable": false
+            }
+          },
+          "edit_order_details": {
+            "db": {
+              "type": "text",
+              "maxLength": 65535,
+              "primary": false,
+              "nullable": false
+            }
+          },
+          "delete_po_item": {
+            "db": {
+              "type": "text",
+              "maxLength": 65535,
+              "primary": false,
+              "nullable": false
+            }
+          },
+          "delete_order_item": {
+            "db": {
+              "type": "text",
+              "maxLength": 65535,
+              "primary": false,
+              "nullable": false
+            }
+          },
+          "create_ao": {
+            "db": {
+              "type": "text",
+              "maxLength": 65535,
+              "primary": false,
+              "nullable": false
+            }
+          },
+          "delete_ao": {
+            "db": {
+              "type": "text",
+              "maxLength": 65535,
+              "primary": false,
+              "nullable": false
+            }
+          },
+          "edit_ao_item_quantity": {
+            "db": {
+              "type": "text",
+              "maxLength": 65535,
+              "primary": false,
+              "nullable": false
+            }
+          },
+          "delete_ao_item": {
+            "db": {
+              "type": "text",
+              "maxLength": 65535,
+              "primary": false,
+              "nullable": false
+            }
+          },
+          "create_user": {
+            "db": {
+              "type": "text",
+              "maxLength": 65535,
+              "primary": false,
+              "nullable": false
+            }
+          },
+          "delete_user": {
+            "db": {
+              "type": "text",
+              "maxLength": 65535,
+              "primary": false,
+              "nullable": false
+            }
+          },
+          "edit_user": {
+            "db": {
+              "type": "text",
+              "maxLength": 65535,
+              "primary": false,
+              "nullable": false
+            }
+          },
+          "approve_po": {
+            "db": {
+              "type": "text",
+              "maxLength": 65535,
+              "primary": false,
+              "nullable": false
+            }
+          }
+        }
+      },
+      "servo_asset_files": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "columns": {
+          "asset_file_id": {
+            "db": {
+              "type": "increments",
+              "primary": true,
+              "nullable": false
+            }
+          },
+          "asset_file": {
+            "db": {
+              "type": "string",
+              "default": "",
+              "maxLength": 128,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "asset_file_type": {
+            "db": {
+              "type": "text",
+              "default": "",
+              "maxLength": 65535,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "asset_file_description": {
+            "db": {
+              "type": "text",
+              "default": "",
+              "maxLength": 16777215,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "asset_file_creator": {
+            "db": {
+              "type": "integer",
+              "default": "",
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "asset_file_date_created": {
+            "db": {
+              "type": "datetime",
+              "default": "current_timestamp()",
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "asset_file_status": {
+            "db": {
+              "type": "text",
+              "default": "",
+              "maxLength": 65535,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "asset_file_asset_id": {
+            "db": {
+              "type": "reference",
+              "primary": false,
+              "nullable": false,
+              "references": "asset_id",
+              "inTable": "servo_assets",
+              "referenceType": "integer",
+              "onUpdate": "RESTRICT",
+              "onDelete": "RESTRICT"
+            }
+          }
+        },
+        "parent": "servo_assets"
+      },
+      "servo_stock_movement": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "columns": {
+          "stock_id": {
+            "db": {
+              "type": "increments",
+              "primary": true,
+              "nullable": false
+            }
+          },
+          "stock_product_id": {
+            "db": {
+              "type": "reference",
+              "default": "",
+              "primary": false,
+              "nullable": true,
+              "references": "product_id",
+              "inTable": "servo_products",
+              "referenceType": "integer",
+              "onUpdate": "NO ACTION",
+              "onDelete": "NO ACTION"
+            }
+          },
+          "stock_po_id": {
+            "db": {
+              "type": "reference",
+              "default": "",
+              "primary": false,
+              "nullable": true,
+              "references": "po_id",
+              "inTable": "servo_purchase_orders",
+              "referenceType": "integer",
+              "onUpdate": "NO ACTION",
+              "onDelete": "NO ACTION"
+            }
+          },
+          "stock_order_id": {
+            "db": {
+              "type": "reference",
+              "default": "",
+              "primary": false,
+              "nullable": true,
+              "references": "order_id",
+              "inTable": "servo_orders",
+              "referenceType": "integer",
+              "onUpdate": "NO ACTION",
+              "onDelete": "NO ACTION"
+            }
+          },
+          "stock_movement": {
+            "db": {
+              "type": "enum",
+              "enumValues": [
+                "in",
+                "out"
+              ],
+              "default": "",
+              "maxLength": 3,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "stock_quantity": {
+            "db": {
+              "type": "integer",
+              "default": "",
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "stock_date": {
+            "db": {
+              "type": "datetime",
+              "default": "current_timestamp()",
+              "primary": false,
+              "nullable": true
+            }
+          }
+        }
+      },
+      "servo_product_sub_category": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "columns": {
+          "product_sub_category_id": {
+            "db": {
+              "type": "increments",
+              "primary": true,
+              "nullable": false
+            }
+          },
+          "product_sub_category_category_id": {
+            "db": {
+              "type": "reference",
+              "primary": false,
+              "nullable": false,
+              "references": "product_categories_id",
+              "inTable": "servo_product_categories",
+              "referenceType": "integer",
+              "onUpdate": "RESTRICT",
+              "onDelete": "RESTRICT"
+            }
+          },
+          "product_sub_category_name": {
+            "db": {
+              "type": "string",
+              "maxLength": 128,
+              "primary": false,
+              "nullable": false
+            }
+          }
+        },
+        "refs": {
+          "servo_products": "product_sub_category_sub_category_id"
+        }
+      },
+      "servo_department_categories": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "columns": {
+          "id": {
+            "db": {
+              "type": "increments",
+              "primary": true,
+              "nullable": false
+            }
+          },
+          "department_id": {
+            "db": {
+              "type": "reference",
+              "default": "",
+              "primary": false,
+              "nullable": true,
+              "references": "department_id",
+              "inTable": "servo_department",
+              "referenceType": "integer",
+              "onUpdate": "RESTRICT",
+              "onDelete": "RESTRICT"
+            }
+          },
+          "category_id": {
+            "db": {
+              "type": "reference",
+              "primary": false,
+              "nullable": false,
+              "references": "product_categories_id",
+              "inTable": "servo_product_categories",
+              "referenceType": "integer",
+              "onUpdate": "RESTRICT",
+              "onDelete": "RESTRICT"
+            }
+          },
+          "department_category_code": {
+            "db": {
+              "type": "string",
+              "default": "",
+              "maxLength": 100,
+              "primary": false,
+              "nullable": true
+            }
+          }
+        },
+        "parent": "servo_department"
+      },
+      "servo_service_department_category": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "columns": {
+          "service_department_category_id": {
+            "db": {
+              "type": "increments",
+              "primary": true,
+              "nullable": false
+            }
+          },
+          "sdc_service_id": {
+            "db": {
+              "type": "reference",
+              "default": "",
+              "primary": false,
+              "nullable": true,
+              "references": "service_id",
+              "inTable": "servo_services",
+              "referenceType": "integer",
+              "onUpdate": "RESTRICT",
+              "onDelete": "RESTRICT"
+            }
+          },
+          "sdc_category_id": {
+            "db": {
+              "type": "reference",
+              "default": "",
+              "primary": false,
+              "nullable": true,
+              "references": "product_categories_id",
+              "inTable": "servo_product_categories",
+              "referenceType": "integer",
+              "onUpdate": "RESTRICT",
+              "onDelete": "RESTRICT"
+            }
+          },
+          "sdc_department_id": {
+            "db": {
+              "type": "reference",
+              "default": "",
+              "primary": false,
+              "nullable": true,
+              "references": "department_id",
+              "inTable": "servo_department",
+              "referenceType": "integer",
+              "onUpdate": "RESTRICT",
+              "onDelete": "RESTRICT"
+            }
+          },
+          "sdc_code": {
+            "db": {
+              "type": "string",
+              "maxLength": 128,
+              "primary": false,
+              "nullable": false
+            }
+          }
+        },
+        "parent": "servo_services"
+      },
+      "servo_product_group_items": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "columns": {
+          "product_group_item_id": {
+            "db": {
+              "type": "increments",
+              "primary": true,
+              "nullable": false
+            }
+          },
+          "product_group_product_id": {
+            "db": {
+              "type": "reference",
+              "primary": false,
+              "nullable": false,
+              "references": "product_id",
+              "inTable": "servo_products",
+              "referenceType": "integer",
+              "onUpdate": "RESTRICT",
+              "onDelete": "RESTRICT"
+            }
+          },
+          "product_group_product_quantity": {
+            "db": {
+              "type": "integer",
+              "primary": false,
+              "nullable": false
+            }
+          },
+          "product_group_product_group_id": {
+            "db": {
+              "type": "reference",
+              "primary": false,
+              "nullable": false,
+              "references": "product_group_id",
+              "inTable": "servo_product_groups",
+              "referenceType": "integer",
+              "onUpdate": "RESTRICT",
+              "onDelete": "RESTRICT"
+            }
+          },
+          "product_group_product_unit_price": {
+            "db": {
+              "type": "integer",
+              "primary": false,
+              "nullable": false
+            }
+          },
+          "product_group_item_type": {
+            "db": {
+              "type": "text",
+              "default": "",
+              "maxLength": 65535,
+              "primary": false,
+              "nullable": true
+            }
+          }
+        },
+        "parent": "servo_products"
+      },
+      "servo_sales_point_departments": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "columns": {
+          "sales_point_department_id": {
+            "db": {
+              "type": "increments",
+              "primary": true,
+              "nullable": false
+            }
+          },
+          "servo_sales_point_sales_point_id": {
+            "db": {
+              "type": "reference",
+              "default": "",
+              "primary": false,
+              "nullable": true,
+              "references": "sales_point_id",
+              "inTable": "servo_sales_point",
+              "referenceType": "integer",
+              "onUpdate": "RESTRICT",
+              "onDelete": "RESTRICT"
+            }
+          },
+          "servo_departments_department_id": {
+            "db": {
+              "type": "reference",
+              "default": "",
+              "primary": false,
+              "nullable": true,
+              "references": "department_id",
+              "inTable": "servo_department",
+              "referenceType": "integer",
+              "onUpdate": "RESTRICT",
+              "onDelete": "RESTRICT"
+            }
+          }
+        },
+        "parent": "servo_sales_point"
+      },
+      "servo_data_reading_session": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "columns": {
+          "data_reading_session_id": {
+            "db": {
+              "type": "increments",
+              "primary": true,
+              "nullable": false
+            }
+          },
+          "data_reading_session_date": {
+            "db": {
+              "type": "datetime",
+              "default": "",
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "data_reading_session_user": {
+            "db": {
+              "type": "reference",
+              "default": "",
+              "primary": false,
+              "nullable": true,
+              "references": "user_id",
+              "inTable": "servo_user",
+              "referenceType": "integer",
+              "onUpdate": "RESTRICT",
+              "onDelete": "RESTRICT"
+            }
+          },
+          "data_reading_session_customer": {
+            "db": {
+              "type": "reference",
+              "default": "",
+              "primary": false,
+              "nullable": true,
+              "references": "customer_id",
+              "inTable": "servo_customers",
+              "referenceType": "integer",
+              "onUpdate": "RESTRICT",
+              "onDelete": "RESTRICT"
+            }
+          },
+          "data_reading_session_notes": {
+            "db": {
+              "type": "text",
+              "default": "",
+              "maxLength": 65535,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "data_reading_session_asset": {
+            "db": {
+              "type": "reference",
+              "default": "",
+              "primary": false,
+              "nullable": true,
+              "references": "table_id",
+              "inTable": "servo_customer_table",
+              "referenceType": "integer",
+              "onUpdate": "RESTRICT",
+              "onDelete": "RESTRICT"
+            }
+          }
+        },
+        "refs": {
+          "servo_data_field_readings": "data_reading_session_id"
+        }
+      },
+      "servo_product_discount": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "columns": {
+          "product_discount_id": {
+            "db": {
+              "type": "increments",
+              "primary": true,
+              "nullable": false
+            }
+          },
+          "product_discount": {
+            "db": {
+              "type": "integer",
+              "default": "",
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "product_discount_date": {
+            "db": {
+              "type": "datetime",
+              "default": "",
+              "primary": false,
+              "nullable": true
+            }
+          }
+        }
+      },
+      "servo_purchase_order_item_deletes": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "columns": {
+          "po_item_delete_id": {
+            "db": {
+              "type": "increments",
+              "primary": true,
+              "nullable": false
+            }
+          },
+          "po_item_id": {
+            "db": {
+              "type": "integer",
+              "primary": false,
+              "nullable": false
+            }
+          },
+          "po_id": {
+            "db": {
+              "type": "integer",
+              "primary": false,
+              "nullable": false
+            }
+          },
+          "po_item_quantity": {
+            "db": {
+              "type": "integer",
+              "primary": false,
+              "nullable": false
+            }
+          },
+          "po_item_price": {
+            "db": {
+              "type": "integer",
+              "primary": false,
+              "nullable": false
+            }
+          },
+          "po_user_deleted": {
+            "db": {
+              "type": "reference",
+              "primary": false,
+              "nullable": false,
+              "references": "user_id",
+              "inTable": "servo_user",
+              "referenceType": "integer",
+              "onUpdate": "RESTRICT",
+              "onDelete": "RESTRICT"
+            }
+          },
+          "po_item_time_deleted": {
+            "db": {
+              "type": "datetime",
+              "primary": false,
+              "nullable": false
+            }
+          },
+          "po_item_deleted_product_id": {
+            "db": {
+              "type": "reference",
+              "primary": false,
+              "nullable": false,
+              "references": "product_id",
+              "inTable": "servo_products",
+              "referenceType": "integer",
+              "onUpdate": "RESTRICT",
+              "onDelete": "RESTRICT"
+            }
+          }
+        }
+      },
+      "servo_data_fields": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "columns": {
+          "data_field_id": {
+            "db": {
+              "type": "increments",
+              "primary": true,
+              "nullable": false
+            }
+          },
+          "data_field_name": {
+            "db": {
+              "type": "text",
+              "maxLength": 65535,
+              "primary": false,
+              "nullable": false
+            }
+          },
+          "data_field_unit": {
+            "db": {
+              "type": "string",
+              "default": "",
+              "maxLength": 11,
+              "primary": false,
+              "nullable": true
+            }
+          }
+        },
+        "sub": {
+          "servo_data_field_readings": "data_field_reading_data_field"
+        }
+      },
+      "servo_product_categories": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "columns": {
+          "product_categories_id": {
+            "db": {
+              "type": "increments",
+              "primary": true,
+              "nullable": false
+            }
+          },
+          "product_category_name": {
+            "db": {
+              "type": "string",
+              "default": "",
+              "maxLength": 45,
+              "primary": false,
+              "nullable": true
+            }
+          }
+        },
+        "sub": {
+          "servo_product_category_options": "category_option_category_id"
+        },
+        "refs": {
+          "servo_product_sub_category": "product_sub_category_category_id",
+          "servo_department_categories": "category_id",
+          "servo_service_department_category": "sdc_category_id",
+          "servo_products_has_servo_product_categories": "servo_product_categories_product_categories_id",
+          "servo_products": "servo_product_category_product_category_id"
+        }
+      },
       "servo_wallet_transactions": {
         "db": {
           "engine": "InnoDB",
@@ -225,1507 +2361,6 @@
         },
         "parent": "servo_wallets"
       },
-      "servo_branches": {
-        "db": {
-          "engine": "InnoDB",
-          "schema": "servodb",
-          "collation": "utf8_general_ci",
-          "system_versioned": false
-        },
-        "columns": {
-          "branch_id": {
-            "db": {
-              "type": "increments",
-              "primary": true,
-              "nullable": false
-            }
-          },
-          "branch_name": {
-            "db": {
-              "type": "string",
-              "default": "",
-              "maxLength": 45,
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "branch_date_registered": {
-            "db": {
-              "type": "datetime",
-              "default": "",
-              "primary": false,
-              "nullable": true
-            }
-          }
-        },
-        "refs": {
-          "servo_shifts": "servo_branches_branch_id",
-          "servo_user_tenure": "servo_branches_branch_id"
-        }
-      },
-      "servo_project_files": {
-        "db": {
-          "engine": "InnoDB",
-          "schema": "servodb",
-          "collation": "utf8_general_ci",
-          "system_versioned": false
-        },
-        "columns": {
-          "project_file_id": {
-            "db": {
-              "type": "increments",
-              "primary": true,
-              "nullable": false
-            }
-          },
-          "project_file": {
-            "db": {
-              "type": "string",
-              "default": "",
-              "maxLength": 128,
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "project_file_type": {
-            "db": {
-              "type": "text",
-              "default": "",
-              "maxLength": 65535,
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "project_file_description": {
-            "db": {
-              "type": "text",
-              "default": "",
-              "maxLength": 16777215,
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "project_file_creator": {
-            "db": {
-              "type": "reference",
-              "default": "",
-              "primary": false,
-              "nullable": true,
-              "references": "user_id",
-              "inTable": "servo_user",
-              "referenceType": "integer",
-              "onUpdate": "RESTRICT",
-              "onDelete": "RESTRICT"
-            }
-          },
-          "project_file_date_created": {
-            "db": {
-              "type": "datetime",
-              "default": "current_timestamp()",
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "project_file_status": {
-            "db": {
-              "type": "text",
-              "default": "",
-              "maxLength": 65535,
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "project_file_project_id": {
-            "db": {
-              "type": "reference",
-              "primary": false,
-              "nullable": false,
-              "references": "project_id",
-              "inTable": "servo_projects",
-              "referenceType": "integer",
-              "onUpdate": "RESTRICT",
-              "onDelete": "RESTRICT"
-            }
-          }
-        },
-        "parent": "servo_projects"
-      },
-      "servo_purchase_orders": {
-        "db": {
-          "engine": "InnoDB",
-          "schema": "servodb",
-          "collation": "utf8_general_ci",
-          "system_versioned": false
-        },
-        "columns": {
-          "po_id": {
-            "db": {
-              "type": "increments",
-              "primary": true,
-              "nullable": false
-            }
-          },
-          "servo_vendors_vendor_id": {
-            "db": {
-              "type": "reference",
-              "default": "",
-              "primary": false,
-              "nullable": true,
-              "references": "vendor_id",
-              "inTable": "servo_vendors",
-              "referenceType": "integer",
-              "onUpdate": "RESTRICT",
-              "onDelete": "RESTRICT"
-            }
-          },
-          "servo_users_user_ordered_id": {
-            "db": {
-              "type": "reference",
-              "primary": false,
-              "nullable": false,
-              "references": "user_id",
-              "inTable": "servo_user",
-              "referenceType": "integer",
-              "onUpdate": "NO ACTION",
-              "onDelete": "NO ACTION"
-            }
-          },
-          "servo_users_user_approved_id": {
-            "db": {
-              "type": "reference",
-              "default": "",
-              "primary": false,
-              "nullable": true,
-              "references": "user_id",
-              "inTable": "servo_user",
-              "referenceType": "integer",
-              "onUpdate": "NO ACTION",
-              "onDelete": "NO ACTION"
-            }
-          },
-          "servo_users_user_received_id": {
-            "db": {
-              "type": "reference",
-              "default": "",
-              "primary": false,
-              "nullable": true,
-              "references": "user_id",
-              "inTable": "servo_user",
-              "referenceType": "integer",
-              "onUpdate": "NO ACTION",
-              "onDelete": "NO ACTION"
-            }
-          },
-          "time_ordered": {
-            "db": {
-              "type": "datetime",
-              "default": "current_timestamp()",
-              "primary": false,
-              "nullable": false
-            }
-          },
-          "time_approved": {
-            "db": {
-              "type": "datetime",
-              "default": "",
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "time_received": {
-            "db": {
-              "type": "datetime",
-              "default": "",
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "po_status": {
-            "db": {
-              "type": "enum",
-              "enumValues": [
-                "Requested",
-                "Approved",
-                "Ordered",
-                "Received"
-              ],
-              "default": "",
-              "maxLength": 9,
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "payment_method": {
-            "db": {
-              "type": "reference",
-              "default": "",
-              "primary": false,
-              "nullable": true,
-              "references": "payment_method_id",
-              "inTable": "servo_payment_methods",
-              "referenceType": "integer",
-              "onUpdate": "RESTRICT",
-              "onDelete": "RESTRICT"
-            }
-          },
-          "payment_status": {
-            "db": {
-              "type": "enum",
-              "enumValues": [
-                "Full",
-                "Partial",
-                "Nothing"
-              ],
-              "default": "",
-              "maxLength": 7,
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "po_notes": {
-            "db": {
-              "type": "text",
-              "default": "",
-              "maxLength": 65535,
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "servo_departments_department_id": {
-            "db": {
-              "type": "reference",
-              "default": "",
-              "primary": false,
-              "nullable": true,
-              "references": "department_id",
-              "inTable": "servo_department",
-              "referenceType": "integer",
-              "onUpdate": "RESTRICT",
-              "onDelete": "RESTRICT"
-            }
-          },
-          "po_need_by_date": {
-            "db": {
-              "type": "datetime",
-              "default": "",
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "transfer_source_department_id": {
-            "db": {
-              "type": "reference",
-              "default": "",
-              "primary": false,
-              "nullable": true,
-              "references": "department_id",
-              "inTable": "servo_department",
-              "referenceType": "integer",
-              "onUpdate": "RESTRICT",
-              "onDelete": "RESTRICT"
-            }
-          },
-          "po_type": {
-            "db": {
-              "type": "enum",
-              "enumValues": [
-                "Purchase",
-                "Transfer"
-              ],
-              "default": "",
-              "maxLength": 8,
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "po_discount": {
-            "db": {
-              "type": "integer",
-              "default": "0",
-              "primary": false,
-              "nullable": false
-            }
-          },
-          "po_payment_status": {
-            "db": {
-              "type": "enum",
-              "enumValues": [
-                "Ordered",
-                "Pending",
-                "Paid",
-                ""
-              ],
-              "default": "'Ordered'",
-              "maxLength": 7,
-              "primary": false,
-              "nullable": false
-            }
-          }
-        },
-        "refs": {
-          "servo_stock_movement": "stock_po_id"
-        },
-        "sub": {
-          "servo_purchase_order_items": "po_id"
-        }
-      },
-      "servo_wallets": {
-        "db": {
-          "engine": "InnoDB",
-          "schema": "servodb",
-          "collation": "utf8_general_ci",
-          "system_versioned": false
-        },
-        "columns": {
-          "wallet_id": {
-            "db": {
-              "type": "increments",
-              "primary": true,
-              "nullable": false
-            }
-          },
-          "wallet_name": {
-            "db": {
-              "type": "string",
-              "default": "",
-              "maxLength": 1000,
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "wallet_type": {
-            "db": {
-              "type": "enum",
-              "enumValues": [
-                "internal",
-                "external"
-              ],
-              "default": "",
-              "maxLength": 8,
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "wallet_description": {
-            "db": {
-              "type": "text",
-              "default": "",
-              "maxLength": 65535,
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "wallet_creation_date": {
-            "db": {
-              "type": "datetime",
-              "default": "",
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "wallet_user_created": {
-            "db": {
-              "type": "integer",
-              "default": "",
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "wallet_currency": {
-            "db": {
-              "type": "reference",
-              "default": "",
-              "primary": false,
-              "nullable": true,
-              "references": "currency_id",
-              "inTable": "servo_currencies",
-              "referenceType": "integer",
-              "onUpdate": "RESTRICT",
-              "onDelete": "RESTRICT"
-            }
-          },
-          "wallet_format": {
-            "db": {
-              "type": "reference",
-              "default": "",
-              "primary": false,
-              "nullable": true,
-              "references": "payment_method_id",
-              "inTable": "servo_payment_methods",
-              "referenceType": "integer",
-              "onUpdate": "RESTRICT",
-              "onDelete": "RESTRICT"
-            }
-          }
-        },
-        "sub": {
-          "servo_wallet_transactions": "transaction_originating_wallet",
-          "servo_wallet_privileges": "wallet_privilege_wallet_id"
-        },
-        "refs": {
-          "servo_wallet_transactions": "transaction_destination_wallet"
-        }
-      },
-      "servo_asset_files": {
-        "db": {
-          "engine": "InnoDB",
-          "schema": "servodb",
-          "collation": "utf8_general_ci",
-          "system_versioned": false
-        },
-        "columns": {
-          "asset_file_id": {
-            "db": {
-              "type": "increments",
-              "primary": true,
-              "nullable": false
-            }
-          },
-          "asset_file": {
-            "db": {
-              "type": "string",
-              "default": "",
-              "maxLength": 128,
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "asset_file_type": {
-            "db": {
-              "type": "text",
-              "default": "",
-              "maxLength": 65535,
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "asset_file_description": {
-            "db": {
-              "type": "text",
-              "default": "",
-              "maxLength": 16777215,
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "asset_file_creator": {
-            "db": {
-              "type": "integer",
-              "default": "",
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "asset_file_date_created": {
-            "db": {
-              "type": "datetime",
-              "default": "current_timestamp()",
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "asset_file_status": {
-            "db": {
-              "type": "text",
-              "default": "",
-              "maxLength": 65535,
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "asset_file_asset_id": {
-            "db": {
-              "type": "reference",
-              "primary": false,
-              "nullable": false,
-              "references": "asset_id",
-              "inTable": "servo_assets",
-              "referenceType": "integer",
-              "onUpdate": "RESTRICT",
-              "onDelete": "RESTRICT"
-            }
-          }
-        },
-        "parent": "servo_assets"
-      },
-      "servo_profile_settings": {
-        "db": {
-          "engine": "InnoDB",
-          "schema": "servodb",
-          "collation": "utf8_general_ci",
-          "system_versioned": false
-        },
-        "columns": {
-          "profile_settings_id": {
-            "db": {
-              "type": "increments",
-              "primary": true,
-              "nullable": false
-            }
-          },
-          "profile": {
-            "db": {
-              "type": "text",
-              "maxLength": 65535,
-              "primary": false,
-              "nullable": false
-            }
-          },
-          "create_po": {
-            "db": {
-              "type": "text",
-              "maxLength": 65535,
-              "primary": false,
-              "nullable": false
-            }
-          },
-          "delete_po": {
-            "db": {
-              "type": "text",
-              "maxLength": 65535,
-              "primary": false,
-              "nullable": false
-            }
-          },
-          "edit_po_item_quantity": {
-            "db": {
-              "type": "text",
-              "maxLength": 65535,
-              "primary": false,
-              "nullable": false
-            }
-          },
-          "edit_po_item_price": {
-            "db": {
-              "type": "text",
-              "maxLength": 65535,
-              "primary": false,
-              "nullable": false
-            }
-          },
-          "create_order": {
-            "db": {
-              "type": "text",
-              "maxLength": 65535,
-              "primary": false,
-              "nullable": false
-            }
-          },
-          "delete_order": {
-            "db": {
-              "type": "text",
-              "maxLength": 65535,
-              "primary": false,
-              "nullable": false
-            }
-          },
-          "edit_order_item_quantity": {
-            "db": {
-              "type": "text",
-              "maxLength": 65535,
-              "primary": false,
-              "nullable": false
-            }
-          },
-          "edit_order_item_price": {
-            "db": {
-              "type": "text",
-              "maxLength": 65535,
-              "primary": false,
-              "nullable": false
-            }
-          },
-          "create_customer": {
-            "db": {
-              "type": "text",
-              "maxLength": 65535,
-              "primary": false,
-              "nullable": false
-            }
-          },
-          "delete_customer": {
-            "db": {
-              "type": "text",
-              "maxLength": 65535,
-              "primary": false,
-              "nullable": false
-            }
-          },
-          "edit_customer": {
-            "db": {
-              "type": "text",
-              "maxLength": 65535,
-              "primary": false,
-              "nullable": false
-            }
-          },
-          "edit_order_details": {
-            "db": {
-              "type": "text",
-              "maxLength": 65535,
-              "primary": false,
-              "nullable": false
-            }
-          },
-          "delete_po_item": {
-            "db": {
-              "type": "text",
-              "maxLength": 65535,
-              "primary": false,
-              "nullable": false
-            }
-          },
-          "delete_order_item": {
-            "db": {
-              "type": "text",
-              "maxLength": 65535,
-              "primary": false,
-              "nullable": false
-            }
-          },
-          "create_ao": {
-            "db": {
-              "type": "text",
-              "maxLength": 65535,
-              "primary": false,
-              "nullable": false
-            }
-          },
-          "delete_ao": {
-            "db": {
-              "type": "text",
-              "maxLength": 65535,
-              "primary": false,
-              "nullable": false
-            }
-          },
-          "edit_ao_item_quantity": {
-            "db": {
-              "type": "text",
-              "maxLength": 65535,
-              "primary": false,
-              "nullable": false
-            }
-          },
-          "delete_ao_item": {
-            "db": {
-              "type": "text",
-              "maxLength": 65535,
-              "primary": false,
-              "nullable": false
-            }
-          },
-          "create_user": {
-            "db": {
-              "type": "text",
-              "maxLength": 65535,
-              "primary": false,
-              "nullable": false
-            }
-          },
-          "delete_user": {
-            "db": {
-              "type": "text",
-              "maxLength": 65535,
-              "primary": false,
-              "nullable": false
-            }
-          },
-          "edit_user": {
-            "db": {
-              "type": "text",
-              "maxLength": 65535,
-              "primary": false,
-              "nullable": false
-            }
-          },
-          "approve_po": {
-            "db": {
-              "type": "text",
-              "maxLength": 65535,
-              "primary": false,
-              "nullable": false
-            }
-          }
-        }
-      },
-      "servo_project_step": {
-        "db": {
-          "engine": "InnoDB",
-          "schema": "servodb",
-          "collation": "utf8_general_ci",
-          "system_versioned": false
-        },
-        "columns": {
-          "project_step_id": {
-            "db": {
-              "type": "increments",
-              "primary": true,
-              "nullable": false
-            }
-          },
-          "step_project": {
-            "db": {
-              "type": "reference",
-              "default": "",
-              "primary": false,
-              "nullable": true,
-              "references": "project_id",
-              "inTable": "servo_projects",
-              "referenceType": "integer",
-              "onUpdate": "RESTRICT",
-              "onDelete": "RESTRICT"
-            }
-          },
-          "step_description": {
-            "db": {
-              "type": "text",
-              "default": "",
-              "maxLength": 16777215,
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "step_department_concerned": {
-            "db": {
-              "type": "reference",
-              "default": "",
-              "primary": false,
-              "nullable": true,
-              "references": "department_id",
-              "inTable": "servo_department",
-              "referenceType": "integer",
-              "onUpdate": "RESTRICT",
-              "onDelete": "RESTRICT"
-            }
-          },
-          "step_user_created": {
-            "db": {
-              "type": "reference",
-              "default": "",
-              "primary": false,
-              "nullable": true,
-              "references": "user_id",
-              "inTable": "servo_user",
-              "referenceType": "integer",
-              "onUpdate": "RESTRICT",
-              "onDelete": "RESTRICT"
-            }
-          },
-          "step_users_concerned": {
-            "db": {
-              "type": "reference",
-              "default": "",
-              "primary": false,
-              "nullable": true,
-              "references": "user_id",
-              "inTable": "servo_user",
-              "referenceType": "integer",
-              "onUpdate": "RESTRICT",
-              "onDelete": "RESTRICT"
-            }
-          },
-          "step_start_date": {
-            "db": {
-              "type": "datetime",
-              "default": "",
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "step_end_date": {
-            "db": {
-              "type": "datetime",
-              "default": "",
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "step_status": {
-            "db": {
-              "type": "enum",
-              "enumValues": [
-                "Active",
-                "Pending",
-                "Suspended",
-                "Completed"
-              ],
-              "default": "",
-              "maxLength": 9,
-              "primary": false,
-              "nullable": true
-            }
-          }
-        },
-        "parent": "servo_projects",
-        "refs": {
-          "servo_project_notes": "project_step"
-        }
-      },
-      "servo_files": {
-        "db": {
-          "engine": "InnoDB",
-          "schema": "servodb",
-          "collation": "utf8_general_ci",
-          "system_versioned": false
-        },
-        "columns": {
-          "file_id": {
-            "db": {
-              "type": "increments",
-              "primary": true,
-              "nullable": false
-            }
-          },
-          "file_customer_id": {
-            "db": {
-              "type": "integer",
-              "default": "",
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "file_asset_id": {
-            "db": {
-              "type": "integer",
-              "default": "",
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "file_order_id": {
-            "db": {
-              "type": "integer",
-              "default": "",
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "file_transaction_id": {
-            "db": {
-              "type": "integer",
-              "default": "",
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "file_name": {
-            "db": {
-              "type": "string",
-              "default": "",
-              "maxLength": 128,
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "file_user_created": {
-            "db": {
-              "type": "integer",
-              "default": "",
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "file_date_created": {
-            "db": {
-              "type": "datetime",
-              "default": "current_timestamp()",
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "file_description": {
-            "db": {
-              "type": "text",
-              "default": "",
-              "maxLength": 16777215,
-              "primary": false,
-              "nullable": true
-            }
-          }
-        }
-      },
-      "servo_product_sub_category": {
-        "db": {
-          "engine": "InnoDB",
-          "schema": "servodb",
-          "collation": "utf8_general_ci",
-          "system_versioned": false
-        },
-        "columns": {
-          "product_sub_category_id": {
-            "db": {
-              "type": "increments",
-              "primary": true,
-              "nullable": false
-            }
-          },
-          "product_sub_category_category_id": {
-            "db": {
-              "type": "reference",
-              "primary": false,
-              "nullable": false,
-              "references": "product_categories_id",
-              "inTable": "servo_product_categories",
-              "referenceType": "integer",
-              "onUpdate": "RESTRICT",
-              "onDelete": "RESTRICT"
-            }
-          },
-          "product_sub_category_name": {
-            "db": {
-              "type": "string",
-              "maxLength": 128,
-              "primary": false,
-              "nullable": false
-            }
-          }
-        },
-        "refs": {
-          "servo_products": "product_sub_category_sub_category_id"
-        }
-      },
-      "servo_vendors": {
-        "db": {
-          "engine": "InnoDB",
-          "schema": "servodb",
-          "collation": "utf8_general_ci",
-          "system_versioned": false
-        },
-        "columns": {
-          "vendor_id": {
-            "db": {
-              "type": "increments",
-              "primary": true,
-              "nullable": false
-            }
-          },
-          "vendor_name": {
-            "db": {
-              "type": "text",
-              "default": "",
-              "maxLength": 65535,
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "vendor_address": {
-            "db": {
-              "type": "string",
-              "default": "",
-              "maxLength": 128,
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "vendor_phone_number": {
-            "db": {
-              "type": "integer",
-              "default": "",
-              "primary": false,
-              "nullable": true
-            }
-          }
-        },
-        "refs": {
-          "servo_purchase_orders": "servo_vendors_vendor_id",
-          "servo_expenses": "expense_vendor"
-        },
-        "sub": {
-          "servo_vendor_cash_transaction": "transaction_vendor_id"
-        }
-      },
-      "servo_department_categories": {
-        "db": {
-          "engine": "InnoDB",
-          "schema": "servodb",
-          "collation": "utf8_general_ci",
-          "system_versioned": false
-        },
-        "columns": {
-          "id": {
-            "db": {
-              "type": "increments",
-              "primary": true,
-              "nullable": false
-            }
-          },
-          "department_id": {
-            "db": {
-              "type": "reference",
-              "default": "",
-              "primary": false,
-              "nullable": true,
-              "references": "department_id",
-              "inTable": "servo_department",
-              "referenceType": "integer",
-              "onUpdate": "RESTRICT",
-              "onDelete": "RESTRICT"
-            }
-          },
-          "category_id": {
-            "db": {
-              "type": "reference",
-              "primary": false,
-              "nullable": false,
-              "references": "product_categories_id",
-              "inTable": "servo_product_categories",
-              "referenceType": "integer",
-              "onUpdate": "RESTRICT",
-              "onDelete": "RESTRICT"
-            }
-          },
-          "department_category_code": {
-            "db": {
-              "type": "string",
-              "default": "",
-              "maxLength": 100,
-              "primary": false,
-              "nullable": true
-            }
-          }
-        },
-        "parent": "servo_department"
-      },
-      "servo_product_group_items": {
-        "db": {
-          "engine": "InnoDB",
-          "schema": "servodb",
-          "collation": "utf8_general_ci",
-          "system_versioned": false
-        },
-        "columns": {
-          "product_group_item_id": {
-            "db": {
-              "type": "increments",
-              "primary": true,
-              "nullable": false
-            }
-          },
-          "product_group_product_id": {
-            "db": {
-              "type": "reference",
-              "primary": false,
-              "nullable": false,
-              "references": "product_id",
-              "inTable": "servo_products",
-              "referenceType": "integer",
-              "onUpdate": "RESTRICT",
-              "onDelete": "RESTRICT"
-            }
-          },
-          "product_group_product_quantity": {
-            "db": {
-              "type": "integer",
-              "primary": false,
-              "nullable": false
-            }
-          },
-          "product_group_product_group_id": {
-            "db": {
-              "type": "reference",
-              "primary": false,
-              "nullable": false,
-              "references": "product_group_id",
-              "inTable": "servo_product_groups",
-              "referenceType": "integer",
-              "onUpdate": "RESTRICT",
-              "onDelete": "RESTRICT"
-            }
-          },
-          "product_group_product_unit_price": {
-            "db": {
-              "type": "integer",
-              "primary": false,
-              "nullable": false
-            }
-          },
-          "product_group_item_type": {
-            "db": {
-              "type": "text",
-              "default": "",
-              "maxLength": 65535,
-              "primary": false,
-              "nullable": true
-            }
-          }
-        },
-        "parent": "servo_products"
-      },
-      "servo_user_shifts": {
-        "db": {
-          "engine": "InnoDB",
-          "schema": "servodb",
-          "collation": "utf8_general_ci",
-          "system_versioned": false
-        },
-        "columns": {
-          "user_shift_id": {
-            "db": {
-              "type": "increments",
-              "primary": true,
-              "nullable": false
-            }
-          },
-          "time_checkin": {
-            "db": {
-              "type": "datetime",
-              "default": "",
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "time_checkout": {
-            "db": {
-              "type": "datetime",
-              "default": "",
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "balance_checkin": {
-            "db": {
-              "type": "integer",
-              "default": "",
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "balance_checkout": {
-            "db": {
-              "type": "integer",
-              "default": "",
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "servo_user_user_id": {
-            "db": {
-              "type": "reference",
-              "primary": false,
-              "nullable": false,
-              "references": "user_id",
-              "inTable": "servo_user",
-              "referenceType": "integer",
-              "onUpdate": "NO ACTION",
-              "onDelete": "NO ACTION"
-            }
-          },
-          "servo_shifts_shift_id": {
-            "db": {
-              "type": "reference",
-              "primary": false,
-              "nullable": false,
-              "references": "shift_id",
-              "inTable": "servo_shifts",
-              "referenceType": "integer",
-              "onUpdate": "RESTRICT",
-              "onDelete": "RESTRICT"
-            }
-          },
-          "user_shift_notes": {
-            "db": {
-              "type": "text",
-              "default": "",
-              "maxLength": 65535,
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "user_shift_code": {
-            "db": {
-              "type": "string",
-              "default": "",
-              "maxLength": 25,
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "assigned": {
-            "db": {
-              "type": "text",
-              "default": "",
-              "maxLength": 65535,
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "servo_service_service_id": {
-            "db": {
-              "type": "reference",
-              "default": "",
-              "primary": false,
-              "nullable": true,
-              "references": "service_id",
-              "inTable": "servo_services",
-              "referenceType": "integer",
-              "onUpdate": "RESTRICT",
-              "onDelete": "RESTRICT"
-            }
-          },
-          "servo_sales_point_sales_point_id": {
-            "db": {
-              "type": "reference",
-              "default": "",
-              "primary": false,
-              "nullable": true,
-              "references": "sales_point_id",
-              "inTable": "servo_sales_point",
-              "referenceType": "integer",
-              "onUpdate": "RESTRICT",
-              "onDelete": "RESTRICT"
-            }
-          }
-        },
-        "parent": "servo_user"
-      },
-      "servo_data_reading_session": {
-        "db": {
-          "engine": "InnoDB",
-          "schema": "servodb",
-          "collation": "utf8_general_ci",
-          "system_versioned": false
-        },
-        "columns": {
-          "data_reading_session_id": {
-            "db": {
-              "type": "increments",
-              "primary": true,
-              "nullable": false
-            }
-          },
-          "data_reading_session_date": {
-            "db": {
-              "type": "datetime",
-              "default": "",
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "data_reading_session_user": {
-            "db": {
-              "type": "reference",
-              "default": "",
-              "primary": false,
-              "nullable": true,
-              "references": "user_id",
-              "inTable": "servo_user",
-              "referenceType": "integer",
-              "onUpdate": "RESTRICT",
-              "onDelete": "RESTRICT"
-            }
-          },
-          "data_reading_session_customer": {
-            "db": {
-              "type": "reference",
-              "default": "",
-              "primary": false,
-              "nullable": true,
-              "references": "customer_id",
-              "inTable": "servo_customers",
-              "referenceType": "integer",
-              "onUpdate": "RESTRICT",
-              "onDelete": "RESTRICT"
-            }
-          },
-          "data_reading_session_notes": {
-            "db": {
-              "type": "text",
-              "default": "",
-              "maxLength": 65535,
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "data_reading_session_asset": {
-            "db": {
-              "type": "reference",
-              "default": "",
-              "primary": false,
-              "nullable": true,
-              "references": "table_id",
-              "inTable": "servo_customer_table",
-              "referenceType": "integer",
-              "onUpdate": "RESTRICT",
-              "onDelete": "RESTRICT"
-            }
-          }
-        },
-        "refs": {
-          "servo_data_field_readings": "data_reading_session_id"
-        }
-      },
-      "servo_product_discount": {
-        "db": {
-          "engine": "InnoDB",
-          "schema": "servodb",
-          "collation": "utf8_general_ci",
-          "system_versioned": false
-        },
-        "columns": {
-          "product_discount_id": {
-            "db": {
-              "type": "increments",
-              "primary": true,
-              "nullable": false
-            }
-          },
-          "product_discount": {
-            "db": {
-              "type": "integer",
-              "default": "",
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "product_discount_date": {
-            "db": {
-              "type": "datetime",
-              "default": "",
-              "primary": false,
-              "nullable": true
-            }
-          }
-        }
-      },
-      "servo_data_fields": {
-        "db": {
-          "engine": "InnoDB",
-          "schema": "servodb",
-          "collation": "utf8_general_ci",
-          "system_versioned": false
-        },
-        "columns": {
-          "data_field_id": {
-            "db": {
-              "type": "increments",
-              "primary": true,
-              "nullable": false
-            }
-          },
-          "data_field_name": {
-            "db": {
-              "type": "text",
-              "maxLength": 65535,
-              "primary": false,
-              "nullable": false
-            }
-          },
-          "data_field_unit": {
-            "db": {
-              "type": "string",
-              "default": "",
-              "maxLength": 11,
-              "primary": false,
-              "nullable": true
-            }
-          }
-        },
-        "sub": {
-          "servo_data_field_readings": "data_field_reading_data_field"
-        }
-      },
-      "servo_shifts": {
-        "db": {
-          "engine": "InnoDB",
-          "schema": "servodb",
-          "collation": "utf8_general_ci",
-          "system_versioned": false
-        },
-        "columns": {
-          "shift_id": {
-            "db": {
-              "type": "increments",
-              "primary": true,
-              "nullable": false
-            }
-          },
-          "shift_start": {
-            "db": {
-              "type": "datetime",
-              "default": "",
-              "nullable": true,
-              "primary": false
-            }
-          },
-          "shift_stop": {
-            "db": {
-              "type": "datetime",
-              "default": "",
-              "nullable": true,
-              "primary": false
-            }
-          },
-          "servo_branches_branch_id": {
-            "db": {
-              "type": "reference",
-              "default": "",
-              "nullable": true,
-              "primary": false,
-              "references": "branch_id",
-              "inTable": "servo_branches",
-              "referenceType": "integer",
-              "onUpdate": "NO ACTION",
-              "onDelete": "NO ACTION"
-            }
-          },
-          "shift_status": {
-            "db": {
-              "type": "enum",
-              "default": "",
-              "nullable": true,
-              "enumValues": [
-                "Active",
-                "Pending",
-                "Closed"
-              ],
-              "maxLength": 7,
-              "primary": false
-            }
-          }
-        },
-        "refs": {
-          "servo_user_shifts": "servo_shifts_shift_id",
-          "servo_login_session": "servo_shift_shift_id",
-          "servo_orders": "servo_shift_shift_id"
-        }
-      },
-      "servo_product_categories": {
-        "db": {
-          "engine": "InnoDB",
-          "schema": "servodb",
-          "collation": "utf8_general_ci",
-          "system_versioned": false
-        },
-        "columns": {
-          "product_categories_id": {
-            "db": {
-              "type": "increments",
-              "primary": true,
-              "nullable": false
-            }
-          },
-          "product_category_name": {
-            "db": {
-              "type": "string",
-              "default": "",
-              "maxLength": 45,
-              "primary": false,
-              "nullable": true
-            }
-          }
-        },
-        "refs": {
-          "servo_product_sub_category": "product_sub_category_category_id",
-          "servo_department_categories": "category_id",
-          "servo_products_has_servo_product_categories": "servo_product_categories_product_categories_id",
-          "servo_service_department_category": "sdc_category_id",
-          "servo_products": "servo_product_category_product_category_id"
-        },
-        "sub": {
-          "servo_product_category_options": "category_option_category_id"
-        }
-      },
       "servo_customer_cash_transaction": {
         "db": {
           "engine": "InnoDB",
@@ -1872,52 +2507,6 @@
         },
         "parent": "servo_customers"
       },
-      "servo_services": {
-        "db": {
-          "engine": "InnoDB",
-          "schema": "servodb",
-          "collation": "utf8_general_ci",
-          "system_versioned": false
-        },
-        "columns": {
-          "service_id": {
-            "db": {
-              "type": "increments",
-              "primary": true,
-              "nullable": false
-            }
-          },
-          "service_name": {
-            "db": {
-              "type": "string",
-              "maxLength": 128,
-              "primary": false,
-              "nullable": false
-            }
-          },
-          "servo_service_sales_point": {
-            "db": {
-              "type": "reference",
-              "default": "",
-              "nullable": true,
-              "primary": false,
-              "references": "sales_point_id",
-              "inTable": "servo_sales_point",
-              "referenceType": "integer",
-              "onUpdate": "RESTRICT",
-              "onDelete": "RESTRICT"
-            }
-          }
-        },
-        "refs": {
-          "servo_user_shifts": "servo_service_service_id",
-          "servo_product_price": "servo_service_service_id",
-          "servo_orders": "servo_service_service_id"
-        },
-        "sub": {
-          "servo_service_department_category": "sdc_service_id"
-        }
-      },
       "servo_products_has_servo_product_categories": {
         "db": {
           "engine": "InnoDB",
@@ -1948,6 +2537,103 @@
         },
         "parent": "servo_products"
       },
+      "servo_wallets": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "columns": {
+          "wallet_id": {
+            "db": {
+              "type": "increments",
+              "primary": true,
+              "nullable": false
+            }
+          },
+          "wallet_name": {
+            "db": {
+              "type": "string",
+              "default": "",
+              "maxLength": 1000,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "wallet_type": {
+            "db": {
+              "type": "enum",
+              "enumValues": [
+                "internal",
+                "external"
+              ],
+              "default": "",
+              "maxLength": 8,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "wallet_description": {
+            "db": {
+              "type": "text",
+              "default": "",
+              "maxLength": 65535,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "wallet_creation_date": {
+            "db": {
+              "type": "datetime",
+              "default": "",
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "wallet_user_created": {
+            "db": {
+              "type": "integer",
+              "default": "",
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "wallet_currency": {
+            "db": {
+              "type": "reference",
+              "default": "",
+              "primary": false,
+              "nullable": true,
+              "references": "currency_id",
+              "inTable": "servo_currencies",
+              "referenceType": "integer",
+              "onUpdate": "RESTRICT",
+              "onDelete": "RESTRICT"
+            }
+          },
+          "wallet_format": {
+            "db": {
+              "type": "reference",
+              "default": "",
+              "primary": false,
+              "nullable": true,
+              "references": "payment_method_id",
+              "inTable": "servo_payment_methods",
+              "referenceType": "integer",
+              "onUpdate": "RESTRICT",
+              "onDelete": "RESTRICT"
+            }
+          }
+        },
+        "sub": {
+          "servo_wallet_privileges": "wallet_privilege_wallet_id",
+          "servo_wallet_transactions": "transaction_originating_wallet"
+        },
+        "refs": {
+          "servo_wallet_transactions": "transaction_destination_wallet"
+        }
+      },
       "servo_currencies": {
         "db": {
           "engine": "InnoDB",
@@ -1976,6 +2662,169 @@
           "servo_wallets": "wallet_currency"
         }
       },
+      "servo_project_step": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "columns": {
+          "project_step_id": {
+            "db": {
+              "type": "increments",
+              "primary": true,
+              "nullable": false
+            }
+          },
+          "step_project": {
+            "db": {
+              "type": "reference",
+              "default": "",
+              "primary": false,
+              "nullable": true,
+              "references": "project_id",
+              "inTable": "servo_projects",
+              "referenceType": "integer",
+              "onUpdate": "RESTRICT",
+              "onDelete": "RESTRICT"
+            }
+          },
+          "step_description": {
+            "db": {
+              "type": "text",
+              "default": "",
+              "maxLength": 16777215,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "step_department_concerned": {
+            "db": {
+              "type": "reference",
+              "default": "",
+              "primary": false,
+              "nullable": true,
+              "references": "department_id",
+              "inTable": "servo_department",
+              "referenceType": "integer",
+              "onUpdate": "RESTRICT",
+              "onDelete": "RESTRICT"
+            }
+          },
+          "step_user_created": {
+            "db": {
+              "type": "reference",
+              "default": "",
+              "primary": false,
+              "nullable": true,
+              "references": "user_id",
+              "inTable": "servo_user",
+              "referenceType": "integer",
+              "onUpdate": "RESTRICT",
+              "onDelete": "RESTRICT"
+            }
+          },
+          "step_users_concerned": {
+            "db": {
+              "type": "reference",
+              "default": "",
+              "primary": false,
+              "nullable": true,
+              "references": "user_id",
+              "inTable": "servo_user",
+              "referenceType": "integer",
+              "onUpdate": "RESTRICT",
+              "onDelete": "RESTRICT"
+            }
+          },
+          "step_start_date": {
+            "db": {
+              "type": "datetime",
+              "default": "",
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "step_end_date": {
+            "db": {
+              "type": "datetime",
+              "default": "",
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "step_status": {
+            "db": {
+              "type": "enum",
+              "enumValues": [
+                "Active",
+                "Pending",
+                "Suspended",
+                "Completed"
+              ],
+              "default": "",
+              "maxLength": 9,
+              "primary": false,
+              "nullable": true
+            }
+          }
+        },
+        "parent": "servo_projects",
+        "refs": {
+          "servo_project_notes": "project_step"
+        }
+      },
+      "servo_vendors": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "columns": {
+          "vendor_id": {
+            "db": {
+              "type": "increments",
+              "primary": true,
+              "nullable": false
+            }
+          },
+          "vendor_name": {
+            "db": {
+              "type": "text",
+              "default": "",
+              "maxLength": 65535,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "vendor_address": {
+            "db": {
+              "type": "string",
+              "default": "",
+              "maxLength": 128,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "vendor_phone_number": {
+            "db": {
+              "type": "integer",
+              "default": "",
+              "primary": false,
+              "nullable": true
+            }
+          }
+        },
+        "sub": {
+          "servo_vendor_cash_transaction": "transaction_vendor_id"
+        },
+        "refs": {
+          "servo_expenses": "expense_vendor",
+          "servo_purchase_orders": "servo_vendors_vendor_id"
+        }
+      },
       "servo_payment_methods": {
         "db": {
           "engine": "InnoDB",
@@ -2001,132 +2850,13 @@
           }
         },
         "refs": {
-          "servo_wallet_transactions": "transaction_payment_method",
-          "servo_purchase_orders": "payment_method",
-          "servo_wallets": "wallet_format",
           "servo_vendor_cash_transaction": "transaction_payment_method",
+          "servo_wallet_transactions": "transaction_payment_method",
+          "servo_wallets": "wallet_format",
           "servo_expenses": "expense_payment_method",
-          "servo_orders": "servo_payment_methods_payment_method"
+          "servo_orders": "servo_payment_methods_payment_method",
+          "servo_purchase_orders": "payment_method"
         }
-      },
-      "servo_sales_point": {
-        "db": {
-          "engine": "InnoDB",
-          "schema": "servodb",
-          "collation": "utf8_general_ci",
-          "system_versioned": false
-        },
-        "columns": {
-          "sales_point_id": {
-            "db": {
-              "type": "increments",
-              "primary": true,
-              "nullable": false
-            }
-          },
-          "sales_point_name": {
-            "db": {
-              "type": "string",
-              "maxLength": 128,
-              "primary": false,
-              "nullable": false
-            }
-          },
-          "sales_point_customer_id": {
-            "db": {
-              "type": "reference",
-              "default": "",
-              "primary": false,
-              "nullable": true,
-              "references": "customer_id",
-              "inTable": "servo_customers",
-              "referenceType": "integer",
-              "onUpdate": "RESTRICT",
-              "onDelete": "RESTRICT"
-            }
-          }
-        },
-        "refs": {
-          "servo_user_shifts": "servo_sales_point_sales_point_id",
-          "servo_services": "servo_service_sales_point",
-          "servo_orders": "order_pos"
-        },
-        "sub": {
-          "servo_sales_point_departments": "servo_sales_point_sales_point_id"
-        }
-      },
-      "servo_project_notes": {
-        "db": {
-          "engine": "InnoDB",
-          "schema": "servodb",
-          "collation": "utf8_general_ci",
-          "system_versioned": false
-        },
-        "columns": {
-          "project_note_id": {
-            "db": {
-              "type": "increments",
-              "primary": true,
-              "nullable": false
-            }
-          },
-          "project_step": {
-            "db": {
-              "type": "reference",
-              "default": "",
-              "primary": false,
-              "nullable": true,
-              "references": "project_step_id",
-              "inTable": "servo_project_step",
-              "referenceType": "integer",
-              "onUpdate": "RESTRICT",
-              "onDelete": "RESTRICT"
-            }
-          },
-          "project_note": {
-            "db": {
-              "type": "text",
-              "default": "",
-              "maxLength": 16777215,
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "project_note_user_created": {
-            "db": {
-              "type": "reference",
-              "default": "",
-              "primary": false,
-              "nullable": true,
-              "references": "user_id",
-              "inTable": "servo_user",
-              "referenceType": "integer",
-              "onUpdate": "RESTRICT",
-              "onDelete": "RESTRICT"
-            }
-          },
-          "date_created": {
-            "db": {
-              "type": "datetime",
-              "default": "",
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "project_note_project_id": {
-            "db": {
-              "type": "reference",
-              "primary": false,
-              "nullable": false,
-              "references": "project_id",
-              "inTable": "servo_projects",
-              "referenceType": "integer",
-              "onUpdate": "RESTRICT",
-              "onDelete": "RESTRICT"
-            }
-          }
-        },
-        "parent": "servo_projects"
       },
       "servo_changes_updates": {
         "db": {
@@ -2237,6 +2967,206 @@
             }
           }
         }
+      },
+      "servo_project_notes": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "columns": {
+          "project_note_id": {
+            "db": {
+              "type": "increments",
+              "primary": true,
+              "nullable": false
+            }
+          },
+          "project_step": {
+            "db": {
+              "type": "reference",
+              "default": "",
+              "primary": false,
+              "nullable": true,
+              "references": "project_step_id",
+              "inTable": "servo_project_step",
+              "referenceType": "integer",
+              "onUpdate": "RESTRICT",
+              "onDelete": "RESTRICT"
+            }
+          },
+          "project_note": {
+            "db": {
+              "type": "text",
+              "default": "",
+              "maxLength": 16777215,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "project_note_user_created": {
+            "db": {
+              "type": "reference",
+              "default": "",
+              "primary": false,
+              "nullable": true,
+              "references": "user_id",
+              "inTable": "servo_user",
+              "referenceType": "integer",
+              "onUpdate": "RESTRICT",
+              "onDelete": "RESTRICT"
+            }
+          },
+          "date_created": {
+            "db": {
+              "type": "datetime",
+              "default": "",
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "project_note_project_id": {
+            "db": {
+              "type": "reference",
+              "primary": false,
+              "nullable": false,
+              "references": "project_id",
+              "inTable": "servo_projects",
+              "referenceType": "integer",
+              "onUpdate": "RESTRICT",
+              "onDelete": "RESTRICT"
+            }
+          }
+        },
+        "parent": "servo_projects"
+      },
+      "servo_user_shifts": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "columns": {
+          "user_shift_id": {
+            "db": {
+              "type": "increments",
+              "primary": true,
+              "nullable": false
+            }
+          },
+          "time_checkin": {
+            "db": {
+              "type": "datetime",
+              "default": "",
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "time_checkout": {
+            "db": {
+              "type": "datetime",
+              "default": "",
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "balance_checkin": {
+            "db": {
+              "type": "integer",
+              "default": "",
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "balance_checkout": {
+            "db": {
+              "type": "integer",
+              "default": "",
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "servo_user_user_id": {
+            "db": {
+              "type": "reference",
+              "primary": false,
+              "nullable": false,
+              "references": "user_id",
+              "inTable": "servo_user",
+              "referenceType": "integer",
+              "onUpdate": "NO ACTION",
+              "onDelete": "NO ACTION"
+            }
+          },
+          "servo_shifts_shift_id": {
+            "db": {
+              "type": "reference",
+              "primary": false,
+              "nullable": false,
+              "references": "shift_id",
+              "inTable": "servo_shifts",
+              "referenceType": "integer",
+              "onUpdate": "RESTRICT",
+              "onDelete": "RESTRICT"
+            }
+          },
+          "user_shift_notes": {
+            "db": {
+              "type": "text",
+              "default": "",
+              "maxLength": 65535,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "user_shift_code": {
+            "db": {
+              "type": "string",
+              "default": "",
+              "maxLength": 25,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "assigned": {
+            "db": {
+              "type": "text",
+              "default": "",
+              "maxLength": 65535,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "servo_service_service_id": {
+            "db": {
+              "type": "reference",
+              "default": "",
+              "primary": false,
+              "nullable": true,
+              "references": "service_id",
+              "inTable": "servo_services",
+              "referenceType": "integer",
+              "onUpdate": "RESTRICT",
+              "onDelete": "RESTRICT"
+            }
+          },
+          "servo_sales_point_sales_point_id": {
+            "db": {
+              "type": "reference",
+              "default": "",
+              "primary": false,
+              "nullable": true,
+              "references": "sales_point_id",
+              "inTable": "servo_sales_point",
+              "referenceType": "integer",
+              "onUpdate": "RESTRICT",
+              "onDelete": "RESTRICT"
+            }
+          }
+        },
+        "parent": "servo_user"
       },
       "servo_order_items": {
         "db": {
@@ -2430,141 +3360,6 @@
         },
         "parent": "servo_orders"
       },
-      "servo_wallet_privileges": {
-        "db": {
-          "engine": "InnoDB",
-          "schema": "servodb",
-          "collation": "utf8_general_ci",
-          "system_versioned": false
-        },
-        "columns": {
-          "wallet_privilege_id": {
-            "db": {
-              "type": "increments",
-              "primary": true,
-              "nullable": false
-            }
-          },
-          "wallet_privilege_wallet_id": {
-            "db": {
-              "type": "reference",
-              "default": "",
-              "primary": false,
-              "nullable": true,
-              "references": "wallet_id",
-              "inTable": "servo_wallets",
-              "referenceType": "integer",
-              "onUpdate": "RESTRICT",
-              "onDelete": "RESTRICT"
-            }
-          },
-          "wallet_privilege_user_id": {
-            "db": {
-              "type": "reference",
-              "default": "",
-              "primary": false,
-              "nullable": true,
-              "references": "user_id",
-              "inTable": "servo_user",
-              "referenceType": "integer",
-              "onUpdate": "RESTRICT",
-              "onDelete": "RESTRICT"
-            }
-          },
-          "wallet_privilege_deposit": {
-            "db": {
-              "type": "enum",
-              "enumValues": [
-                "Yes",
-                "No"
-              ],
-              "default": "'No'",
-              "maxLength": 3,
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "wallet_privilege_transfer": {
-            "db": {
-              "type": "enum",
-              "enumValues": [
-                "Yes",
-                "No"
-              ],
-              "default": "'No'",
-              "maxLength": 3,
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "wallet_privilege_payout": {
-            "db": {
-              "type": "enum",
-              "enumValues": [
-                "Yes",
-                "No"
-              ],
-              "default": "'No'",
-              "maxLength": 3,
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "wallet_privilege_approve": {
-            "db": {
-              "type": "enum",
-              "enumValues": [
-                "Yes",
-                "No"
-              ],
-              "default": "'No'",
-              "maxLength": 3,
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "wallet_privilege_receive": {
-            "db": {
-              "type": "enum",
-              "enumValues": [
-                "Yes",
-                "No"
-              ],
-              "default": "'No'",
-              "maxLength": 3,
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "wallet_privilege_transfer_to": {
-            "db": {
-              "type": "enum",
-              "enumValues": [
-                "Yes",
-                "No"
-              ],
-              "default": "'No'",
-              "maxLength": 3,
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "wallet_privilege_user_access": {
-            "db": {
-              "type": "enum",
-              "enumValues": [
-                "Yes",
-                "No"
-              ],
-              "default": "'No'",
-              "maxLength": 3,
-              "primary": false,
-              "nullable": true
-            }
-          }
-        },
-        "parent": "servo_wallets"
-      },
       "servo_projects": {
         "db": {
           "engine": "InnoDB",
@@ -2754,6 +3549,9 @@
           "servo_project_step": "step_project",
           "servo_project_notes": "project_note_project_id",
           "servo_project_tasks": "task_project"
+        },
+        "refs": {
+          "servo_files": "file_project_id"
         }
       },
       "servo_login_session": {
@@ -2820,152 +3618,6 @@
             }
           }
         }
-      },
-      "servo_vendor_cash_transaction": {
-        "db": {
-          "engine": "InnoDB",
-          "schema": "servodb",
-          "collation": "utf8_general_ci",
-          "system_versioned": false
-        },
-        "columns": {
-          "vendor_transaction_id": {
-            "db": {
-              "type": "increments",
-              "primary": true,
-              "nullable": false
-            }
-          },
-          "transaction_amount": {
-            "db": {
-              "type": "integer",
-              "primary": false,
-              "nullable": false
-            }
-          },
-          "transaction_type": {
-            "db": {
-              "type": "text",
-              "maxLength": 65535,
-              "primary": false,
-              "nullable": false
-            }
-          },
-          "user_approved_id": {
-            "db": {
-              "type": "reference",
-              "primary": false,
-              "nullable": false,
-              "references": "user_id",
-              "inTable": "servo_user",
-              "referenceType": "integer",
-              "onUpdate": "RESTRICT",
-              "onDelete": "RESTRICT"
-            }
-          },
-          "transaction_date": {
-            "db": {
-              "type": "datetime",
-              "default": "",
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "transaction_payment_method": {
-            "db": {
-              "type": "reference",
-              "primary": false,
-              "nullable": false,
-              "references": "payment_method_id",
-              "inTable": "servo_payment_methods",
-              "referenceType": "integer",
-              "onUpdate": "RESTRICT",
-              "onDelete": "RESTRICT"
-            }
-          },
-          "transaction_status": {
-            "db": {
-              "type": "text",
-              "default": "",
-              "maxLength": 65535,
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "transaction_note": {
-            "db": {
-              "type": "text",
-              "default": "",
-              "maxLength": 65535,
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "transaction_order": {
-            "db": {
-              "type": "integer",
-              "default": "",
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "transaction_balance": {
-            "db": {
-              "type": "integer",
-              "default": "",
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "transaction_amount_tendered": {
-            "db": {
-              "type": "integer",
-              "default": "",
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "transaction_user_received": {
-            "db": {
-              "type": "reference",
-              "default": "",
-              "primary": false,
-              "nullable": true,
-              "references": "user_id",
-              "inTable": "servo_user",
-              "referenceType": "integer",
-              "onUpdate": "RESTRICT",
-              "onDelete": "RESTRICT"
-            }
-          },
-          "transaction_department_received": {
-            "db": {
-              "type": "reference",
-              "default": "",
-              "primary": false,
-              "nullable": true,
-              "references": "department_id",
-              "inTable": "servo_department",
-              "referenceType": "integer",
-              "onUpdate": "RESTRICT",
-              "onDelete": "RESTRICT"
-            }
-          },
-          "transaction_vendor_id": {
-            "db": {
-              "type": "reference",
-              "default": "",
-              "primary": false,
-              "nullable": true,
-              "references": "vendor_id",
-              "inTable": "servo_vendors",
-              "referenceType": "integer",
-              "onUpdate": "RESTRICT",
-              "onDelete": "RESTRICT"
-            }
-          }
-        },
-        "parent": "servo_vendors"
       },
       "servo_assets": {
         "db": {
@@ -3214,6 +3866,71 @@
           }
         }
       },
+      "servo_shifts": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "columns": {
+          "shift_id": {
+            "db": {
+              "type": "increments",
+              "primary": true,
+              "nullable": false
+            }
+          },
+          "shift_start": {
+            "db": {
+              "type": "datetime",
+              "default": "",
+              "nullable": true,
+              "primary": false
+            }
+          },
+          "shift_stop": {
+            "db": {
+              "type": "datetime",
+              "default": "",
+              "nullable": true,
+              "primary": false
+            }
+          },
+          "servo_branches_branch_id": {
+            "db": {
+              "type": "reference",
+              "default": "",
+              "nullable": true,
+              "primary": false,
+              "references": "branch_id",
+              "inTable": "servo_branches",
+              "referenceType": "integer",
+              "onUpdate": "NO ACTION",
+              "onDelete": "NO ACTION"
+            }
+          },
+          "shift_status": {
+            "db": {
+              "type": "enum",
+              "default": "",
+              "nullable": true,
+              "enumValues": [
+                "Active",
+                "Pending",
+                "Closed"
+              ],
+              "maxLength": 7,
+              "primary": false
+            }
+          }
+        },
+        "refs": {
+          "servo_user_shifts": "servo_shifts_shift_id",
+          "servo_login_session": "servo_shift_shift_id",
+          "servo_orders": "servo_shift_shift_id"
+        }
+      },
       "servo_product_price": {
         "db": {
           "engine": "InnoDB",
@@ -3280,1021 +3997,6 @@
           }
         },
         "parent": "servo_products"
-      },
-      "servo_user_tenure": {
-        "db": {
-          "engine": "InnoDB",
-          "schema": "servodb",
-          "collation": "utf8_general_ci",
-          "system_versioned": false
-        },
-        "columns": {
-          "user_tenure_id": {
-            "db": {
-              "type": "increments",
-              "primary": true,
-              "nullable": false
-            }
-          },
-          "user_tenure_start_date": {
-            "db": {
-              "type": "datetime",
-              "default": "",
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "user_tenure_end_date": {
-            "db": {
-              "type": "datetime",
-              "default": "",
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "servo_user_user_id": {
-            "db": {
-              "type": "integer",
-              "primary": false,
-              "nullable": false
-            }
-          },
-          "servo_branches_branch_id": {
-            "db": {
-              "type": "reference",
-              "primary": false,
-              "nullable": false,
-              "references": "branch_id",
-              "inTable": "servo_branches",
-              "referenceType": "integer",
-              "onUpdate": "NO ACTION",
-              "onDelete": "NO ACTION"
-            }
-          },
-          "servo_department_department_id": {
-            "db": {
-              "type": "reference",
-              "primary": false,
-              "nullable": false,
-              "references": "department_id",
-              "inTable": "servo_department",
-              "referenceType": "integer",
-              "onUpdate": "NO ACTION",
-              "onDelete": "NO ACTION"
-            }
-          }
-        }
-      },
-      "servo_department": {
-        "db": {
-          "engine": "InnoDB",
-          "schema": "servodb",
-          "collation": "utf8_general_ci",
-          "system_versioned": false
-        },
-        "columns": {
-          "department_id": {
-            "db": {
-              "type": "increments",
-              "primary": true,
-              "nullable": false
-            }
-          },
-          "department_name": {
-            "db": {
-              "type": "string",
-              "maxLength": 45,
-              "primary": false,
-              "nullable": false
-            }
-          }
-        },
-        "refs": {
-          "servo_purchase_orders": "servo_departments_department_id",
-          "servo_project_step": "step_department_concerned",
-          "servo_customer_cash_transaction": "transaction_department_received",
-          "servo_order_items": "servo_departments_department_id",
-          "servo_vendor_cash_transaction": "transaction_department_received",
-          "servo_expenses": "expense_department",
-          "servo_user_tenure": "servo_department_department_id",
-          "servo_product_groups": "group_product_department",
-          "servo_service_department_category": "sdc_department_id",
-          "servo_sales_point_departments": "servo_departments_department_id",
-          "servo_user": "servo_user_departments_department_id"
-        },
-        "sub": {
-          "servo_department_categories": "department_id"
-        }
-      },
-      "servo_product_groups": {
-        "db": {
-          "engine": "InnoDB",
-          "schema": "servodb",
-          "collation": "utf8_general_ci",
-          "system_versioned": false
-        },
-        "columns": {
-          "product_group_id": {
-            "db": {
-              "type": "increments",
-              "primary": true,
-              "nullable": false
-            }
-          },
-          "product_group_name": {
-            "db": {
-              "type": "text",
-              "maxLength": 65535,
-              "primary": false,
-              "nullable": false
-            }
-          },
-          "group_product_department": {
-            "db": {
-              "type": "reference",
-              "default": "",
-              "primary": false,
-              "nullable": true,
-              "references": "department_id",
-              "inTable": "servo_department",
-              "referenceType": "integer",
-              "onUpdate": "RESTRICT",
-              "onDelete": "RESTRICT"
-            }
-          }
-        },
-        "refs": {
-          "servo_product_group_items": "product_group_product_group_id",
-          "servo_order_items": "order_item_group_id"
-        }
-      },
-      "servo_user_profile": {
-        "db": {
-          "engine": "InnoDB",
-          "schema": "servodb",
-          "collation": "utf8_general_ci",
-          "system_versioned": false
-        },
-        "columns": {
-          "user_profile_id": {
-            "db": {
-              "type": "increments",
-              "primary": true,
-              "nullable": false
-            }
-          },
-          "user_profile_name": {
-            "db": {
-              "type": "text",
-              "default": "",
-              "maxLength": 65535,
-              "primary": false,
-              "nullable": true
-            }
-          }
-        }
-      },
-      "servo_data_field_readings": {
-        "db": {
-          "engine": "InnoDB",
-          "schema": "servodb",
-          "collation": "utf8_general_ci",
-          "system_versioned": false
-        },
-        "columns": {
-          "data_field_reading_id": {
-            "db": {
-              "type": "increments",
-              "primary": true,
-              "nullable": false
-            }
-          },
-          "data_field_reading_data_field": {
-            "db": {
-              "type": "reference",
-              "primary": false,
-              "nullable": false,
-              "references": "data_field_id",
-              "inTable": "servo_data_fields",
-              "referenceType": "integer",
-              "onUpdate": "RESTRICT",
-              "onDelete": "RESTRICT"
-            }
-          },
-          "data_field_reading_date": {
-            "db": {
-              "type": "datetime",
-              "primary": false,
-              "nullable": false
-            }
-          },
-          "data_field_reading_value": {
-            "db": {
-              "type": "decimal",
-              "default": "",
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "data_field_reading_user": {
-            "db": {
-              "type": "reference",
-              "default": "",
-              "primary": false,
-              "nullable": true,
-              "references": "user_id",
-              "inTable": "servo_user",
-              "referenceType": "integer",
-              "onUpdate": "RESTRICT",
-              "onDelete": "RESTRICT"
-            }
-          },
-          "data_field_reading_note": {
-            "db": {
-              "type": null,
-              "default": "",
-              "maxLength": 4294967295,
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "data_reading_session_id": {
-            "db": {
-              "type": "reference",
-              "default": "",
-              "primary": false,
-              "nullable": true,
-              "references": "data_reading_session_id",
-              "inTable": "servo_data_reading_session",
-              "referenceType": "integer",
-              "onUpdate": "RESTRICT",
-              "onDelete": "RESTRICT"
-            }
-          }
-        },
-        "parent": "servo_data_fields"
-      },
-      "servo_stock_movement": {
-        "db": {
-          "engine": "InnoDB",
-          "schema": "servodb",
-          "collation": "utf8_general_ci",
-          "system_versioned": false
-        },
-        "columns": {
-          "stock_id": {
-            "db": {
-              "type": "increments",
-              "primary": true,
-              "nullable": false
-            }
-          },
-          "stock_product_id": {
-            "db": {
-              "type": "reference",
-              "default": "",
-              "primary": false,
-              "nullable": true,
-              "references": "product_id",
-              "inTable": "servo_products",
-              "referenceType": "integer",
-              "onUpdate": "NO ACTION",
-              "onDelete": "NO ACTION"
-            }
-          },
-          "stock_po_id": {
-            "db": {
-              "type": "reference",
-              "default": "",
-              "primary": false,
-              "nullable": true,
-              "references": "po_id",
-              "inTable": "servo_purchase_orders",
-              "referenceType": "integer",
-              "onUpdate": "NO ACTION",
-              "onDelete": "NO ACTION"
-            }
-          },
-          "stock_order_id": {
-            "db": {
-              "type": "reference",
-              "default": "",
-              "primary": false,
-              "nullable": true,
-              "references": "order_id",
-              "inTable": "servo_orders",
-              "referenceType": "integer",
-              "onUpdate": "NO ACTION",
-              "onDelete": "NO ACTION"
-            }
-          },
-          "stock_movement": {
-            "db": {
-              "type": "enum",
-              "enumValues": [
-                "in",
-                "out"
-              ],
-              "default": "",
-              "maxLength": 3,
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "stock_quantity": {
-            "db": {
-              "type": "integer",
-              "default": "",
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "stock_date": {
-            "db": {
-              "type": "datetime",
-              "default": "current_timestamp()",
-              "primary": false,
-              "nullable": true
-            }
-          }
-        }
-      },
-      "servo_product_category_options": {
-        "db": {
-          "engine": "InnoDB",
-          "schema": "servodb",
-          "collation": "utf8_general_ci",
-          "system_versioned": false
-        },
-        "columns": {
-          "category_option_id": {
-            "db": {
-              "type": "increments",
-              "primary": true,
-              "nullable": false
-            }
-          },
-          "category_option_category_id": {
-            "db": {
-              "type": "reference",
-              "primary": false,
-              "nullable": false,
-              "references": "product_categories_id",
-              "inTable": "servo_product_categories",
-              "referenceType": "integer",
-              "onUpdate": "RESTRICT",
-              "onDelete": "RESTRICT"
-            }
-          },
-          "category_option_option": {
-            "db": {
-              "type": "text",
-              "maxLength": 65535,
-              "primary": false,
-              "nullable": false
-            }
-          }
-        },
-        "parent": "servo_product_categories"
-      },
-      "servo_customer_table": {
-        "db": {
-          "engine": "InnoDB",
-          "schema": "servodb",
-          "collation": "utf8_general_ci",
-          "system_versioned": false
-        },
-        "columns": {
-          "table_id": {
-            "db": {
-              "type": "increments",
-              "primary": true,
-              "nullable": false
-            }
-          },
-          "table_name": {
-            "db": {
-              "type": "string",
-              "default": "",
-              "nullable": true,
-              "maxLength": 45,
-              "primary": false
-            }
-          }
-        },
-        "refs": {
-          "servo_data_reading_session": "data_reading_session_asset",
-          "servo_orders": "servo_customer_table_table_id"
-        }
-      },
-      "servo_service_department_category": {
-        "db": {
-          "engine": "InnoDB",
-          "schema": "servodb",
-          "collation": "utf8_general_ci",
-          "system_versioned": false
-        },
-        "columns": {
-          "service_department_category_id": {
-            "db": {
-              "type": "increments",
-              "primary": true,
-              "nullable": false
-            }
-          },
-          "sdc_service_id": {
-            "db": {
-              "type": "reference",
-              "default": "",
-              "primary": false,
-              "nullable": true,
-              "references": "service_id",
-              "inTable": "servo_services",
-              "referenceType": "integer",
-              "onUpdate": "RESTRICT",
-              "onDelete": "RESTRICT"
-            }
-          },
-          "sdc_category_id": {
-            "db": {
-              "type": "reference",
-              "default": "",
-              "primary": false,
-              "nullable": true,
-              "references": "product_categories_id",
-              "inTable": "servo_product_categories",
-              "referenceType": "integer",
-              "onUpdate": "RESTRICT",
-              "onDelete": "RESTRICT"
-            }
-          },
-          "sdc_department_id": {
-            "db": {
-              "type": "reference",
-              "default": "",
-              "primary": false,
-              "nullable": true,
-              "references": "department_id",
-              "inTable": "servo_department",
-              "referenceType": "integer",
-              "onUpdate": "RESTRICT",
-              "onDelete": "RESTRICT"
-            }
-          },
-          "sdc_code": {
-            "db": {
-              "type": "string",
-              "maxLength": 128,
-              "primary": false,
-              "nullable": false
-            }
-          }
-        },
-        "parent": "servo_services"
-      },
-      "servo_product_brands": {
-        "db": {
-          "engine": "InnoDB",
-          "schema": "servodb",
-          "collation": "utf8_general_ci",
-          "system_versioned": false
-        },
-        "columns": {
-          "product_brand_id": {
-            "db": {
-              "type": "increments",
-              "primary": true,
-              "nullable": false
-            }
-          },
-          "product_brand_name": {
-            "db": {
-              "type": "string",
-              "default": "",
-              "maxLength": 45,
-              "primary": false,
-              "nullable": true
-            }
-          }
-        },
-        "refs": {
-          "servo_products": "servo_product_brands_product_brand_id"
-        }
-      },
-      "servo_customers": {
-        "db": {
-          "engine": "InnoDB",
-          "schema": "servodb",
-          "collation": "utf8_general_ci",
-          "system_versioned": false
-        },
-        "columns": {
-          "customer_id": {
-            "db": {
-              "type": "increments",
-              "primary": true,
-              "nullable": false
-            }
-          },
-          "customer_first_name": {
-            "db": {
-              "type": "text",
-              "maxLength": 65535,
-              "primary": false,
-              "nullable": false
-            }
-          },
-          "customer_last_name": {
-            "db": {
-              "type": "text",
-              "default": "",
-              "maxLength": 65535,
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "customer_phone_number": {
-            "db": {
-              "type": "string",
-              "default": "",
-              "maxLength": 128,
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "customer_picture": {
-            "db": {
-              "type": "string",
-              "default": "",
-              "maxLength": 128,
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "customer_class": {
-            "db": {
-              "type": "text",
-              "default": "",
-              "maxLength": 65535,
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "customer_sex": {
-            "db": {
-              "type": "text",
-              "default": "",
-              "maxLength": 65535,
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "customer_dob": {
-            "db": {
-              "type": "datetime",
-              "default": "",
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "customer_age": {
-            "db": {
-              "type": "integer",
-              "default": "",
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "customer_address": {
-            "db": {
-              "type": "text",
-              "default": "",
-              "maxLength": 65535,
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "id_card_number": {
-            "db": {
-              "type": "string",
-              "default": "",
-              "primary": false,
-              "nullable": true,
-              "maxLength": 128
-            }
-          },
-          "location_lat": {
-            "db": {
-              "type": "text",
-              "default": "",
-              "maxLength": 65535,
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "locatio_lon": {
-            "db": {
-              "type": "text",
-              "default": "",
-              "maxLength": 65535,
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "customer_city": {
-            "db": {
-              "type": "integer",
-              "default": "",
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "customer_building_photo": {
-            "db": {
-              "type": "string",
-              "default": "",
-              "maxLength": 128,
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "customer_location_diretions": {
-            "db": {
-              "type": "text",
-              "default": "",
-              "maxLength": 65535,
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "customer_nationality": {
-            "db": {
-              "type": "integer",
-              "default": "",
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "customer_email": {
-            "db": {
-              "type": "string",
-              "default": "",
-              "maxLength": 128,
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "customer_legal_status": {
-            "db": {
-              "type": "text",
-              "default": "",
-              "maxLength": 65535,
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "customer_tax_payer_number": {
-            "db": {
-              "type": "string",
-              "default": "",
-              "maxLength": 11,
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "customer_rep_name": {
-            "db": {
-              "type": "text",
-              "default": "",
-              "maxLength": 65535,
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "customer_rep_surname": {
-            "db": {
-              "type": "text",
-              "default": "",
-              "maxLength": 65535,
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "customer_rep_id_card": {
-            "db": {
-              "type": "string",
-              "default": "",
-              "maxLength": 128,
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "customer_rep_address": {
-            "db": {
-              "type": "text",
-              "default": "",
-              "maxLength": 65535,
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "customer_rep_phone": {
-            "db": {
-              "type": "string",
-              "default": "",
-              "maxLength": 128,
-              "primary": false,
-              "nullable": true
-            }
-          }
-        },
-        "refs": {
-          "servo_data_reading_session": "data_reading_session_customer",
-          "servo_sales_point": "sales_point_customer_id",
-          "servo_projects": "project_customer",
-          "servo_assets": "asset_owner",
-          "servo_orders": "order_customer"
-        },
-        "sub": {
-          "servo_customer_cash_transaction": "customer_id"
-        }
-      },
-      "servo_sales_point_departments": {
-        "db": {
-          "engine": "InnoDB",
-          "schema": "servodb",
-          "collation": "utf8_general_ci",
-          "system_versioned": false
-        },
-        "columns": {
-          "sales_point_department_id": {
-            "db": {
-              "type": "increments",
-              "primary": true,
-              "nullable": false
-            }
-          },
-          "servo_sales_point_sales_point_id": {
-            "db": {
-              "type": "reference",
-              "default": "",
-              "primary": false,
-              "nullable": true,
-              "references": "sales_point_id",
-              "inTable": "servo_sales_point",
-              "referenceType": "integer",
-              "onUpdate": "RESTRICT",
-              "onDelete": "RESTRICT"
-            }
-          },
-          "servo_departments_department_id": {
-            "db": {
-              "type": "reference",
-              "default": "",
-              "primary": false,
-              "nullable": true,
-              "references": "department_id",
-              "inTable": "servo_department",
-              "referenceType": "integer",
-              "onUpdate": "RESTRICT",
-              "onDelete": "RESTRICT"
-            }
-          }
-        },
-        "parent": "servo_sales_point"
-      },
-      "servo_company_info": {
-        "db": {
-          "engine": "InnoDB",
-          "schema": "servodb",
-          "collation": "utf8_general_ci",
-          "system_versioned": false
-        },
-        "columns": {
-          "company_info_id": {
-            "db": {
-              "type": "increments",
-              "primary": true,
-              "nullable": false
-            }
-          },
-          "company_name": {
-            "db": {
-              "type": "text",
-              "maxLength": 65535,
-              "primary": false,
-              "nullable": false
-            }
-          },
-          "company_address": {
-            "db": {
-              "type": "text",
-              "default": "",
-              "maxLength": 65535,
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "company_phone_number": {
-            "db": {
-              "type": "string",
-              "default": "",
-              "maxLength": 128,
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "company_payment_numbers": {
-            "db": {
-              "type": "text",
-              "default": "",
-              "maxLength": 65535,
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "company_message": {
-            "db": {
-              "type": "text",
-              "default": "",
-              "maxLength": 65535,
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "company_logo": {
-            "db": {
-              "type": "string",
-              "default": "",
-              "maxLength": 128,
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "company_receipt_footer": {
-            "db": {
-              "type": "text",
-              "default": "",
-              "maxLength": 65535,
-              "primary": false,
-              "nullable": true
-            }
-          }
-        }
-      },
-      "servo_order_item_deletes": {
-        "db": {
-          "engine": "InnoDB",
-          "schema": "servodb",
-          "collation": "utf8_general_ci",
-          "system_versioned": false
-        },
-        "columns": {
-          "time_deleted": {
-            "db": {
-              "type": "datetime",
-              "primary": false,
-              "nullable": false
-            }
-          },
-          "user_deleted": {
-            "db": {
-              "type": "reference",
-              "default": "",
-              "primary": false,
-              "nullable": true,
-              "references": "user_id",
-              "inTable": "servo_user",
-              "referenceType": "integer",
-              "onUpdate": "RESTRICT",
-              "onDelete": "RESTRICT"
-            }
-          },
-          "order_item_delete_id": {
-            "db": {
-              "type": "increments",
-              "primary": true,
-              "nullable": false
-            }
-          },
-          "order_id": {
-            "db": {
-              "type": "reference",
-              "primary": false,
-              "nullable": false,
-              "references": "order_id",
-              "inTable": "servo_orders",
-              "referenceType": "integer",
-              "onUpdate": "RESTRICT",
-              "onDelete": "RESTRICT"
-            }
-          },
-          "deleted_product_id": {
-            "db": {
-              "type": "reference",
-              "primary": false,
-              "nullable": false,
-              "references": "product_id",
-              "inTable": "servo_products",
-              "referenceType": "integer",
-              "onUpdate": "RESTRICT",
-              "onDelete": "RESTRICT"
-            }
-          },
-          "deleted_item_quantity": {
-            "db": {
-              "type": "integer",
-              "default": "",
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "deleted_order_item_id": {
-            "db": {
-              "type": "integer",
-              "default": "",
-              "primary": false,
-              "nullable": true
-            }
-          }
-        },
-        "parent": "servo_orders"
-      },
-      "servo_purchase_order_item_deletes": {
-        "db": {
-          "engine": "InnoDB",
-          "schema": "servodb",
-          "collation": "utf8_general_ci",
-          "system_versioned": false
-        },
-        "columns": {
-          "po_item_delete_id": {
-            "db": {
-              "type": "increments",
-              "primary": true,
-              "nullable": false
-            }
-          },
-          "po_item_id": {
-            "db": {
-              "type": "integer",
-              "primary": false,
-              "nullable": false
-            }
-          },
-          "po_id": {
-            "db": {
-              "type": "integer",
-              "primary": false,
-              "nullable": false
-            }
-          },
-          "po_item_quantity": {
-            "db": {
-              "type": "integer",
-              "primary": false,
-              "nullable": false
-            }
-          },
-          "po_item_price": {
-            "db": {
-              "type": "integer",
-              "primary": false,
-              "nullable": false
-            }
-          },
-          "po_user_deleted": {
-            "db": {
-              "type": "reference",
-              "primary": false,
-              "nullable": false,
-              "references": "user_id",
-              "inTable": "servo_user",
-              "referenceType": "integer",
-              "onUpdate": "RESTRICT",
-              "onDelete": "RESTRICT"
-            }
-          },
-          "po_item_time_deleted": {
-            "db": {
-              "type": "datetime",
-              "primary": false,
-              "nullable": false
-            }
-          },
-          "po_item_deleted_product_id": {
-            "db": {
-              "type": "reference",
-              "primary": false,
-              "nullable": false,
-              "references": "product_id",
-              "inTable": "servo_products",
-              "referenceType": "integer",
-              "onUpdate": "RESTRICT",
-              "onDelete": "RESTRICT"
-            }
-          }
-        }
       },
       "servo_project_tasks": {
         "db": {
@@ -4889,18 +4591,18 @@
             }
           }
         },
+        "refs": {
+          "servo_order_item_deletes": "deleted_product_id",
+          "servo_stock_movement": "stock_product_id",
+          "servo_purchase_order_item_deletes": "po_item_deleted_product_id",
+          "servo_order_items": "servo_products_product_id",
+          "servo_purchase_order_items": "po_product_id"
+        },
         "sub": {
           "servo_product_group_items": "product_group_product_id",
           "servo_products_has_servo_product_categories": "servo_products_product_id",
           "servo_product_price": "product_price_product_id",
           "servo_product_uom_multiples": "uom_product_id"
-        },
-        "refs": {
-          "servo_order_items": "servo_products_product_id",
-          "servo_stock_movement": "stock_product_id",
-          "servo_order_item_deletes": "deleted_product_id",
-          "servo_purchase_order_item_deletes": "po_item_deleted_product_id",
-          "servo_purchase_order_items": "po_product_id"
         }
       },
       "servo_product_uom_multiples": {
@@ -5042,26 +4744,26 @@
           }
         },
         "refs": {
-          "servo_wallet_transactions": "transaction_user_initiated_id",
-          "servo_project_files": "project_file_creator",
-          "servo_purchase_orders": "servo_users_user_ordered_id",
-          "servo_project_step": "step_user_created",
-          "servo_data_reading_session": "data_reading_session_user",
-          "servo_customer_cash_transaction": "user_approved_id",
-          "servo_project_notes": "project_note_user_created",
-          "servo_changes_updates": "user_updated",
-          "servo_order_items": "servo_users_user_ordered",
+          "servo_data_field_readings": "data_field_reading_user",
           "servo_wallet_privileges": "wallet_privilege_user_id",
+          "servo_vendor_cash_transaction": "user_approved_id",
+          "servo_order_item_deletes": "user_deleted",
+          "servo_project_files": "project_file_creator",
+          "servo_data_reading_session": "data_reading_session_user",
+          "servo_purchase_order_item_deletes": "po_user_deleted",
+          "servo_wallet_transactions": "transaction_user_initiated_id",
+          "servo_customer_cash_transaction": "user_approved_id",
+          "servo_project_step": "step_user_created",
+          "servo_changes_updates": "user_updated",
+          "servo_project_notes": "project_note_user_created",
+          "servo_order_items": "servo_users_user_ordered",
           "servo_projects": "project_user_created",
           "servo_login_session": "servo_user_user_id",
-          "servo_vendor_cash_transaction": "user_approved_id",
           "servo_expenses": "expense_user_paid",
-          "servo_data_field_readings": "data_field_reading_user",
-          "servo_order_item_deletes": "user_deleted",
-          "servo_purchase_order_item_deletes": "po_user_deleted",
           "servo_project_tasks": "task_user_created",
           "servo_purchase_order_items": "po_item_user_received",
-          "servo_orders": "servo_user_user_id"
+          "servo_orders": "servo_user_user_id",
+          "servo_purchase_orders": "servo_users_user_ordered_id"
         },
         "sub": {
           "servo_user_shifts": "servo_user_user_id"
@@ -5402,14 +5104,433 @@
             }
           }
         },
+        "sub": {
+          "servo_order_item_deletes": "order_id",
+          "servo_order_items": "servo_orders_order_id"
+        },
         "refs": {
+          "servo_stock_movement": "stock_order_id",
           "servo_wallet_transactions": "transaction_order",
-          "servo_customer_cash_transaction": "transaction_order",
-          "servo_stock_movement": "stock_order_id"
+          "servo_customer_cash_transaction": "transaction_order"
+        }
+      },
+      "servo_purchase_orders": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "columns": {
+          "po_id": {
+            "db": {
+              "type": "increments",
+              "primary": true,
+              "nullable": false
+            }
+          },
+          "servo_vendors_vendor_id": {
+            "db": {
+              "type": "reference",
+              "default": "",
+              "primary": false,
+              "nullable": true,
+              "references": "vendor_id",
+              "inTable": "servo_vendors",
+              "referenceType": "integer",
+              "onUpdate": "RESTRICT",
+              "onDelete": "RESTRICT"
+            }
+          },
+          "servo_users_user_ordered_id": {
+            "db": {
+              "type": "reference",
+              "primary": false,
+              "nullable": false,
+              "references": "user_id",
+              "inTable": "servo_user",
+              "referenceType": "integer",
+              "onUpdate": "NO ACTION",
+              "onDelete": "NO ACTION"
+            }
+          },
+          "servo_users_user_approved_id": {
+            "db": {
+              "type": "reference",
+              "default": "",
+              "primary": false,
+              "nullable": true,
+              "references": "user_id",
+              "inTable": "servo_user",
+              "referenceType": "integer",
+              "onUpdate": "NO ACTION",
+              "onDelete": "NO ACTION"
+            }
+          },
+          "servo_users_user_received_id": {
+            "db": {
+              "type": "reference",
+              "default": "",
+              "primary": false,
+              "nullable": true,
+              "references": "user_id",
+              "inTable": "servo_user",
+              "referenceType": "integer",
+              "onUpdate": "NO ACTION",
+              "onDelete": "NO ACTION"
+            }
+          },
+          "time_ordered": {
+            "db": {
+              "type": "datetime",
+              "default": "current_timestamp()",
+              "primary": false,
+              "nullable": false
+            }
+          },
+          "time_approved": {
+            "db": {
+              "type": "datetime",
+              "default": "",
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "time_received": {
+            "db": {
+              "type": "datetime",
+              "default": "",
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "po_status": {
+            "db": {
+              "type": "enum",
+              "enumValues": [
+                "Requested",
+                "Approved",
+                "Ordered",
+                "Received"
+              ],
+              "default": "",
+              "maxLength": 9,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "payment_method": {
+            "db": {
+              "type": "reference",
+              "default": "",
+              "primary": false,
+              "nullable": true,
+              "references": "payment_method_id",
+              "inTable": "servo_payment_methods",
+              "referenceType": "integer",
+              "onUpdate": "RESTRICT",
+              "onDelete": "RESTRICT"
+            }
+          },
+          "payment_status": {
+            "db": {
+              "type": "enum",
+              "enumValues": [
+                "Full",
+                "Partial",
+                "Nothing"
+              ],
+              "default": "",
+              "maxLength": 7,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "po_notes": {
+            "db": {
+              "type": "text",
+              "default": "",
+              "maxLength": 65535,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "servo_departments_department_id": {
+            "db": {
+              "type": "reference",
+              "default": "",
+              "primary": false,
+              "nullable": true,
+              "references": "department_id",
+              "inTable": "servo_department",
+              "referenceType": "integer",
+              "onUpdate": "RESTRICT",
+              "onDelete": "RESTRICT"
+            }
+          },
+          "po_need_by_date": {
+            "db": {
+              "type": "datetime",
+              "default": "",
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "transfer_source_department_id": {
+            "db": {
+              "type": "reference",
+              "default": "",
+              "primary": false,
+              "nullable": true,
+              "references": "department_id",
+              "inTable": "servo_department",
+              "referenceType": "integer",
+              "onUpdate": "RESTRICT",
+              "onDelete": "RESTRICT"
+            }
+          },
+          "po_type": {
+            "db": {
+              "type": "enum",
+              "enumValues": [
+                "Purchase",
+                "Transfer"
+              ],
+              "default": "",
+              "maxLength": 8,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "po_discount": {
+            "db": {
+              "type": "integer",
+              "default": "0",
+              "primary": false,
+              "nullable": false
+            }
+          },
+          "po_payment_status": {
+            "db": {
+              "type": "enum",
+              "enumValues": [
+                "Ordered",
+                "Pending",
+                "Paid",
+                ""
+              ],
+              "default": "'Ordered'",
+              "maxLength": 7,
+              "primary": false,
+              "nullable": false
+            }
+          },
+          "po_invoice_id": {
+            "db": {
+              "type": "string",
+              "default": "",
+              "maxLength": 128,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "po_eta": {
+            "db": {
+              "type": "datetime",
+              "default": "",
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "po_goods_description": {
+            "db": {
+              "type": "text",
+              "default": "",
+              "maxLength": 16777215,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "po_project_name": {
+            "db": {
+              "type": "string",
+              "default": "",
+              "maxLength": 128,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "po_pr_number": {
+            "db": {
+              "type": "string",
+              "default": "",
+              "maxLength": 128,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "po_importation_declaration_number": {
+            "db": {
+              "type": "string",
+              "default": "",
+              "maxLength": 128,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "po_final_invoice_ref": {
+            "db": {
+              "type": "string",
+              "maxLength": 128,
+              "primary": false,
+              "nullable": false
+            }
+          },
+          "po_agreed_advance_payment": {
+            "db": {
+              "type": "integer",
+              "default": "",
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "po_agreed_balance": {
+            "db": {
+              "type": "integer",
+              "default": "",
+              "primary": false,
+              "nullable": true
+            }
+          }
+        },
+        "refs": {
+          "servo_stock_movement": "stock_po_id",
+          "servo_files": "file_po_id"
         },
         "sub": {
-          "servo_order_items": "servo_orders_order_id",
-          "servo_order_item_deletes": "order_id"
+          "servo_purchase_order_items": "po_id"
+        }
+      },
+      "servo_files": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "columns": {
+          "file_id": {
+            "db": {
+              "type": "increments",
+              "primary": true,
+              "nullable": false
+            }
+          },
+          "file_customer_id": {
+            "db": {
+              "type": "reference",
+              "default": "",
+              "primary": false,
+              "nullable": true,
+              "references": "customer_id",
+              "inTable": "servo_customers",
+              "referenceType": "integer",
+              "onUpdate": "RESTRICT",
+              "onDelete": "RESTRICT"
+            }
+          },
+          "file_asset_id": {
+            "db": {
+              "type": "integer",
+              "default": "",
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "file_order_id": {
+            "db": {
+              "type": "integer",
+              "default": "",
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "file_transaction_id": {
+            "db": {
+              "type": "integer",
+              "default": "",
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "file_name": {
+            "db": {
+              "type": "string",
+              "default": "",
+              "maxLength": 128,
+              "primary": false,
+              "nullable": false
+            }
+          },
+          "file_user_created": {
+            "db": {
+              "type": "integer",
+              "default": "",
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "file_date_created": {
+            "db": {
+              "type": "datetime",
+              "default": "current_timestamp()",
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "file_description": {
+            "db": {
+              "type": "text",
+              "default": "",
+              "maxLength": 16777215,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "file_po_id": {
+            "db": {
+              "type": "reference",
+              "default": "",
+              "primary": false,
+              "nullable": true,
+              "references": "po_id",
+              "inTable": "servo_purchase_orders",
+              "referenceType": "integer",
+              "onUpdate": "RESTRICT",
+              "onDelete": "RESTRICT"
+            }
+          },
+          "file_project_id": {
+            "db": {
+              "type": "reference",
+              "primary": false,
+              "nullable": true,
+              "default": "",
+              "references": "project_id",
+              "inTable": "servo_projects",
+              "referenceType": "integer",
+              "onUpdate": "RESTRICT",
+              "onDelete": "RESTRICT"
+            }
+          },
+          "file_project_task_id": {
+            "db": {
+              "type": "integer",
+              "default": "",
+              "primary": false,
+              "nullable": true
+            }
+          }
         }
       }
     },

@@ -46,6 +46,7 @@ JSON
   <link rel="stylesheet" href="dmxAppConnect/dmxValidator/dmxValidator.css" />
   <script src="dmxAppConnect/dmxValidator/dmxValidator.js" defer=""></script>
   <link rel="stylesheet" href="bootstrap/5/cerulean/bootstrap.min.css" />
+  <script src="dmxAppConnect/dmxFormatter/dmxFormatter.js" defer></script>
 </head>
 
 <body id="brands" is="dmx-app">
@@ -249,7 +250,6 @@ JSON
             <table class="table table-hover table-sm table-borderless">
               <thead>
                 <tr>
-                  <th>#</th>
                   <th>{{trans.data.name[lang.value]}}</th>
                   <th>{{trans.data.surname[lang.value]}}</th>
                   <th>{{trans.data.username[lang.value]}}</th>
@@ -257,9 +257,8 @@ JSON
                   <th></th>
                 </tr>
               </thead>
-              <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="serverconnectListUsers.data.query_list_users.data" id="tableRepeat2">
+              <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="serverconnectListUsers.data.query_list_users.data.sort(`user_id`)" id="tableRepeat2">
                 <tr>
-                  <td dmx-text="user_id"></td>
                   <td dmx-text="user_fname"></td>
                   <td dmx-text="user_lname"></td>
                   <td dmx-text="user_username"></td>

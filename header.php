@@ -20,6 +20,7 @@
   <dmx-serverconnect id="load_currencies" url="dmxConnect/api/servo_currencies/load_currencies.php"></dmx-serverconnect>
   <dmx-serverconnect id="load_payment_methods" url="dmxConnect/api/servo_payment_methods/list_payment_methods.php"></dmx-serverconnect>
   <dmx-serverconnect id="logout1" url="dmxConnect/api/servo_users/user_logout.php"></dmx-serverconnect>
+   <dmx-serverconnect id="read_shift" url="dmxConnect/api/servo_shifts/read_shift.php" dmx-param:shift_id="shift_id"></dmx-serverconnect>
 
 
   <dmx-session-manager id="session1"></dmx-session-manager>
@@ -49,7 +50,7 @@
                   <td dmx-text="shift_stop"></td>
                   <td dmx-text="shift_status"></td>
                   <td>
-                    <button id="btn6" class="btn btn-outline-body" dmx-on:click="session_variables.set('current_shift', shift_id);read_shift({shift_id:shift_id}); shiftSelectModal.hide()">
+                    <button id="btn6" class="btn btn-outline-body" dmx-on:click="session_variables.set('current_shift', shift_id);read_shift.load({shift_id:shift_id}); shiftSelectModal.hide()">
                       <i class="far fa-eye fa-lg fa-rotate-180"></i>
                     </button>
                   </td>
@@ -77,7 +78,7 @@
       <div class="col-auto justify-content-end" id="headerbuttons" style="/* font-size: 16px !important */">
 
 
-         <button id="btn7" class="btn bg-light text-body" data-bs-toggle="modal" data-bs-target="#shiftSelectModal" dmx-bind:disabled="(list_user_info.data.query_list_user_info.user_profile !== 'Admin')&&(list_user_info.data.query_list_user_info.user_profile !== 'Manager')" dmx-on:click="list_shifts.load({})"><i class="fas fa-clock fa-sm" style="margin-right: 5px !important;"></i> {{list_user_shift_info.data.query_list_user_shift[0].servo_shifts_shift_id}}</button>
+         <button id="btn7" class="btn bg-danger text-white" data-bs-toggle="modal" data-bs-target="#shiftSelectModal" dmx-bind:disabled="(list_user_info.data.query_list_user_info.user_profile !== 'Admin')&&(list_user_info.data.query_list_user_info.user_profile !== 'Manager')" dmx-on:click="list_shifts.load({})"><i class="fas fa-clock fa-sm" style="margin-right: 5px !important;"></i> {{list_user_shift_info.data.query_list_user_shift[0].servo_shifts_shift_id}}</button>
         <button id="toggleSubMenu" class="btn bg-light text-primary" dmx-on:click="offcanvas2.toggle()" dmx-text="session_variables.data.current_user.capitalize().substr(0, 1)"</button>
 
     </div>
@@ -92,26 +93,23 @@
   <div class="offcanvas offcanvas-end opacity-100" id="offcanvas2" is="dmx-bs5-offcanvas" tabindex="-1" style="max-width: 80% !important; opacity: 0.85 !important;  background: #0e1422 !important;">
 
   <div class="offcanvas-body" style="oveflow-y: hidden;">
-    <div class="col d-flex justify-content-evenly">
+    <div class="col d-flex">
 
-        <button id="btn4" class="btn bg-white bg-opacity-25 text-white" dmx-on:click="logout1.load();notifies1.warning('&quot;Logging Out&quot;');session_variables.removeAll();session1.removeAll(); browser1.goto('login.php')">
+        <button id="btn4" class="btn bg-white bg-opacity-25 text-white me-3" dmx-on:click="logout1.load();notifies1.warning('&quot;Logging Out&quot;');session_variables.removeAll();session1.removeAll(); browser1.goto('login.php')">
 
           <i class="fa fa-power-off fa-sm"></i>
         </button>
-  
-
-        <button id="btn7" class="btn bg-white bg-opacity-25 text-white" data-bs-toggle="modal" data-bs-target="#shiftSelectModal" dmx-bind:disabled="(list_user_info.data.query_list_user_info.user_profile !== 'Admin')&&(list_user_info.data.query_list_user_info.user_profile !== 'Manager')" dmx-on:click="list_shifts.load({})"><i class="fas fa-hourglass-half fa-sm" style="margin-right: 15px !important;"></i> {{list_user_shift_info.data.query_list_user_shift[0].servo_shifts_shift_id}}</button>
       
-        <button id="btn3" class="btn bg-white bg-opacity-25 text-white" dmx-on:click="browser1.goto(list_user_info.data.query_list_user_info.user_profile+'.php')" style="">
+        <button id="btn3" class="btn bg-white bg-opacity-25 text-white me-3" dmx-on:click="browser1.goto(list_user_info.data.query_list_user_info.user_profile+'.php')" style="">
         <i class="fas fa-home fa-sm"></i>
         </button>
 
-        <button id="themelight" class="btn  bg-secondary rounded"  dmx-on:click="themedark.hide();cookies.set('servotheme','bootstrap/5/servolight/bootstrap.min.css',{expires: 30})" dmx-hide="(cookies.data.servotheme =='bootstrap/5/servolight/bootstrap.min.css')" style="">
-                <i class="fa fa-lightbulb fa-rotate-180"></i>
+        <button id="themelight" class="btn  bg-light text-body rounded me-3"  dmx-on:click="themedark.hide();cookies.set('servotheme','bootstrap/5/servolight/bootstrap.min.css',{expires: 30})" dmx-hide="(cookies.data.servotheme =='bootstrap/5/servolight/bootstrap.min.css')" style="">
+                <i class="fa fa-sun fa-rotate-180"></i>
         </button>
               
-        <button id="themedark" class="btn text-white rounded"  dmx-on:click="themedark.hide();cookies.set('servotheme','bootstrap/5/servodark/bootstrap.min.css',{expires: 30})" dmx-hide="(cookies.data.servotheme =='bootstrap/5/servodark/bootstrap.min.css')" style="">
-            <i class="fa fa-lightbulb fa-rotate-180"></i>
+        <button id="themedark" class="btn text-body bg-body text-body rounded me-3"  dmx-on:click="themedark.hide();cookies.set('servotheme','bootstrap/5/servodark/bootstrap.min.css',{expires: 30})" dmx-hide="(cookies.data.servotheme =='bootstrap/5/servodark/bootstrap.min.css')" style="">
+            <i class="fa fa-moon fa-rotate-180"></i>
         </button>
 
       
@@ -169,7 +167,7 @@
           </div>
         </div>
 
-        <div class="col" id="finance" dmx-show="(list_user_info.data.query_list_user_info.user_profile == 'Admin')||(list_user_info.data.query_list_user_info.user_profile == 'fmanager')||(list_user_info.data.query_list_user_info.user_profile == 'smanager')">
+        <div class="col" id="finance" dmx-show="(list_user_info.data.query_list_user_info.user_profile == 'Admin')||(list_user_info.data.query_list_user_info.user_profile == 'fmanager')||(list_user_info.data.query_list_user_info.user_profile == 'smanager')||(list_user_info.data.query_list_user_info.user_profile == 'Manager')">
           <div class="row">
             <div class="col w-auto h-auto mt-sm-1 mb-sm-2 ms-sm-1 me-sm-1 d-flex justify-content-sm-center justify-content-center mt-2 mb-2 ms-2 me-2 border-secondary rounded-2"><a href="finance.php" class="badge style25 w-auto h-auto" style="text-decoration: unset;"><i class="fas fa-coins fa-lg" style="color: #ff1847 !important;"></i>
                 <h6 class="mt-lg-3 text-white">{{trans.data.finance[lang.value]}}</h6>

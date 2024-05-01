@@ -19,12 +19,28 @@ $app->define(<<<'JSON'
       {
         "type": "text",
         "name": "customer_id"
+      },
+      {
+        "type": "text",
+        "name": "po_id"
+      },
+      {
+        "type": "text",
+        "name": "asset_id"
+      },
+      {
+        "type": "text",
+        "name": "project_id"
+      },
+      {
+        "type": "text",
+        "name": "project_task_id"
       }
     ]
   },
   "exec": {
     "steps": {
-      "name": "query_list_customer_files",
+      "name": "query_list_files",
       "module": "dbconnector",
       "action": "select",
       "options": {
@@ -108,35 +124,175 @@ $app->define(<<<'JSON'
               "primary": "user_id"
             }
           ],
-          "query": "SELECT servo_files.file_id, servo_files.file_customer_id, servo_files.file_asset_id, servo_files.file_order_id, servo_files.file_transaction_id, servo_files.file_name, servo_files.file_user_created, servo_files.file_date_created, servo_files.file_description, servo_user.user_fname, servo_user.user_lname, servo_user.user_username\nFROM servo_files\nLEFT JOIN servo_user ON (servo_user.user_id = servo_files.file_user_created)\nWHERE servo_files.file_customer_id = :P1 /* {{$_GET.customer_id}} */",
+          "query": "select `servo_files`.`file_id`, `servo_files`.`file_customer_id`, `servo_files`.`file_asset_id`, `servo_files`.`file_order_id`, `servo_files`.`file_transaction_id`, `servo_files`.`file_name`, `servo_files`.`file_user_created`, `servo_files`.`file_date_created`, `servo_files`.`file_description`, `servo_user`.`user_fname`, `servo_user`.`user_lname`, `servo_user`.`user_username` from `servo_files` left join `servo_user` on `servo_user`.`user_id` = `servo_files`.`file_user_created` where (`servo_files`.`file_customer_id` = ?) and (`servo_files`.`file_po_id` = ?) and (`servo_files`.`file_asset_id` = ?) and (`servo_files`.`file_project_id` = ?) and (`servo_files`.`file_project_task_id` = ?)",
           "params": [
             {
               "operator": "equal",
               "type": "expression",
               "name": ":P1",
-              "value": "{{$_GET.customer_id}}"
+              "value": "{{$_GET.customer_id}}",
+              "test": ""
+            },
+            {
+              "operator": "equal",
+              "type": "expression",
+              "name": ":P2",
+              "value": "{{$_GET.po_id}}",
+              "test": ""
+            },
+            {
+              "operator": "equal",
+              "type": "expression",
+              "name": ":P3",
+              "value": "{{$_GET.asset_id}}",
+              "test": ""
+            },
+            {
+              "operator": "equal",
+              "type": "expression",
+              "name": ":P4",
+              "value": "{{$_GET.project_id}}",
+              "test": ""
+            },
+            {
+              "operator": "equal",
+              "type": "expression",
+              "name": ":P5",
+              "value": "{{$_GET.project_task_id}}",
+              "test": ""
             }
           ],
           "wheres": {
             "condition": "AND",
             "rules": [
               {
-                "id": "servo_files.file_customer_id",
-                "field": "servo_files.file_customer_id",
-                "type": "double",
-                "operator": "equal",
-                "value": "{{$_GET.customer_id}}",
-                "data": {
-                  "table": "servo_files",
-                  "column": "file_customer_id",
-                  "type": "number",
-                  "columnObj": {
-                    "type": "integer",
-                    "nullable": true,
-                    "name": "file_customer_id"
+                "condition": "AND",
+                "rules": [
+                  {
+                    "id": "servo_files.file_customer_id",
+                    "field": "servo_files.file_customer_id",
+                    "type": "double",
+                    "operator": "equal",
+                    "value": "{{$_GET.customer_id}}",
+                    "data": {
+                      "table": "servo_files",
+                      "column": "file_customer_id",
+                      "type": "number",
+                      "columnObj": {
+                        "type": "integer",
+                        "default": "",
+                        "primary": false,
+                        "nullable": true,
+                        "name": "file_customer_id"
+                      }
+                    },
+                    "operation": "="
                   }
-                },
-                "operation": "="
+                ],
+                "conditional": "{{$_GET.customer_id}}"
+              },
+              {
+                "condition": "AND",
+                "rules": [
+                  {
+                    "id": "servo_files.file_po_id",
+                    "field": "servo_files.file_po_id",
+                    "type": "double",
+                    "operator": "equal",
+                    "value": "{{$_GET.po_id}}",
+                    "data": {
+                      "table": "servo_files",
+                      "column": "file_po_id",
+                      "type": "number",
+                      "columnObj": {
+                        "type": "integer",
+                        "default": "",
+                        "primary": false,
+                        "nullable": true,
+                        "name": "file_po_id"
+                      }
+                    },
+                    "operation": "="
+                  }
+                ],
+                "conditional": "{{$_GET.po_id}}"
+              },
+              {
+                "condition": "AND",
+                "rules": [
+                  {
+                    "id": "servo_files.file_asset_id",
+                    "field": "servo_files.file_asset_id",
+                    "type": "double",
+                    "operator": "equal",
+                    "value": "{{$_GET.asset_id}}",
+                    "data": {
+                      "table": "servo_files",
+                      "column": "file_asset_id",
+                      "type": "number",
+                      "columnObj": {
+                        "type": "integer",
+                        "default": "",
+                        "primary": false,
+                        "nullable": true,
+                        "name": "file_asset_id"
+                      }
+                    },
+                    "operation": "="
+                  }
+                ],
+                "conditional": "{{$_GET.asset_id}}"
+              },
+              {
+                "condition": "AND",
+                "rules": [
+                  {
+                    "id": "servo_files.file_project_id",
+                    "field": "servo_files.file_project_id",
+                    "type": "double",
+                    "operator": "equal",
+                    "value": "{{$_GET.project_id}}",
+                    "data": {
+                      "table": "servo_files",
+                      "column": "file_project_id",
+                      "type": "number",
+                      "columnObj": {
+                        "type": "integer",
+                        "primary": false,
+                        "nullable": false,
+                        "name": "file_project_id"
+                      }
+                    },
+                    "operation": "="
+                  }
+                ],
+                "conditional": "{{$_GET.project_id}}"
+              },
+              {
+                "condition": "AND",
+                "rules": [
+                  {
+                    "id": "servo_files.file_project_task_id",
+                    "field": "servo_files.file_project_task_id",
+                    "type": "double",
+                    "operator": "equal",
+                    "value": "{{$_GET.project_task_id}}",
+                    "data": {
+                      "table": "servo_files",
+                      "column": "file_project_task_id",
+                      "type": "number",
+                      "columnObj": {
+                        "type": "integer",
+                        "default": "",
+                        "primary": false,
+                        "nullable": true,
+                        "name": "file_project_task_id"
+                      }
+                    },
+                    "operation": "="
+                  }
+                ],
+                "conditional": null
               }
             ],
             "conditional": null,

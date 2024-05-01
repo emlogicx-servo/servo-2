@@ -234,6 +234,41 @@
                 "en-US": "Pro-Forma Invoice",
                 "fr-FR": "Devis Pro-Forma"
             },
+    "poProFormaInvoiceRef": 
+            {
+                "en-US": "Ref. Pro-Forma Invoice",
+                "fr-FR": "Ref. Devis Pro-Forma"
+            },
+    "poFinalInvoiceRef": 
+            {
+                "en-US": "Ref. Final Invoice",
+                "fr-FR": "Ref. Devis Final"
+            },
+    "poPRref": 
+            {
+                "en-US": "PR Ref.",
+                "fr-FR": "Ref. PR"
+            },
+    "poDIref": 
+            {
+                "en-US": "ID Ref.",
+                "fr-FR": "Ref. DI"
+            },
+    "poAdvance": 
+            {
+                "en-US": "Payment Advance",
+                "fr-FR": "Avance Sur Paiement"
+            },
+    "poBalance": 
+            {
+                "en-US": "Payment Balance",
+                "fr-FR": "Reste Sur Paiement"
+            },
+    "invoiceRef": 
+            {
+                "en-US": "Ref. Final Invoice",
+                "fr-FR": "Ref. Devis Final"
+            },
     "invoice": 
             {
                 "en-US": "Invoice",
@@ -815,6 +850,21 @@
                 "en-US": "Stock Adjustment",
                 "fr-FR": "Adjustement de Stock"
             },
+    "eta": 
+            {
+                "en-US": "ETA",
+                "fr-FR": "ETA"
+            },
+    "invoiceId": 
+            {
+                "en-US": "Invoice ID",
+                "fr-FR": "Numéro du Dévis"
+            },
+    "poInfo": 
+            {
+                "en-US": "Purchase Order Infomation",
+                "fr-FR": "Informations Sur Bon d'Achat"
+            },
     "adjustments": 
             {
                 "en-US": "Adjustments",
@@ -1345,7 +1395,7 @@
     "assignment": 
             {
                 "en-US": "Assignment",
-                "fr-FR": "Assignement"
+                "fr-FR": "Assignation"
             },
     "dateCreated": 
             {

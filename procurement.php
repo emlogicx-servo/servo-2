@@ -1,23 +1,3 @@
-<?php
-require('dmxConnectLib/dmxConnect.php');
-
-$app = new \lib\App();
-
-$app->exec(<<<'JSON'
-{
-	"steps": [
-		"Connections/servodb",
-		"SecurityProviders/servo_login",
-		{
-			"module": "auth",
-			"action": "restrict",
-			"options": {"permissions":"Manager","loginUrl":"login.php","forbiddenUrl":"login.php","provider":"servo_login"}
-		}
-	]
-}
-JSON
-, TRUE);
-?>
 <!doctype html>
 <html>
 
@@ -123,6 +103,7 @@ JSON
   <link rel="stylesheet" href="dmxAppConnect/dmxPreloader/dmxPreloader.css" />
   <script src="dmxAppConnect/dmxPreloader/dmxPreloader.js" defer></script>
   <link rel="stylesheet" href="bootstrap/5/css/bootstrap.min.css" />
+  <script src="dmxAppConnect/dmxDownload/dmxDownload.js" defer></script>
 </head>
 
 <body id="procurement" is="dmx-app" dmx-on:ready="preloader.hide();readItemModal.preloader1.hide()">
@@ -345,7 +326,7 @@ JSON
                   <option value="500">500</option>
                 </select>
 
-                <button id="btn1" class="btn style12 mb-1 fw-normal btn-success text-white" data-bs-toggle="modal" data-bs-target="#CreatePOModal" style="float: right;"><i class="fas fa-plus" style="margin-right: 5px !important;"></i>{{trans.data.newPO[lang.value]}}
+                <button id="btn1" class="btn style12 mb-1 fw-normal text-white bg-info" data-bs-toggle="modal" data-bs-target="#CreatePOModal" style="float: right;"><i class="fas fa-plus" style="margin-right: 5px !important;"></i>{{trans.data.newPO[lang.value]}}
                 </button>
               </div>
 
@@ -360,6 +341,7 @@ JSON
                     <thead class="text-center">
                       <tr>
                         <th class="sorting text-end" dmx-on:click="listPurchaseOrders.set('sort_po','po_id');listPurchaseOrders.set('dir_po',listPurchaseOrders.data.dir_po == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="listPurchaseOrders.data.sort_po=='po_id' &amp;&amp; listPurchaseOrders.data.dir_po == 'asc'" dmx-class:sorting_desc="listPurchaseOrders.data.sort_po=='po_id' &amp;&amp; listPurchaseOrders.data.dir_po == 'desc'">ID</th>
+                        <th class="sorting text-center" dmx-on:click="listPurchaseOrders.set('sort_po','po_id');listPurchaseOrders.set('dir_po',listPurchaseOrders.data.dir_po == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="listPurchaseOrders.data.sort_po=='po_id' &amp;&amp; listPurchaseOrders.data.dir_po == 'asc'" dmx-class:sorting_desc="listPurchaseOrders.data.sort_po=='po_id' &amp;&amp; listPurchaseOrders.data.dir_po == 'desc'">{{trans.data.invoiceId[lang.value]}}</th>
                         <th class="sorting text-center" dmx-on:click="listPurchaseOrders.set('sort_po','user_username');listPurchaseOrders.set('dir_po',listPurchaseOrders.data.dir_po == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="listPurchaseOrders.data.sort_po=='user_username' &amp;&amp; listPurchaseOrders.data.dir_po == 'asc'" dmx-class:sorting_desc="listPurchaseOrders.data.sort_po=='user_username' &amp;&amp; listPurchaseOrders.data.dir_po == 'desc'">{{trans.data.attention[lang.value]}}</th>
                         <th class="sorting text-center" dmx-on:click="listPurchaseOrders.set('sort_po','time_ordered');listPurchaseOrders.set('dir_po',listPurchaseOrders.data.dir_po == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="listPurchaseOrders.data.sort_po=='time_ordered' &amp;&amp; listPurchaseOrders.data.dir_po == 'asc'" dmx-class:sorting_desc="listPurchaseOrders.data.sort_po=='time_ordered' &amp;&amp; listPurchaseOrders.data.dir_po == 'desc'">{{trans.data.timeOrdered[lang.value]}}</th>
 
@@ -372,6 +354,7 @@ JSON
                     <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="list_purchase_orders.data.list_purchase_orders_paged.data" id="tableRepeat5" dmx-state="listPurchaseOrders" dmx-sort="sort_po" dmx-order="dir_po" class="scrollable">
                       <tr class="align-middle">
                         <td dmx-text="po_id" class="text-end"></td>
+                        <td dmx-text="po_invoice_id" class="text-center"></td>
                         <td dmx-text="user_username" class="text-center"></td>
                         <td dmx-text="time_ordered" class="text-center"></td>
                         <td dmx-text="vendor_name" class="text-center"></td>
@@ -380,7 +363,7 @@ JSON
                         <td class="text-center">
                           <span dmx-text="trans.data.getValueOrKey(po_status)[lang.value]" class="text-center pt-1 pb-1 ps-2 pe-2 rounded" dmx-class:text-success="(po_status=='Received')" dmx-class:text-danger="(po_status=='Requested')" dmx-class:text-warning="(po_status=='Approved')">Fancy display heading</span>
                         </td>
-                        <td class="text-center"><button id="btn16" class="btn open" data-bs-target="#readItemModal" dmx-on:click="readItemModal.show();session_variables.set('current_purchase_order',po_id);read_purchase_order.load({po_id: po_id});query_po_items.load({po_id: po_id})" dmx-bind:value="list_purchase_orders.data.query[0].po_id" data-bs-toggle="modal"><i class="fas fa-pencil-alt fa-sm"><br></i></button></td>
+                        <td class="text-center"><button id="btn16" class="btn open text-primary" data-bs-target="#readItemModal" dmx-on:click="readItemModal.show();session_variables.set('current_purchase_order',po_id);read_purchase_order.load({po_id: po_id});query_po_items.load({po_id: po_id})" dmx-bind:value="list_purchase_orders.data.query[0].po_id" data-bs-toggle="modal"><i class="fas fa-pencil-alt fa-sm"><br></i></button></td>
                       </tr>
                     </tbody>
                   </table>
@@ -441,7 +424,7 @@ JSON
                   <option value="250">250</option>
                   <option value="500">500</option>
                 </select>
-                <button id="btn5" class="btn btn-primary lead fw-normal" data-bs-toggle="modal" data-bs-target="#CreateTOModal">
+                <button id="btn5" class="btn lead fw-normal text-white bg-info" data-bs-toggle="modal" data-bs-target="#CreateTOModal">
                   <i class="fas fa-plus fa-sm" style="margin-right: 5px;"></i>{{trans.data.newTO[lang.value]}}
                 </button>
               </div>
@@ -949,7 +932,7 @@ JSON
         </div>
       </div>
     </div>
-    <div class="modal" id="CreateSAModal" is="dmx-bs5-modal" tabindex="-1">
+    <div class="modal" id="CreateAOModal" is="dmx-bs5-modal" tabindex="-1">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header border-0">
@@ -1049,8 +1032,6 @@ JSON
           </div>
 
           <div class="modal-body">
-
-
             <div class="offcanvas offcanvas-start w-100" id="AddProductsToOrderOffCanvas" is="dmx-bs5-offcanvas" tabindex="-1">
               <div class="offcanvas-header border-0 bg-secondary">
                 <h4 class="offcanvas-title text-body">{{trans.data.addProducts[lang.value]}}</h4>
@@ -1134,13 +1115,18 @@ JSON
                   <li class="nav-item" id="poOverview"><a class="nav-link active" id="navTabs1_1_tab" data-bs-toggle="tab" href="#" data-bs-target="#poOverview_1" role="tab" aria-controls="navTabs1_1" aria-selected="true"><i class="far fa-eye" style="margin-right: 3px;"></i>{{trans.data.overview[lang.value]}}
 
                     </a></li>
+                  <li class="nav-item" id="poInfo"><a class="nav-link" id="navTabs1_1_tab1" data-bs-toggle="tab" href="#" data-bs-target="#poInfo_1" role="tab" aria-controls="navTabs1_1" aria-selected="true"><i class="far fa-eye" style="margin-right: 3px;"></i>{{trans.data.info[lang.value]}}</a></li>
                   <li class="nav-item" id="poCash" dmx-hide="(read_purchase_order.data.query.po_payment_status=='Paid');(read_purchase_order.data.query.po_type=='Transfer')">
                     <a class="nav-link" id="navTabs1_2_tab" data-bs-toggle="tab" href="#" data-bs-target="#poCash_1" role="tab" aria-controls="navTabs1_2" aria-selected="false"><i class="fas fa-cash-register" style="margin-right: 3px;"></i>{{trans.data.payment[lang.value]}}
 
                     </a>
                   </li>
                   <li class="nav-item" id="poTransactions" dmx-hide="read_purchase_order.data.query.po_type=='Transfer'">
-                    <a class="nav-link" id="navTabs1_3_tab2" data-bs-toggle="tab" href="#" data-bs-target="#poTransactions_1" role="tab" aria-controls="navTabs1_3" aria-selected="false"><i class="fas fa-coins"></i>
+                    <a class="nav-link" id="navTabs1_3_tab2" data-bs-toggle="tab" href="#" data-bs-target="#poTransactions_1" role="tab" aria-controls="navTabs1_3" aria-selected="false"><i class="fas fa-coins" style="margin-right: 5px;"></i> {{trans.data.transactions[lang.value]}}
+                    </a>
+                  </li>
+                  <li class="nav-item" id="poFiles">
+                    <a class="nav-link" id="navTabs1_3_tab3" data-bs-toggle="tab" href="#" data-bs-target="#poFilesTab" role="tab" aria-controls="navTabs1_3" aria-selected="false"><i class="fas fa-copy" style="margin-right: 5px;"></i>{{trans.data.files[lang.value]}}
                     </a>
                   </li>
                   <li class="nav-item" id="poHistory">
@@ -1260,40 +1246,58 @@ JSON
                         </div>
                       </div>
                     </div>
-                    <div class="row rounded mt-2 mb-2 ms-0 me-0 pt-2 pb-2 ps-2 pe-2 bg-secondary">
-                      <form is="dmx-serverconnect-form" id="updatePurchaseOrder" method="post" action="dmxConnect/api/servo_purchase_orders/update_purchase_order.php" dmx-generator="bootstrap5" dmx-form-type="horizontal" dmx-populate="read_purchase_order.data.query" dmx-on:success="read_purchase_order.load({po_id: read_purchase_order.data.query.po_id});notifies1.success('Success!');list_purchase_orders.load({})">
+
+                  </div>
+                  <div class="tab-pane scrollable" id="poInfo_1" role="tabpanel">
+                    <div class="row rounded bg-secondary  scrollable-y mt-2 mb-2 ms-0 me-0 pt-3 pb-2 ps-2 pe-2">
+                      <form is="dmx-serverconnect-form" id="updatePurchaseOrder" method="post" action="dmxConnect/api/servo_purchase_orders/update_purchase_order.php" dmx-generator="bootstrap5" dmx-form-type="horizontal" dmx-populate="read_purchase_order.data.query" dmx-on:success="read_purchase_order.load({po_id: read_purchase_order.data.query.po_id});notifies1.success('Success!');list_purchase_orders.load({})" dmx-on:error="notifies1.danger('Error!')">
+                        <div class="mb-3 row">
+                          <label for="poName" class="col-sm-2 col-form-label">{{trans.data.project[lang.value]}}</label>
+                          <div class="col-sm-7">
+                            <input type="text" class="form-control" id="poName" name="po_project_name" dmx-bind:value="read_purchase_order.data.query.po_project_name" aria-describedby="inp_po_notes_help" dmx-bind:disabled="read_purchase_order.data.query.po_status=='Received'&amp;&amp;profile_privileges.data.profile_privileges[0].create_po=='No'" style="width: 400px !important;">
+                          </div>
+                        </div>
+                        <div class="mb-3 row">
+                          <label for="poInvoiceId" class="col-sm-2 col-form-label">{{trans.data.poProFormaInvoiceRef[lang.value]}}</label>
+                          <div class="col-sm-7">
+                            <input type="text" class="form-control" id="poInvoiceId" name="po_invoice_id" dmx-bind:value="read_purchase_order.data.query.po_invoice_id" aria-describedby="inp_po_notes_help" dmx-bind:disabled="read_purchase_order.data.query.po_status=='Received'&amp;&amp;profile_privileges.data.profile_privileges[0].create_po=='No'" style="width: 400px !important;">
+                          </div>
+                        </div>
+                        <div class="mb-3 row">
+                          <label for="poFinalInvoiceRef" class="col-sm-2 col-form-label">{{trans.data.poFinalInvoiceRef[lang.value]}}</label>
+                          <div class="col-sm-7">
+                            <input type="text" class="form-control" id="poFinalInvoiceRef" name="po_final_invoice_ref" dmx-bind:value="read_purchase_order.data.query.po_final_invoice_ref" aria-describedby="inp_po_notes_help" dmx-bind:disabled="read_purchase_order.data.query.po_status=='Received'&amp;&amp;profile_privileges.data.profile_privileges[0].create_po=='No'" style="width: 400px !important;">
+                          </div>
+                        </div>
+                        <div class="mb-3 row">
+                          <label for="poPRNumberid" class="col-sm-2 col-form-label">{{trans.data.poPRref[lang.value]}}</label>
+                          <div class="col-sm-7">
+                            <input type="text" class="form-control" id="poPRNumberid" name="po_pr_number" dmx-bind:value="read_purchase_order.data.query.po_pr_number" aria-describedby="inp_po_notes_help" dmx-bind:disabled="read_purchase_order.data.query.po_status=='Received'&amp;&amp;profile_privileges.data.profile_privileges[0].create_po=='No'" style="width: 400px !important;">
+                          </div>
+                        </div>
+                        <div class="mb-3 row">
+                          <label for="poDINumerid" class="col-sm-2 col-form-label">{{trans.data.poDIref[lang.value]}}</label>
+                          <div class="col-sm-7">
+                            <input type="text" class="form-control" id="poDINumerid" name="po_importation_declaration_number" dmx-bind:value="read_purchase_order.data.query.po_imporation_declaration_number" aria-describedby="inp_po_notes_help" dmx-bind:disabled="read_purchase_order.data.query.po_status=='Received'&amp;&amp;profile_privileges.data.profile_privileges[0].create_po=='No'" style="width: 400px !important;">
+                          </div>
+                        </div>
+                        <div class="mb-3 row">
+                          <label for="poAdvanceid" class="col-sm-2 col-form-label">{{trans.data.poAdvance[lang.value]}}</label>
+                          <div class="col-sm-7">
+                            <input type="text" class="form-control" id="poAdvanceid" name="po_agreed_advance_payment" dmx-bind:value="read_purchase_order.data.query.po_agreed_advance_payment" aria-describedby="inp_po_notes_help" dmx-bind:disabled="read_purchase_order.data.query.po_status=='Received'&amp;&amp;profile_privileges.data.profile_privileges[0].create_po=='No'" style="width: 400px !important;">
+                          </div>
+                        </div>
+                        <div class="mb-3 row">
+                          <label for="poBalanceId" class="col-sm-2 col-form-label">{{trans.data.poBalance[lang.value]}}</label>
+                          <div class="col-sm-7">
+                            <input type="text" class="form-control" id="poBalanceId" name="po_agreed_balance" dmx-bind:value="read_purchase_order.data.query.po_agreed_balance" aria-describedby="inp_po_notes_help" dmx-bind:disabled="read_purchase_order.data.query.po_status=='Received'&amp;&amp;profile_privileges.data.profile_privileges[0].create_po=='No'" style="width: 400px !important;">
+                          </div>
+                        </div>
+
                         <div class="mb-3 row visually-hidden">
-                          <label for="inp_po_id" class="col-sm-2 col-form-label visually-hidden" wappler-command="editContent">PO</label>
+                          <label for="inp_po_id" class="col-sm-2 col-form-label visually-hidden">PO</label>
                           <div class="col-sm-10">
                             <input type="number" class="form-control visually-hidden" id="inp_po_id" name="po_id" dmx-bind:value="read_purchase_order.data.query.po_id" aria-describedby="inp_po_id_help" readonly="true">
-                          </div>
-                        </div>
-                        <div class="mb-3 row ">
-                          <label for="inp_po_need_by_date" class="col-sm-2 col-form-label" wappler-command="editContent">{{trans.data.dateNeeded[lang.value]}}</label>
-                          <div class="col-sm-10">
-                            <input type="datetime-local" class="form-control" id="inp_po_need_by_date" name="po_need_by_date" dmx-bind:value="read_purchase_order.data.query.po_need_by_date" aria-describedby="inp_po_id_help" dmx-bind:disabled="read_purchase_order.data.query.po_status=='Received'&amp;&amp;profile_privileges.data.profile_privileges[0].create_po=='No'">
-                          </div>
-                        </div>
-                        <div class="mb-3 row ">
-                          <label for="inp_payment_method" class="col-sm-2 col-form-label" wappler-command="editContent">{{trans.data.discount[lang.value]}} %</label>
-                          <div class="col-sm-10">
-                            <input id="poDiscount" name="po_discount" type="number" class="form-control" dmx-bind:disabled="read_purchase_order.data.query.po_status=='Received'&amp;&amp;profile_privileges.data.profile_privileges[0].create_po=='No'" placeholder="0" dmx-bind:value="read_purchase_order.data.query.po_discount">
-                          </div>
-                        </div>
-                        <div class="row mb-3 fw-bold" dmx-show="read_purchase_order.data.query.po_type=='Purchase'">
-                          <label for="inp_payment_method" class="col-sm-2 col-form-label" wappler-command="editContent">{{trans.data.vendor[lang.value]}}</label>
-                          <div class="col-sm-10">
-                            <select id="select4" class="form-select" name="servo_vendors_vendor_id" dmx-bind:disabled="read_purchase_order.data.query.po_status=='Received'&amp;&amp;profile_privileges.data.profile_privileges[0].create_po=='No'" dmx-bind:options="list_vendors.data.query_list_vendors" optiontext="vendor_name" optionvalue="vendor_id" dmx-bind:value="read_purchase_order.data.query.servo_vendors_vendor_id">
-                              <option selected="" value="">-----</option>
-                            </select>
-                          </div>
-                        </div>
-                        <div class="row mb-3 fw-bold" dmx-show="read_purchase_order.data.query.po_type=='Transfer'">
-                          <label for="inp_payment_method" class="col-sm-2 col-form-label" wappler-command="editContent">{{trans.data.source[lang.value]}}</label>
-                          <div class="col-sm-10">
-                            <select id="select2" class="form-select" name="transfer_source_department_id" dmx-bind:disabled="read_purchase_order.data.query.po_status=='Received'&amp;&amp;profile_privileges.data.profile_privileges[0].create_po=='No'" dmx-bind:options="load_departments.data.query_list_departments" optiontext="department_name" optionvalue="department_id" dmx-bind:value="read_purchase_order.data.query.transfer_source_department_id">
-                              <option selected="" value="">-----</option>
-                            </select>
                           </div>
                         </div>
                         <div class="row mb-3 fw-bold"><label for="inp_payment_method" class="col-sm-2 col-form-label">{{trans.data.destination[lang.value]}}</label>
@@ -1303,16 +1307,58 @@ JSON
                             </select>
                           </div>
                         </div>
-                        <div class="mb-3 row">
-                          <label for="inp_po_notes" class="col-sm-2 col-form-label" wappler-command="editContent">{{trans.data.note[lang.value]}}</label>
-                          <div class="col-sm-7">
-                            <textarea type="text" class="form-control" id="inp_po_notes" name="po_notes" dmx-bind:value="read_purchase_order.data.query.po_notes" aria-describedby="inp_po_notes_help" dmx-bind:disabled="read_purchase_order.data.query.po_status=='Received'&amp;&amp;profile_privileges.data.profile_privileges[0].create_po=='No'"></textarea>
+                        <div class="row mb-3 fw-bold" dmx-show="read_purchase_order.data.query.po_type=='Purchase'">
+                          <label for="inp_payment_method" class="col-sm-2 col-form-label">{{trans.data.vendor[lang.value]}}</label>
+                          <div class="col-sm-10">
+                            <select id="select4" class="form-select" name="servo_vendors_vendor_id" dmx-bind:disabled="read_purchase_order.data.query.po_status=='Received'&amp;&amp;profile_privileges.data.profile_privileges[0].create_po=='No'" dmx-bind:options="list_vendors.data.query_list_vendors" optiontext="vendor_name" optionvalue="vendor_id" dmx-bind:value="read_purchase_order.data.query.servo_vendors_vendor_id">
+                              <option selected="" value="">-----</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="row mb-3 fw-bold" dmx-show="read_purchase_order.data.query.po_type=='Transfer'">
+                          <label for="inp_payment_method" class="col-sm-2 col-form-label">{{trans.data.source[lang.value]}}</label>
+                          <div class="col-sm-10">
+                            <select id="select2" class="form-select" name="transfer_source_department_id" dmx-bind:disabled="read_purchase_order.data.query.po_status=='Received'&amp;&amp;profile_privileges.data.profile_privileges[0].create_po=='No'" dmx-bind:options="load_departments.data.query_list_departments" optiontext="department_name" optionvalue="department_id" dmx-bind:value="read_purchase_order.data.query.transfer_source_department_id">
+                              <option selected="" value="">-----</option>
+                            </select>
                           </div>
                         </div>
                         <div class="mb-3 row">
-                          <div class="col-sm-2" wappler-empty="Column" wappler-command="addElementInside">&nbsp;</div>
+                          <label for="inp_po_notes3" class="col-sm-2 col-form-label">{{trans.data.eta[lang.value]}}</label>
+                          <div class="col-sm-7">
+                            <input type="datetime-local" class="form-control" id="inp_po_notes3" name="po_eta" dmx-bind:value="read_purchase_order.data.query.po_eta" aria-describedby="inp_po_notes_help" dmx-bind:disabled="read_purchase_order.data.query.po_status=='Received'&amp;&amp;profile_privileges.data.profile_privileges[0].create_po=='No'">
+
+                          </div>
+                        </div>
+                        <div class="mb-3 row ">
+                          <label for="inp_po_need_by_date" class="col-sm-2 col-form-label">{{trans.data.dateNeeded[lang.value]}}</label>
                           <div class="col-sm-10">
-                            <button type="submit" class="btn btn-primary" wappler-command="editContent" dmx-hide="read_purchase_order.data.query.po_status=='Received'&amp;&amp;profile_privileges.data.profile_privileges[0].create_po=='No'">{{trans.data.update[lang.value]}}</button>
+                            <input type="datetime-local" class="form-control" id="inp_po_need_by_date" name="po_need_by_date" dmx-bind:value="read_purchase_order.data.query.po_need_by_date" aria-describedby="inp_po_id_help" dmx-bind:disabled="read_purchase_order.data.query.po_status=='Received'&amp;&amp;profile_privileges.data.profile_privileges[0].create_po=='No'">
+                          </div>
+                        </div>
+                        <div class="mb-3 row ">
+                          <label for="inp_payment_method" class="col-sm-2 col-form-label">{{trans.data.discount[lang.value]}} %</label>
+                          <div class="col-sm-10">
+                            <input id="poDiscount" name="po_discount" type="number" class="form-control" dmx-bind:disabled="read_purchase_order.data.query.po_status=='Received'&amp;&amp;profile_privileges.data.profile_privileges[0].create_po=='No'" placeholder="0" dmx-bind:value="read_purchase_order.data.query.po_discount" max="100" data-rule-max="100" data-msg-max="!" min="0" data-rule-min="0">
+                          </div>
+                        </div>
+
+
+
+                        <div class="mb-3 row">
+                          <label for="inp_po_notes" class="col-sm-2 col-form-label">{{trans.data.note[lang.value]}}</label>
+                          <div class="col-sm-7">
+                            <textarea type="text" class="form-control" id="inp_po_notes" name="po_notes" dmx-bind:value="read_purchase_order.data.query.po_notes" aria-describedby="inp_po_notes_help" dmx-bind:disabled="read_purchase_order.data.query.po_status=='Received'&amp;&amp;profile_privileges.data.profile_privileges[0].create_po=='No'" style="width: 400px !important;"></textarea>
+                          </div>
+                        </div>
+
+
+
+                        <div class="mb-3 row">
+                          <div class="col-sm-2">&nbsp;</div>
+                          <div class="col-sm-10">
+                            <button type="submit" class="btn text-white bg-info" dmx-hide="read_purchase_order.data.query.po_status=='Received'&amp;&amp;profile_privileges.data.profile_privileges[0].create_po=='No'">
+                              <i class="fas fa-sync" style="margin-right: 10px;"></i>{{trans.data.update[lang.value]}}</button>
                           </div>
                         </div>
                       </form>
@@ -1332,7 +1378,7 @@ JSON
                         <div class="mb-3 row">
                           <label for="transactionAmount1" class="col-sm-2 col-form-label">{{trans.data.total[lang.value]}}</label>
                           <div class="col-sm-10">
-                            <input class="form-control" id="transactionAmount" name="transaction_amount" required="" data-msg-required="!" min="" data-msg-min="Min 1" dmx-bind:min="1" data-rule-min="1" dmx-bind:value="-((read_purchase_order.data.read_po_totals[0].POTotalPaid).toNumber() - read_purchase_order.data.read_po_totals[0].POTotal).toNumber()" type="number" dmx-bind:max="-poTotalOwing2.value" max="" data-msg-max="&gt;Max!">
+                            <input class="form-control" id="transactionAmount" name="transaction_amount" required="" data-msg-required="!" min="" data-msg-min="Min 1" dmx-bind:min="1" data-rule-min="1" dmx-bind:value="-((read_purchase_order.data.read_po_totals[0].POTotalPaid).toNumber() - read_purchase_order.data.read_po_totals[0].POTotal).toNumber()" type="number" dmx-bind:max="-poTotalOwing2.value" max="" data-msg-max=">Max!">
                           </div>
                         </div>
                         <div class="mb-3 row">
@@ -1347,7 +1393,7 @@ JSON
                             <input type="number" class="form-control" id="transactinBalance" name="transaction_balance" aria-describedby="inp_order_notes_help" dmx-bind:value="(createOrderTransaction.transactionAmountTendered.value - createOrderTransaction.transactionAmount.value)" readonly="true">
                           </div>
                         </div>
-                        <div class="mb-3 row">
+                        <div class="mb-3 row align-items-center">
                           <label for="customersearch" class="col-sm-2 col-form-label">{{trans.data.paymentMethod[lang.value]}}</label>
                           <div class="col-sm-10 d-flex">
 
@@ -1366,7 +1412,7 @@ JSON
                           <div class="col-sm-2">
                             &nbsp;</div>
                           <div class="col-sm-10 d-flex justify-content-start">
-                            <button class="btn pt-md-2 pb-md-2 ps-md-2 pe-md-2 btn-primary w-25" id="receive_payment1" dmx-bind:disabled="(readCustomerOrder.data.query.order_status == 'Paid')" type="submit" dmx-show="createOrderTransaction.transactionAmount.value&gt;0"><i class="fas fa-hand-holding-usd fa-lg"></i></button>
+                            <button class="btn pt-md-2 pb-md-2 ps-md-2 pe-md-2 btn-primary w-25" id="receive_payment1" dmx-bind:disabled="(readCustomerOrder.data.query.order_status == 'Paid')" type="submit" dmx-show="createOrderTransaction.transactionAmount.value>0"><i class="fas fa-hand-holding-usd fa-lg"></i></button>
                           </div>
 
                         </div>
@@ -1405,7 +1451,14 @@ JSON
                                 <td dmx-text="payment_method_name"></td>
                                 <td dmx-text="transaction_date"></td>
                                 <td dmx-text="transaction_status"></td>
-                                <td dmx-text="transaction_note"></td>
+                                <td>
+                                  <form id="updateVendorTransactionNote" is="dmx-serverconnect-form" method="post" action="dmxConnect/api/servo_vendor_cash_transactions/update_vendor_cash_transaction_note.php" dmx-on:success="updateVendorTransactionNote.reset();read_purchase_order.load({});notifies1.success('Success!')">
+                                    <input id="text2" name="vendor_transaction_id" type="text" class="form-control visually-hidden" dmx-bind:value="vendor_transaction_id">
+                                    <textarea id="text6" name="transaction_note" type="text" class="form-control" dmx-bind:value="transaction_note" style="width: 150px !important;"></textarea>
+                                    <button id="btn35" class="btn text-success" type="submit">
+                                      <i class="fas fa-check"></i></button>
+                                  </form>
+                                </td>
 
                                 <td dmx-text="transaction_amount.formatNumber('0', ',', ',')"></td>
                                 <td dmx-text="transaction_amount_tendered.formatNumber('0', ',', ',')"></td>
@@ -1426,6 +1479,92 @@ JSON
                             </tbody>
                           </table>
                         </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="tab-pane fade" id="poFilesTab" role="tabpanel">
+
+                    <button id="btn26" class="btn text-white bg-info" data-bs-toggle="collapse" data-bs-target="#showUploadFile">
+                      <i class="fas fa-file-upload" style="margin-right: 5px;"></i>{{trans.data.uploadFile[lang.value]}}</button>
+                    <div class="row justify-content-start mt-2 me-0">
+                      <div class="col mt-md-3 ms-lg-2 me-lg-2 ms-2 me-2 pt-2 pb-2 ps-5 pe-2 rounded rounded-2 text-start">
+
+
+
+                        <div class="collapse mt-2" id="showUploadFile" is="dmx-bs5-collapse">
+                          <main>
+                            <div class="row align-items-center">
+
+                              <div class="align-self-center d-flex col-auto pt-3 pb-2 ps-3 pe-3 bg-secondary rounded">
+                                <form id="uploadFile" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_files/create_file.php" dmx-on:success="notifies1.success('File Uploaded');uploadFile.reset();showUploadFile.hide();read_purchase_order.load({})" dmx-on:error="assetNotification.danger('Error!')">
+                                  <input id="fileCreator" name="file_user_created" type="text" class="form-control visually-hidden" dmx-bind:value="list_user_info.data.query_list_user_info.user_id">
+                                  <input id="fileDateCreated" name="file_date_created" type="datetime-local" class="form-control visually-hidden" dmx-bind:value="dateTime.datetime">
+                                  <input id="filepoid" name="file_po_id" type="number" class="form-control visually-hidden" dmx-bind:value="read_purchase_order.data.query.po_id">
+                                  <input id="fileName" name="file_name" type="number" class="form-control visually-hidden">
+
+
+                                  <input type="file" class="form-control mb-2 me-2" id="fileUpload" name="file_name" aria-describedby="input1_help" data-rule-maxtotalsize="100MB" data-msg-maxtotalsize="Max 100MB!" required="" data-msg-required="!"><textarea id="poFileDescription" name="file_description" class="form-control"></textarea><button id="submitFile" class="btn mt-2 text-white bg-info w-25" type="submit"><i class="fas fa-upload"></i></button>
+                                </form>
+                              </div>
+                            </div>
+                          </main>
+                        </div>
+
+
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="bg-secondary rounded mt-2 col scrollable">
+                        <div class="table-responsive">
+                          <table class="table table-hover table-sm">
+                            <thead>
+                              <tr>
+                                <th>#</th>
+                                <th>{{trans.data.file[lang.value]}}</th>
+                                <th>{{trans.data.object[lang.value]}}</th>
+                                <th>{{trans.data.dateCreated[lang.value]}}</th>
+                                <th>{{trans.data.user[lang.value]}}</th>
+                                <th></th>
+                                <th></th>
+                              </tr>
+                            </thead>
+                            <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="read_purchase_order.data.list_po_files" id="tableRepeat3">
+                              <tr class="align-middle">
+                                <td dmx-text="file_id"></td>
+                                <td dmx-text="file_name"></td>
+                                <td>
+                                  <div class="row mt-2">
+                                    <form id="updateFileDescription" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/gugr_projects/gugr_files/update_project_file_description.php" dmx-on:success="notifies1.success('Success!');listGugrProjectsFiles.load({project_id: readGuGrProject.data.query_read_gugr_project.project_id})" dmx-on:error="notifies1.danger('Error!')">
+                                      <input id="FileID1" name="file_id" type="number" class="form-control visually-hidden" dmx-bind:value="file_id">
+                                      <textarea id="FileDescription1" name="file_description" type="text" class="form-control" dmx-bind:value="file_description"></textarea>
+                                      <button id="btn6" class="btn text-white bg-info w-25 mt-2" type="submit">
+                                        <i class="fas fa-check"></i>
+                                      </button>
+                                    </form>
+                                  </div>
+
+                                </td>
+                                <td dmx-text="file_date_created"></td>
+                                <td dmx-text="user_username"></td>
+                                <td>
+                                  <dmx-download id="downloadFile" dmx-bind:url="'uploads/files/'+project_file"></dmx-download><button id="btn03" class="btn text-info" dmx-on:click="run({confirm:{message:'Télécharger Ficher?',then:{steps:{run:{action:`downloadFile.download()`}}},name:'confirm'}})">
+                                    <i class="fas fa-download"></i></button>
+
+                                </td>
+                                <td>
+                                  <form id="deleteFile" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_files/delete_file.php" dmx-on:success="read_purchase_order.load({})" onsubmit="return confirm('Confirm Delete');">
+                                    <input id="text4" name="file_id" type="text" class="form-control visually-hidden" dmx-bind:value="file_id">
+                                    <input id="text5" name="file_name" type="text" class="form-control visually-hidden" dmx-bind:value="file_name"><button id="btn05" class="btn text-info" type="submit">
+                                      <i class="far fa-trash-alt fa-sm"></i></button>
+                                  </form>
+
+
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+
                       </div>
                     </div>
                   </div>
@@ -1499,9 +1638,6 @@ JSON
 
 
             </div>
-
-
-
           </div>
 
           <div class="modal-footer border-0">

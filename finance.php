@@ -11,7 +11,7 @@ $app->exec(<<<'JSON'
 		{
 			"module": "auth",
 			"action": "restrict",
-			"options": {"permissions":"Manager","loginUrl":"login.php","forbiddenUrl":"login.php","provider":"servo_login"}
+			"options": {"permissions":"finance","loginUrl":"login.php","forbiddenUrl":"login.php","provider":"servo_login"}
 		}
 	]
 }

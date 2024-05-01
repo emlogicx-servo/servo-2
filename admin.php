@@ -201,7 +201,7 @@ JSON
 
     <dmx-value id="lang" dmx-bind:value="browser1.language"></dmx-value>
     <dmx-json-datasource id="trans" is="dmx-serverconnect" url="assets/translation/translation.JSON"></dmx-json-datasource>
-    <dmx-scheduler id="scheduler1" dmx-on:tick="total_sales_all_waiters_in_per_shift.load({current_shift: session_variables.data.current_shift, order_status: 'Paid'});total_sales_all_waiters_out_per_shift.load({current_shift: session_variables.data.current_shift, order_status: 'Ordered'});list_orders_all_shift.load({current_shift: session_variables.data.current_shift});payentMethodsShift.load();SalesReportShift.load();SalesReportCategoriesShift.load();SalesReportTimeSeries.load();list_low_stock.load({});product_report_shift_department_admin.load({department: departentReportSelect.selectDepartment.value, status: departentReportSelect.selectOrderItemStatus.value});paymentsShift.load({shift_id: session_variables.data.current_shift})" delay="10"></dmx-scheduler>
+    <dmx-scheduler id="scheduler1" dmx-on:tick="total_sales_all_waiters_in_per_shift.load({current_shift: session_variables.data.current_shift, order_status: 'Paid'});total_sales_all_waiters_out_per_shift.load({current_shift: session_variables.data.current_shift, order_status: 'Ordered'});list_orders_all_shift.load({current_shift: session_variables.data.current_shift});SalesReportShift.load();SalesReportCategoriesShift.load();SalesReportTimeSeries.load();list_low_stock.load({});product_report_shift_department_admin.load({department: departentReportSelect.selectDepartment.value, status: departentReportSelect.selectOrderItemStatus.value});paymentsShift.load({shift_id: session_variables.data.current_shift});shiftData.load({})" delay="10"></dmx-scheduler>
     <dmx-datetime id="var1"></dmx-datetime>
     <dmx-serverconnect id="total_sales_all_waiters_in_per_shift" url="dmxConnect/api/servo_data/total_sales_all_waiters_in_per_shift_manager.php" dmx-param:user_id="session_variables.data.user_id" dmx-param:order_status="'Paid'" dmx-param:current_shift="session_variables.data.current_shift"></dmx-serverconnect>
     <dmx-serverconnect id="shiftData" url="dmxConnect/api/servo_reporting/shift_data.php" dmx-param:shift_id="session_variables.data.current_shift" dmx-param:service_id="serviceSelect.selectService.value"></dmx-serverconnect>
@@ -245,7 +245,7 @@ JSON
 
             <div class="row rounded row-cols-12" id="orders_table">
                 <div class="col-md col mt-1" style="height: 75vh !important;">
-                    <ul class="nav nav-tabs nav-fill d-flex align-items-end flex-nowrap text-nowrap" id="navTabs1_tabs" role="tablist" style="overflow-y: scroll;">
+                    <ul class="row nav nav-tabs flex-nowrap text-nowrap align-items-center nav-fill" id="navTabs1_tabs" role="tablist" style="overflow-y: scroll;">
 
                         <li class="nav-item flex-shrink-1 fw-bold">
                             <a class="nav-link active w-auto" id="navTabs1_2_tab_1" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_2_1" role="tab" aria-controls="navTabs1_2" aria-selected="false"><i class="far fa-chart-bar" style="margin-right: 3px;"></i>{{trans.data.shiftReport[lang.value]}}
@@ -272,10 +272,10 @@ JSON
                     </ul>
                     <div class="tab-content" id="navTabs1_content">
                         <div class="tab-pane fade show active  " id="navTabs1_2_1" role="tabpanel" aria-labelledby="navTabs1_2_tab_1">
-                            <div class="row scrollable row-cols-12 me-2">
+                            <div class="row scrollable row-cols-12">
                                 <div class="col">
                                     <div class="row align-items-center row-cols-12 mt-2">
-                                        <div class="d-flex col-xxl-auto col-xxl-5 col-lg align-self-center col">
+                                        <div class="d-flex col ps-0">
 
                                             <form id="serviceSelect" class="d-flex">
 
@@ -283,15 +283,15 @@ JSON
                                                     <option selected="" value="%">----</option>
                                                 </select>
                                             </form><button id="btn1" class="btn btn-info text-white w-auto ps-3 pe-3 w-100" data-bs-toggle="modal" data-bs-target="#reportModal">
-                                                <i class="fas fa-list" style="margin-right: 5px;"></i>{{trans.data.report[lang.value]}}</button>
+                                                <i class="fas fa-table" style="margin-right: 5px;"></i>{{trans.data.report[lang.value]}}</button>
                                         </div>
 
 
                                     </div>
-                                    <div class="row row-cols-12 align-items-center mt-2">
+                                    <div class="row row-cols-12 mt-2 align-items-stretch">
                                         <div class="rounded align-items-center h-auto mt-2 me-2 pt-4 pb-4 ps-4 pe-4 col justify-content-center text-center bg-opacity-10 text-primary bg-primary">
                                             <h4 class="text-start"><i class="fas fa-coins" style="/* color: #F3426C !important */"></i></h4>
-                                            <h2 class="ms-2 fw-bold" style="/* color: #F3426C !important */" dmx-text="shiftData.data.shift_sales_data[0].TotalSales.toNumber().formatNumber('3', '.', ',')"></h2>
+                                            <h2 class="ms-2" style="/* color: #F3426C !important */" dmx-text="shiftData.data.shift_sales_data[0].TotalSales.toNumber().formatNumber('3', '.', ',')"></h2>
                                             <h6>{{trans.data.totalSales[lang.value]}}</h6>
 
 
@@ -299,7 +299,7 @@ JSON
                                         </div>
                                         <div class="rounded align-items-center h-auto mt-2 me-2 pt-4 pb-4 ps-4 pe-4 col justify-content-center text-center bg-danger bg-opacity-10 text-danger">
                                             <h4 class="text-start"><i class="fas fa-arrow-alt-circle-up" style="/* color: #F3426C !important */"></i></h4>
-                                            <h2 class="ms-2 fw-bold" style="/* color: #F3426C !important */" dmx-text="shiftData.data.shift_sales_data[0].TotalUnpaid.toNumber().formatNumber('3', '.', ',').default(0)"></h2>
+                                            <h2 class="ms-2" style="/* color: #F3426C !important */" dmx-text="(shiftData.data.shift_sales_data[0].TotalOpenUnpaid-shiftData.data.shift_sales_data[0].TotalOpenPaid).toNumber().formatNumber('3', '.', ',').default(0)"></h2>
                                             <h6>{{trans.data.receivable[lang.value]}}</h6>
 
 
@@ -308,47 +308,53 @@ JSON
 
                                         <div class="rounded align-items-center h-auto mt-2 me-2 pt-4 pb-4 ps-4 pe-4 col justify-content-center text-center bg-opacity-10 text-success bg-success">
                                             <h4 class="text-start"><i class="fas fa-arrow-alt-circle-down" style="/* color: #F3426C !important */"></i></h4>
-                                            <h2 class="ms-2 text-success fw-bold" dmx-text="shiftData.data.shift_sales_data[0].TotalPaid.toNumber().formatNumber('3', '.', ',').default(0)" style="/* color: #89F387 !important */"></h2>
+                                            <h2 class="ms-2" dmx-text="shiftData.data.shift_sales_data[0].TotalPaid.toNumber().formatNumber('3', '.', ',').default(0)" style="/* color: #89F387 !important */"></h2>
                                             <h6>{{trans.data.totalPayments[lang.value]}}</h6>
 
 
 
                                         </div>
                                         <div class="rounded align-items-center h-auto mt-2 me-2 pt-4 pb-4 ps-4 pe-4 col justify-content-center text-center bg-danger text-danger bg-opacity-25">
-                                            <h4 class="text-start"><i class="fas fa-arrow-alt-circle-down" style="/* color: #F3426C !important */"></i></h4>
-                                            <h2 class="ms-2 fw-bold text-danger" dmx-text="shiftData.data.shift_sales_data[0].TotalAdjustments.toNumber().formatNumber('5','.',',').default(0)" style="/* color: #89F387 !important */"></h2>
+                                            <h4 class="text-start"><i class="fas fa-exchange-alt" style="/* color: #F3426C !important */"></i></h4>
+                                            <h2 class="ms-2 text-danger" dmx-text="shiftData.data.shift_sales_data[0].TotalAdjustments.toNumber().formatNumber('5','.',',').default(0)" style="/* color: #89F387 !important */"></h2>
                                             <h6>{{trans.data.adjustments[lang.value]}}</h6>
                                         </div>
                                     </div>
 
-                                    <div class="row rounded-3 scrollable-y pt-md-2 row-cols-12 mt-2">
-                                        <div class="rounded bg-light shadow-none mt-2 me-2 pt-3 col-auto col-5" style="height: 80vh !important;">
-                                            <h3>
+                                    <div class="row d-flex rounded-3 pt-md-2 row-cols-2 align-items-stretch mt-1">
+                                        <div class="rounded bg-light scrollable-y col-12 col-md mt-2 me-2 pt-2 pb-2 ps-2 pe-2 col-lg-5 col-xl-4 col-xxl-4" style="height: 50vh !important;">
+                                            <h4>
                                                 <i class="fas fa-hand-holding-usd" style="margin-right: 10px;"></i>{{trans.data.payments[lang.value]}}
-                                            </h3>
-                                            <dmx-chart id="chart4" dmx-bind:data="payentMethodsShift.data.payment_methods_report_shift" point-size="" type="pie" dataset-1:label="Total" dataset-1:value="TotalPayments" labels="TotalPayments.toNumber().formatNumber(3, '.', ',')+Method+' '" legend="bottom" width="500" height="350" responsive="true" colors="colors9"></dmx-chart>
+                                            </h4>
+                                            <dmx-chart id="chart4" dmx-bind:data="payentMethodsShift.data.payment_methods_report_shift" point-size="" type="pie" dataset-1:label="Total" dataset-1:value="TotalPayments" labels="TotalPayments.toNumber().formatNumber(3, '.', ',')+Method+' '" legend="bottom" width="300" height="300" colors="colors9"></dmx-chart>
                                         </div>
-                                        <div class="scrollable rounded bg-light col-auto mt-2 me-2 pt-1 pb-1 ps-1 pe-1 col-6">
+                                        <div class="rounded bg-light scrollable-y col-12 col-md mt-2 me-2 pt-3 pb-2 ps-3 pe-2">
 
-                                            <h4 class="text-center">{{trans.data.sales[lang.value]}}</h4>
-                                            <dmx-chart id="chart3" dmx-bind:data="shiftData.data.shift_sales_products" dataset-1:label="Total" point-size="" type="bar" dataset-1:value="Total" labels="product_name" thickness="1" dataset-1:tooltip="" dataset-2:label="Volume" legend="top" dataset-2:value="Volume" width="1000" height="400" dataset-2:tooltip=""></dmx-chart>
-
-                                        </div>
-                                    </div>
-                                    <div class="row mt-3 row-cols-12 justify-content-between">
-
-                                        <div class="scrollable text-xxl-center rounded rounded-3 col-xxl pt-1 pb-1 ps-1 pe-1 bg-secondary col-md-11">
-
-                                            <h4 class="text-center">{{trans.data.categories[lang.value]}}</h4>
-                                            <dmx-chart id="chart2" labels="product_category_name" point-size="" type="bar" dataset-1:label="Total" dataset-1:value="Total" multicolor="true" dataset-2:label="Volume" dataset-2:value="Volume" legend="top" thickness="1" width="1000" height="400" dmx-bind:data="shiftData.data.shift_sales_categories"></dmx-chart>
+                                            <h4 class="text-start">
+                                                <i class="far fa-chart-bar" style="margin-right: 5px;"></i>{{trans.data.sales[lang.value]}} | {{trans.data.products[lang.value]}}
+                                            </h4>
+                                            <dmx-chart id="chart3" dmx-bind:data="shiftData.data.shift_sales_products" dataset-1:label="Total" point-size="" type="bar" dataset-1:value="Total" labels="product_name" thickness="1" dataset-1:tooltip="" dataset-2:label="Volume" legend="top" dataset-2:value="Volume" width="1000" height="300" dataset-2:tooltip="" multicolor="true" stacked="true" nogrid="true"></dmx-chart>
 
                                         </div>
                                     </div>
-                                    <div class="row mt-xxl-2 mt-2 row-cols-12 rounded rounded-3 scrollable-y row-cols-md-12">
-                                        <div class="scrollable col-md col-md-4 text-xxl-center rounded rounded-3 col-xl-5 col-xxl-7 bg-secondary pt-2 pb-2 ps-2 pe-2 col">
+                                    <div class="row row-cols-12 mt-2">
 
-                                            <h4 class="text-center text-xxl-center">{{trans.data.salesMonitor[lang.value]}}</h4>
-                                            <dmx-chart id="chart5" dmx-bind:data="SalesReportTimeSeries.data.product_report_by_date" dataset-1:label="Total" dataset-1:value="_['sum(order_item_quantity * order_item_price)']" legend="bottom" points="true" smooth="true" labels="order_time_ordered.toISOTime()" height="300" width="1000" point-size="2" dataset-2:value="_['SUM(order_item_quantity)']" dataset-2:label="Volume"></dmx-chart>
+                                        <div class="scrollable text-xxl-center rounded rounded-3 col-xxl bg-light pt-3 pb-1 ps-3 pe-1 col-md-12" style="">
+
+                                            <h4 class="text-start">
+                                                <i class="far fa-chart-bar" style="margin-right: 5px;"></i>{{trans.data.sales[lang.value]}} | {{trans.data.categories[lang.value]}}
+                                            </h4>
+                                            <dmx-chart id="chart2" labels="product_category_name" point-size="" type="bar" dataset-1:label="Total" dataset-1:value="Total" multicolor="true" dataset-2:label="Volume" dataset-2:value="Volume" legend="top" thickness="1" width="1000" height="250" dmx-bind:data="shiftData.data.shift_sales_categories" nogrid="true"></dmx-chart>
+
+                                        </div>
+                                    </div>
+                                    <div class="row mt-xxl-2 row-cols-12 rounded rounded-3 scrollable-y row-cols-md-12 mt-2">
+                                        <div class="scrollable-y col-md text-xxl-center rounded rounded-3  bg-light pt-3 pb-2 ps-3 pe-2 col-auto ">
+
+                                            <h4 class="text-start">
+                                                <i class="fas fa-chart-line" style="margin-right: 5px;"></i>{{trans.data.salesMonitor[lang.value]}}
+                                            </h4>
+                                            <dmx-chart id="chart5" dmx-bind:data="SalesReportTimeSeries.data.product_report_by_date" dataset-1:label="Total" dataset-1:value="_['sum(order_item_quantity * order_item_price)']" legend="bottom" points="true" smooth="true" labels="order_time_ordered.toISOTime()" height="300" width="1300" point-size="2" dataset-2:value="_['SUM(order_item_quantity)']" dataset-2:label="Volume" nogrid="true"></dmx-chart>
 
                                         </div>
                                     </div>
@@ -368,7 +374,7 @@ JSON
                         </div>
                         <div class="tab-pane fade" id="navTabs1_1_2" role="tabpanel" aria-labelledby="navTabs1_1_tab_2">
                             <div class="row mt-2">
-                                <div class="rounded rounded-3 col bg-secondary" style="max-height: 65vh; overflow-y: scroll;">
+                                <div class="rounded rounded-3 col bg-light" style="max-height: 65vh; overflow-y: scroll;">
                                     <div class="table-responsive">
                                         <table class="table table-hover table-sm table-borderless" id="cashierorders">
                                             <thead>
@@ -409,8 +415,8 @@ JSON
 
                         </div>
                         <div class="tab-pane fade" id="navTabs1_2_2" role="tabpanel" aria-labelledby="navTabs1_2_tab_2">
-                            <div class="row row-cols-12">
-                                <div class="scrollable bg-secondary rounded mt-2 col">
+                            <div class="row row-cols-12 justify-content-center">
+                                <div class="scrollable rounded mt-2 bg-light col-auto col-7">
                                     <div class="table-responsive">
                                         <table class="table table-hover table-sm">
                                             <thead>
@@ -435,7 +441,7 @@ JSON
 
                         <div class="tab-pane fade scrollable" id="navTabs1_2_3" role="tabpanel" aria-labelledby="navTabs1_2_tab_1">
                             <div class="row justify-content-xxl-center rounded-0 row-cols-12 mt-2 ms-0 me-0">
-                                <div class="col-md-6 text-xxl-center bg-secondary rounded col">
+                                <div class="col-md-6 text-xxl-center rounded col bg-light">
                                     <div class="table-responsive">
                                         <table class="table table-hover table-sm">
                                             <thead>
@@ -461,7 +467,7 @@ JSON
                         </div>
                         <div class="tab-pane fade scrollable" id="navTabs1_2_4" role="tabpanel" aria-labelledby="navTabs1_2_tab_1">
                             <div class="row row-cols-12 mt-2 ms-0 me-0">
-                                <div class="bg-secondary rounded pt-2 pb-2 col">
+                                <div class="rounded pt-2 pb-2 col bg-light">
                                     <table class="table">
                                         <thead>
                                             <tr>
@@ -940,7 +946,7 @@ JSON
 
                         <div class="d-block">
                             <h5>
-                                <i class="fas fa-list" style="margin-right: 5px;"></i>{{trans.data.report[lang.value]}}
+                                <i class="fas fa-table" style="margin-right: 5px;"></i>{{trans.data.report[lang.value]}}
                             </h5>
                         </div><button id="btn5" class="btn float-end text-warning ms-4 visually-hidden" data-bs-toggle="modal" data-bs-target="#printReceipt" dmx-on:click="" dmx-animate-enter.duration:20000.delay:100="pulse" dmx-class:show-print-2="(read_item_order.data.query.order_status == 'Paid')">
                             <i class="fas fa-receipt fa-2x"></i>
@@ -956,11 +962,6 @@ JSON
                                     <li class="nav-item">
                                         <a class="nav-link active text-primary" id="navTabs1_1_tab1" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_2" role="tab" aria-controls="navTabs1_1" aria-selected="true">
                                             <i class="fas fa-barcode"></i>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-primary" id="navTabs1_1_tab2" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_3" role="tab" aria-controls="navTabs1_1" aria-selected="true">
-                                            <i class="fas fa-sitemap"></i>
                                         </a>
                                     </li>
                                     <li class="nav-item">
@@ -1059,12 +1060,9 @@ JSON
 
                                         </div>
                                     </div>
-                                    <div class="tab-pane fade show active mt-3" id="navTabs1_3" role="tabpanel" aria-labelledby="navTabs1_1_tab">
+                                    <div class="tab-pane fade mt-3" id="navTabs1_4" role="tabpanel" aria-labelledby="navTabs1_1_tab">
 
-                                    </div>
-                                    <div class="tab-pane fade show active mt-3" id="navTabs1_4" role="tabpanel" aria-labelledby="navTabs1_1_tab">
-
-                                        <div class="row row-cols-xxl-12 row-cols-12 row-cols-lg-12 justify-content-lg-between justify-content-between mt-3 mb-4">
+                                        <div class="row row-cols-xxl-12 row-cols-12 row-cols-lg-12 justify-content-lg-between mt-3 mb-4 ms-0 me-2">
 
                                             <div class="rounded rounded-3 col-auto bg-secondary ms-2 me-2 pt-2">
                                                 <form id="departentReportSelect">
@@ -1152,13 +1150,6 @@ JSON
 
                     </div>
                     <div class="modal-footer bg-light border-0">
-                        <form id="form4" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_orders/delete_order_and_items.php" dmx-on:success="notifies1.success('Success');list_orders_all_shift.load();readItemModal.hide()" onsubmit=" return confirm('CONFIRM DELETE?');">
-                            <input id="text2" name="order_id1" type="hidden" class="form-control" dmx-bind:value="read_item_order.data.query.order_id">
-
-                            <button id="btn5" class="btn text-danger" type="submit">
-                                <i class="far fa-trash-alt fa-lg"></i>
-                            </button>
-                        </form>
                     </div>
                 </div>
             </div>

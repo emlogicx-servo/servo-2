@@ -23,19 +23,31 @@ $app->define(<<<'JSON'
       {
         "type": "text",
         "name": "service_id"
+      },
+      {
+        "type": "text",
+        "name": "user_id"
+      },
+      {
+        "type": "text",
+        "name": "datefrom"
+      },
+      {
+        "type": "text",
+        "name": "dateto"
       }
     ]
   },
   "exec": {
     "steps": [
       {
-        "name": "shift_sales_data",
+        "name": "report_sales_data",
         "module": "dbupdater",
         "action": "custom",
         "options": {
           "connection": "servodb",
           "sql": {
-            "query": "select shift_id, \n\n(select sum(transaction_amount) from servo_customer_cash_transaction left join servo_orders on order_id = transaction_order where servo_shift_shift_id = :P1 and servo_service_service_id like :P2) as TotalPaid,\n\n(select sum(transaction_amount) from servo_customer_cash_transaction left join servo_orders on order_id = transaction_order where order_status = 'Ordered' and servo_shift_shift_id = :P1 and servo_service_service_id like :P2) as TotalOpenPaid,\n\n(select (sum(order_item_quantity * order_item_price) * (100 - order_discount)/100) from servo_order_items left join servo_orders on order_id = servo_orders_order_id where order_status = 'Ordered' and servo_shift_shift_id = :P1 and servo_service_service_id like :P2) as TotalOpenUnpaid,\n\n(select (sum(order_item_quantity * order_item_price) * (100 - order_discount)/100) from servo_order_items left join servo_orders on order_id = servo_orders_order_id where servo_shift_shift_id = :P1 and servo_service_service_id like :P2) as TotalSales,\n\n(select sum(order_total_adjustment) from servo_orders where servo_shift_shift_id like :P1 and servo_service_service_id like :P2) as TotalAdjustments\n\nfrom servo_shifts where shift_id = :P1 \n\n",
+            "query": "select \n\n(select sum(transaction_amount) from servo_customer_cash_transaction left join servo_orders on order_id = transaction_order where servo_shift_shift_id like :P1 and servo_service_service_id like :P2 and servo_user_user_id like :P3 and order_time between :P4 and :P5) as TotalPaid,\n\n(select sum(transaction_amount) from servo_customer_cash_transaction left join servo_orders on order_id = transaction_order where order_status = 'Ordered' and servo_shift_shift_id like :P1 and servo_service_service_id like :P2 and servo_user_user_id like :P3 and order_time between :P4 and :P5) as TotalOpenPaid,\n\n(select (sum(order_item_quantity * order_item_price) * (100 - order_discount)/100) from servo_order_items left join servo_orders on order_id = servo_orders_order_id where order_status = 'Ordered' and servo_shift_shift_id like :P1 and servo_service_service_id like :P2 and servo_user_user_id like :P3 and order_time between :P4 and :P5) as TotalOpenUnpaid,\n\n(select (sum(order_item_quantity * order_item_price) * (100 - order_discount)/100) from servo_order_items left join servo_orders on order_id = servo_orders_order_id where servo_shift_shift_id like :P1 and servo_service_service_id like :P2 and servo_user_user_id like :P3 and order_time between :P4 and :P5) as TotalSales,\n\n(select sum(order_total_adjustment) from servo_orders where servo_shift_shift_id like :P1 and servo_service_service_id like :P2 and servo_user_user_id like :P3 and order_time between :P4 and :P5) as TotalAdjustments\n\n\n",
             "params": [
               {
                 "name": ":P1",
@@ -46,16 +58,27 @@ $app->define(<<<'JSON'
                 "name": ":P2",
                 "value": "{{$_GET.service_id}}",
                 "test": "1"
+              },
+              {
+                "name": ":P3",
+                "value": "{{$_GET.user_id}}",
+                "test": "1"
+              },
+              {
+                "name": ":P4",
+                "value": "{{$_GET.datefrom}}",
+                "test": "2023-3-12"
+              },
+              {
+                "name": ":P5",
+                "value": "{{$_GET.dateto}}",
+                "test": "2023-3-12"
               }
             ]
           }
         },
         "output": true,
         "meta": [
-          {
-            "name": "shift_id",
-            "type": "number"
-          },
           {
             "name": "TotalPaid",
             "type": "text"
@@ -80,13 +103,13 @@ $app->define(<<<'JSON'
         "type": "dbcustom_query"
       },
       {
-        "name": "shift_sales_products",
+        "name": "report_sales_products",
         "module": "dbupdater",
         "action": "custom",
         "options": {
           "connection": "servodb",
           "sql": {
-            "query": "SELECT *, sum(order_item_quantity) as Volume, sum(order_item_price) as Total\nFROM servo_order_items\nLEFT JOIN servo_products ON servo_products.product_id = servo_order_items.servo_products_product_id \n\nLEFT JOIN servo_product_categories ON servo_product_categories.product_categories_id = servo_products.servo_product_category_product_category_id \n\nLEFT JOIN servo_orders ON servo_orders.order_id = servo_order_items.servo_orders_order_id\nWHERE servo_orders.servo_shift_shift_id = :P1 /* {{$_GET.shift_id}} */ AND servo_orders.servo_service_service_id like :P2 /* {{$_GET.service_id}} */\n\ngroup by product_id\n",
+            "query": "SELECT *, sum(order_item_quantity) as Volume, sum(order_item_price) as Total\nFROM servo_order_items\nLEFT JOIN servo_products ON servo_products.product_id = servo_order_items.servo_products_product_id \n\nLEFT JOIN servo_product_categories ON servo_product_categories.product_categories_id = servo_products.servo_product_category_product_category_id \n\nLEFT JOIN servo_orders ON servo_orders.order_id = servo_order_items.servo_orders_order_id\nWHERE servo_orders.servo_shift_shift_id LIKE :P1 /* {{$_GET.shift_id}} */ AND servo_orders.servo_service_service_id like :P2 /* {{$_GET.service_id}} */ and servo_user_user_id like :P3 and order_time between :P4 and :P5\n\ngroup by product_id\n",
             "params": [
               {
                 "name": ":P1",
@@ -97,6 +120,21 @@ $app->define(<<<'JSON'
                 "name": ":P2",
                 "value": "{{$_GET.service_id}}",
                 "test": "1"
+              },
+              {
+                "name": ":P3",
+                "value": "{{$_GET.user_id}}",
+                "test": "1"
+              },
+              {
+                "name": ":P4",
+                "value": "{{$_GET.datefrom}}",
+                "test": "2022-05-6"
+              },
+              {
+                "name": ":P5",
+                "value": "{{$_GET.dateto}}",
+                "test": "2025-05-7"
               }
             ]
           }
@@ -257,7 +295,7 @@ $app->define(<<<'JSON'
           },
           {
             "name": "order_discount",
-            "type": "number"
+            "type": "text"
           },
           {
             "name": "order_status",
@@ -328,6 +366,10 @@ $app->define(<<<'JSON'
             "type": "number"
           },
           {
+            "name": "order_total_adjustment",
+            "type": "text"
+          },
+          {
             "name": "Volume",
             "type": "text"
           },
@@ -339,13 +381,13 @@ $app->define(<<<'JSON'
         "type": "dbcustom_query"
       },
       {
-        "name": "shift_sales_categories",
+        "name": "report_sales_categories",
         "module": "dbupdater",
         "action": "custom",
         "options": {
           "connection": "servodb",
           "sql": {
-            "query": "SELECT *, sum(order_item_quantity) as Volume, sum(order_item_price) as Total\nFROM servo_order_items\nLEFT JOIN servo_products ON servo_products.product_id = servo_order_items.servo_products_product_id \n\nLEFT JOIN servo_product_categories ON servo_product_categories.product_categories_id = servo_products.servo_product_category_product_category_id \n\nLEFT JOIN servo_orders ON servo_orders.order_id = servo_order_items.servo_orders_order_id\nWHERE servo_orders.servo_shift_shift_id = :P1 /* {{$_GET.shift_id}} */ AND servo_orders.servo_service_service_id like :P2 /* {{$_GET.service_id}} */\n\ngroup by product_categories_id",
+            "query": "SELECT *, sum(order_item_quantity) as Volume, sum(order_item_price) as Total\nFROM servo_order_items\nLEFT JOIN servo_products ON servo_products.product_id = servo_order_items.servo_products_product_id \n\nLEFT JOIN servo_product_categories ON servo_product_categories.product_categories_id = servo_products.servo_product_category_product_category_id \n\nLEFT JOIN servo_orders ON servo_orders.order_id = servo_order_items.servo_orders_order_id\nWHERE servo_orders.servo_shift_shift_id LIKE :P1 /* {{$_GET.shift_id}} */ AND servo_orders.servo_service_service_id like :P2 /* {{$_GET.service_id}} */ and servo_user_user_id like :P3 and order_time between :P4 and :P5\n\ngroup by servo_product_category_product_category_id",
             "params": [
               {
                 "name": ":P1",
@@ -356,6 +398,21 @@ $app->define(<<<'JSON'
                 "name": ":P2",
                 "value": "{{$_GET.service_id}}",
                 "test": "1"
+              },
+              {
+                "name": ":P3",
+                "value": "{{$_GET.user_id}}",
+                "test": "1"
+              },
+              {
+                "name": ":P4",
+                "value": "{{$_GET.datefrom}}",
+                "test": "2022-05-6"
+              },
+              {
+                "name": ":P5",
+                "value": "{{$_GET.dateto}}",
+                "test": "2025-05-7"
               }
             ]
           }

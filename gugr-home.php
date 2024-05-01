@@ -2273,7 +2273,7 @@ JSON
                       <textarea type="text" class="form-control" id="gugrDescription" name="project_description" aria-describedby="inp_product_name_help"></textarea>
                     </div>
                   </div>
-                  <div class="mb-3 row">
+                  <div class="mb-3 row" dmx-show="(list_user_info.data.query_list_user_info.user_profile=='gugr-cordo')||(list_user_info.data.query_list_user_info.user_profile=='gugr-admin')">
                     <label for="inp_product_name" class="col-sm-2 col-form-label"><b>{{trans.data.dateDue[lang.value]}}</b></label>
                     <div class="col-sm-10">
                       <input id="gugrProjectDateDue" name="project_date_due" type="datetime-local" class="form-control">

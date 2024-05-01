@@ -156,6 +156,46 @@ $app->define(<<<'JSON'
               {
                 "table": "servo_purchase_orders",
                 "column": "po_discount"
+              },
+              {
+                "table": "servo_purchase_orders",
+                "column": "po_invoice_id"
+              },
+              {
+                "table": "servo_purchase_orders",
+                "column": "po_eta"
+              },
+              {
+                "table": "servo_purchase_orders",
+                "column": "po_goods_description"
+              },
+              {
+                "table": "servo_purchase_orders",
+                "column": "po_project_name"
+              },
+              {
+                "table": "servo_purchase_orders",
+                "column": "po_pr_number"
+              },
+              {
+                "table": "servo_purchase_orders",
+                "column": "po_id"
+              },
+              {
+                "table": "servo_purchase_orders",
+                "column": "po_final_invoice_ref"
+              },
+              {
+                "table": "servo_purchase_orders",
+                "column": "po_agreed_balance"
+              },
+              {
+                "table": "servo_purchase_orders",
+                "column": "po_agreed_advance_payment"
+              },
+              {
+                "table": "servo_purchase_orders",
+                "column": "po_importation_declaration_number"
               }
             ],
             "table": {
@@ -316,7 +356,7 @@ $app->define(<<<'JSON'
               "conditional": null,
               "valid": true
             },
-            "query": "select `servo_purchase_orders`.`po_id`, `servo_purchase_orders`.`servo_vendors_vendor_id`, `servo_purchase_orders`.`servo_users_user_ordered_id`, `servo_purchase_orders`.`servo_users_user_approved_id`, `servo_purchase_orders`.`servo_users_user_received_id`, `servo_purchase_orders`.`time_ordered`, `servo_purchase_orders`.`time_approved`, `servo_purchase_orders`.`time_received`, `servo_purchase_orders`.`po_status`, `servo_purchase_orders`.`payment_method`, `servo_purchase_orders`.`payment_status`, `servo_purchase_orders`.`po_notes`, `servo_purchase_orders`.`servo_departments_department_id`, `servo_purchase_orders`.`po_need_by_date`, `servo_purchase_orders`.`transfer_source_department_id`, `servo_purchase_orders`.`po_type`, `servo_vendors`.`vendor_name`, `servo_vendors`.`vendor_address`, `servo_vendors`.`vendor_phone_number`, `source_dept`.`department_name` as `department_source`, `dest_dept`.`department_name` as `department_destination`, `user_ordered`.`user_fname` as `ordered_fname`, `user_ordered`.`user_lname` as `ordered_lname`, `user_ordered`.`user_username` as `ordered_username`, `user_ordered`.`user_fname` as `approved_fname`, `user_ordered`.`user_lname` as `approved_lname`, `user_ordered`.`user_username` as `approved_username`, `servo_purchase_orders`.`po_payment_status`, `servo_purchase_orders`.`po_discount` from `servo_purchase_orders` as `servo_purchase_orders` left join `servo_vendors` on `servo_vendors`.`vendor_id` = `servo_purchase_orders`.`servo_vendors_vendor_id` left join `servo_department` as `source_dept` on `source_dept`.`department_id` = `servo_purchase_orders`.`transfer_source_department_id` left join `servo_department` as `dest_dept` on `dest_dept`.`department_id` = `servo_purchase_orders`.`servo_departments_department_id` left join `servo_user` as `user_ordered` on `user_ordered`.`user_id` = `servo_purchase_orders`.`servo_users_user_ordered_id` left join `servo_user` as `user_approved` on `user_approved`.`user_id` = `servo_purchase_orders`.`servo_users_user_received_id` left join `servo_user` as `user_received` on `user_received`.`user_id` = `servo_purchase_orders`.`servo_users_user_received_id` where `servo_purchase_orders`.`po_id` = ?",
+            "query": "select `servo_purchase_orders`.`po_id`, `servo_purchase_orders`.`servo_vendors_vendor_id`, `servo_purchase_orders`.`servo_users_user_ordered_id`, `servo_purchase_orders`.`servo_users_user_approved_id`, `servo_purchase_orders`.`servo_users_user_received_id`, `servo_purchase_orders`.`time_ordered`, `servo_purchase_orders`.`time_approved`, `servo_purchase_orders`.`time_received`, `servo_purchase_orders`.`po_status`, `servo_purchase_orders`.`payment_method`, `servo_purchase_orders`.`payment_status`, `servo_purchase_orders`.`po_notes`, `servo_purchase_orders`.`servo_departments_department_id`, `servo_purchase_orders`.`po_need_by_date`, `servo_purchase_orders`.`transfer_source_department_id`, `servo_purchase_orders`.`po_type`, `servo_vendors`.`vendor_name`, `servo_vendors`.`vendor_address`, `servo_vendors`.`vendor_phone_number`, `source_dept`.`department_name` as `department_source`, `dest_dept`.`department_name` as `department_destination`, `user_ordered`.`user_fname` as `ordered_fname`, `user_ordered`.`user_lname` as `ordered_lname`, `user_ordered`.`user_username` as `ordered_username`, `user_ordered`.`user_fname` as `approved_fname`, `user_ordered`.`user_lname` as `approved_lname`, `user_ordered`.`user_username` as `approved_username`, `servo_purchase_orders`.`po_payment_status`, `servo_purchase_orders`.`po_discount`, `servo_purchase_orders`.`po_invoice_id`, `servo_purchase_orders`.`po_eta`, `servo_purchase_orders`.`po_goods_description`, `servo_purchase_orders`.`po_project_name`, `servo_purchase_orders`.`po_pr_number`, `servo_purchase_orders`.`po_id`, `servo_purchase_orders`.`po_final_invoice_ref`, `servo_purchase_orders`.`po_agreed_balance`, `servo_purchase_orders`.`po_agreed_advance_payment`, `servo_purchase_orders`.`po_importation_declaration_number` from `servo_purchase_orders` as `servo_purchase_orders` left join `servo_vendors` on `servo_vendors`.`vendor_id` = `servo_purchase_orders`.`servo_vendors_vendor_id` left join `servo_department` as `source_dept` on `source_dept`.`department_id` = `servo_purchase_orders`.`transfer_source_department_id` left join `servo_department` as `dest_dept` on `dest_dept`.`department_id` = `servo_purchase_orders`.`servo_departments_department_id` left join `servo_user` as `user_ordered` on `user_ordered`.`user_id` = `servo_purchase_orders`.`servo_users_user_ordered_id` left join `servo_user` as `user_approved` on `user_approved`.`user_id` = `servo_purchase_orders`.`servo_users_user_received_id` left join `servo_user` as `user_received` on `user_received`.`user_id` = `servo_purchase_orders`.`servo_users_user_received_id` where `servo_purchase_orders`.`po_id` = ?",
             "params": [
               {
                 "operator": "equal",
@@ -446,6 +486,42 @@ $app->define(<<<'JSON'
           {
             "type": "number",
             "name": "po_discount"
+          },
+          {
+            "type": "text",
+            "name": "po_invoice_id"
+          },
+          {
+            "type": "datetime",
+            "name": "po_eta"
+          },
+          {
+            "type": "text",
+            "name": "po_goods_description"
+          },
+          {
+            "type": "text",
+            "name": "po_project_name"
+          },
+          {
+            "type": "text",
+            "name": "po_pr_number"
+          },
+          {
+            "type": "text",
+            "name": "po_final_invoice_ref"
+          },
+          {
+            "type": "number",
+            "name": "po_agreed_balance"
+          },
+          {
+            "type": "number",
+            "name": "po_agreed_advance_payment"
+          },
+          {
+            "type": "text",
+            "name": "po_importation_declaration_number"
           }
         ],
         "outputType": "object"
@@ -736,6 +812,220 @@ $app->define(<<<'JSON'
           {
             "type": "text",
             "name": "payment_method_name"
+          }
+        ],
+        "outputType": "array"
+      },
+      {
+        "name": "list_po_files",
+        "module": "dbconnector",
+        "action": "select",
+        "options": {
+          "connection": "servodb",
+          "sql": {
+            "type": "select",
+            "columns": [
+              {
+                "table": "servo_files",
+                "column": "file_id"
+              },
+              {
+                "table": "servo_files",
+                "column": "file_customer_id"
+              },
+              {
+                "table": "servo_files",
+                "column": "file_asset_id"
+              },
+              {
+                "table": "servo_files",
+                "column": "file_order_id"
+              },
+              {
+                "table": "servo_files",
+                "column": "file_transaction_id"
+              },
+              {
+                "table": "servo_files",
+                "column": "file_name"
+              },
+              {
+                "table": "servo_files",
+                "column": "file_user_created"
+              },
+              {
+                "table": "servo_files",
+                "column": "file_date_created"
+              },
+              {
+                "table": "servo_files",
+                "column": "file_description"
+              },
+              {
+                "table": "servo_files",
+                "column": "file_po_id"
+              },
+              {
+                "table": "servo_files",
+                "column": "file_project_id"
+              },
+              {
+                "table": "servo_files",
+                "column": "file_project_task_id"
+              },
+              {
+                "table": "servo_user",
+                "column": "user_id"
+              },
+              {
+                "table": "servo_user",
+                "column": "user_fname"
+              },
+              {
+                "table": "servo_user",
+                "column": "user_lname"
+              },
+              {
+                "table": "servo_user",
+                "column": "user_username"
+              }
+            ],
+            "params": [
+              {
+                "operator": "equal",
+                "type": "expression",
+                "name": ":P1",
+                "value": "{{$_GET.po_id}}",
+                "test": ""
+              }
+            ],
+            "table": {
+              "name": "servo_files"
+            },
+            "primary": "file_id",
+            "joins": [
+              {
+                "table": "servo_user",
+                "column": "*",
+                "type": "LEFT",
+                "clauses": {
+                  "condition": "AND",
+                  "rules": [
+                    {
+                      "table": "servo_user",
+                      "column": "user_id",
+                      "operator": "equal",
+                      "operation": "=",
+                      "value": {
+                        "table": "servo_files",
+                        "column": "file_user_created"
+                      }
+                    }
+                  ]
+                },
+                "primary": "user_id"
+              }
+            ],
+            "wheres": {
+              "condition": "AND",
+              "rules": [
+                {
+                  "id": "servo_files.file_po_id",
+                  "field": "servo_files.file_po_id",
+                  "type": "double",
+                  "operator": "equal",
+                  "value": "{{$_GET.po_id}}",
+                  "data": {
+                    "table": "servo_files",
+                    "column": "file_po_id",
+                    "type": "number",
+                    "columnObj": {
+                      "type": "reference",
+                      "default": "",
+                      "primary": false,
+                      "nullable": true,
+                      "references": "po_id",
+                      "inTable": "servo_purchase_orders",
+                      "referenceType": "integer",
+                      "onUpdate": "RESTRICT",
+                      "onDelete": "RESTRICT",
+                      "name": "file_po_id"
+                    }
+                  },
+                  "operation": "="
+                }
+              ],
+              "conditional": null,
+              "valid": true
+            },
+            "query": "select `servo_files`.`file_id`, `servo_files`.`file_customer_id`, `servo_files`.`file_asset_id`, `servo_files`.`file_order_id`, `servo_files`.`file_transaction_id`, `servo_files`.`file_name`, `servo_files`.`file_user_created`, `servo_files`.`file_date_created`, `servo_files`.`file_description`, `servo_files`.`file_po_id`, `servo_files`.`file_project_id`, `servo_files`.`file_project_task_id`, `servo_user`.`user_id`, `servo_user`.`user_fname`, `servo_user`.`user_lname`, `servo_user`.`user_username` from `servo_files` left join `servo_user` on `servo_user`.`user_id` = `servo_files`.`file_user_created` where `servo_files`.`file_po_id` = ?"
+          }
+        },
+        "output": true,
+        "meta": [
+          {
+            "type": "number",
+            "name": "file_id"
+          },
+          {
+            "type": "number",
+            "name": "file_customer_id"
+          },
+          {
+            "type": "number",
+            "name": "file_asset_id"
+          },
+          {
+            "type": "number",
+            "name": "file_order_id"
+          },
+          {
+            "type": "number",
+            "name": "file_transaction_id"
+          },
+          {
+            "type": "text",
+            "name": "file_name"
+          },
+          {
+            "type": "number",
+            "name": "file_user_created"
+          },
+          {
+            "type": "datetime",
+            "name": "file_date_created"
+          },
+          {
+            "type": "text",
+            "name": "file_description"
+          },
+          {
+            "type": "number",
+            "name": "file_po_id"
+          },
+          {
+            "type": "number",
+            "name": "file_project_id"
+          },
+          {
+            "type": "number",
+            "name": "file_project_task_id"
+          },
+          {
+            "type": "number",
+            "name": "user_id"
+          },
+          {
+            "type": "text",
+            "name": "user_fname"
+          },
+          {
+            "type": "text",
+            "name": "user_lname"
+          },
+          {
+            "type": "text",
+            "name": "user_username"
           }
         ],
         "outputType": "array"

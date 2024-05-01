@@ -580,6 +580,42 @@ $app->define(<<<'JSON'
           {
             "type": "text",
             "name": "po_payment_status"
+          },
+          {
+            "type": "text",
+            "name": "po_invoice_id"
+          },
+          {
+            "type": "datetime",
+            "name": "po_eta"
+          },
+          {
+            "type": "text",
+            "name": "po_goods_description"
+          },
+          {
+            "type": "text",
+            "name": "po_project_name"
+          },
+          {
+            "type": "text",
+            "name": "po_pr_number"
+          },
+          {
+            "type": "text",
+            "name": "po_importation_declaration_number"
+          },
+          {
+            "type": "text",
+            "name": "po_final_invoice_ref"
+          },
+          {
+            "type": "number",
+            "name": "po_agreed_advance_payment"
+          },
+          {
+            "type": "number",
+            "name": "po_agreed_balance"
           }
         ],
         "outputType": "array",

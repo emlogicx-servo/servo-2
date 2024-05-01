@@ -3550,7 +3550,56 @@ dmx.config({
         "type": "text",
         "name": "ListTransactionsOffset"
       }
-    ]
+    ],
+    "tableRepeat2": {
+      "meta": [
+        {
+          "name": "$index",
+          "type": "number"
+        },
+        {
+          "name": "$key",
+          "type": "text"
+        },
+        {
+          "name": "$value",
+          "type": "object"
+        },
+        {
+          "type": "number",
+          "name": "user_id"
+        },
+        {
+          "type": "text",
+          "name": "user_fname"
+        },
+        {
+          "type": "text",
+          "name": "user_lname"
+        },
+        {
+          "type": "text",
+          "name": "user_username"
+        },
+        {
+          "type": "number",
+          "name": "servo_user_departments_department_id"
+        },
+        {
+          "type": "text",
+          "name": "user_profile"
+        },
+        {
+          "type": "number",
+          "name": "department_id"
+        },
+        {
+          "type": "text",
+          "name": "department_name"
+        }
+      ],
+      "outputType": "array"
+    }
   },
   "dmanager": {
     "products": {
@@ -3843,6 +3892,61 @@ dmx.config({
     "pageName": {
       "meta": null,
       "outputType": "text"
+    }
+  },
+  "procurement": {
+    "tableRepeat3": {
+      "meta": [
+        {
+          "type": "number",
+          "name": "file_id"
+        },
+        {
+          "type": "number",
+          "name": "file_customer_id"
+        },
+        {
+          "type": "number",
+          "name": "file_asset_id"
+        },
+        {
+          "type": "number",
+          "name": "file_order_id"
+        },
+        {
+          "type": "number",
+          "name": "file_transaction_id"
+        },
+        {
+          "type": "text",
+          "name": "file_name"
+        },
+        {
+          "type": "number",
+          "name": "file_user_created"
+        },
+        {
+          "type": "datetime",
+          "name": "file_date_created"
+        },
+        {
+          "type": "text",
+          "name": "file_description"
+        },
+        {
+          "type": "number",
+          "name": "file_po_id"
+        },
+        {
+          "type": "number",
+          "name": "file_project_id"
+        },
+        {
+          "type": "number",
+          "name": "file_project_task_id"
+        }
+      ],
+      "outputType": "array"
     }
   }
 });

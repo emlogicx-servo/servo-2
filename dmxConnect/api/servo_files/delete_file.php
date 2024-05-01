@@ -64,11 +64,22 @@ $app->define(<<<'JSON'
         ]
       },
       {
-        "name": "fileRemove",
-        "module": "fs",
-        "action": "remove",
+        "name": "",
+        "module": "core",
+        "action": "condition",
         "options": {
-          "path": "{{'/uploads/files/'+$_POST.file_name}}"
+          "if": "{{delete_file.affected}}",
+          "then": {
+            "steps": {
+              "name": "fileRemove",
+              "module": "fs",
+              "action": "remove",
+              "options": {
+                "path": "{{'/uploads/files/'+$_POST.file_name}}"
+              },
+              "outputType": "boolean"
+            }
+          }
         },
         "outputType": "boolean"
       }

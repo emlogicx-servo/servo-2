@@ -9,29 +9,6 @@ $app->define(<<<'JSON'
   "meta": {
     "$_POST": [
       {
-        "type": "file",
-        "name": "file",
-        "sub": [
-          {
-            "type": "text",
-            "name": "name"
-          },
-          {
-            "type": "text",
-            "name": "type"
-          },
-          {
-            "type": "number",
-            "name": "size"
-          },
-          {
-            "type": "text",
-            "name": "error"
-          }
-        ],
-        "outputType": "file"
-      },
-      {
         "type": "number",
         "name": "file_customer_id"
       },
@@ -48,6 +25,10 @@ $app->define(<<<'JSON'
         "name": "file_transaction_id"
       },
       {
+        "type": "text",
+        "name": "file_name"
+      },
+      {
         "type": "number",
         "name": "file_user_created"
       },
@@ -58,18 +39,30 @@ $app->define(<<<'JSON'
       {
         "type": "text",
         "name": "file_description"
+      },
+      {
+        "type": "number",
+        "name": "file_po_id"
+      },
+      {
+        "type": "number",
+        "name": "file_project_id"
+      },
+      {
+        "type": "number",
+        "name": "file_project_task_id"
       }
     ]
   },
   "exec": {
     "steps": [
       {
-        "name": "upload_file",
+        "name": "uploadFile",
         "module": "upload",
         "action": "upload",
         "options": {
           "path": "/uploads/files",
-          "fields": "{{$_POST.file}}"
+          "fields": "{{$_POST.file_name}}"
         },
         "meta": [
           {
@@ -97,10 +90,10 @@ $app->define(<<<'JSON'
             "type": "number"
           }
         ],
-        "outputType": "file"
+        "outputType": "array"
       },
       {
-        "name": "insert_file",
+        "name": "create_file",
         "module": "dbupdater",
         "action": "insert",
         "options": {
@@ -136,7 +129,7 @@ $app->define(<<<'JSON'
                 "table": "servo_files",
                 "column": "file_name",
                 "type": "text",
-                "value": "{{upload_file.name}}"
+                "value": "{{uploadFile.name}}"
               },
               {
                 "table": "servo_files",
@@ -155,51 +148,95 @@ $app->define(<<<'JSON'
                 "column": "file_description",
                 "type": "text",
                 "value": "{{$_POST.file_description.default(null)}}"
+              },
+              {
+                "table": "servo_files",
+                "column": "file_po_id",
+                "type": "number",
+                "value": "{{$_POST.file_po_id.default(null)}}"
+              },
+              {
+                "table": "servo_files",
+                "column": "file_project_id",
+                "type": "number",
+                "value": "{{$_POST.file_project_id.default(null)}}"
+              },
+              {
+                "table": "servo_files",
+                "column": "file_project_task_id",
+                "type": "number",
+                "value": "{{$_POST.file_project_task_id.default(null)}}"
               }
             ],
             "table": "servo_files",
             "returning": "file_id",
-            "query": "INSERT INTO servo_files\n(file_customer_id, file_asset_id, file_order_id, file_transaction_id, file_name, file_user_created, file_date_created, file_description) VALUES (:P1 /* {{$_POST.file_customer_id.default(null)}} */, :P2 /* {{$_POST.file_asset_id.default(null)}} */, :P3 /* {{$_POST.file_order_id.default(null)}} */, :P4 /* {{$_POST.file_transaction_id.default(null)}} */, :P5 /* {{upload_file.name}} */, :P6 /* {{$_POST.file_user_created.default(null)}} */, :P7 /* {{$_POST.file_date_created.default(null)}} */, :P8 /* {{$_POST.file_description.default(null)}} */)",
+            "query": "insert into `servo_files` (`file_asset_id`, `file_customer_id`, `file_date_created`, `file_description`, `file_name`, `file_order_id`, `file_po_id`, `file_project_id`, `file_project_task_id`, `file_transaction_id`, `file_user_created`) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
             "params": [
               {
                 "name": ":P1",
                 "type": "expression",
-                "value": "{{$_POST.file_customer_id.default(null)}}"
+                "value": "{{$_POST.file_customer_id.default(null)}}",
+                "test": ""
               },
               {
                 "name": ":P2",
                 "type": "expression",
-                "value": "{{$_POST.file_asset_id.default(null)}}"
+                "value": "{{$_POST.file_asset_id.default(null)}}",
+                "test": ""
               },
               {
                 "name": ":P3",
                 "type": "expression",
-                "value": "{{$_POST.file_order_id.default(null)}}"
+                "value": "{{$_POST.file_order_id.default(null)}}",
+                "test": ""
               },
               {
                 "name": ":P4",
                 "type": "expression",
-                "value": "{{$_POST.file_transaction_id.default(null)}}"
+                "value": "{{$_POST.file_transaction_id.default(null)}}",
+                "test": ""
               },
               {
                 "name": ":P5",
                 "type": "expression",
-                "value": "{{upload_file.name}}"
+                "value": "{{uploadFile.name}}",
+                "test": ""
               },
               {
                 "name": ":P6",
                 "type": "expression",
-                "value": "{{$_POST.file_user_created.default(null)}}"
+                "value": "{{$_POST.file_user_created.default(null)}}",
+                "test": ""
               },
               {
                 "name": ":P7",
                 "type": "expression",
-                "value": "{{$_POST.file_date_created.default(null)}}"
+                "value": "{{$_POST.file_date_created.default(null)}}",
+                "test": ""
               },
               {
                 "name": ":P8",
                 "type": "expression",
-                "value": "{{$_POST.file_description.default(null)}}"
+                "value": "{{$_POST.file_description.default(null)}}",
+                "test": ""
+              },
+              {
+                "name": ":P9",
+                "type": "expression",
+                "value": "{{$_POST.file_po_id.default(null)}}",
+                "test": ""
+              },
+              {
+                "name": ":P10",
+                "type": "expression",
+                "value": "{{$_POST.file_project_id.default(null)}}",
+                "test": ""
+              },
+              {
+                "name": ":P11",
+                "type": "expression",
+                "value": "{{$_POST.file_project_task_id.default(null)}}",
+                "test": ""
               }
             ]
           }
@@ -213,8 +250,7 @@ $app->define(<<<'JSON'
             "name": "affected",
             "type": "number"
           }
-        ],
-        "output": true
+        ]
       }
     ]
   }
