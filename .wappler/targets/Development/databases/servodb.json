@@ -3356,6 +3356,31 @@
               "maxLength": 128,
               "primary": false
             }
+          },
+          "order_item_uom": {
+            "db": {
+              "type": "text",
+              "default": "",
+              "maxLength": 65535,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "order_item_uom_ref": {
+            "db": {
+              "type": "integer",
+              "default": "",
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "order_item_uom_ref_multiple": {
+            "db": {
+              "type": "integer",
+              "default": "",
+              "primary": false,
+              "nullable": true
+            }
           }
         },
         "parent": "servo_orders"

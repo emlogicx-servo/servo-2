@@ -285,7 +285,10 @@
     </div>
   </div>
   </main>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA5oFvvlozu_WJis78Bq6da8kqlfFGOcDI&libraries=places"></script>
+ 
+  <!-- 
+   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA5oFvvlozu_WJis78Bq6da8kqlfFGOcDI&libraries=places"></script> -->
+   
   <script src="qr/qrcode.min.js" type="text/javascript"></script>
   <script>
   $(document).ready(

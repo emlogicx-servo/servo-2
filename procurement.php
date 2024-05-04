@@ -124,6 +124,7 @@
   <dmx-serverconnect id="procurement_information_products" url="dmxConnect/api/servo_reporting/purchasing_report_products.php"></dmx-serverconnect>
   <dmx-serverconnect id="productstockvalues" url="dmxConnect/api/servo_stock/get_stock_values_2.php" dmx-param:limit="productStockSortLimit.value" dmx-param:offset="query.stock_value_offset" dmx-param:department_id="selectStockDepartment.value" dmx-param:product_id="stockProductSearch.stock_product_search.value"></dmx-serverconnect>
   <dmx-serverconnect id="list_vendors" url="dmxConnect/api/servo_vendors/list_vendors.php"></dmx-serverconnect>
+  <dmx-serverconnect id="reportPurchasingData" url="dmxConnect/api/servo_reporting/report_purchasing_data.php" dmx-param:department_id="selectDepartmentPurchasingData.value"></dmx-serverconnect>
   <dmx-value id="TO" dmx-bind:value="O +AO"></dmx-value>
   <dmx-serverconnect id="list_ao_items" url="dmxConnect/api/servo_order_items/list_ao_items.php" dmx-param:order_id="session_variables.data.current_adjustment_order" dmx-on:start="readAOModal.preloader_ao.show()" dmx-on:done="readAOModal.preloader_ao.hide()"></dmx-serverconnect>
   <dmx-serverconnect id="list_adjustment_orders" url="dmxConnect/api/servo_orders/list_adjustment_orders.php"></dmx-serverconnect>
@@ -135,7 +136,7 @@
   <dmx-json-datasource id="trans" is="dmx-serverconnect" url="assets/translation/translation.JSON"></dmx-json-datasource>
 
   <dmx-serverconnect id="query_po_items" url="dmxConnect/api/servo_purchase_order_items/list_po_items.php" dmx-param:po_id="session_variables.data.current_purchase_order" noload="" dmx-on:start="readItemModal.preloader1.show()" dmx-on:done="readItemModal.preloader1.hide()"></dmx-serverconnect>
-  <dmx-scheduler id="scheduler1" dmx-on:tick="list_purchase_order_items_current.load({order_id: read_purchase_order.data.query.po_id, po_id: read_purchase_order.data.query.po_id});read_purchase_order.load({po_id: read_purchase_order.data.query.po_id})" delay="5"></dmx-scheduler>
+  <dmx-scheduler id="scheduler1" dmx-on:tick="list_purchase_order_items_current.load({order_id: read_purchase_order.data.query.po_id, po_id: read_purchase_order.data.query.po_id});read_purchase_order.load({po_id: read_purchase_order.data.query.po_id});reportPurchasingData.load({})" delay="5"></dmx-scheduler>
   <dmx-datetime id="var1"></dmx-datetime>
   <dmx-serverconnect id="delete_purchase_order" url="dmxConnect/api/servo_purchase_orders/delete_purchase_order.php" dmx-param:po_id="tableRepeat5[0].po_id"></dmx-serverconnect>
   <dmx-serverconnect id="list_purchase_order_items_current" url="dmxConnect/api/servo_purchase_order_items/list_po_items.php" dmx-param:order_id="session_variables.data.current_order" noload=""></dmx-serverconnect>
@@ -187,59 +188,81 @@
     <div class="tab-content" id="navTabs1_content">
 
       <div class="tab-pane fade active show" id="navTabs1_2" role="tabpanel">
-        <div class="row mt-xxl-2 rounded rounded-2 border-secondary bg-light mt-1 mb-2 ms-0 me-0 pt-2" id="procurement_reports_" style="height: 450px; overflow: scroll;">
-          <h3 class="text-body">{{trans.data.products[lang.value]}}</h3>
-          <div class="col-sm col-md-6">
-
-            <div class="row">
-              <dmx-chart id="chart1" responsive="true" height="400" dmx-bind:data="procurement_information_products.data.purchasing_report_products_requested" labels="product_name" dataset-1:value="_['Total Requested']" point-size="" type="bar" multicolor="true" colors="colors1" dataset-1:label="Total" dataset-2:label="Volume" dataset-2:value="quantity" legend="top"></dmx-chart>
-            </div>
-
-
-
-            <div class="row justify-content-center">
-              <div class="col">
-                <h3 class="text-end" dmx-text="trans.data.Requested[lang.value]+' :'"></h3>
-              </div>
-              <div class="col">
-                <h3 class="text-start" dmx-text="procurement_information.data.purchasing_report_vendors_requested.sum(`_['Total Requested']`).formatNumber('0',',',',')">{{trans.data.Requested[lang.value]}}</h3>
-              </div>
-
-            </div>
+        <div class="row mt-2">
+          <div class="col-auto">
+            <select id="selectDepartmentPurchasingData" class="form-select" name="department_id" dmx-on:updated="productstockvalues.load({offset: 1, limit: selectedValue});productStockValuesState.set('offset',value)" dmx-bind:options="load_departments.data.query_list_departments" optiontext="department_name" optionvalue="department_id">
+              <option selected="" value="%">-----</option>
+            </select>
           </div>
-          <div class="col-sm col-md-6">
+        </div>
 
-            <div class="row">
-              <dmx-chart id="chart3" responsive="true" height="400" dmx-bind:data="procurement_information_products.data.purchasing_report_products_approved" labels="product_name" dataset-1:value="_['Total Approved']" point-size="" type="bar" multicolor="true" colors="colors1" dataset-1:label="Total" dataset-2:label="Volume" dataset-2:value="quantity" legend="top"></dmx-chart>
-            </div>
+        <div class="row scrollable gy-2 mt-0 ms-0">
+          <div class="text-center bg-info rounded col me-2 pt-3 pb-3 ps-4 pe-4 text-white">
+            <h5 class="text-start">
+              <i class="fas fa-question-circle fa-lg"></i>
+            </h5>
 
-
-
-            <div class="row justify-content-center">
-              <div class="col">
-                <h3 dmx-text="trans.data.Approved[lang.value]+' :'" class="text-end"></h3>
-              </div>
-              <div class="col">
-                <h3 class="text-start" dmx-text="procurement_information.data.purchasing_report_vendors_approved.sum(`_['Total Approved']`).formatNumber('0',',',',')">{{trans.data.Requested[lang.value]}}</h3>
-              </div>
-
-            </div>
+            <h3 dmx-text="reportPurchasingData.data.purchasing_report_data[0].TotalRequested.toNumber().formatNumber('3','.',',').default(0)">{{trans.data.Requested[lang.value]}}</h3>
+            <h6 dmx-text="trans.data.Requested[lang.value]"></h6>
           </div>
-          <div class="col-sm col-md-6">
+          <div class="col text-center rounded me-2 pt-3 pb-4 ps-4 pe-4 bg-info text-white">
+            <h5 class="text-start">
+              <i class="fas fa-check-circle fa-lg"></i>
+            </h5>
+            <h3 dmx-text="reportPurchasingData.data.purchasing_report_data[0].TotalOrdered.toNumber().formatNumber('3','.',',').default(0)">{{trans.data.Requested[lang.value]}}</h3>
+            <h6 dmx-text="trans.data.Approved[lang.value]"></h6>
 
+          </div>
+          <div class="col text-center rounded me-2 pt-3 pb-4 ps-4 pe-4 bg-info text-white">
+            <h5 class="text-start">
+              <i class="fas fa-coins fa-lg"></i>
+            </h5>
+            <h3 dmx-text="reportPurchasingData.data.purchasing_report_data[0].TotalRequested.toNumber().formatNumber('3','.',',').default(0)">{{trans.data.Requested[lang.value]}}</h3>
+            <h6 dmx-text="trans.data.Approved[lang.value]"></h6>
 
+          </div>
+          <div class="col text-center bg-opacity-10 rounded me-2 pt-3 pb-4 ps-4 pe-4 text-danger bg-danger">
+            <h5 class="text-start">
+              <i class="fas fa-arrow-alt-circle-up fa-lg"></i>
+            </h5>
+            <h3 dmx-text="procurement_information.data.purchasing_report_vendors_approved.sum(`_['Total Approved']`).formatNumber('0',',',',')">{{trans.data.Requested[lang.value]}}</h3>
+            <h6 dmx-text="trans.data.Approved[lang.value]"></h6>
 
+          </div>
+          <div class="col text-center text-success bg-success bg-opacity-10 rounded me-2 pt-3 pb-4 ps-4 pe-4">
+            <h3 dmx-text="procurement_information.data.purchasing_report_vendors_approved.sum(`_['Total Approved']`).formatNumber('0',',',',')">{{trans.data.Requested[lang.value]}}</h3>
+            <h6 dmx-text="trans.data.Approved[lang.value]"></h6>
 
+          </div>
+        </div>
+        <div class="row rounded rounded-2 border-secondary bg-light mt-2 mb-2 ms-0 me-0 pt-2" id="procurement_reports" style="height: 450px; overflow: scroll;">
+          <div class="col-sm col-md-6 scrollable-y">
 
             <div class="row justify-content-center">
-              <div class="col">
-                <h3 dmx-text="trans.data.inStock[lang.value]+' :'" class="text-end"></h3>
-              </div>
-              <div class="col">
-                <h3 class="text-start"></h3>
-              </div>
+
 
             </div>
+            <div class="row">
+              <dmx-chart id="chart1" height="400" dmx-bind:data="procurement_information_products.data.purchasing_report_products_requested" labels="product_name" dataset-1:value="_['Total Requested']" point-size="" type="bar" multicolor="true" colors="colors1" dataset-1:label="Total" dataset-2:label="Volume" dataset-2:value="quantity" legend="top"></dmx-chart>
+            </div>
+
+
+
+
+          </div>
+          <div class="col-sm col-md-6 scrollable-y">
+
+            <div class="row justify-content-center">
+
+
+            </div>
+            <div class="row">
+              <dmx-chart id="chart3" height="400" dmx-bind:data="procurement_information_products.data.purchasing_report_products_approved" labels="product_name" dataset-1:value="_['Total Approved']" point-size="" type="bar" multicolor="true" colors="colors1" dataset-1:label="Total" dataset-2:label="Volume" dataset-2:value="quantity" legend="top"></dmx-chart>
+            </div>
+
+
+
+
           </div>
         </div>
         <div class="row rounded ms-0 me-0 pt-3 bg-light ">
@@ -248,7 +271,7 @@
           </div>
 
         </div>
-        <div class="row mt-xxl-2 mt-2 ms-0 me-0 pt-4 rounded rounded-2 border-secondary" id="procurement_reports1" style="height: 450px; overflow: scroll;">
+        <div class="row mt-xxl-2 mt-2 ms-0 me-0 pt-4 rounded rounded-2 border-secondary bg-light" id="procurement_reports1" style="height: 450px; overflow: scroll;">
           <h3 class="text-light">{{trans.data.vendors[lang.value]}}</h3>
           <div class="col-sm col-md-6">
 
@@ -348,6 +371,9 @@
                         <th class="sorting text-center" dmx-on:click="listPurchaseOrders.set('sort_po','vendor_name');listPurchaseOrders.set('dir_po',listPurchaseOrders.data.dir_po == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="listPurchaseOrders.data.sort_po=='vendor_name' &amp;&amp; listPurchaseOrders.data.dir_po == 'asc'" dmx-class:sorting_desc="listPurchaseOrders.data.sort_po=='vendor_name' &amp;&amp; listPurchaseOrders.data.dir_po == 'desc'">{{trans.data.vendor[lang.value]}}</th>
                         <th class="sorting text-center" dmx-on:click="listPurchaseOrders.set('sort_po','department_name');listPurchaseOrders.set('dir_po',listPurchaseOrders.data.dir_po == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="listPurchaseOrders.data.sort_po=='department_name' &amp;&amp; listPurchaseOrders.data.dir_po == 'asc'" dmx-class:sorting_desc="listPurchaseOrders.data.sort_po=='department_name' &amp;&amp; listPurchaseOrders.data.dir_po == 'desc'">{{trans.data.destination[lang.value]}}</th>
                         <th class="sorting text-center" dmx-on:click="listPurchaseOrders.set('sort_po','department_name');listPurchaseOrders.set('dir_po',listPurchaseOrders.data.dir_po == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="listPurchaseOrders.data.sort_po=='department_name' &amp;&amp; listPurchaseOrders.data.dir_po == 'asc'" dmx-class:sorting_desc="listPurchaseOrders.data.sort_po=='department_name' &amp;&amp; listPurchaseOrders.data.dir_po == 'desc'">{{trans.data.poFinalInvoiceRef[lang.value]}}</th>
+                        <th class="sorting text-center" dmx-on:click="listPurchaseOrders.set('sort_po','department_name');listPurchaseOrders.set('dir_po',listPurchaseOrders.data.dir_po == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="listPurchaseOrders.data.sort_po=='department_name' &amp;&amp; listPurchaseOrders.data.dir_po == 'asc'" dmx-class:sorting_desc="listPurchaseOrders.data.sort_po=='department_name' &amp;&amp; listPurchaseOrders.data.dir_po == 'desc'">{{trans.data.poPRref[lang.value]}}</th>
+                        <th class="sorting text-center" dmx-on:click="listPurchaseOrders.set('sort_po','department_name');listPurchaseOrders.set('dir_po',listPurchaseOrders.data.dir_po == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="listPurchaseOrders.data.sort_po=='department_name' &amp;&amp; listPurchaseOrders.data.dir_po == 'asc'" dmx-class:sorting_desc="listPurchaseOrders.data.sort_po=='department_name' &amp;&amp; listPurchaseOrders.data.dir_po == 'desc'">{{trans.data.poPrepayment[lang.value]}}</th>
+                        <th class="sorting text-center" dmx-on:click="listPurchaseOrders.set('sort_po','department_name');listPurchaseOrders.set('dir_po',listPurchaseOrders.data.dir_po == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="listPurchaseOrders.data.sort_po=='department_name' &amp;&amp; listPurchaseOrders.data.dir_po == 'asc'" dmx-class:sorting_desc="listPurchaseOrders.data.sort_po=='department_name' &amp;&amp; listPurchaseOrders.data.dir_po == 'desc'">{{trans.data.poBalance[lang.value]}}</th>
                         <th class="sorting text-center" dmx-on:click="listPurchaseOrders.set('sort_po','po_status');listPurchaseOrders.set('dir_po',listPurchaseOrders.data.dir_po == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="listPurchaseOrders.data.sort_po=='po_status' && listPurchaseOrders.data.dir_po == 'asc'" dmx-class:sorting_desc="listPurchaseOrders.data.sort_po=='po_status' && listPurchaseOrders.data.dir_po == 'desc'">{{trans.data.status[lang.value]}}</th>
                         <th class="text-center"></th>
                       </tr>
@@ -361,6 +387,9 @@
                         <td dmx-text="vendor_name" class="text-center"></td>
                         <td dmx-text="department_name" class="text-center"></td>
                         <td dmx-text="po_final_invoice_ref" class="text-center"></td>
+                        <td dmx-text="po_pr_number" class="text-center"></td>
+                        <td dmx-text="po_agreed_advance_payment" class="text-center"></td>
+                        <td dmx-text="po_agreed_balance" class="text-center"></td>
 
                         <td class="text-center">
                           <span dmx-text="trans.data.getValueOrKey(po_status)[lang.value]" class="text-center pt-1 pb-1 ps-2 pe-2 rounded" dmx-class:text-success="(po_status=='Received')" dmx-class:text-danger="(po_status=='Requested')" dmx-class:text-warning="(po_status=='Approved')">Fancy display heading</span>
@@ -590,7 +619,8 @@
         <div class="d-flex mt-2 align-items-center flex-wrap">
           <div class="col-xl-1 col-md-2 col-lg col-auto col-lg-3 me-2 col-sm-NaN"><select id="selectStockDepartment" class="form-select" name="department_id" dmx-on:updated="productstockvalues.load({offset: 1, limit: selectedValue});productStockValuesState.set('offset',value)" dmx-bind:options="load_departments.data.query_list_departments" optiontext="department_name" optionvalue="department_id">
               <option selected="" value="">-----</option>
-            </select></div>
+            </select>
+          </div>
           <div class="col-xxl-4 col-auto col-md-2 visually-hidden">
             <form id="stockProductSearch" class="d-flex">
               <input id="stock_product_search" name="product_id" type="text" class="form-control mb-1" dmx-bind:value="searchProducts2.value" dmx-on:changed="load_products.load({service_id: list_user_shift_info.data.query_list_user_shift[0].servo_service_service_id, search: searchProducts2.value, productfilter: AddProductstoAO.searchProducts2.value})" dmx-bind:placeholder="trans.data.search[lang.value]"><button id="btn17b" class="btn mt-xxl-0 mb-xxl-0 ms-xxl-0 me-xxl-0 btn-sm btn-secondary mb-1 ms-2 me-2" dmx-on:click="searchProducts2.setValue(null);load_products.load({service_id: list_user_shift_info.data.query_list_user_shift[0].servo_service_service_id})">
@@ -1284,7 +1314,7 @@
                           </div>
                         </div>
                         <div class="mb-3 row">
-                          <label for="poAdvanceid" class="col-sm-2 col-form-label">{{trans.data.poAdvance[lang.value]}}</label>
+                          <label for="poAdvanceid" class="col-sm-2 col-form-label">{{trans.data.poPrepayment[lang.value]}}</label>
                           <div class="col-sm-7">
                             <input type="text" class="form-control" id="poAdvanceid" name="po_agreed_advance_payment" dmx-bind:value="read_purchase_order.data.query.po_agreed_advance_payment" aria-describedby="inp_po_notes_help" dmx-bind:disabled="read_purchase_order.data.query.po_status=='Received'&amp;&amp;profile_privileges.data.profile_privileges[0].create_po=='No'" style="width: 400px !important;">
                           </div>

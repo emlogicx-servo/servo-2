@@ -174,8 +174,8 @@ JSON
     <link rel="stylesheet" href="bootstrap/5/css/bootstrap.min.css" />
 </head>
 
-<body is="dmx-app" id="ServoCashier" dmx-on:ready="preloader.hide();readItemModal.hide()">
-    <dmx-preloader id="preloader" spinner="pulse" bgcolor="rgba(255,255,255,0.23)" ,255,255,0.99),255,255,0.97)></dmx-preloader>
+<body is="dmx-app" id="ServoCashier">
+
     <dmx-query-manager id="sales_report"></dmx-query-manager>
     <dmx-serverconnect id="list_expenses" url="dmxConnect/api/servo_expenses/list_expenses_shift.php" dmx-param:shift="list_user_shift_info.data.query_list_user_shift[0].servo_shifts_shift_id"></dmx-serverconnect>
     <dmx-serverconnect id="list_low_stock" url="dmxConnect/api/servo_stock/get_stock_alerts.php" dmx-param:low_stock_value="list_low_stock.data.custom_get_stock_alerts[0].product_min_stock" dmx-param:product_id="list_low_stock.data.custom_get_stock_alerts[0].product_id" dmx-param:totalstock="list_low_stock.data.custom_get_stock_alerts[0].TotalStock"></dmx-serverconnect>
@@ -204,7 +204,7 @@ JSON
     <dmx-scheduler id="scheduler1" dmx-on:tick="total_sales_all_waiters_in_per_shift.load({current_shift: session_variables.data.current_shift, order_status: 'Paid'});total_sales_all_waiters_out_per_shift.load({current_shift: session_variables.data.current_shift, order_status: 'Ordered'});list_orders_all_shift.load({current_shift: session_variables.data.current_shift});SalesReportShift.load();SalesReportCategoriesShift.load();SalesReportTimeSeries.load();list_low_stock.load({});product_report_shift_department_admin.load({department: departentReportSelect.selectDepartment.value, status: departentReportSelect.selectOrderItemStatus.value});paymentsShift.load({shift_id: session_variables.data.current_shift});shiftData.load({})" delay="10"></dmx-scheduler>
     <dmx-datetime id="var1"></dmx-datetime>
     <dmx-serverconnect id="total_sales_all_waiters_in_per_shift" url="dmxConnect/api/servo_data/total_sales_all_waiters_in_per_shift_manager.php" dmx-param:user_id="session_variables.data.user_id" dmx-param:order_status="'Paid'" dmx-param:current_shift="session_variables.data.current_shift"></dmx-serverconnect>
-    <dmx-serverconnect id="shiftData" url="dmxConnect/api/servo_reporting/shift_data.php" dmx-param:shift_id="session_variables.data.current_shift" dmx-param:service_id="serviceSelect.selectService.value"></dmx-serverconnect>
+    <dmx-serverconnect id="shiftData" url="dmxConnect/api/servo_reporting/shift_data.php" dmx-param:shift_id="session_variables.data.current_shift" dmx-param:service_id="serviceSelect.selectService.value" dmx-on:success="preloader1.hide()"></dmx-serverconnect>
     <dmx-serverconnect id="total_sales_all_waiters_out_per_shift" url="dmxConnect/api/servo_data/total_sales_all_waiters_out_per_shift_manager.php" dmx-param:user_id="session_variables.data.user_id" dmx-param:current_shift="session_variables.data.current_shift" dmx-param:order_status="'Ordered'"></dmx-serverconnect>
     <dmx-serverconnect id="delte_item_order_item" url="dmxConnect/api/servo_order_items/delete_order_item.php"></dmx-serverconnect>
     <dmx-serverconnect id="list_order_items_current" url="dmxConnect/api/servo_order_items/list_order_items_current.php" dmx-param:order_id="session_variables.data.current_order"></dmx-serverconnect>
@@ -223,6 +223,8 @@ JSON
     <?php include 'header.php'; ?>
 
     <main class="bg-body">
+        <dmx-preloader id="preloader1" spinner="doubleBounce" bgcolor="#3D85C6" color="#FFFFFF" dmx-bind:title="'SERVO LOADING...'">
+        </dmx-preloader>
         <div class="ms-4 me-4">
 
 
@@ -274,7 +276,7 @@ JSON
                         <div class="tab-pane fade show active  " id="navTabs1_2_1" role="tabpanel" aria-labelledby="navTabs1_2_tab_1">
                             <div class="row scrollable row-cols-12">
                                 <div class="col">
-                                    <div class="row align-items-center row-cols-12 mt-2">
+                                    <div class="row align-items-center row-cols-12 mt-2 me-2">
                                         <div class="d-flex col ps-0">
 
                                             <form id="serviceSelect" class="d-flex">
@@ -288,7 +290,7 @@ JSON
 
 
                                     </div>
-                                    <div class="row row-cols-12 mt-2 align-items-stretch">
+                                    <div class="row row-cols-12 align-items-stretch">
                                         <div class="rounded align-items-center h-auto mt-2 me-2 pt-4 pb-4 ps-4 pe-4 col justify-content-center text-center bg-opacity-10 text-primary bg-primary">
                                             <h4 class="text-start"><i class="fas fa-coins" style="/* color: #F3426C !important */"></i></h4>
                                             <h2 class="ms-2" style="/* color: #F3426C !important */" dmx-text="shiftData.data.shift_sales_data[0].TotalSales.toNumber().formatNumber('3', '.', ',')"></h2>
@@ -306,7 +308,7 @@ JSON
 
                                         </div>
 
-                                        <div class="rounded align-items-center h-auto mt-2 me-2 pt-4 pb-4 ps-4 pe-4 col justify-content-center text-center bg-opacity-10 text-success bg-success">
+                                        <div class="rounded align-items-center h-auto col justify-content-center text-center bg-opacity-10 text-success bg-success mt-2 me-2 pt-4 pb-4 ps-4 pe-4">
                                             <h4 class="text-start"><i class="fas fa-arrow-alt-circle-down" style="/* color: #F3426C !important */"></i></h4>
                                             <h2 class="ms-2" dmx-text="shiftData.data.shift_sales_data[0].TotalPaid.toNumber().formatNumber('3', '.', ',').default(0)" style="/* color: #89F387 !important */"></h2>
                                             <h6>{{trans.data.totalPayments[lang.value]}}</h6>
@@ -321,8 +323,8 @@ JSON
                                         </div>
                                     </div>
 
-                                    <div class="row d-flex rounded-3 pt-md-2 row-cols-2 align-items-stretch mt-1">
-                                        <div class="rounded bg-light scrollable-y col-12 col-md mt-2 me-2 pt-2 pb-2 ps-2 pe-2 col-lg-5 col-xl-4 col-xxl-4" style="height: 50vh !important;">
+                                    <div class="row d-flex rounded-3 pt-md-2 row-cols-2 align-items-stretch">
+                                        <div class="rounded bg-light scrollable-y col-12 col-md col-lg-5 col-xl-4 col-xxl-4 mt-2 me-2 pt-2 pb-2 ps-2 pe-2" style="height: 50vh !important;">
                                             <h4>
                                                 <i class="fas fa-hand-holding-usd" style="margin-right: 10px;"></i>{{trans.data.payments[lang.value]}}
                                             </h4>
@@ -337,9 +339,9 @@ JSON
 
                                         </div>
                                     </div>
-                                    <div class="row row-cols-12 mt-2">
+                                    <div class="row row-cols-12">
 
-                                        <div class="scrollable text-xxl-center rounded rounded-3 col-xxl bg-light pt-3 pb-1 ps-3 pe-1 col-md-12" style="">
+                                        <div class="scrollable text-xxl-center rounded rounded-3 col-xxl bg-light col-md-12 mt-2 me-2 pt-3 pb-1 ps-3 pe-1" style="">
 
                                             <h4 class="text-start">
                                                 <i class="far fa-chart-bar" style="margin-right: 5px;"></i>{{trans.data.sales[lang.value]}} | {{trans.data.categories[lang.value]}}
@@ -348,8 +350,8 @@ JSON
 
                                         </div>
                                     </div>
-                                    <div class="row mt-xxl-2 row-cols-12 rounded rounded-3 scrollable-y row-cols-md-12 mt-2">
-                                        <div class="scrollable-y col-md text-xxl-center rounded rounded-3  bg-light pt-3 pb-2 ps-3 pe-2 col-auto ">
+                                    <div class="row mt-xxl-2 row-cols-12 rounded rounded-3  row-cols-md-12 mt-2 mb-2">
+                                        <div class="scrollable-y col-md text-xxl-center rounded rounded-3  bg-light col-auto pt-3 pb-2 ps-3 pe-2">
 
                                             <h4 class="text-start">
                                                 <i class="fas fa-chart-line" style="margin-right: 5px;"></i>{{trans.data.salesMonitor[lang.value]}}
@@ -374,7 +376,7 @@ JSON
                         </div>
                         <div class="tab-pane fade" id="navTabs1_1_2" role="tabpanel" aria-labelledby="navTabs1_1_tab_2">
                             <div class="row mt-2">
-                                <div class="rounded rounded-3 col bg-light" style="max-height: 65vh; overflow-y: scroll;">
+                                <div class="rounded rounded-3 col bg-light" style="max-height: 83vh; overflow-y: scroll;">
                                     <div class="table-responsive">
                                         <table class="table table-hover table-sm table-borderless" id="cashierorders">
                                             <thead>
@@ -415,8 +417,8 @@ JSON
 
                         </div>
                         <div class="tab-pane fade" id="navTabs1_2_2" role="tabpanel" aria-labelledby="navTabs1_2_tab_2">
-                            <div class="row row-cols-12 justify-content-center">
-                                <div class="scrollable rounded mt-2 bg-light col-auto col-7">
+                            <div class="row row-cols-12 justify-content-start">
+                                <div class="scrollable rounded mt-2 bg-light col-auto col-9" style="max-height: 83vh; overflow-y: scroll;">
                                     <div class="table-responsive">
                                         <table class="table table-hover table-sm">
                                             <thead>
@@ -440,8 +442,8 @@ JSON
                         </div>
 
                         <div class="tab-pane fade scrollable" id="navTabs1_2_3" role="tabpanel" aria-labelledby="navTabs1_2_tab_1">
-                            <div class="row justify-content-xxl-center rounded-0 row-cols-12 mt-2 ms-0 me-0">
-                                <div class="col-md-6 text-xxl-center rounded col bg-light">
+                            <div class="row justify-content-xxl-center rounded-0 row-cols-12 mt-2 ms-0 me-0 justify-content-start">
+                                <div class="col-md-6 text-xxl-center rounded bg-light col-auto" style="max-height: 83vh; overflow-y: scroll;">
                                     <div class="table-responsive">
                                         <table class="table table-hover table-sm">
                                             <thead>
@@ -466,8 +468,8 @@ JSON
                             </div>
                         </div>
                         <div class="tab-pane fade scrollable" id="navTabs1_2_4" role="tabpanel" aria-labelledby="navTabs1_2_tab_1">
-                            <div class="row row-cols-12 mt-2 ms-0 me-0">
-                                <div class="rounded pt-2 pb-2 col bg-light">
+                            <div class="row row-cols-12 mt-2 ms-0 me-0 justify-content-start">
+                                <div class="rounded pt-2 pb-2 bg-light col" style="max-height: 83vh; overflow-y: scroll;">
                                     <table class="table">
                                         <thead>
                                             <tr>

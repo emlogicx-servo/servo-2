@@ -254,9 +254,9 @@
                 "en-US": "ID Ref.",
                 "fr-FR": "Ref. DI"
             },
-    "poAdvance": 
+    "poPrepayment": 
             {
-                "en-US": "Payment Advance",
+                "en-US": "Prepayment",
                 "fr-FR": "Avance Sur Paiement"
             },
     "poBalance": 
@@ -264,6 +264,7 @@
                 "en-US": "Payment Balance",
                 "fr-FR": "Reste Sur Paiement"
             },
+
     "invoiceRef": 
             {
                 "en-US": "Ref. Final Invoice",
