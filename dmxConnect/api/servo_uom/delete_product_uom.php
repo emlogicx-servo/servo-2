@@ -57,7 +57,8 @@ $app->define(<<<'JSON'
           "name": "affected",
           "type": "number"
         }
-      ]
+      ],
+      "output": true
     }
   }
 }

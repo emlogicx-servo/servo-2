@@ -1,0 +1,77 @@
+Status (oui, non)
+Paiement (oui, non)
+signale (oui, non)
+
+infos sur parcelle:
+promoteur
+numero titre foncier
+numero de lot
+numero de bloc
+photos
+date enregistree
+
+
+Geospatial Asset properties:
+Superficie M2
+Commentaire Sur Decallage (text)
+Secteur Opérationnel (Oui, Non)
+Servitude Publique (Oui, Non)
+Servitude Privée (Oui, Non)
+
+Documents Administratifs:
+Certificat de Proprieté (Files)
+Certificat d'Urbanisme
+Plan de Masse
+Demande de Permi
+Dérogation
+Autre
+
+Infos Sur Projet
+Intitule du Projet (R+)
+Emprise Du Sol (m2)
+Cumul Des Plancees (m2)
+Observations
+
+Infos Sur Plaque:
+Numero Du Permis
+Maitre D'Oeuvre
+Maitre d'Ouvrage
+Type De Construction
+Arrondissement
+Quartier
+Lieu Dit
+Numero ou Nom De la Rue
+Destination
+Emplacement (Lon, Lat)
+ID
+
+-----------------------------------------------
+
+Customer Info:
+Label
+Nom
+Prénom
+Addresse
+Label
+Numéro CNI
+Location
+Ville
+Photo
+Photo Batiment Promoteur
+Directions
+Nationalité
+Téléphone
+Email
+Statut Juridique
+Numéro CNI
+Numéro De Contribuable
+Nom Du Représentant
+Copie CNIAucun fichier choisi
+Copie Registre de CommerceAucun fichier choisi
+Date D’Introduction
+Observations
+Nom du Mandataire
+Prénom du Mandataire
+Addresse du Mandataire
+Numero CNI Du Mandataire
+Téléphone Du Mandataire

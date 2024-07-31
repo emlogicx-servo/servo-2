@@ -27,6 +27,7 @@ class App
     public $response;
     public $session;
 
+    public $arrays;
     public $db;
     public $mail;
     public $auth;
@@ -44,6 +45,7 @@ class App
         $this->response = new Response($this);
         $this->session = new Session();
 
+        $this->arrays = array();
         $this->db = array();
         $this->mail = array();
         $this->auth = array();
@@ -108,14 +110,31 @@ class App
             require(FileSystem::encode($path . DIRECTORY_SEPARATOR . 'global.php'));
             $this->exec(json_decode($exports), TRUE);
         }
-        $this->exec($cfg);
+        $this->exec($cfg, defined('TEMPLATE'));
     }
 
     protected function settings($settings) {
+        $checkCsrfToken = TRUE;
+
         if (isset($settings->options)) {
             if (isset($settings->options->scriptTimeout)) {
                 set_time_limit((int)$settings->options->scriptTimeout);
             }
+
+            if (isset($settings->options->method)) {
+                if ($_SERVER['REQUEST_METHOD'] != strtoupper($settings->options->method)) {
+                    header('Status: 405 Method Not Allowed');
+                    exit('Method Not Allowed');
+                }
+            }
+
+            if (isset($settings->options->nocsrf)) {
+                $checkCsrfToken = !$settings->options->nocsrf;
+            }
+        }
+
+        if ($checkCsrfToken) {
+            checkCsrfToken();
         }
     }
 

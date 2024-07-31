@@ -1,0 +1,62 @@
+Mr Eric Njong:
+
+Solutions we have:
+
+High-level business software that is highly customisable by us to provide advanced features for the client 
+without incuring the expenses that other foreign software like SAGE, Oracle, SAP, etc... require.
+
+Our systems bring the possibility of:
+- Real Time Data Exchange between departments and personnel in the enterprise from a centralisd database
+- Live data stream of all operations as various departments
+- Remote access to real-time operational data for who requires
+- Powerful and customised business Intelligence Dashboards - Costs/Expenses, Sales, Vendor, Purchasing, Stock, 
+
+- All business software specialised for different sectors.
+- Examples:
+	- Logistics and Transportation
+	- Banking and Insurance
+	- Healthcare Sector Solution - Hospital Management, Patient Health Record Management
+
+
+Our Solution Difference:
+-----------------------
+- Interconnect Departments to share information in real time, reduce paperwork and make reporting instant in all aspects.
+- Highly customisable to suit the operations of various companies
+- Provide access to various operational information for the boss on the go.
+
+Specific Propositions:
+---------------------
+
+BUNS:
+- Fleet and Transportation Management
+	- Maintenance Management 
+	- Incidence Management 
+	- Asset Exploitation (Projects)
+	- Asset Financials
+
+- Construction Project Management / Sites, People, Tasks, Financials, Reporting, Remote
+
+- General Business Systems:
+	- Connected Systems, Multi-Department Access - specialised dashboards for each department automatically updating the other
+		- procurement
+		- expenses
+		- stock and inventory
+		- projects and tasks
+
+ZENITH:
+	- Geolocation for Insurance Purposes : Marketing and Sales, Property Insurance
+	- Medical Insurance Invoicing System
+
+
+- UBC: Customer Geolocation for Credit Recovery and Collateral Asset Management
+
+- Plantation:
+	- Plantation Management: 
+		- Planting Project Management - Expenses, Stock, 
+		- Stock - Raw Materials, Products
+		- Purchasing - Vendor Dashboards, Purchase Orders, Reports
+		- Sales - Customer Dashboard, Orders, Credit, Reports, etc...
+
+- General Software Technology Development Contract - Building various solutions for the various needs of the companies
+
+- Investment in our company and mentorship/guidance/referalls to get contracts via established Network and also benefit from our services at a discount.

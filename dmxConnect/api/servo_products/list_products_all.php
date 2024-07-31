@@ -14,11 +14,19 @@ $app->define(<<<'JSON'
       },
       {
         "type": "text",
+        "name": "limit"
+      },
+      {
+        "type": "text",
+        "name": "offset"
+      },
+      {
+        "type": "text",
         "name": "dir"
       },
       {
         "type": "text",
-        "name": "search"
+        "name": "product_name"
       },
       {
         "type": "text",
@@ -30,112 +38,285 @@ $app->define(<<<'JSON'
     "steps": [
       {
         "name": "query_list_products",
-        "module": "dbupdater",
-        "action": "custom",
+        "module": "dbconnector",
+        "action": "paged",
         "options": {
           "connection": "servodb",
           "sql": {
-            "query": "select * from servo_products\n\nleft join servo_product_categories on servo_product_category_product_category_id = product_categories_id\n\nwhere product_name LIKE :P3\n\nlimit 50\n",
+            "type": "select",
+            "distinct": false,
+            "columns": [],
+            "table": {
+              "name": "servo_products"
+            },
+            "joins": [
+              {
+                "table": "servo_product_categories",
+                "column": "*",
+                "type": "LEFT",
+                "clauses": {
+                  "condition": "AND",
+                  "rules": [
+                    {
+                      "table": "servo_product_categories",
+                      "column": "product_categories_id",
+                      "operator": "equal",
+                      "operation": "=",
+                      "value": {
+                        "table": "servo_products",
+                        "column": "servo_product_category_product_category_id"
+                      }
+                    }
+                  ]
+                },
+                "primary": "product_categories_id"
+              }
+            ],
+            "orders": [],
             "params": [
               {
-                "name": ":P3",
-                "value": "%{{$_GET.search}}%",
-                "test": "%"
+                "operator": "contains",
+                "type": "expression",
+                "name": ":P1",
+                "value": "{{$_GET.product_name}}",
+                "test": ""
               },
               {
+                "operator": "equal",
+                "type": "expression",
                 "name": ":P2",
-                "value": "%{{$_GET.product_category}}%",
-                "test": "%"
+                "value": "{{$_GET.product_category}}",
+                "test": ""
               }
-            ]
+            ],
+            "primary": "product_id",
+            "wheres": {
+              "condition": "AND",
+              "rules": [
+                {
+                  "condition": "AND",
+                  "rules": [
+                    {
+                      "id": "servo_products.product_name",
+                      "field": "servo_products.product_name",
+                      "type": "string",
+                      "operator": "contains",
+                      "value": "{{$_GET.product_name}}",
+                      "data": {
+                        "table": "servo_products",
+                        "column": "product_name",
+                        "type": "text",
+                        "columnObj": {
+                          "type": "string",
+                          "maxLength": 1000,
+                          "primary": false,
+                          "nullable": false,
+                          "name": "product_name"
+                        }
+                      },
+                      "operation": "LIKE",
+                      "table": "servo_products"
+                    }
+                  ],
+                  "conditional": "{{$_GET.product_name}}",
+                  "table": "servo_products",
+                  "id": "servo_products.undefined"
+                },
+                {
+                  "condition": "AND",
+                  "rules": [
+                    {
+                      "id": "servo_products.servo_product_category_product_category_id",
+                      "field": "servo_products.servo_product_category_product_category_id",
+                      "type": "double",
+                      "operator": "equal",
+                      "value": "{{$_GET.product_category}}",
+                      "data": {
+                        "table": "servo_products",
+                        "column": "servo_product_category_product_category_id",
+                        "type": "number",
+                        "columnObj": {
+                          "type": "reference",
+                          "default": "",
+                          "primary": false,
+                          "nullable": true,
+                          "references": "product_categories_id",
+                          "inTable": "servo_product_categories",
+                          "referenceType": "integer",
+                          "onUpdate": "NO ACTION",
+                          "onDelete": "NO ACTION",
+                          "name": "servo_product_category_product_category_id"
+                        }
+                      },
+                      "operation": "=",
+                      "table": "servo_products"
+                    }
+                  ],
+                  "conditional": "{{$_GET.product_category}}",
+                  "table": "servo_products",
+                  "id": "servo_products.undefined"
+                }
+              ],
+              "conditional": null,
+              "valid": true
+            },
+            "query": "select * from `servo_products` left join `servo_product_categories` on `servo_product_categories`.`product_categories_id` = `servo_products`.`servo_product_category_product_category_id` where (`servo_products`.`product_name` like ?) and (`servo_products`.`servo_product_category_product_category_id` = ?)"
           }
         },
         "meta": [
           {
-            "name": "product_id",
+            "name": "offset",
             "type": "number"
           },
           {
-            "name": "product_name",
-            "type": "text"
-          },
-          {
-            "name": "product_picture",
-            "type": "text"
-          },
-          {
-            "name": "servo_product_brands_product_brand_id",
+            "name": "limit",
             "type": "number"
           },
           {
-            "name": "product_description",
-            "type": "file"
-          },
-          {
-            "name": "servo_product_category_product_category_id",
+            "name": "total",
             "type": "number"
           },
           {
-            "name": "product_standard_price",
-            "type": "number"
+            "name": "page",
+            "type": "object",
+            "sub": [
+              {
+                "name": "offset",
+                "type": "object",
+                "sub": [
+                  {
+                    "name": "first",
+                    "type": "number"
+                  },
+                  {
+                    "name": "prev",
+                    "type": "number"
+                  },
+                  {
+                    "name": "next",
+                    "type": "number"
+                  },
+                  {
+                    "name": "last",
+                    "type": "number"
+                  }
+                ]
+              },
+              {
+                "name": "current",
+                "type": "number"
+              },
+              {
+                "name": "total",
+                "type": "number"
+              }
+            ]
           },
           {
-            "name": "product_discount",
-            "type": "number"
-          },
-          {
-            "name": "product_type",
-            "type": "file"
-          },
-          {
-            "name": "product_stock_value",
-            "type": "number"
-          },
-          {
-            "name": "product_min_stock",
-            "type": "number"
-          },
-          {
-            "name": "product_expiration_date",
-            "type": "datetime"
-          },
-          {
-            "name": "product_sub_category_sub_category_id",
-            "type": "number"
-          },
-          {
-            "name": "product_categories_id",
-            "type": "number"
-          },
-          {
-            "name": "product_category_name",
-            "type": "text"
+            "name": "data",
+            "type": "array",
+            "sub": [
+              {
+                "type": "number",
+                "name": "product_id"
+              },
+              {
+                "type": "text",
+                "name": "product_name"
+              },
+              {
+                "type": "text",
+                "name": "product_picture"
+              },
+              {
+                "type": "number",
+                "name": "servo_product_brands_product_brand_id"
+              },
+              {
+                "type": "text",
+                "name": "product_description"
+              },
+              {
+                "type": "number",
+                "name": "servo_product_category_product_category_id"
+              },
+              {
+                "type": "number",
+                "name": "product_standard_price"
+              },
+              {
+                "type": "number",
+                "name": "product_discount"
+              },
+              {
+                "type": "text",
+                "name": "product_type"
+              },
+              {
+                "type": "number",
+                "name": "product_stock_value"
+              },
+              {
+                "type": "number",
+                "name": "product_min_stock"
+              },
+              {
+                "type": "datetime",
+                "name": "product_expiration_date"
+              },
+              {
+                "type": "number",
+                "name": "product_sub_category_sub_category_id"
+              },
+              {
+                "type": "text",
+                "name": "product_reference_uom"
+              }
+            ]
           }
-        ]
+        ],
+        "type": "dbconnector_paged_select",
+        "outputType": "object",
+        "output": true
+      },
+      {
+        "name": "query_list_categories",
+        "module": "dbconnector",
+        "action": "select",
+        "options": {
+          "connection": "servodb",
+          "sql": {
+            "type": "select",
+            "columns": [],
+            "params": [],
+            "table": {
+              "name": "servo_product_categories"
+            },
+            "primary": "product_categories_id",
+            "joins": [],
+            "query": "select * from `servo_product_categories`"
+          }
+        },
+        "output": true,
+        "meta": [
+          {
+            "type": "number",
+            "name": "product_categories_id"
+          },
+          {
+            "type": "text",
+            "name": "product_category_name"
+          }
+        ],
+        "outputType": "array"
       },
       {
         "name": "repeat",
         "module": "core",
         "action": "repeat",
         "options": {
-          "repeat": "{{query_list_products}}",
-          "outputFields": [
-            "product_id",
-            "product_name",
-            "product_description",
-            "product_standard_price",
-            "product_picture",
-            "servo_product_brands_product_brand_id",
-            "servo_product_category_product_category_id",
-            "product_type",
-            "product_discount",
-            "product_stock_value",
-            "product_min_stock",
-            "product_expiration_date",
-            "product_sub_category_sub_category_id",
-            "product_categories_id",
-            "product_category_name"
-          ],
+          "repeat": "{{query_list_products.data}}",
+          "outputFields": [],
           "exec": {
             "steps": [
               {
@@ -283,7 +464,7 @@ $app->define(<<<'JSON'
           },
           {
             "name": "product_description",
-            "type": "file"
+            "type": "text"
           },
           {
             "name": "servo_product_category_product_category_id",
@@ -299,7 +480,7 @@ $app->define(<<<'JSON'
           },
           {
             "name": "product_type",
-            "type": "file"
+            "type": "text"
           },
           {
             "name": "product_stock_value",
@@ -318,11 +499,7 @@ $app->define(<<<'JSON'
             "type": "number"
           },
           {
-            "name": "product_categories_id",
-            "type": "number"
-          },
-          {
-            "name": "product_category_name",
+            "name": "product_reference_uom",
             "type": "text"
           },
           {

@@ -117,6 +117,7 @@
   <script src="dmxAppConnect/dmxPreloader/dmxPreloader.js" defer></script>
   <link rel="stylesheet" href="bootstrap/5/servodark/bootstrap.min.css" />
   <link rel="stylesheet" href="bootstrap/5/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="css/bootstrap-icons.min.css" />
 </head>
 
 <body is="dmx-app" dmx-on:ready="preloader.hide();customerOrderModal.preloader1.hide()" id="Customers">
@@ -125,7 +126,7 @@
 
   <dmx-preloader id="preloader" spinner="doubleBounce" bgcolor="#8A8686" ,255,255,0.99),255,255,0.97)=""></dmx-preloader>
 
-  <dmx-scheduler id="scheduler1" dmx-on:tick="load_products.load({service_id: list_user_shift_info.data.query_list_user_shift[0].servo_service_service_id, product_category: customerOrderModal.AddProductsToOrderOffCanvas.conditional33.repeatProductCategories[0].btn11.value});list_value_updates_per_order.load({order_id: readCustomerOrder.data.query.order_id});list_order_items_deleted.load({order_id: readCustomerOrder.data.query.order_id});list_order_items.load({order_id: readCustomerOrder.data.query.order_id})" delay="15"></dmx-scheduler>
+  <dmx-scheduler id="scheduler1" dmx-on:tick="list_value_updates_per_order.load({order_id: readCustomerOrder.data.query.order_id});list_order_items_deleted.load({order_id: readCustomerOrder.data.query.order_id});list_order_items.load({order_id: readCustomerOrder.data.query.order_id})" delay="15"></dmx-scheduler>
   <dmx-query-manager id="listCustomerOrders"></dmx-query-manager>
   <dmx-query-manager id="listData"></dmx-query-manager>
 
@@ -182,7 +183,7 @@
   <dmx-value id="totalDepositPayments" dmx-bind:value="list_customer_transactions_amounts.data.custom_list_transaction_amounts[0].DepositPayments.toNumber()"></dmx-value>
   <dmx-value id="totalDeposits" dmx-bind:value="list_customer_transactions_amounts.data.custom_list_transaction_amounts[0].Deposits.toNumber()"></dmx-value>
   <dmx-value id="netDeposits" dmx-bind:value="(totalDeposits.value-(totalDepositPayments.value + totalDepositSettlements.value))"></dmx-value>
-  <main class="bg-light rounded mt-2 ms-2 me-2 pt-2 pb-3 ps-2 pe-2" style="height: 90vh !important;">
+  <main class="rounded mt-2 ms-2 me-2 pt-2 pb-3 ps-2 pe-2" style="height: 90vh !important;">
     <div class="mt-auto ms-2 me-2">
 
 
@@ -200,28 +201,28 @@
       </div>
       <div class="row">
         <div class="col">
-          <ul class="nav nav-tabs nav-fill flex-nowrap scrollable align-items-end" id="navTabs1_tabs" role="tablist">
-            <li class="nav-item">
+          <ul class="nav nav-tabs flex-nowrap scrollable align-items-end" id="navTabs1_tabs" role="tablist">
+            <li class="nav-item visually-hidden">
               <a class="nav-link active" id="navTabsOverview" data-bs-toggle="tab" href="#" data-bs-target="#navTabs_overview" role="tab" aria-controls="navTabs1_1" aria-selected="true">
                 <i class="far fa-chart-bar fa-sm" style="margin-right: 3px;"></i>
                 {{trans.data.overview[lang.value]}}</a>
 
             </li>
             <li class="nav-item">
-              <a class="nav-link" id="navTabsCustomerList" data-bs-toggle="tab" href="#" data-bs-target="#navTabs_customer_list" role="tab" aria-controls="navTabs1_2" aria-selected="false"><i class="fas fa-users fa-sm" style="margin-right: 3px;"></i>{{trans.data.customers[lang.value]}}</a>
+              <a class="nav-link active" id="navTabsCustomerList" data-bs-toggle="tab" href="#" data-bs-target="#navTabs_customer_list" role="tab" aria-controls="navTabs1_2" aria-selected="false"><i class="fas fa-users fa-sm" style="margin-right: 3px;"></i>{{trans.data.customers[lang.value]}}</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item visually-hidden">
               <a class="nav-link" id="navTabs1_3_tab" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_3" role="tab" aria-controls="navTabs1_3" aria-selected="false">Messages</a>
             </li>
           </ul>
           <div class="tab-content" id="navTabs1_content">
-            <div class="tab-pane fade show active" id="navTabs_overview" role="tabpanel">
+            <div class="tab-pane fade show active visually-hidden" id="navTabs_overview" role="tabpanel">
               <dmx-value id="variableTotalCustomerDebt1" dmx-bind:value="variableTotalCustomerDebtVariable.value.toNumber()"></dmx-value>
               <dmx-value id="variableTotalCustomerTransactions1" dmx-bind:value="list_customer_transactions_amounts.data.custom_list_transaction_amounts[0].Settlements.toNumber()"></dmx-value>
-              <dmx-value id="variableTotalCustomerDebtVariable1" dmx-bind:value="((list_customer_transactions_amounts.data.custom_list_transaction_amounts[0].Settlements).toNumber().default(0) -(list_customer_orders_totals.data.custom_list_customer_orders_totals[0]['Customer Orders Totals']).toNumber().default(0)).formatNumber('0',',',',')"></dmx-value>
-              <dmx-value id="variableTotalCustomerCoverageDebt1" dmx-bind:value="((list_customer_transactions_amounts.data.custom_list_transaction_amounts[0].Settlements).toNumber().default(0) -(list_customer_orders_totals.data.custom_list_customer_orders_totals[0]['Customer Orders Totals']).toNumber().default(0)).formatNumber('0',',',',')"></dmx-value>
-              <dmx-value id="variableTotalCoverageDebt1" dmx-bind:value="((list_customer_orders_totals.data.custom_list_customer_orders_totals[0]['Coverage Totals']).toNumber().default(0)).formatNumber('0',',',',')"></dmx-value>
-              <dmx-value id="variableTotalCovered1" dmx-bind:value="((list_customer_orders_totals.data.custom_list_customer_orders_totals[0]['Total Covered']).toNumber().default(0)).formatNumber('0',',',',')"></dmx-value>
+              <dmx-value id="variableTotalCustomerDebtVariable1" dmx-bind:value="((list_customer_transactions_amounts.data.custom_list_transaction_amounts[0].Settlements).toNumber().default(0) -(list_customer_orders_totals.data.custom_list_customer_orders_totals[0]['Customer Orders Totals']).toNumber().default(0)).formatNumber('4','.',',')"></dmx-value>
+              <dmx-value id="variableTotalCustomerCoverageDebt1" dmx-bind:value="((list_customer_transactions_amounts.data.custom_list_transaction_amounts[0].Settlements).toNumber().default(0) -(list_customer_orders_totals.data.custom_list_customer_orders_totals[0]['Customer Orders Totals']).toNumber().default(0)).formatNumber('4','.',',')"></dmx-value>
+              <dmx-value id="variableTotalCoverageDebt1" dmx-bind:value="((list_customer_orders_totals.data.custom_list_customer_orders_totals[0]['Coverage Totals']).toNumber().default(0)).formatNumber('4','.',',')"></dmx-value>
+              <dmx-value id="variableTotalCovered1" dmx-bind:value="((list_customer_orders_totals.data.custom_list_customer_orders_totals[0]['Total Covered']).toNumber().default(0)).formatNumber('4','.',',')"></dmx-value>
               <div class="row">
 
                 <div class="col-12 col-lg-6">
@@ -252,7 +253,7 @@
                       </div>
                       <div class="row">
                         <div class="col">
-                          <h1 dmx-text="(totalDeposits.value-(totalDepositPayments.value + totalDepositSettlements.value)).formatNumber('0',',',',')" class="text-white"></h1>
+                          <h1 dmx-text="(totalDeposits.value-(totalDepositPayments.value + totalDepositSettlements.value)).formatNumber('4','.',',')" class="text-white"></h1>
                         </div>
                       </div>
                       <div class="row">
@@ -271,7 +272,7 @@
                       </div>
                       <div class="row">
                         <div class="col">
-                          <h1 dmx-text="list_customer_transactions_amounts.data.custom_list_transaction_amounts[0].Settlements.toNumber().formatNumber('0', ',', ',').default(0)" class="text-white"></h1>
+                          <h1 dmx-text="list_customer_transactions_amounts.data.custom_list_transaction_amounts[0].Settlements.toNumber().formatNumber('3', '.', ',').default(0)" class="text-white"></h1>
                         </div>
                       </div>
                       <div class="row">
@@ -288,7 +289,7 @@
                       </div>
                       <div class="row">
                         <div class="col">
-                          <h1 dmx-text="(list_customer_transactions.data.query.where(`transaction_type`, 'Payment', '==')).sum('transaction_amount').formatNumber('0',',',',').default('0')" class="text-white"></h1>
+                          <h1 dmx-text="(list_customer_transactions.data.query.where(`transaction_type`, 'Payment', '==')).sum('transaction_amount').formatNumber('4','.',',').default('0')" class="text-white"></h1>
                         </div>
                       </div>
                       <div class="row">
@@ -305,7 +306,7 @@
                       </div>
                       <div class="row">
                         <div class="col">
-                          <h1 dmx-text="list_customer_orders.data.query_list_customer_orders.data.count().formatNumber('0',',',',').default(0)" class="text-white">{{trans.data.totalOrders[lang.value]}}</h1>
+                          <h1 dmx-text="list_customer_orders.data.query_list_customer_orders.data.count().formatNumber('4','.',',').default(0)" class="text-white">{{trans.data.totalOrders[lang.value]}}</h1>
                         </div>
                       </div>
                       <div class="row">
@@ -367,17 +368,17 @@
               </div>
 
             </div>
-            <div class="tab-pane  scrollable" id="navTabs_customer_list" role="tabpanel">
-              <div class="row scrollable mb-2">
-                <div class="col rounded">
+            <div class="tab-pane  scrollable show active fade" id="navTabs_customer_list" role="tabpanel">
+              <div class="row scrollable mt-2 mb-2 ms-0 me-0">
+                <div class="rounded bg-light col">
 
-                  <div class="row justify-content-sm-between justify-content-md-between justify-content-lg-between justify-content-xl-between justify-content-xxl-between justify-content-between sorter shadow-none mt-2 mb-2 rounded bg-primary bg-opacity-10">
+                  <div class="row justify-content-sm-between justify-content-md-between justify-content-lg-between justify-content-xl-between justify-content-xxl-between justify-content-between sorter shadow-none mt-2 mb-2 rounded bg-light">
                     <div class="d-flex col-xxl flex-wrap col-auto col-sm-auto col-md col-lg-auto align-items-baseline"><input id="customerfilter" name="customerfilter" type="search" class="form-control search mb-2 me-2" dmx-bind:placeholder="trans.data.name[lang.value]+'  '">
                       <input id="customerfilter2" name="customerfilter1" type="search" class="form-control search mb-2 me-2" dmx-bind:placeholder="trans.data.surname[lang.value]+'  '">
                       <button id="btn29" class="btn align-self-lg-start bg-opacity-10 me-2 bg-body visually-hidden" dmx-on:click="customerfilter.setValue(NULL); customerfilter2.setValue(NULL)">
                         <i class="fas fa-backspace fa-sm"></i>
                       </button>
-                      <ul class="pagination flex-xl-wrap flex-xxl-wrap flex-lg-wrap flex-md-wrap flex-sm-wrap flex-wrap rounded me-2 bg-dark bg-opacity-10" dmx-populate="list_customers.data.query_list_customers" dmx-state="listcustomers" dmx-offset="offset" dmx-generator="bs5paging">
+                      <ul class="pagination flex-xl-wrap flex-xxl-wrap flex-lg-wrap flex-md-wrap flex-sm-wrap flex-wrap rounded me-2 bg-opacity-10 bg-primary" dmx-populate="list_customers.data.query_list_customers" dmx-state="listcustomers" dmx-offset="offset" dmx-generator="bs5paging">
                         <li class="page-item" dmx-class:disabled="list_customers.data.query_list_customers.page.current == 1" aria-label="First">
                           <a href="javascript:void(0)" class="page-link" dmx-on:click="listcustomers.set('offset',list_customers.data.query_list_customers.page.offset.first)"><span aria-hidden="true">‹‹</span></a>
                         </li>
@@ -404,50 +405,51 @@
                     </div>
 
                   </div>
+                  <div class="row ms-0 me-0">
+                    <div class="col rounded scrollable">
+                      <div class="table-responsive servo-shadow" id="customerList">
+                        <table class="table table-hover table-sm table-borderless">
+                          <thead>
+                            <tr>
+                              <th>#</th>
+                              <th>{{trans.data.name[lang.value]}}</th>
+                              <th>{{trans.data.surname[lang.value]}}</th>
+                              <th>{{trans.data.phoneNumber[lang.value]}}</th>
+                              <th></th>
+                              <th></th>
+                              <th></th>
+                            </tr>
+                          </thead>
+                          <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="list_customers.data.query_list_customers.data" id="tableRepeat1">
+                            <tr>
+                              <td dmx-text="customer_id"></td>
+                              <td dmx-text="customer_first_name"></td>
+                              <td dmx-text="customer_last_name"></td>
+                              <td dmx-text="customer_phone_number"></td>
+                              <td>
+                                <button id="btn28" class="btn text-warning" dmx-hide="(customer_class == 'standard')"><i class="fas fa-people-arrows fa-sm"></i></button>
 
-                </div>
-              </div>
-              <div class="row ms-0 me-0">
-                <div class="col rounded bg-light scrollable">
-                  <div class="table-responsive servo-shadow" id="customerList">
-                    <table class="table table-hover table-sm table-borderless">
-                      <thead>
-                        <tr>
-                          <th>#</th>
-                          <th>{{trans.data.name[lang.value]}}</th>
-                          <th>{{trans.data.surname[lang.value]}}</th>
-                          <th>{{trans.data.phoneNumber[lang.value]}}</th>
-                          <th></th>
-                          <th></th>
-                          <th></th>
-                        </tr>
-                      </thead>
-                      <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="list_customers.data.query_list_customers.data" id="tableRepeat1">
-                        <tr>
-                          <td dmx-text="customer_id"></td>
-                          <td dmx-text="customer_first_name"></td>
-                          <td dmx-text="customer_last_name"></td>
-                          <td dmx-text="customer_phone_number"></td>
-                          <td>
-                            <button id="btn28" class="btn text-warning" dmx-hide="(customer_class == 'standard')"><i class="fas fa-people-arrows fa-sm"></i></button>
+                              </td>
+                              <td>
 
-                          </td>
-                          <td>
+                              </td>
+                              <td class="text-center">
 
-                          </td>
-                          <td class="text-center">
+                                <button id="btn2" class="btn open text-primary bg-primary bg-opacity-10" data-bs-target="#readItemModal" dmx-bind:value="customer_id" dmx-on:click="session_variables.set('current_customer',customer_id); read_customer.load({customer_id: customer_id});list_customer_transactions.load({customer_id: customer_id});list_customer_orders.load({customer_id: customer_id, offset: listCustomerOrders.data.customerOrdersOffset, limit: c_order_sort_limit.value});list_customer_data_reading_sessions.load({customer_id: customer_id});list_customer_transactions_amounts.load({customer_id: customer_id});list_customer_orders_totals.load({customer_id: customer_id});list_customer_covered_orders.load({customer_id: customer_id, offset: listCustomerCoveredOrders.data.offset, limit: c_order_sort_limit2.value})"><i class="fas fa-pencil-alt fa-sm" style=""><br></i></button>
 
-                            <button id="btn2" class="btn open text-primary bg-primary bg-opacity-10" data-bs-target="#readItemModal" dmx-bind:value="customer_id" dmx-on:click="session_variables.set('current_customer',customer_id); read_customer.load({customer_id: customer_id});list_customer_transactions.load({customer_id: customer_id});list_customer_orders.load({customer_id: customer_id, offset: listCustomerOrders.data.customerOrdersOffset, limit: c_order_sort_limit.value});list_customer_data_reading_sessions.load({customer_id: customer_id});list_customer_transactions_amounts.load({customer_id: customer_id});list_customer_orders_totals.load({customer_id: customer_id});list_customer_covered_orders.load({customer_id: customer_id, offset: listCustomerCoveredOrders.data.offset, limit: c_order_sort_limit2.value})"><i class="fas fa-pencil-alt fa-sm" style=""><br></i></button>
-
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
                   </div>
+
                 </div>
               </div>
+
             </div>
-            <div class="tab-pane fade" id="navTabs1_3" role="tabpanel">
+            <div class="tab-pane fade visually-hidden" id="navTabs1_3" role="tabpanel">
             </div>
           </div>
         </div>
@@ -566,7 +568,7 @@
                 <div class="row mb-2" id="expensesTotal">
                   <div class="col d-flex offset-0 justify-content-center bg-info rounded-pill pt-2">
                     <h3 class="text-white">{{trans.data.total[lang.value]}}:&nbsp;</h3>
-                    <h3 dmx-text="list_expenses.data.list_expenses_shift.sum(`expense_amount`).formatNumber('0',',',',')" class="text-white fw-bolder"></h3>
+                    <h3 dmx-text="list_expenses.data.list_expenses_shift.sum(`expense_amount`).formatNumber('4','.',',')" class="text-white fw-bolder"></h3>
                   </div>
                 </div>
                 <ul class="nav nav-tabs" id="navTabs1_tabs" role="tablist">
@@ -661,7 +663,7 @@
                               <td dmx-text="user_paid_name"></td>
                               <td dmx-text="user_received_name"></td>
                               <td dmx-text="department_name"></td>
-                              <td dmx-text="expense_amount.formatNumber('0',',',',')" class="text-end"></td>
+                              <td dmx-text="expense_amount.formatNumber('4','.',',')" class="text-end"></td>
                               <td dmx-text="payment_method_name" class="text-center"></td>
                               <td>
                                 <div class="row">
@@ -711,7 +713,7 @@
                               <td dmx-text="user_paid_name"></td>
                               <td dmx-text="user_received_name"></td>
                               <td dmx-text="department_name"></td>
-                              <td dmx-text="expense_amount.formatNumber('0',',',',')" class="text-end"></td>
+                              <td dmx-text="expense_amount.formatNumber('4','.',',')" class="text-end"></td>
                               <td dmx-text="payment_method_name" class="text-center"></td>
                             </tr>
                           </tbody>
@@ -742,7 +744,7 @@
 
 
 
-              <img dmx-bind:src="'/servo/uploads/customer_pictures/'+read_customer.data.query_read_customer.customer_picture" class="rounded-circle shadow-none mt-2 me-2 img-thumbnail" width="30" dmx-hide="(read_customer.data.query_read_customer.customer_picture == null)" loading="lazy" style="object-fit: cover;" height="30">
+              <img dmx-bind:src="'/servo/uploads/customer_pictures/'+read_customer.data.query_read_customer.customer_picture" class="rounded-circle shadow-none mt-2 me-2" width="30" dmx-hide="(read_customer.data.query_read_customer.customer_picture == null)" loading="lazy" style="object-fit: cover;" height="30">
 
               <img class="rounded-circle mt-2 me-2" width="30" src="uploads/servo_no_image.jpg" dmx-show="(read_customer.data.query_read_customer.customer_picture == null)" height="30">
               <h6 class="text-body text-wrap rounded mt-3 me-2 pt-2 pb-2 ps-2 pe-2 bg-opacity-75 w-auto">{{read_customer.data.query_read_customer.customer_first_name+' '+read_customer.data.query_read_customer.customer_last_name}}</h6>
@@ -755,7 +757,7 @@
                 <input id="shift_id" name="servo_shift_shift_id" type="hidden" class="form-control visually-hidden" dmx-bind:value="session1.data.current_shift">
                 <input id="serviceId" name="servo_service_service_id" type="hidden" class="form-control visually-hidden" dmx-bind:value="list_user_shift_info.data.query_list_user_shift[0].servo_service_service_id">
 
-                <button id="btn7" class="btn fw-bold mt-2 me-2 bg-success text-success bg-opacity-10" style="" dmx-on:click="run({'bootbox.confirm':{message:'Confirm',then:{steps:{run:{action:`create_order_form.submit()`,outputType:'text'}}}}})">
+                <button id="btn7" class="btn mt-2 me-2 bg-success text-success bg-opacity-10" style="" dmx-on:click="run({'bootbox.confirm':{message:'Confirm',then:{steps:{run:{action:`create_order_form.submit()`,outputType:'text'}}}}})">
                   <i class="fas fa-plus-circle" style="margin-right: 5px;"></i>{{trans.data.createOrder[lang.value]}}
                 </button>
               </form>
@@ -789,7 +791,7 @@
           <div class="modal-body">
             <div class="row">
               <div class="col-12">
-                <ul class="nav nav-tabs nav-fill flex-nowrap scrollable align-items-end" id="navTabs1_tabs" role="tablist">
+                <ul class="nav nav-tabs nav-fill flex-nowrap scrollable-y align-items-end text-nowrap" id="navTabs1_tabs" role="tablist">
                   <li class="nav-item">
                     <a class="nav-link active flex-grow-1" id="customerOverviewTab" data-bs-toggle="tab" href="#" data-bs-target="#tabPane1" role="tab" aria-controls="navTabs1_1" aria-selected="true" dmx-on:click="list_customer_transactions_amounts.load({customer_id: session_variables.data.current_customer});list_customer_orders_totals.load({customer_id: session_variables.data.current_customer})"><i class="far fa-eye fa-sm" style="margin-right: 5px;"></i>
 
@@ -821,18 +823,18 @@
                   <div class="tab-pane fade show active scrollable" id="tabPane1" role="tabpanel">
                     <dmx-value id="variableTotalCustomerDebt" dmx-bind:value="variableTotalCustomerDebtVariable.value.toNumber()"></dmx-value>
                     <dmx-value id="variableTotalCustomerTransactions" dmx-bind:value="list_customer_transactions_amounts.data.custom_list_transaction_amounts[0].Settlements.toNumber()"></dmx-value>
-                    <dmx-value id="variableTotalCustomerDebtVariable" dmx-bind:value="((list_customer_transactions_amounts.data.custom_list_transaction_amounts[0].Settlements).toNumber().default(0) -(list_customer_orders_totals.data.custom_list_customer_orders_totals[0]['Customer Orders Totals']).toNumber().default(0)).formatNumber('0',',',',')"></dmx-value>
-                    <dmx-value id="variableTotalCustomerCoverageDebt" dmx-bind:value="((list_customer_transactions_amounts.data.custom_list_transaction_amounts[0].Settlements).toNumber().default(0) -(list_customer_orders_totals.data.custom_list_customer_orders_totals[0]['Customer Orders Totals']).toNumber().default(0)).formatNumber('0',',',',')"></dmx-value>
-                    <dmx-value id="variableTotalCoverageDebt" dmx-bind:value="((list_customer_orders_totals.data.custom_list_customer_orders_totals[0]['Coverage Totals']).toNumber().default(0)).formatNumber('0',',',',')"></dmx-value>
-                    <dmx-value id="variableTotalCovered" dmx-bind:value="((list_customer_orders_totals.data.custom_list_customer_orders_totals[0]['Total Covered']).toNumber().default(0)).formatNumber('0',',',',')"></dmx-value>
+                    <dmx-value id="variableTotalCustomerDebtVariable" dmx-bind:value="((list_customer_transactions_amounts.data.custom_list_transaction_amounts[0].Settlements).toNumber().default(0) -(list_customer_orders_totals.data.custom_list_customer_orders_totals[0]['Customer Orders Totals']).toNumber().default(0)).formatNumber('4','.',',')"></dmx-value>
+                    <dmx-value id="variableTotalCustomerCoverageDebt" dmx-bind:value="((list_customer_transactions_amounts.data.custom_list_transaction_amounts[0].Settlements).toNumber().default(0) -(list_customer_orders_totals.data.custom_list_customer_orders_totals[0]['Customer Orders Totals']).toNumber().default(0)).formatNumber('4','.',',')"></dmx-value>
+                    <dmx-value id="variableTotalCoverageDebt" dmx-bind:value="((list_customer_orders_totals.data.custom_list_customer_orders_totals[0]['Coverage Totals']).toNumber().default(0)).formatNumber('4','.',',')"></dmx-value>
+                    <dmx-value id="variableTotalCovered" dmx-bind:value="((list_customer_orders_totals.data.custom_list_customer_orders_totals[0]['Total Covered']).toNumber().default(0)).formatNumber('4','.',',')"></dmx-value>
                     <div class="row">
 
                       <div class="col-12 col-lg-6">
                         <div class="row mt-1">
                           <div class="d-flex flex-sm-wrap col-md-auto col-sm-6 col-xl-auto col-lg-auto col-auto justify-content-start">
-                            <button id="btn40" class="btn fw-bold me-md-1 bg-light mb-1 me-1 text-warning">{{trans.data.Ordered[lang.value]}}: {{list_customer_orders.data.customer_order_stats[0].Ordered}}</button>
-                            <button id="btn490" class="btn fw-bold me-md-2 text-success bg-light mb-1 me-1">{{trans.data.Paid[lang.value]}}: {{list_customer_orders.data.customer_order_stats[0].Paid}}</button>
-                            <button id="btn480" class="btn fw-bold me-md-2 bg-light mb-1 me-1 text-body">{{trans.data.pending[lang.value]}}: {{list_customer_orders.data.customer_order_stats[0].Pending}}</button>
+                            <button id="btn40" class="btn me-md-1 bg-light mb-1 me-1 text-warning">{{trans.data.Ordered[lang.value]}}: {{list_customer_orders.data.customer_order_stats[0].Ordered}}</button>
+                            <button id="btn490" class="btn me-md-2 text-success bg-light mb-1 me-1">{{trans.data.Paid[lang.value]}}: {{list_customer_orders.data.customer_order_stats[0].Paid}}</button>
+                            <button id="btn480" class="btn me-md-2 bg-light mb-1 me-1 text-body">{{trans.data.pending[lang.value]}}: {{list_customer_orders.data.customer_order_stats[0].Pending}}</button>
                           </div>
                         </div>
 
@@ -864,7 +866,7 @@
                             </div>
                             <div class="row">
                               <div class="col">
-                                <h1 dmx-text="(totalDeposits.value-(totalDepositPayments.value + totalDepositSettlements.value)).formatNumber('0',',',',')"></h1>
+                                <h1 dmx-text="(totalDeposits.value-(totalDepositPayments.value + totalDepositSettlements.value)).formatNumber('4','.',',')"></h1>
                               </div>
                             </div>
                             <div class="row">
@@ -883,7 +885,7 @@
                             </div>
                             <div class="row">
                               <div class="col">
-                                <h1 dmx-text="list_customer_transactions_amounts.data.custom_list_transaction_amounts[0].Settlements.toNumber().formatNumber('0', ',', ',').default(0)"></h1>
+                                <h1 dmx-text="list_customer_transactions_amounts.data.custom_list_transaction_amounts[0].Settlements.toNumber().formatNumber('3', '.', ',').default(0)"></h1>
                               </div>
                             </div>
                             <div class="row">
@@ -900,7 +902,7 @@
                             </div>
                             <div class="row">
                               <div class="col">
-                                <h1 dmx-text="(list_customer_transactions.data.query.where(`transaction_type`, 'Payment', '==')).sum('transaction_amount').formatNumber('0',',',',').default('0')"></h1>
+                                <h1 dmx-text="(list_customer_transactions.data.query.where(`transaction_type`, 'Payment', '==')).sum('transaction_amount').formatNumber('4','.',',').default('0')"></h1>
                               </div>
                             </div>
                             <div class="row">
@@ -917,7 +919,7 @@
                             </div>
                             <div class="row">
                               <div class="col">
-                                <h1 dmx-text="list_customer_orders.data.query_list_customer_orders.total.formatNumber('0',',',',').default(0)">{{trans.data.totalOrders[lang.value]}}</h1>
+                                <h1 dmx-text="list_customer_orders.data.query_list_customer_orders.total.formatNumber('4','.',',').default(0)">{{trans.data.totalOrders[lang.value]}}</h1>
                               </div>
                             </div>
                             <div class="row">
@@ -987,7 +989,7 @@
                     <div class="row mt-2 ms-0 me-0">
                       <div class="col rounded bg-secondary bg-opacity-75">
                         <div class="row justify-content-sm-between justify-content-md-between justify-content-lg-between justify-content-xl-between justify-content-xxl-between d-flex mt-3 ms-2 me-2 pb-2 rounded border-primary">
-                          <div class="d-flex flex-sm-wrap col-md-auto col-xl-auto flex-wrap col-auto col-sm-auto flex-lg-wrap justify-content-lg-start col-lg-auto pt-2 align-items-baseline"><input id="customerorderfilter" name="customerorderfilter" type="text" class="form-control mt-1 mb-1 me-2" dmx-bind:placeholder="trans.data.search[lang.value]+'  '"><button id="btn37" class="btn fw-bold me-md-1 mt-1 mb-2 me-2 text-warning">{{trans.data.Ordered[lang.value]}}: {{list_customer_orders.data.customer_order_stats[0].Ordered}}</button><button id="btn38" class="btn fw-bold me-md-2 text-success mt-1 mb-1 me-2">{{trans.data.Paid[lang.value]}}: {{list_customer_orders.data.customer_order_stats[0].Paid}}</button><button id="btn39" class="btn fw-bold me-md-2 text-muted mt-1 mb-1 me-2">{{trans.data.pending[lang.value]}}: {{list_customer_orders.data.customer_order_stats[0].Pending}}</button>
+                          <div class="d-flex flex-sm-wrap col-md-auto col-xl-auto flex-wrap col-auto col-sm-auto flex-lg-wrap justify-content-lg-start col-lg-auto pt-2 align-items-baseline"><input id="customerorderfilter" name="customerorderfilter" type="text" class="form-control mt-1 mb-1 me-2" dmx-bind:placeholder="trans.data.search[lang.value]+'  '"><button id="btn37" class="btn me-md-1 mt-1 mb-2 me-2 text-warning">{{trans.data.Ordered[lang.value]}}: {{list_customer_orders.data.customer_order_stats[0].Ordered}}</button><button id="btn38" class="btn me-md-2 text-success mt-1 mb-1 me-2">{{trans.data.Paid[lang.value]}}: {{list_customer_orders.data.customer_order_stats[0].Paid}}</button><button id="btn39" class="btn me-md-2 text-muted mt-1 mb-1 me-2">{{trans.data.pending[lang.value]}}: {{list_customer_orders.data.customer_order_stats[0].Pending}}</button>
                             <ul class="pagination rounded mb-1 me-2 flex-wrap w-auto bg-primary bg-opacity-10" dmx-populate="list_customer_orders.data.query_list_customer_orders" dmx-state="listCustomerOrders" dmx-offset="customerOrdersOffset" dmx-generator="bs5paging">
                               <li class="page-item" dmx-class:disabled="list_customer_orders.data.query_list_customer_orders.page.current == 1" aria-label="First">
                                 <a href="javascript:void(0)" class="page-link" dmx-on:click="listCustomerOrders.set('customerOrdersOffset',list_customer_orders.data.query_list_customer_orders.page.offset.first)"><span aria-hidden="true">&lsaquo;&lsaquo;</span></a>
@@ -1211,7 +1213,7 @@
                                 <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="list_customer_transactions.data.query.data" id="tableRepeat2">
                                   <tr>
                                     <td dmx-text="customer_transaction_id"></td>
-                                    <td dmx-text="transaction_amount.formatNumber('0', ',', ',')" class="text-end"></td>
+                                    <td dmx-text="transaction_amount.formatNumber('3', '.', ',')" class="text-end"></td>
                                     <td dmx-text="payment_method_name" class="text-center"></td>
                                     <td dmx-text="trans.data.getValueOrKey(transaction_type)[lang.value]" class="text-center"></td>
                                     <td dmx-text="transaction_order" class="text-end"></td>
@@ -1384,7 +1386,7 @@
                           <div class="mb-3 row">
                             <label for="inp_customer_last_name1" class="col-sm-2 col-form-label">{{trans.data.dob[lang.value]}}</label>
                             <div class="col-sm-10">
-                              <input id="date12" name="customer_dob" type="datetime-local" dmx-bind:value="read_customer.data.query_read_customer.customer_dob">
+                              <input id="date12" name="customer_dob" type="datetime-local" class="form-control" dmx-bind:value="read_customer.data.query_read_customer.customer_dob">
                             </div>
                           </div>
                           <div class="mb-3 row">
@@ -1471,52 +1473,52 @@
 
 
           </div>
-          <div class="modal-body" id="invoice" style="background: white;">
-            <div class="container shadow-none" id="customerInvoiceContent">
-              <div class="row justify-content-xxl-between mt-4 row-cols-12" id="invoiceHeader">
+          <div class="modal-body shadow-none" id="invoice" style="background: white;">
+            <div class="shadow-none" id="customerInvoiceContent">
+              <div class="row justify-content-xxl-between row-cols-12 justify-content-between mt-2" id="invoiceHeader">
                 <div class="col-auto">
                   <img dmx-bind:src="'uploads/'+companyInfo.data.query.company_logo" width="200">
                 </div>
-                <div class="col ms-4">
+                <div class="ms-4 col-auto">
                   <div class="row">
                     <div class="col">
-                      <h2 class="text-info fw-bolder" dmx-text="companyInfo.data.query.company_name"></h2>
-                      <h6 class="text-info fw-bolder" dmx-text="companyInfo.data.query.company_address"></h6>
+                      <h4 class="text-info fw-bold" dmx-text="companyInfo.data.query.company_name"></h4>
+                      <h6 class="text-info" dmx-text="companyInfo.data.query.company_address"></h6>
                     </div>
                   </div>
                 </div>
 
               </div>
-              <div class="row justify-content-center row-cols-1" id="receiptNumber">
+              <div class="row justify-content-center row-cols-1 mt-2" id="receiptNumber">
 
                 <div class="col">
-                  <h3 class="text-info fw-bolder text-center" dmx-text="InvoiceTitleContent.value+' : '+readCustomerOrder.data.query.order_id" id="invoiceTitle"></h3>
+                  <h5 class="text-info text-center fw-bold" dmx-text="InvoiceTitleContent.value+' : '+readCustomerOrder.data.query.order_id" id="invoiceTitle"></h5>
                 </div>
               </div>
-              <div class="row row-cols-12" id="receiptInformation">
+              <div class="row row-cols-12 border rounded mb-1 pt-1 border-dark" id="receiptInformation">
 
                 <div class="col">
-                  <h5 class="text-info fw-bolder text-start" dmx-text="trans.data.name[lang.value]+' : '+read_customer.data.query_read_customer.customer_first_name+' '+read_customer.data.query_read_customer.customer_last_name"></h5>
+                  <h6 class="text-info text-start" dmx-text="trans.data.customer[lang.value]+' : '+read_customer.data.query_read_customer.customer_first_name+' '+read_customer.data.query_read_customer.customer_last_name"></h6>
                 </div>
                 <div class="col">
-                  <h5 class="text-info fw-bolder text-start" dmx-text="trans.data.info[lang.value]+' :  '+readCustomerOrder.data.query.order_extra_info"></h5>
+                  <h6 class="text-info text-start" dmx-text="trans.data.info[lang.value]+' :  '+readCustomerOrder.data.query.order_extra_info"></h6>
                 </div>
                 <div class="col">
-                  <h5 class="text-info fw-bolder text-start" dmx-text="trans.data.dateTime[lang.value]+' : '+dateTime.datetime"></h5>
+                  <h6 class="text-info text-start" dmx-text="trans.data.dateTime[lang.value]+' : '+dateTime.datetime"></h6>
                 </div>
                 <div class="col">
-                  <h5 class="text-info fw-bolder text-start" dmx-text="trans.data.user[lang.value]+' : '+list_customer_orders.data.query_list_customer_orders.data[0].user_username"></h5>
+                  <h6 class="text-info text-start" dmx-text="trans.data.user[lang.value]+' : '+list_customer_orders.data.query_list_customer_orders.data[0].user_username"></h6>
                 </div>
                 <div class="col">
-                  <h5 class="text-info fw-bolder text-start" dmx-text="trans.data.coverage[lang.value]+' :  '+readCustomerOrder.data.order_coverage_partner.customer_first_name+' '+readCustomerOrder.data.order_coverage_partner.customer_last_name+' '+readCustomerOrder.data.order_coverage_partner.customer_phone_number" id="orderInsurer3"></h5>
+                  <h6 class="text-info text-start" dmx-text="trans.data.coverage[lang.value]+' :  '+readCustomerOrder.data.order_coverage_partner.customer_first_name+' '+readCustomerOrder.data.order_coverage_partner.customer_last_name+' '+readCustomerOrder.data.order_coverage_partner.customer_phone_number" id="orderInsurer3"></h6>
                 </div>
               </div>
-              <div class="row justify-content-center row-cols-1" id="receiptTable">
+              <div class="row justify-content-center row-cols-1 border-dark border rounded" id="receiptTable">
 
                 <div class="col">
                   <div class="table-responsive bg-white" id="ReceiptOrderDetails" style="/* background: white */ /* border-color: white */ color: black !important;">
                     <table class="table" style="background: white;">
-                      <thead style="background: #b0b0b0 !important;">
+                      <thead style="background: #b0b0b0 !important;" class="fw-bold">
                         <tr style="color: black !important;">
                           <th>{{trans.data.product[lang.value]}}</th>
                           <th>{{trans.data.note[lang.value]}}</th>
@@ -1526,13 +1528,13 @@
                         </tr>
                       </thead>
                       <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="list_order_items.data.query" id="receiptDetails">
-                        <tr style="color: black !important;" class="fw-bold">
+                        <tr style="color: black !important;">
                           <td dmx-text="product_name"></td>
                           <td dmx-text="order_item_notes"></td>
                           <td dmx-text="order_item_quantity">
 
                           </td>
-                          <td dmx-text="order_item_price.toNumber().formatNumber('0',',',',')" dmx-hide="InvoiceTitleContent.value==('Delivery Note')||InvoiceTitleContent.value==('Bordereaux de Livraison')">
+                          <td dmx-text="order_item_price.toNumber().formatNumber('4','.',',')" dmx-hide="InvoiceTitleContent.value==('Delivery Note')||InvoiceTitleContent.value==('Bordereaux de Livraison')">
 
                           </td>
                           <td dmx-text="(order_item_quantity * order_item_price).formatNumber('O', ',', ',')" dmx-hide="InvoiceTitleContent.value==('Delivery Note')||InvoiceTitleContent.value==('Bordereaux de Livraison')">
@@ -1544,11 +1546,11 @@
                   </div>
                 </div>
               </div>
-              <div class="row" style="color: black !important;" dmx-hide="InvoiceTitleContent.value==('Delivery Note'||'Bon De Livraison') ">
-                <dmx-value id="varOrderTotal" dmx-bind:value="(list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`)).formatNumber('0', ',', ',')"></dmx-value>
+              <div class="row rounded border-dark border mt-1" style="color: black !important;" dmx-hide="InvoiceTitleContent.value==('Delivery Note'||'Bon De Livraison') ">
+                <dmx-value id="varOrderTotal" dmx-bind:value="(list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`)).formatNumber('3', '.', ',')"></dmx-value>
                 <dmx-value id="varOrderPaid" dmx-bind:value="list_customer_transactions_order.data.query.sum(`transaction_amount`)"></dmx-value>
                 <dmx-value id="varCustomerTotal" dmx-bind:value="((list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`))-((readCustomerOrder.data.query.coverage_percentage /100) * (list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`))))"></dmx-value>
-                <dmx-value id="varCustomerOwing" dmx-bind:value="(varOrderDiscounted.value - varOrderPaid.value).formatNumber('0',',',',')"></dmx-value>
+                <dmx-value id="varCustomerOwing" dmx-bind:value="(varOrderDiscounted.value - varOrderPaid.value).formatNumber('4','.',',')"></dmx-value>
                 <dmx-value id="varOrderDiscounted" dmx-bind:value="((list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`))-((readCustomerOrder.data.query.order_discount / 100) * (list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`))))"></dmx-value>
 
                 <dmx-value id="variableOrderTotal" dmx-bind:value="(list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`))"></dmx-value>
@@ -1565,31 +1567,14 @@
                   <div class="row row-cols-12 justify-content-center" id="total">
                     <div class="justify-content-xl-end col-xl-auto col-auto" id="total2">
                       <h6 class="ms-2 pt-2">{{trans.data.total[lang.value]}}:</h6>
-                      <h6 class="fw-bold text-white" id="totalAmount">{{(list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`)).formatNumber('0', ',', ',')}}</h6>
+                      <h6 class="fw-bold text-white" id="totalAmount">{{(list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`)).toNumber().default(0).formatNumber('3', '.', ',')}}</h6>
                     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
                   </div>
                   <div class="row row-cols-12 justify-content-center" id="invoiceDiscount">
                     <div class="justify-content-xl-end col-xl-auto col-auto text-center" id="discount">
                       <h6 class="ms-2 pt-2">{{trans.data.discount[lang.value]}}:</h6>
-                      <h6 class="fw-bold text-white" dmx-text="readCustomerOrder.data.query.order_discount+'%'" id="invoiceDiscountAmount"></h6>
+                      <h6 class="fw-bold text-white" dmx-text="readCustomerOrder.data.query.order_discount.default(0).toNumber().formatNumber('3','.',',')+'%'" id="invoiceDiscountAmount"></h6>
                     </div>
 
 
@@ -1597,25 +1582,25 @@
                   <div class="row justify-content-center" id="orderCoverage">
                     <div class="justify-content-xl-end col-xl-auto col-auto text-center" id="coverage1">
                       <h6 class="ms-2 pt-2">{{trans.data.coverage[lang.value]}}:</h6>
-                      <h6 class="fw-bold text-white" id="CoverageAmount1">{{readCustomerOrder.data.query.coverage_percentage}}%</h6>
+                      <h6 class="fw-bold text-white" id="CoverageAmount1">{{readCustomerOrder.data.query.coverage_percentage.default(0).formatNumber('3','.',',')}}%</h6>
                     </div>
                   </div>
                   <div class="row justify-content-center" id="discountTotal">
                     <div class="justify-content-xl-end col-xl-auto col-auto text-center" id="discount1">
                       <h6 class="ms-2 pt-2 text-white">{{trans.data.discount[lang.value]}}:</h6>
-                      <h6 class="fw-bold text-white" dmx-text="((list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`))-((readCustomerOrder.data.query.order_discount / 100) * (list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`)))).formatNumber('0', ',', ',')" id="discountAmount1"></h6>
+                      <h6 class="fw-bold text-white" dmx-text="((list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`))-((readCustomerOrder.data.query.order_discount / 100) * (list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`)))).formatNumber('3', '.', ',').default(0)" id="discountAmount1"></h6>
                     </div>
                   </div>
                   <div class="row justify-content-center" id="paid1">
                     <div class="justify-content-xl-end col-xl-auto offset-0 col-auto" id="paid">
                       <h6 class="ms-2 pt-2">{{trans.data.Paid[lang.value]}}:</h6>
-                      <h6 class="fw-bold" dmx-text="list_customer_transactions_order.data.query.sum(`transaction_amount`).formatNumber('0', ',', ',')" id="paidAmount"></h6>
+                      <h6 class="fw-bold" dmx-text="list_customer_transactions_order.data.query.sum(`transaction_amount`).formatNumber('3', '.', ',')" id="paidAmount"></h6>
                     </div>
                   </div>
                   <div class="row justify-content-center" id="owing">
                     <div class="justify-content-xl-end col-xl-auto offset-0 col-auto text-center" id="owing1">
                       <h6 class="ms-2 pt-2">{{trans.data.owing[lang.value]}}:</h6>
-                      <h5 class="fw-bolder" dmx-text="(-variableCustomerTotalToPay.value).formatNumber('0',',',',')" id="owingAmount"></h5>
+                      <h5 class="fw-bolder" dmx-text="(-variableCustomerTotalToPay.value).formatNumber('4','.',',')" id="owingAmount"></h5>
                     </div>
                   </div>
 
@@ -1623,11 +1608,11 @@
               </div>
               <div class="row justify-content-between row-cols-6 mt-4 mb-5">
                 <div class="col">
-                  <h5 dmx-text="trans.data.signatureClient[lang.value]" class="fw-bolder" style="color: black !important;"></h5>
+                  <h6 dmx-text="trans.data.signatureClient[lang.value]" style="color: black !important;"></h6>
 
                 </div>
                 <div class="col">
-                  <h5 dmx-text="trans.data.signatureCashier[lang.value]" class="fw-bolder" style="color: black !important;"></h5>
+                  <h6 dmx-text="trans.data.signatureCashier[lang.value]" style="color: black !important;"></h6>
                 </div>
               </div>
               <div class="row align-items-end receipt-footer">
@@ -1733,7 +1718,7 @@
                 </div>
               </div>
               <div class="row" style="color: black !important;">
-                <dmx-value id="varOrderTotal1" dmx-bind:value="(list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`)).formatNumber('0', ',', ',')"></dmx-value>
+                <dmx-value id="varOrderTotal1" dmx-bind:value="(list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`)).formatNumber('3', '.', ',')"></dmx-value>
                 <dmx-value id="varOrderPaid1" dmx-bind:value="list_customer_transactions_order.data.query.sum(`transaction_amount`)"></dmx-value>
                 <dmx-value id="varCustomerTotal1" dmx-bind:value="((list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`))-((readCustomerOrder.data.query.coverage_percentage /100) * (list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`))))"></dmx-value>
                 <dmx-value id="varCustomerOwing1" dmx-bind:value="(((list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`))-((readCustomerOrder.data.query.coverage_percentage /100) * (list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`))))- ((list_customer_transactions_order.data.query.sum(`transaction_amount`))))"></dmx-value>
@@ -1745,7 +1730,7 @@
 
 
                     <div class="justify-content-xl-end col-xl-auto offset-xl-0 col-auto rounded-pill rounded-2 align-self-center align-self-xxl-center align-self-xl-center align-self-lg-center align-self-md-center pt-2" id="totalAmount4">
-                      <h6 class="fw-bold text-white">{{(list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`)).formatNumber('0', ',', ',')}}</h6>
+                      <h6 class="fw-bold text-white">{{(list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`)).formatNumber('3', '.', ',')}}</h6>
                     </div>
 
 
@@ -1769,7 +1754,7 @@
                       <h6 class="ms-2 pt-2">{{trans.data.owing[lang.value]}}:</h6>
                     </div>
                     <div class="justify-content-xl-end col-xl-auto offset-xl-0 col-auto rounded-pill rounded-2 align-self-center align-self-xxl-center align-self-xl-center align-self-lg-center align-self-md-center pt-2" id="owingAmount3">
-                      <h6 class="fw-bold" dmx-text="(((list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`))-((readCustomerOrder.data.query.coverage_percentage /100) * (list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`))))- ((list_customer_transactions_order.data.query.sum(`transaction_amount`)))).formatNumber('0', ',', ',')">{{list_customer_transactions_order.data.query.sum(`transaction_amount`)}}</h6>
+                      <h6 class="fw-bold" dmx-text="(((list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`))-((readCustomerOrder.data.query.coverage_percentage /100) * (list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`))))- ((list_customer_transactions_order.data.query.sum(`transaction_amount`)))).formatNumber('3', '.', ',')">{{list_customer_transactions_order.data.query.sum(`transaction_amount`)}}</h6>
                     </div>
                   </div>
                   <div class="row">
@@ -1777,7 +1762,7 @@
                       <h6 class="ms-2 pt-2">{{trans.data.Paid[lang.value]}}:</h6>
                     </div>
                     <div class="justify-content-xl-end col-xl-auto offset-xl-0 col-auto rounded-pill rounded-2 align-self-center align-self-xxl-center align-self-xl-center align-self-lg-center align-self-md-center pt-2" id="paidAmount4">
-                      <h6 class="fw-bold" dmx-text="list_customer_transactions_order.data.query.sum(`transaction_amount`).formatNumber('0', ',', ',')"></h6>
+                      <h6 class="fw-bold" dmx-text="list_customer_transactions_order.data.query.sum(`transaction_amount`).formatNumber('3', '.', ',')"></h6>
                     </div>
                   </div>
                   <div class="row">
@@ -1785,7 +1770,7 @@
                       <h6 class="ms-2 pt-2">{{trans.data.coverageTotal[lang.value]}}:</h6>
                     </div>
                     <div class="justify-content-xl-end col-xl-auto offset-xl-0 col-auto rounded-pill rounded-2 align-self-center align-self-xxl-center align-self-xl-center align-self-lg-center align-self-md-center pt-2" id="coverageToPayAmount4">
-                      <h6 dmx-text="((list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`))-(((100 - readCustomerOrder.data.query.coverage_percentage) /100) * (list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`)))).formatNumber('0', ',', ',')" class="fw-bold">{{list_customer_transactions_order.data.query.sum(`transaction_amount`)}}</h6>
+                      <h6 dmx-text="((list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`))-(((100 - readCustomerOrder.data.query.coverage_percentage) /100) * (list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`)))).formatNumber('3', '.', ',')" class="fw-bold">{{list_customer_transactions_order.data.query.sum(`transaction_amount`)}}</h6>
                     </div>
                   </div>
                   <div class="row">
@@ -1793,7 +1778,7 @@
                       <h6 class="ms-2 pt-2">{{trans.data.customerTotal[lang.value]}}:</h6>
                     </div>
                     <div class="justify-content-xl-end col-xl-auto offset-xl-0 col-auto rounded-pill rounded-2 align-self-center align-self-xxl-center align-self-xl-center align-self-lg-center align-self-md-center pt-2" id="toPayAmount4">
-                      <h6 class="fw-bold text-white" dmx-text="((list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`))-((readCustomerOrder.data.query.coverage_percentage /100) * (list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`)))).formatNumber('0', ',', ',')"></h6>
+                      <h6 class="fw-bold text-white" dmx-text="((list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`))-((readCustomerOrder.data.query.coverage_percentage /100) * (list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`)))).formatNumber('3', '.', ',')"></h6>
                     </div>
                   </div>
                   <div class="row">
@@ -1809,7 +1794,7 @@
                       <h6 class="ms-2 pt-2 text-white">{{trans.data.discount[lang.value]}}:</h6>
                     </div>
                     <div class="justify-content-xl-end col-xl-auto offset-xl-0 col-auto rounded-pill rounded-2 align-self-center align-self-xxl-center align-self-xl-center align-self-lg-center align-self-md-center pt-2" id="disocuntAmount4">
-                      <h6 class="fw-bold text-white" dmx-text="((list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`))-((readCustomerOrder.data.query.order_discount / 100) * (list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`)))).formatNumber('0', ',', ',')"></h6>
+                      <h6 class="fw-bold text-white" dmx-text="((list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`))-((readCustomerOrder.data.query.order_discount / 100) * (list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`)))).formatNumber('3', '.', ',')"></h6>
                     </div>
                   </div>
                   <div class="row"></div>
@@ -1823,7 +1808,7 @@
 
 
                     <div class="justify-content-xl-end col-xl-auto offset-xl-0 col-auto rounded-pill rounded-2 align-self-center align-self-xxl-center align-self-xl-center align-self-lg-center align-self-md-center pt-2" id="totalAmount4">
-                      <h6 class="fw-bold text-white">{{(list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`)).formatNumber('0', ',', ',')}}</h6>
+                      <h6 class="fw-bold text-white">{{(list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`)).formatNumber('3', '.', ',')}}</h6>
                     </div>
 
 
@@ -1847,7 +1832,7 @@
                       <h6 class="ms-2 pt-2 text-white">{{trans.data.owing[lang.value]}}:</h6>
                     </div>
                     <div class="justify-content-xl-end col-xl-auto offset-xl-0 col-auto rounded-pill rounded-2 align-self-center align-self-xxl-center align-self-xl-center align-self-lg-center align-self-md-center pt-2" id="owingAmount3">
-                      <h6 class="fw-bold" dmx-text="(((list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`))-((readCustomerOrder.data.query.coverage_percentage /100) * (list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`))))- ((list_customer_transactions_order.data.query.sum(`transaction_amount`)))).formatNumber('0', ',', ',')">{{list_customer_transactions_order.data.query.sum(`transaction_amount`)}}</h6>
+                      <h6 class="fw-bold" dmx-text="(((list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`))-((readCustomerOrder.data.query.coverage_percentage /100) * (list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`))))- ((list_customer_transactions_order.data.query.sum(`transaction_amount`)))).formatNumber('3', '.', ',')">{{list_customer_transactions_order.data.query.sum(`transaction_amount`)}}</h6>
                     </div>
                   </div>
                   <div class="row">
@@ -1855,7 +1840,7 @@
                       <h6 class="ms-2 pt-2">{{trans.data.Paid[lang.value]}}:</h6>
                     </div>
                     <div class="justify-content-xl-end col-xl-auto offset-xl-0 col-auto rounded-pill rounded-2 align-self-center align-self-xxl-center align-self-xl-center align-self-lg-center align-self-md-center pt-2" id="paidAmount4">
-                      <h6 class="fw-bold" dmx-text="list_customer_transactions_order.data.query.sum(`transaction_amount`).formatNumber('0', ',', ',')"></h6>
+                      <h6 class="fw-bold" dmx-text="list_customer_transactions_order.data.query.sum(`transaction_amount`).formatNumber('3', '.', ',')"></h6>
                     </div>
                   </div>
                   <div class="row">
@@ -1863,7 +1848,7 @@
                       <h6 class="ms-2 pt-2">{{trans.data.coverageTotal[lang.value]}}:</h6>
                     </div>
                     <div class="justify-content-xl-end col-xl-auto offset-xl-0 col-auto rounded-pill rounded-2 align-self-center align-self-xxl-center align-self-xl-center align-self-lg-center align-self-md-center pt-2" id="coverageToPayAmount4">
-                      <h6 dmx-text="((list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`))-(((100 - readCustomerOrder.data.query.coverage_percentage) /100) * (list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`)))).formatNumber('0', ',', ',')" class="fw-bold">{{list_customer_transactions_order.data.query.sum(`transaction_amount`)}}</h6>
+                      <h6 dmx-text="((list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`))-(((100 - readCustomerOrder.data.query.coverage_percentage) /100) * (list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`)))).formatNumber('3', '.', ',')" class="fw-bold">{{list_customer_transactions_order.data.query.sum(`transaction_amount`)}}</h6>
                     </div>
                   </div>
                   <div class="row">
@@ -1871,7 +1856,7 @@
                       <h6 class="ms-2 pt-2">{{trans.data.customerTotal[lang.value]}}:</h6>
                     </div>
                     <div class="justify-content-xl-end col-xl-auto offset-xl-0 col-auto rounded-pill rounded-2 align-self-center align-self-xxl-center align-self-xl-center align-self-lg-center align-self-md-center pt-2 h-50" id="toPayAmount4">
-                      <h6 class="fw-bold text-white" dmx-text="((list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`))-((readCustomerOrder.data.query.coverage_percentage /100) * (list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`)))).formatNumber('0', ',', ',')"></h6>
+                      <h6 class="fw-bold text-white" dmx-text="((list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`))-((readCustomerOrder.data.query.coverage_percentage /100) * (list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`)))).formatNumber('3', '.', ',')"></h6>
                     </div>
                   </div>
                   <div class="row">
@@ -1887,7 +1872,7 @@
                       <h6 class="ms-2 pt-2 text-white">{{trans.data.discount[lang.value]}}:</h6>
                     </div>
                     <div class="justify-content-xl-end col-xl-auto offset-xl-0 col-auto rounded-pill rounded-2 align-self-center align-self-xxl-center align-self-xl-center align-self-lg-center align-self-md-center pt-2" id="disocuntAmount4">
-                      <h6 class="fw-bold text-white" dmx-text="((list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`))-((readCustomerOrder.data.query.order_discount / 100) * (list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`)))).formatNumber('0', ',', ',')"></h6>
+                      <h6 class="fw-bold text-white" dmx-text="((list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`))-((readCustomerOrder.data.query.order_discount / 100) * (list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`)))).formatNumber('3', '.', ',')"></h6>
                     </div>
                   </div>
                   <div class="row"></div>
@@ -2017,7 +2002,7 @@
                               </div>
                               <div class="row row-cols-12 mt-0">
                                 <div class="col d-flex justify-content-center">
-                                  <h6 class="text-center text-body">{{product_price.formatNumber('0',',',',')}}</h6>
+                                  <h6 class="text-center text-body">{{product_price.formatNumber('4','.',',')}}</h6>
                                 </div>
                               </div>
 
@@ -2132,15 +2117,15 @@
               <dmx-value id="variableCustomerTotal" dmx-bind:value="{{(variableOrderTotal.value * ((100 - variableOrderDiscount.value)/100) * ((100 - variableOrderCoverage.value)/100))}}"></dmx-value>
               <dmx-value id="variableCustomerTotalToPay" dmx-bind:value="(variableOrderPaid.value - variableCustomerTotal.value)"></dmx-value>
               <dmx-value id="variableCustomerOwing" dmx-bind:value="(((list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`))-((readCustomerOrder.data.query.coverage_percentage /100) * (list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`))))- ((list_customer_transactions_order.data.query.sum(`transaction_amount`))))"></dmx-value>
-              <div class="col" style="">
-                <div class="row row-cols-12 justify-content-start rounded ms-0 me-0 pt-2 pb-2 ps-2 pe-2 bg-opacity-10 bg-primary" id="orderInfo">
+              <div class="col ms-1" style="">
+                <div class="row row-cols-12 rounded bg-opacity-10 bg-primary pt-2 pb-2 ps-2 pe-2 " id="orderInfo">
                   <div class="justify-content-xl-end col-xl-auto col-auto" id="total01">
                     <h6 class="ms-2 pt-2">{{trans.data.total[lang.value]}}:</h6>
                   </div>
 
 
                   <div class="justify-content-xl-end col-xl-auto offset-xl-0 col-auto rounded-pill rounded-2 align-self-center align-self-xxl-center align-self-xl-center align-self-lg-center align-self-md-center pt-2 bg-body" id="totalAmount">
-                    <h6>{{(list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`)).formatNumber('0', ',', ',')}}</h6>
+                    <h6>{{(list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`)).formatNumber('3', '.', ',')}}</h6>
                   </div>
                   <div class="justify-content-xl-end col-xl-auto col-auto" id="discount">
                     <h6 class="ms-2 pt-2">{{trans.data.discount[lang.value]}}:</h6>
@@ -2161,38 +2146,38 @@
                     <h6 class="ms-2 pt-2">{{trans.data.customerTotal[lang.value]}}:</h6>
                   </div>
                   <div class="justify-content-xl-end col-xl-auto offset-xl-0 col-auto rounded-pill rounded-2 align-self-center align-self-xxl-center align-self-xl-center align-self-lg-center align-self-md-center pt-2 bg-body" id="toPayAmount">
-                    <h6 class="fw-bold text-success">{{(variableOrderTotal.value * ((100 - variableOrderDiscount.value)/100) * ((100 - variableOrderCoverage.value)/100)).formatNumber('0',',',',')}}</h6>
+                    <h6 class="fw-bold text-success">{{(variableOrderTotal.value * ((100 - variableOrderDiscount.value)/100) * ((100 - variableOrderCoverage.value)/100)).formatNumber('4','.',',')}}</h6>
                   </div>
                   <div class="justify-content-xl-end col-xl-auto offset-0 col-auto" id="paid">
                     <h6 class="ms-2 pt-2">{{trans.data.Paid[lang.value]}}:</h6>
                   </div>
                   <div class="justify-content-xl-end col-xl-auto offset-xl-0 col-auto rounded-pill rounded-2 align-self-center align-self-xxl-center align-self-xl-center align-self-lg-center align-self-md-center pt-2 bg-success text-secondary" id="paidAmount">
-                    <h6 class="fw-bold" dmx-text="list_customer_transactions_order_totals.data.custom_list_customer_transactions_order_totals[0].Settlements.toNumber().formatNumber('0', ',', ',').default(0)"></h6>
+                    <h6 class="fw-bold" dmx-text="list_customer_transactions_order_totals.data.custom_list_customer_transactions_order_totals[0].Settlements.toNumber().formatNumber('4', '.', ',').default(0)"></h6>
                   </div>
                   <div class="justify-content-xl-end col-xl-auto offset-0 col-auto" id="owing">
                     <h6 class="ms-2 pt-2">{{trans.data.owing[lang.value]}}:</h6>
                   </div>
                   <div class="justify-content-xl-end col-xl-auto offset-xl-0 col-auto rounded-pill rounded-2 align-self-center align-self-xxl-center align-self-xl-center align-self-lg-center align-self-md-center pt-2 bg-danger text-secondary" id="owingAmount">
-                    <h6 class="fw-bold">{{(variableCustomerTotalToPay.value).formatNumber('0',',',',')}}</h6>
+                    <h6 class="fw-bold">{{(variableCustomerTotalToPay.value).formatNumber('4','.',',')}}</h6>
                   </div>
                   <div class="justify-content-xl-end col-xl-auto col-auto fw-bold" id="coverageToPay6">
                     <h6 class="ms-2 pt-2 text-warning fw-bold">{{trans.data.coverageTotal[lang.value]}}:</h6>
                   </div>
 
                   <div class="justify-content-xl-end col-xl-auto offset-xl-0 col-auto rounded-pill rounded-2 align-self-center align-self-xxl-center align-self-xl-center align-self-lg-center align-self-md-center pt-2 border-warning bg-transparent text-warning border" id="coverageToPayAmount">
-                    <h6 dmx-text="variableOrderCoverageTotal.value.formatNumber('0',',',',').default(0)" class="fw-bold">{{list_customer_transactions_order.data.query.sum(`transaction_amount`)}}</h6>
+                    <h6 dmx-text="variableOrderCoverageTotal.value.formatNumber('4','.',',').default(0)" class="fw-bold">{{list_customer_transactions_order.data.query.sum(`transaction_amount`)}}</h6>
                   </div>
                   <div class="justify-content-xl-end col-xl-auto col-auto" id="coveragePaid">
                     <h6 class="ms-2 pt-2 text-warning fw-bold">{{trans.data.coveragePaid[lang.value]}}:</h6>
                   </div>
                   <div class="justify-content-xl-end col-xl-auto offset-xl-0 col-auto rounded-pill rounded-2 align-self-center align-self-xxl-center align-self-xl-center align-self-lg-center align-self-md-center pt-2 text-warning bg-transparent border-warning border" id="coveragePaidAmount">
-                    <h6 dmx-text="variableOrderCoveragePaid.value.toNumber().formatNumber('0',',',',').default(0)" class="fw-bold">{{list_customer_transactions_order.data.query.sum(`transaction_amount`)}}</h6>
+                    <h6 dmx-text="variableOrderCoveragePaid.value.toNumber().formatNumber('4','.',',').default(0)" class="fw-bold">{{list_customer_transactions_order.data.query.sum(`transaction_amount`)}}</h6>
                   </div>
                   <div class="justify-content-xl-end col-xl-auto col-auto fw-bold" id="coverageOwing">
                     <h6 class="ms-2 pt-2 text-warning fw-bold">{{trans.data.coverageOwing[lang.value]}}:</h6>
                   </div>
                   <div class="justify-content-xl-end col-xl-auto offset-xl-0 col-auto rounded-pill rounded-2 align-self-center align-self-xxl-center align-self-xl-center align-self-lg-center align-self-md-center pt-2 bg-warning text-secondary" id="coverageOwingAmount">
-                    <h6 dmx-text="(variableOrderCoveragePaid.value  -variableOrderCoverageTotal.value).formatNumber('0',',',',').default(0)" class="fw-bold">{{list_customer_transactions_order.data.query.sum(`transaction_amount`)}}</h6>
+                    <h6 dmx-text="(variableOrderCoveragePaid.value  -variableOrderCoverageTotal.value).formatNumber('4','.',',').default(0)" class="fw-bold">{{list_customer_transactions_order.data.query.sum(`transaction_amount`)}}</h6>
                   </div>
 
 
@@ -2205,8 +2190,8 @@
 
 
 
-            <div class="row mt-4">
-              <div class="col bg-secondary rounded ms-2 me-2 pt-2">
+            <div class="row mt-1 shadow-none">
+              <div class="bg-secondary rounded col ms-1 pt-2">
                 <ul class="nav nav-tabs nav-fill flex-nowrap scrollable align-items-end" id="navTabs1_tabs" role="tablist">
                   <li class="nav-item">
                     <a class="nav-link active" id="navTabs1_13_tab" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_13" role="tab" aria-controls="navTabs1_1" aria-selected="true" dmx-bs-tooltip="trans.data.overview[lang.value]" data-bs-trigger="hover" data-bs-placement="bottom">
@@ -2255,19 +2240,21 @@
                               <tr>
                                 <th>#</th>
                                 <th>{{trans.data.product[lang.value]}}</th>
+                                <th>{{trans.data.product[lang.value]}}</th>
                                 <th>{{trans.data.dateTime[lang.value]}}</th>
                                 <th>{{trans.data.status[lang.value]}}</th>
-                                <th>{{trans.data.note[lang.value]}}</th>
+                                <th class="text-end">{{trans.data.note[lang.value]}}</th>
                                 <th>{{trans.data.quantity[lang.value]}}</th>
                                 <th>{{trans.data.price[lang.value]}}</th>
-                                <th>{{trans.data.attention[lang.value]}}</th>
+                                <th class="text-center">{{trans.data.attention[lang.value]}}</th>
                                 <th></th>
                               </tr>
                             </thead>
                             <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="list_order_items.data.query" id="tableRepeat4">
-                              <tr>
+                              <tr class="align-middle text-center">
                                 <td dmx-text="order_item_id" class="text-center"></td>
                                 <td dmx-text="product_name" class="text-center"></td>
+                                <td><img width="50" height="50" dmx-bind:src="'/servo/uploads/product_pictures/'+product_picture"></td>
                                 <td dmx-text="order_time_ordered" class="text-center"></td>
                                 <td dmx-text="trans.data.getValueOrKey(order_item_status)[lang.value]" class="text-center" dmx-class:text-success="order_item_status=='Delivered'" dmx-class:text-warning="order_item_status=='Ready'" dmx-class:text-info="order_item_status=='Processing'" dmx-class:text-danger="order_item_status=='Ordered'"></td>
                                 <td dmx-text="order_item_notes"></td>
@@ -2275,7 +2262,7 @@
 
                                   <form id="editQuantity" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_order_items/update_order_item_quantity.php" dmx-on:success="create_value_update_order_item_quantity.submit();notifies1.success('Success');list_order_items.load({order_id: session_variables.data.current_order});list_value_updates_per_order.load({order_id: readCustomerOrder.data.query.order_id})">
                                     <div class="row">
-                                      <div class="col d-flex text-end"><input id="newQuantity" name="order_item_quantity" type="number" class="form-control inline-edit" dmx-bind:value="order_item_quantity" dmx-bind:disabled="(readCustomerOrder.data.query.order_status == 'Paid')" min="0.001" data-rule-min="0.001" data-msg-min="Min. 0.001" dmx-on:updated="create_value_update_order_item_quantity.quantityUpdateNew.setValue(editQuantity.newQuantity.value)">
+                                      <div class="col d-flex"><input id="newQuantity" name="order_item_quantity" type="number" class="form-control inline-edit" dmx-bind:value="order_item_quantity" dmx-bind:disabled="(readCustomerOrder.data.query.order_status == 'Paid')" min="0.001" data-rule-min="0.001" data-msg-min="Min. 0.001" dmx-on:updated="create_value_update_order_item_quantity.quantityUpdateNew.setValue(editQuantity.newQuantity.value)">
                                         <input id="editOrderId" name="order_item_id" type="number" class="form-control inline-edit visually-hidden" dmx-bind:value="order_item_id"><button id="btn21" class="btn text-success ms-3" data-bs-target="#productInfo" type="submit" dmx-hide="(readCustomerOrder.data.query.order_status == 'Paid')" dmx-bind:disabled="(readCustomerOrder.data.query.order_status == 'Paid' ||editQuantity.newQuantity.value == order_item_quantity )"><i class="fas fa-check"><br></i></button>
                                       </div>
                                     </div>
@@ -2320,7 +2307,7 @@
                                   </form>
 
                                 </td>
-                                <td dmx-text="user_username" class="text-end">
+                                <td dmx-text="user_username" class="text-center">
 
                                 </td>
                                 <td class="text-end">
@@ -2485,7 +2472,7 @@
                             <select id="orderTransactionPaymentMethod" class="form-select" dmx-bind:options="payment_methods.data.query" optiontext="payment_method_name" optionvalue="payment_method_id" name="transaction_payment_method" dmx-bind:disabled="((readCustomerOrder.data.query.order_status == 'Paid')||(createCustomerTransaction.transactionPaymentMethod1.value == '1'))" required="" data-msg-required="!">
                               <option selected="" value="">----</option>
                             </select>
-                            <button id="payFromDeposit" class="btn ms-2 fw-bold btn-success text-white bg-success bg-opacity-75" dmx-text="trans.data.payFromDeposit[lang.value]+' : '+netDeposits.value.toNumber().formatNumber('0',',',',')" dmx-on:click="createOrderTransaction.transactionType.disable();createOrderTransaction.orderTransactionPaymentMethod.setValue(1)" dmx-show="createOrderTransaction.transactionAmount.value&lt;=netDeposits.value&amp;&amp;createOrderTransaction.transactionAmount.value&gt;0"></button>
+                            <button id="payFromDeposit" class="btn ms-2 fw-bold btn-success text-white bg-success bg-opacity-75" dmx-text="trans.data.payFromDeposit[lang.value]+' : '+netDeposits.value.toNumber().formatNumber('4','.',',')" dmx-on:click="createOrderTransaction.transactionType.disable();createOrderTransaction.orderTransactionPaymentMethod.setValue(1)" dmx-show="createOrderTransaction.transactionAmount.value&lt;=netDeposits.value&amp;&amp;createOrderTransaction.transactionAmount.value&gt;0"></button>
                           </div>
                         </div>
 
@@ -2507,7 +2494,7 @@
                     <div class="row mt-2 ms-0 me-0">
                       <div class="col rounded">
                         <div class="table-responsive">
-                          <table class="table table-hover table-sm">
+                          <table class="table table-hover table-sm bg-transparent">
                             <thead>
                               <tr>
                                 <th>#</th>
@@ -2518,9 +2505,9 @@
                                 <th>{{trans.data.dateTime[lang.value]}}</th>
                                 <th>{{trans.data.status[lang.value]}}</th>
                                 <th>{{trans.data.note[lang.value]}}</th>
-                                <th>{{trans.data.total[lang.value]}}</th>
-                                <th>{{trans.data.amountTendered[lang.value]}}</th>
-                                <th>{{trans.data.balance[lang.value]}}</th>
+                                <th class="text-end">{{trans.data.total[lang.value]}}</th>
+                                <th class="text-end">{{trans.data.amountTendered[lang.value]}}</th>
+                                <th class="text-end">{{trans.data.balance[lang.value]}}</th>
                                 <th></th>
                                 <th></th>
 
@@ -2537,9 +2524,9 @@
                                 <td dmx-text="transaction_status"></td>
                                 <td dmx-text="transaction_note"></td>
 
-                                <td dmx-text="transaction_amount.formatNumber('0', ',', ',')" class="text-end"></td>
-                                <td dmx-text="transaction_amount_tendered.formatNumber('0', ',', ',')"></td>
-                                <td dmx-text="transaction_balance.formatNumber('0', ',', ',')"></td>
+                                <td dmx-text="transaction_amount.toNumber().formatNumber('3','.',',')" class="text-end"></td>
+                                <td dmx-text="transaction_amount_tendered.toNumber().formatNumber('3','.',',')" class="text-end"></td>
+                                <td dmx-text="transaction_balance.toNumber().formatNumber('3','.',',')" class="text-end"></td>
                                 <td>
                                   <button id="btn15" class="btn" data-bs-toggle="modal" data-bs-target="#printTransactionReceiptModalGeneral" dmx-on:click="read_customer_transaction.load({customer_cash_transaction_id: customer_transaction_id})" dmx-bind:disabled="(readCustomerOrder.data.query.order_status == 'Paid')"><i class="fas fa-receipt fa-lg"></i>
                                   </button>
@@ -2956,13 +2943,13 @@
 
 
                   <div class="justify-content-xl-end col-xl-auto offset-xl-0 col-auto bg-secondary rounded-pill rounded-2 align-self-center align-self-xxl-center align-self-xl-center align-self-lg-center align-self-md-center pt-2" id="totalAmount3">
-                    <h6 class="text-success fw-bold">{{(list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`)).formatNumber('0', ',', ',')}}</h6>
+                    <h6 class="text-success fw-bold">{{(list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`)).formatNumber('3', '.', ',')}}</h6>
                   </div>
                   <div class="justify-content-xl-end col-xl-auto col-auto" id="discount3">
                     <h6 class="ms-2 pt-2">{{trans.data.discount[lang.value]}}:</h6>
                   </div>
                   <div class="justify-content-xl-end col-xl-auto offset-xl-0 col-auto bg-secondary rounded-pill rounded-2 align-self-center align-self-xxl-center align-self-xl-center align-self-lg-center align-self-md-center pt-2" id="disocuntAmount3">
-                    <h6 class="text-success fw-bold" dmx-text="((list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`))-((readCustomerOrder.data.query.order_discount / 100) * (list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`)))).formatNumber('0', ',', ',')"></h6>
+                    <h6 class="text-success fw-bold" dmx-text="((list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`))-((readCustomerOrder.data.query.order_discount / 100) * (list_order_items.data.query.sum(`(order_item_price * order_item_quantity)`)))).formatNumber('3', '.', ',')"></h6>
                   </div>
 
 
@@ -2977,38 +2964,38 @@
                     <h6 class="ms-2 pt-2">{{trans.data.customerTotal[lang.value]}}:</h6>
                   </div>
                   <div class="justify-content-xl-end col-xl-auto offset-xl-0 col-auto rounded-pill rounded-2 align-self-center align-self-xxl-center align-self-xl-center align-self-lg-center align-self-md-center pt-2 bg-secondary" id="toPayAmount3">
-                    <h6 class="fw-bold text-white">{{(variableOrderTotal.value * ((100 - variableOrderDiscount.value)/100) * ((100 - variableOrderCoverage.value)/100)).formatNumber('0',',',',')}}</h6>
+                    <h6 class="fw-bold text-white">{{(variableOrderTotal.value * ((100 - variableOrderDiscount.value)/100) * ((100 - variableOrderCoverage.value)/100)).formatNumber('4','.',',')}}</h6>
                   </div>
                   <div class="justify-content-xl-end col-xl-auto offset-0 col-auto" id="paid3">
                     <h6 class="ms-2 pt-2">{{trans.data.Paid[lang.value]}}:</h6>
                   </div>
                   <div class="justify-content-xl-end col-xl-auto offset-xl-0 col-auto rounded-pill rounded-2 align-self-center align-self-xxl-center align-self-xl-center align-self-lg-center align-self-md-center pt-2 bg-success text-success bg-opacity-25" id="paidAmount3">
-                    <h6 class="fw-bold" dmx-text="list_customer_transactions_order_totals.data.custom_list_customer_transactions_order_totals[0].Settlements.toNumber().formatNumber('0', ',', ',').default(0)"></h6>
+                    <h6 class="fw-bold" dmx-text="list_customer_transactions_order_totals.data.custom_list_customer_transactions_order_totals[0].Settlements.toNumber().formatNumber('3', '.', ',').default(0)"></h6>
                   </div>
                   <div class="justify-content-xl-end col-xl-auto offset-0 col-auto" id="owing2">
                     <h6 class="ms-2 pt-2">{{trans.data.owing[lang.value]}}:</h6>
                   </div>
                   <div class="justify-content-xl-end col-xl-auto offset-xl-0 col-auto rounded-pill rounded-2 align-self-center align-self-xxl-center align-self-xl-center align-self-lg-center align-self-md-center pt-2 bg-danger bg-opacity-25 text-danger" id="owingAmount2">
-                    <h6 class="fw-bold">{{(variableCustomerTotalToPay.value).formatNumber('0',',',',')}}</h6>
+                    <h6 class="fw-bold">{{(variableCustomerTotalToPay.value).formatNumber('4','.',',')}}</h6>
                   </div>
                   <div class="justify-content-xl-end col-xl-auto col-auto fw-bold" id="coverageToPay3">
                     <h6 class="ms-2 pt-2 text-warning fw-bold">{{trans.data.coverageTotal[lang.value]}}:</h6>
                   </div>
 
                   <div class="justify-content-xl-end col-xl-auto offset-xl-0 col-auto rounded-pill rounded-2 align-self-center align-self-xxl-center align-self-xl-center align-self-lg-center align-self-md-center pt-2 border-warning bg-transparent text-warning border" id="coverageToPayAmount3">
-                    <h6 dmx-text="variableOrderCoverageTotal.value.formatNumber('0',',',',').default(0)" class="fw-bold">{{list_customer_transactions_order.data.query.sum(`transaction_amount`)}}</h6>
+                    <h6 dmx-text="variableOrderCoverageTotal.value.formatNumber('4','.',',').default(0)" class="fw-bold">{{list_customer_transactions_order.data.query.sum(`transaction_amount`)}}</h6>
                   </div>
                   <div class="justify-content-xl-end col-xl-auto col-auto" id="coveragePaid1">
                     <h6 class="ms-2 pt-2 text-warning fw-bold">{{trans.data.coveragePaid[lang.value]}}:</h6>
                   </div>
                   <div class="justify-content-xl-end col-xl-auto offset-xl-0 col-auto rounded-pill rounded-2 align-self-center align-self-xxl-center align-self-xl-center align-self-lg-center align-self-md-center pt-2 text-warning bg-transparent border-warning border" id="coveragePaidAmount1">
-                    <h6 dmx-text="variableOrderCoveragePaid.value.toNumber().formatNumber('0',',',',').default(0)" class="fw-bold">{{list_customer_transactions_order.data.query.sum(`transaction_amount`)}}</h6>
+                    <h6 dmx-text="variableOrderCoveragePaid.value.toNumber().formatNumber('4','.',',').default(0)" class="fw-bold">{{list_customer_transactions_order.data.query.sum(`transaction_amount`)}}</h6>
                   </div>
                   <div class="justify-content-xl-end col-xl-auto col-auto fw-bold" id="coverageOwing1">
                     <h6 class="ms-2 pt-2 text-warning fw-bold">{{trans.data.coverageOwing[lang.value]}}:</h6>
                   </div>
                   <div class="justify-content-xl-end col-xl-auto offset-xl-0 col-auto rounded-pill rounded-2 align-self-center align-self-xxl-center align-self-xl-center align-self-lg-center align-self-md-center pt-2 bg-warning text-warning bg-opacity-10" id="coverageOwingAmount1">
-                    <h6 dmx-text="(variableOrderCoveragePaid.value  -variableOrderCoverageTotal.value).formatNumber('0',',',',').default(0)" class="fw-bold">{{list_customer_transactions_order.data.query.sum(`transaction_amount`)}}</h6>
+                    <h6 dmx-text="(variableOrderCoveragePaid.value  -variableOrderCoverageTotal.value).formatNumber('4','.',',').default(0)" class="fw-bold">{{list_customer_transactions_order.data.query.sum(`transaction_amount`)}}</h6>
                   </div>
 
 
@@ -3269,9 +3256,9 @@
                                 <td dmx-text="transaction_status"></td>
                                 <td dmx-text="transaction_note"></td>
 
-                                <td dmx-text="transaction_amount.formatNumber('0', ',', ',')"></td>
-                                <td dmx-text="transaction_amount_tendered.formatNumber('0', ',', ',')"></td>
-                                <td dmx-text="transaction_balance.formatNumber('0', ',', ',')"></td>
+                                <td dmx-text="transaction_amount.formatNumber('3', '.', ',')"></td>
+                                <td dmx-text="transaction_amount_tendered.formatNumber('3', '.', ',')"></td>
+                                <td dmx-text="transaction_balance.formatNumber('3', '.', ',')"></td>
                                 <td>
                                   <button id="btn273" class="btn" data-bs-toggle="modal" data-bs-target="#printTransactionReceiptModal" dmx-on:click="read_customer_transaction.load({customer_cash_transaction_id: customer_transaction_id})"><i class="fas fa-receipt fa-lg"></i>
                                   </button>
@@ -3492,6 +3479,7 @@
   </main>
 
   <script src="bootstrap/5/js/bootstrap.min.js"></script>
+  <script src="bootstrap/5/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

@@ -4,14 +4,17 @@ namespace lib\oauth;
 
 use \lib\App;
 use \lib\core\FileSystem;
+use \lib\jwt\Jwt;
 
 class Oauth2
 {
     protected $app;
+    protected $name;
     protected $options;
-
+    
     public $access_token = NULL;
-
+    public $refresh_token = NULL;
+    
     public static function get(App $app, $name) {
 		if (isset($app->oauth[$name])) {
 			return $app->oauth[$name];
@@ -164,8 +167,8 @@ class Oauth2
             break;
         }
 
-        if ($options->jwt_bearer && $app->jwt[$options->jwt_bearer]) {
-            $options->jwt_bearer = $app->jwt[$options->jwt_bearer];
+        if ($options->jwt_bearer) {
+            $options->jwt_bearer = Jwt::get($app, $options->jwt_bearer);
         }
 
         $this->app = $app;

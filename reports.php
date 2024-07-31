@@ -121,7 +121,7 @@ JSON
                         <th>{{trans.data.total[lang.value]}}</th>
                       </tr>
                     </thead>
-                    <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="product_report.data.product_report" id="tableRepeat2">
+                    <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="report_sales_data.data.report_sales_products" id="tableRepeat2">
                       <tr>
                         <td dmx-text="product_id"></td>
                         <td dmx-text="product_name"></td>
@@ -233,32 +233,32 @@ JSON
                     <h5 class="text-start">
                       <i class="fas fa-coins"></i>
                     </h5>
-                    <h1 dmx-text="report_sales_data.data.report_sales_data[0].TotalSales.toNumber().formatNumber('3','.',',').default(0)">
-                    </h1>
+                    <h3 dmx-text="report_sales_data.data.report_sales_data[0].TotalSales.toNumber().formatNumber('3','.',',').default(0)">
+                    </h3>
                     <h5>{{trans.data.totalSales[lang.value]}}</h5>
                   </div>
                   <div class="text-center rounded col bg-opacity-10 text-danger bg-danger mt-2 me-2 pt-3 pb-3 ps-4 pe-4">
                     <h5 class="text-start">
                       <i class="fas fa-arrow-alt-circle-up"></i>
                     </h5>
-                    <h1 dmx-text="((report_sales_data.data.report_sales_data[0].TotalOpenUnpaid.toNumber())-(report_sales_data.data.report_sales_data[0].TotalOpenPaid.toNumber())).formatNumber('3','.',',').default(0)">
-                    </h1>
+                    <h3 dmx-text="((report_sales_data.data.report_sales_data[0].TotalOpenUnpaid.toNumber())-(report_sales_data.data.report_sales_data[0].TotalOpenPaid.toNumber())).formatNumber('3','.',',').default(0)">
+                    </h3>
                     <h5>{{trans.data.receivable[lang.value]}}</h5>
                   </div>
                   <div class="text-center rounded col bg-opacity-10 text-success bg-success mt-2 me-2 pt-3 pb-3 ps-4 pe-4">
                     <h5 class="text-start">
                       <i class="fas fa-arrow-alt-circle-down"></i>
                     </h5>
-                    <h1 dmx-text="report_sales_data.data.report_sales_data[0].TotalPaid.toNumber().formatNumber('3','.',',').default(0)">
-                    </h1>
+                    <h3 dmx-text="report_sales_data.data.report_sales_data[0].TotalPaid.toNumber().formatNumber('3','.',',').default(0)">
+                    </h3>
                     <h5>{{trans.data.totalPayments[lang.value]}}</h5>
                   </div>
                   <div class="text-center rounded col bg-dark bg-opacity-25 text-body mt-2 me-2 pt-3 pb-3 ps-4 pe-4">
                     <h5 class="text-start">
                       <i class="fas fa-exchange-alt"></i>
                     </h5>
-                    <h1 dmx-text="report_sales_data.data.report_sales_data[0].TotalAdjustments.toNumber().formatNumber('3','.',',').default(0)">
-                    </h1>
+                    <h3 dmx-text="report_sales_data.data.report_sales_data[0].TotalAdjustments.toNumber().formatNumber('3','.',',').default(0)">
+                    </h3>
                     <h5>{{trans.data.adjustments[lang.value]}}</h5>
                   </div>
                 </div>

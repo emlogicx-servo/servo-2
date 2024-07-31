@@ -2,6 +2,9 @@
 
 namespace lib\jwt;
 
+use \lib\App;
+use \lib\core\FileSystem;
+
 class Jwt
 {
     public static $algos = array(
@@ -14,6 +17,22 @@ class Jwt
     );
 
     private function __construct() {}
+
+    public static function get(App $app, $name) {
+		if (isset($app->jwt[$name])) {
+			return $app->jwt[$name];
+		}
+
+		$path = realpath($app->get('ACTIONS_URL', BASE_URL . '/../dmxConnect/modules/jwt/' . $name . '.php'));
+		if (FileSystem::exists($path)) {
+			require(FileSystem::encode($path));
+			$data = json_decode($exports);
+            $jwt = new \modules\jwt($app);
+            return $jwt->sign($data->options, $name);
+		}
+		
+		throw new \Exception('JWT "' . $name . '" not found.');
+	}
 
     public static function sign($options) {
         $options = (array)$options;

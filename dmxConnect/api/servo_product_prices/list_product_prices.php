@@ -63,6 +63,10 @@ $app->define(<<<'JSON'
             {
               "table": "servo_services",
               "column": "service_name"
+            },
+            {
+              "table": "servo_product_price",
+              "column": "product_price_uom_service"
             }
           ],
           "table": {
@@ -74,7 +78,7 @@ $app->define(<<<'JSON'
               "table": "servo_products",
               "column": "*",
               "alias": "servo_products",
-              "type": "INNER",
+              "type": "LEFT",
               "clauses": {
                 "condition": "AND",
                 "rules": [
@@ -82,11 +86,11 @@ $app->define(<<<'JSON'
                     "table": "servo_products",
                     "column": "product_id",
                     "operator": "equal",
+                    "operation": "=",
                     "value": {
                       "table": "servo_product_price",
                       "column": "product_price_product_id"
-                    },
-                    "operation": "="
+                    }
                   }
                 ]
               },
@@ -96,7 +100,7 @@ $app->define(<<<'JSON'
               "table": "servo_services",
               "column": "*",
               "alias": "servo_services",
-              "type": "INNER",
+              "type": "LEFT",
               "clauses": {
                 "condition": "AND",
                 "rules": [
@@ -104,19 +108,18 @@ $app->define(<<<'JSON'
                     "table": "servo_services",
                     "column": "service_id",
                     "operator": "equal",
+                    "operation": "=",
                     "value": {
                       "table": "servo_product_price",
-                      "column": "servo_service_service_id",
-                      "type": "number"
-                    },
-                    "operation": "="
+                      "column": "servo_service_service_id"
+                    }
                   }
                 ]
               },
               "primary": "service_id"
             }
           ],
-          "query": "SELECT servo_product_price.product_price_id, servo_product_price.product_price, servo_product_price.product_price_date, servo_product_price.product_price_product_id, servo_product_price.servo_service_service_id, servo_products.product_name, servo_services.service_id, servo_services.service_name\nFROM servo_product_price AS servo_product_price\nINNER JOIN servo_products AS servo_products ON (servo_products.product_id = servo_product_price.product_price_product_id) INNER JOIN servo_services AS servo_services ON (servo_services.service_id = servo_product_price.servo_service_service_id)\nWHERE servo_product_price.product_price_product_id = :P1 /* {{$_GET.product_id}} */",
+          "query": "select `servo_product_price`.`product_price_id`, `servo_product_price`.`product_price`, `servo_product_price`.`product_price_date`, `servo_product_price`.`product_price_product_id`, `servo_product_price`.`servo_service_service_id`, `servo_products`.`product_name`, `servo_services`.`service_id`, `servo_services`.`service_name`, `servo_product_price`.`product_price_uom_service` from `servo_product_price` as `servo_product_price` left join `servo_products` as `servo_products` on `servo_products`.`product_id` = `servo_product_price`.`product_price_product_id` left join `servo_services` as `servo_services` on `servo_services`.`service_id` = `servo_product_price`.`servo_service_service_id` where `servo_product_price`.`product_price_product_id` = ?",
           "params": [
             {
               "operator": "equal",
@@ -180,8 +183,12 @@ $app->define(<<<'JSON'
           "name": "service_id"
         },
         {
-          "type": "number",
+          "type": "text",
           "name": "service_name"
+        },
+        {
+          "type": "number",
+          "name": "product_price_uom_service"
         }
       ],
       "outputType": "array"

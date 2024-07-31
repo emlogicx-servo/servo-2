@@ -291,7 +291,7 @@
                     <div class="modal-body">
                         <div class="row ms-3 me-3">
                             <dmx-geolocation id="createAssetGeolocation"></dmx-geolocation>
-                            <form id="createAssetForm" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_assets/create_asset.php" dmx-on:success="list_customer_assets.load({customer: read_customer.data.query_read_customer.customer_id}); createAssetModal.hide(); readItemModal.show()">
+                            <form id="createAssetForm" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_assets/create_asset.php" dmx-on:success="list_customer_assets.load({customer: read_customer.data.query_read_customer.customer_id}); createAssetModal.hide(); readItemModal.hide();browser1.goto('cc-asset-dash.php?asset='+createAssetForm.data.custom_get_last_insert[0]['last_insert_id()'])">
                                 <div class="form-group mb-3 row">
                                     <label for="assetLat" class="col-sm-2 col-form-label">{{trans.data.latitude[lang.value]}}</label>
 
@@ -336,64 +336,32 @@
             <div class="modal-dialog modal-xl" role="document" style="margin: 0px !important; width: 100% !important; height: 99% !important; max-width: 100% !important; max-height: 99% !important;">
                 <div class="modal-content" style="max-height: 100% !important; height: 100% !important;">
                     <div class="modal-header d-flex">
+                        <div class="d-flex align-items-baseline">
+                            <div class="d-block me-2" style="width: 40px; height: 40px;">
 
-                        <div class="d-block me-2" style="width: 40px; height: 40px;">
+                                <img dmx-bind:src="'/servo/uploads/customer_pictures/'+read_customer.data.query_read_customer.customer_picture" class="rounded-circle shadow-none mt-2 me-2" width="100%" dmx-hide="(read_customer.data.query_read_customer.customer_picture == null)" loading="lazy" style="object-fit: cover;" height="100%">
 
-                            <img dmx-bind:src="'/servo/uploads/customer_pictures/'+read_customer.data.query_read_customer.customer_picture" class="rounded-circle shadow-none mt-2 me-2" width="100%" dmx-hide="(read_customer.data.query_read_customer.customer_picture == null)" loading="lazy" style="object-fit: cover;" height="100%">
-
-                            <img class="rounded-circle img-fluid" width="100%" src="uploads/servo_no_image.jpg" dmx-show="(read_customer.data.query_read_customer.customer_picture == null)" height="100%">
-
-
+                                <img class="rounded-circle img-fluid" width="100%" src="uploads/servo_no_image.jpg" dmx-show="(read_customer.data.query_read_customer.customer_picture == null)" height="100%">
 
 
+
+
+                            </div>
+                            <div class="d-block">
+                                <h5 class="modal-title mt-2 text-body">{{read_customer.data.query_read_customer.customer_first_name+' '+read_customer.data.query_read_customer.customer_last_name}}</h5>
+                            </div>
+                            <div class="d-block" id="createCustomerAsset">
+                                <button id="btn11" class="btn ms-2 text-white bg-info" style="/* background:  */ border: none;" data-bs-toggle="modal" data-bs-target="#createAssetModal">{{trans.data.newProject[lang.value]}}
+                                </button>
+
+                            </div>
                         </div>
 
-                        <div class="d-block">
-                            <h5 class="modal-title mt-2 text-body">{{read_customer.data.query_read_customer.customer_first_name+' '+read_customer.data.query_read_customer.customer_last_name}}</h5>
-                        </div>
-                        <div class="d-block visually-hidden">
-                            <form is="dmx-serverconnect-form" id="create_order_form" method="post" action="dmxConnect/api/servo_orders/create_order.php" dmx-on:success="notifies1.success('Order #'+create_order_form.data.custom[0]['last_insert_id()']+' Created');readCustomerOrder.load({order_id: create_order_form.data.custom[0]['last_insert_id()']});list_order_items.load({order_id: create_order_form.data.custom[0]['last_insert_id()']});session_variables.set('current_order',create_order_form.data.custom[0]['last_insert_id()']);list_customer_orders.load({customer_id: session_variables.data.current_customer, offset: listCustomerOrders.data.offset, limit: c_order_sort_limit.value});create_order_form.reset();customerOrderModal.show();list_customer_transactions_order.load({order_id: create_order_form.data.custom[0]['last_insert_id()']});list_order_items_deleted.load({order_id: create_order_form.data.custom[0]['last_insert_id()']})">
-                                <input id="order_time" name="order_time" type="text" class="form-control visually-hidden">
-                                <input id="orderCustomer" name="order_customer" class="form-control visually-hidden" dmx-bind:value="session_variables.data.current_customer">
-                                <input id="order_discount" name="order_discount" type="hidden" class="form-control visually-hidden" dmx-bind:value="0">
-                                <input id="order_status" name="order_status" type="hidden" class="form-control visually-hidden" dmx-bind:value="'Ordered'">
-                                <input id="user_id" name="servo_user_user_id" type="hidden" class="form-control visually-hidden" dmx-bind:value="session_variables.data.user_id">
-                                <input id="shift_id" name="servo_shift_shift_id" type="hidden" class="form-control visually-hidden" dmx-bind:value="session1.data.current_shift">
-                                <input id="serviceId" name="servo_service_service_id" type="hidden" class="form-control visually-hidden" dmx-bind:value="list_user_shift_info.data.query_list_user_shift[0].servo_service_service_id">
 
-                                <div class="row row-cols-1">
-                                    <div class="d-flex border-warning col mt-2 ms-3">
-                                        <button id="btn7" class="btn btn-success fw-bold" type="submit" style="background: #02b843 !important; border: none;">{{trans.data.createOrder[lang.value]}}
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
 
-                        </div>
-                        <div class="d-block" id="createCustomerAsset">
-                            <button id="btn11" class="btn btn-success fw-bold ms-2 text-white" style="background: #02b843 !important; border: none;" data-bs-toggle="modal" data-bs-target="#createAssetModal">{{trans.data.newProject[lang.value]}}
-                            </button>
 
-                        </div>
 
-                        <div class="d-block" id="createDataReadingSession">
-                            <form is="dmx-serverconnect-form" id="create_data_reading_session" method="post" action="dmxConnect/api/servo_data_reading_session/create_data_reading_sesssion.php" dmx-on:success="notifies1.success('Order #'+create_order_form.data.custom[0]['last_insert_id()']+' Created');create_data_reading_session.reset();session_variables.set('current_data_reading_session',create_order_form.data.custom[0]['last_insert_id()']);customerDataReadingSessionModal.show();list_customer_data_reading_sessions.load({customer_id: session_variables.data.current_customer});read_customer_data_reading_sessions.load({data_reading_session_id: create_data_reading_session.data.custom[0]['last_insert_id()']});list_customer_data_field_readings.load({})">
-                                <input id="drs_date" name="data_reading_session_date" type="datetime-local" class="form-control visually-hidden" dmx-bind:value="dateTime.datetime">
-                                <input id="drs_user" name="data_reading_session_user" class="form-control visually-hidden" dmx-bind:value="session_variables.data.user_id">
-                                <input id="drs_customer" name="data_reading_session_customer" type="hidden" class="form-control visually-hidden" dmx-bind:value="session_variables.data.current_customer">
-                                <input id="drs_notes" name="data_reading_session_notes" type="hidden" class="form-control visually-hidden">
 
-                                <div class="row row-cols-1 visually-hidden">
-                                    <div class="d-flex border-warning col mt-2 ms-3">
-                                        <button id="btn19" class="btn fw-bold btn-info" type="submit" style="border: none;">
-                                            <i class="fas fa-clipboard-list"></i>
-                                        </button>
-
-                                    </div>
-                                </div>
-                            </form>
-
-                        </div>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -419,13 +387,13 @@
                                         <a class="nav-link" id="navTabs1_2_tab1" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_6" role="tab" aria-controls="navTabs1_2" aria-selected="false">{{trans.data.data[lang.value]}}</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link active fw-bold" id="navTabs1_2_tab2" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_11" role="tab" aria-controls="navTabs1_2" aria-selected="false">{{trans.data.projects[lang.value]}}</a>
+                                        <a class="nav-link active" id="navTabs1_2_tab2" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_11" role="tab" aria-controls="navTabs1_2" aria-selected="false">{{trans.data.projects[lang.value]}}</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link fw-bold" id="navTabs1_3_tab" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_3" role="tab" aria-controls="navTabs1_3" aria-selected="false">{{trans.data.info[lang.value]}}</a>
+                                        <a class="nav-link" id="navTabs1_3_tab" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_3" role="tab" aria-controls="navTabs1_3" aria-selected="false">{{trans.data.info[lang.value]}}</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link fw-bold" id="navTabs1_3_tab3" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_31" role="tab" aria-controls="navTabs1_3" aria-selected="false">{{trans.data.documents[lang.value]}}</a>
+                                        <a class="nav-link" id="navTabs1_3_tab3" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_31" role="tab" aria-controls="navTabs1_3" aria-selected="false">{{trans.data.documents[lang.value]}}</a>
                                     </li>
                                 </ul>
                                 <div class="tab-content" id="navTabs1_content">
@@ -892,10 +860,19 @@
                                                                 <td dmx-text="user_username"></td>
                                                                 <td dmx-text=""></td>
                                                                 <td>
+                                                                    <form id="deleteProject" is="dmx-serverconnect-form" method="post" dmx-on:error="notifies1.danger('Error!')" dmx-on:success="notifies1.success('Success!');list_customer_assets.load({customer: read_customer_asset.data.query_read_customer_asset.asset_id})" action="dmxConnect/api/servo_assets/delete_asset.php" onsubmit="return confirm ('Confirm Delete!')">
+                                                                        <input id="text15" name="asset_id" type="text" class="form-control visually-hidden" dmx-bind:value="asset_id">
+                                                                        <button id="btn7" class="btn text-white-50" type="submit">
+                                                                            <i class="fas fa-trash-alt fa-sm"></i></button>
+                                                                    </form>
+
+                                                                </td>
+                                                                <td>
 
                                                                     <button id="btnAssetId" class="btn" data-bs-target="#customerDataReadingSessionModal" dmx-on:click="session_variables.set('user_id',list_user_info.data.query_list_user_info.user_id);session_variables.set('current_asset',asset_id);browser1.goto('cc-asset-dash.php?asset='+asset_id)" dmx-bind:value="asset_id"><i class="far fa-edit"></i>
                                                                     </button>
                                                                 </td>
+
                                                             </tr>
                                                         </tbody>
                                                     </table>
@@ -3845,27 +3822,17 @@
                     <h4 class="servo-page-heading">{{trans.data.operators[lang.value]}}</h4>
                 </div>
                 <div class="col style13 page-button" id="pagebuttons">
-                    <button id="btn1" class="btn style12 fw-light add-button btn-info text-white ps-3 pe-3" data-bs-toggle="modal" data-bs-target="#createItemModal" style="float: right;"><i class="fas fa-plus style14 fa-lg"></i>
+                    <button id="btn1" class="btn style12 fw-light add-button ps-3 pe-3 text-white bg-info" data-bs-toggle="modal" data-bs-target="#createItemModal" style="float: right;"><i class="fas fa-plus style14 fa-lg" style="margin-right: 5px;"></i>{{trans.data.addOperator[lang.value]}}
                     </button>
 
                 </div>
             </div>
             <div class="row">
-                <div class="col">
+                <div class="col rounded bg-light mt-1 ms-2 me-2">
 
-                    <div class="row justify-content-xl-between sorter mt-2 mb-2 ms-0 me-0 shadow-none row-cols-md-12 bg-light rounded">
-                        <div class="col-auto col-sm-auto col-md-auto col-lg-auto col-xxl-auto"><input id="customerfilter" name="customerfilter" type="text" class="form-control mb-2 search form-control-sm" dmx-bind:placeholder="trans.data.name[lang.value]+'  '">
-
-                        </div>
-                        <div class="col-auto col-md-auto col-lg-auto col-xxl-auto"><input id="customerfilter2" name="customerfilter1" type="text" class="form-control search form-control-sm ms-lg-2 mb-2 ms-2" dmx-bind:placeholder="trans.data.surname[lang.value]+'  '"></div>
-                        <div class="col-sm-2 col-auto col-lg-auto">
-                            <button id="btn29" class="btn align-self-lg-start btn-outline-secondary btn-sm text-white bg-info" dmx-on:click="customerfilter.setValue(NULL); customerfilter2.setValue(NULL)">
-                                <i class="fas fa-backspace"></i>
-                            </button>
-                        </div>
-
-                        <div class="flex-sm-wrap col-md-5 justify-content-lg-end col-xl-6 justify-content-xl-end justify-content-xxl-end col-auto col-sm-auto col-lg-auto col-xxl-auto">
-                            <ul class="pagination flex-xl-wrap flex-xxl-wrap flex-lg-wrap flex-md-wrap flex-sm-wrap flex-wrap" dmx-populate="list_customers.data.query_list_customers" dmx-state="listcustomers" dmx-offset="offset" dmx-generator="bs5paging">
+                    <div class="d-flex row sorter mt-2 mb-2 ms-0 me-0  rounded bg-light">
+                        <div class="col-auto d-flex align-items-baseline flex-wrap col-12"><input id="customerfilter" name="customerfilter" type="search" class="form-control mb-2 search" dmx-bind:placeholder="trans.data.name[lang.value]+'  '"><input id="customerfilter2" name="customerfilter1" type="search" class="form-control search ms-lg-2 mb-2 ms-2 me-3" dmx-bind:placeholder="trans.data.surname[lang.value]+'  '">
+                            <ul class="pagination bg-secondary rounded me-2" dmx-populate="list_customers.data.query_list_customers" dmx-state="listcustomers" dmx-offset="offset" dmx-generator="bs5paging">
                                 <li class="page-item" dmx-class:disabled="list_customers.data.query_list_customers.page.current == 1" aria-label="First">
                                     <a href="javascript:void(0)" class="page-link" dmx-on:click="listcustomers.set('offset',list_customers.data.query_list_customers.page.offset.first)"><span aria-hidden="true">&lsaquo;&lsaquo;</span></a>
                                 </li>
@@ -3881,22 +3848,24 @@
                                 <li class="page-item" dmx-class:disabled="list_customers.data.query_list_customers.page.current ==  list_customers.data.query_list_customers.page.total" aria-label="Last">
                                     <a href="javascript:void(0)" class="page-link" dmx-on:click="listcustomers.set('offset',list_customers.data.query_list_customers.page.offset.last)"><span aria-hidden="true">&rsaquo;&rsaquo;</span></a>
                                 </li>
-                            </ul>
-                        </div>
-                        <div class="col-xl-1 col-md-2 col-sm-2 col-3 offset-lg-1 col-lg col-lg-1"><select id="customer_sort_limit" class="form-select" name="customer_sort_limit">
+                            </ul><select id="customer_sort_limit" class="form-select" name="customer_sort_limit" style="width: 100px !important;">
                                 <option value="5">5</option>
                                 <option selected="" value="25">25</option>
                                 <option value="50">50</option>
                                 <option value="100">100</option>
                                 <option value="'250">250</option>
                                 <option value="500">500</option>
-                            </select></div>
+                            </select>
+
+                        </div>
+
+
                     </div>
-                    <div class="row bg-light mt-2 ms-0 me-0 rounded">
+                    <div class="row mt-2 ms-0 me-0 rounded">
                         <div class="col">
                             <div class="table-responsive servo-shadow" id="customerList">
                                 <table class="table table-hover table-sm table-borderless">
-                                    <thead>
+                                    <thead class="fw-bold">
                                         <tr>
                                             <th>#</th>
                                             <th>{{trans.data.name[lang.value]}}</th>

@@ -60,17 +60,17 @@
   </div>
 
   <main>
-    <div id="top-bar" class="row row-cols-12 justify-content-xl-between justify-content-between mt-2 me-0 ps-0 pe-1 bg-light rounded shadow-sm">
+    <div id="top-bar" class="row justify-content-xl-between justify-content-between mt-2 me-0 ps-0 pe-1 ">
 
       <div class="justify-content-lg-start col-8 justify-content-start my-auto" style="padding-left: 10px;">
 
         <button id="btn1" class="btn gy-0 btn-sm text-start" dmx-on:click="offcanvas1.toggle()" style="margin-left: 2px !important; font-size:17px; "><i class="fas fa-th fa-1.5x" style="" dmx-animate-enter="pulse"></i></button>
-        <span class="fw-bold" style="font-family:'Josefin-Sans'; margin-left: 2px">SERVO | {{pageName.value}}</span>
+        <span class="fw-bold" style="font-family:'Josefin-Sans'; margin-left: 2px">SERVO | Douala Building Control {{pageName.value}}</span>
       </div>
 
       <div class="col-auto justify-content-end" id="headerbuttons" style="/* font-size: 16px !important */">
 
-        <button id="toggleSubMenu" class="btn bg-secondary text-body" dmx-on:click="offcanvas2.toggle()"><i class="fas fa-user fa-lg fa-1x" style="margin-right:5px;"></i>{{session_variables.data.current_user}}</button>
+        <button id="toggleSubMenu" class="btn bg-light text-body" dmx-on:click="offcanvas2.toggle()"><i class="fas fa-user fa-lg fa-1x" style="margin-right:5px;"></i>{{session_variables.data.current_user}}</button>
       </div>
       <div class="row" style="margin:3px;">
         <div id="submenuoptions" class="collapse bg-secondary rounded" is="dmx-bs5-collapse" style="padding:5px; margin-bottom:3px; margin-top:3px;">

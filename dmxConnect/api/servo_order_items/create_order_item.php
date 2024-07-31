@@ -161,7 +161,7 @@ $app->define(<<<'JSON'
           ],
           "table": "servo_order_items",
           "returning": "order_item_id",
-          "query": "INSERT INTO servo_order_items\n(order_time_ordered, order_time_ready, order_time_delivered, order_item_status, servo_orders_order_id, servo_products_product_id, servo_user_user_prepared_id, order_item_notes, order_item_quantity, order_item_price, order_item_type, servo_users_user_ordered, servo_departments_department_id) VALUES (:P1 /* {{$_POST.order_time_ordered}} */, :P2 /* {{$_POST.order_time_ready}} */, :P3 /* {{$_POST.order_time_delivered}} */, :P4 /* {{$_POST.order_item_status}} */, :P5 /* {{$_POST.servo_orders_order_id}} */, :P6 /* {{$_POST.servo_products_product_id}} */, :P7 /* {{$_POST.servo_user_user_prepared_id}} */, :P8 /* {{$_POST.order_item_notes}} */, :P9 /* {{$_POST.order_item_quantity}} */, :P10 /* {{$_POST.order_item_price}} */, :P11 /* {{$_POST.order_item_type}} */, :P12 /* {{$_POST.servo_users_user_ordered}} */, :P13 /* {{$_POST.servo_departments_department_id}} */)",
+          "query": "insert into `servo_order_items` (`order_item_notes`, `order_item_price`, `order_item_quantity`, `order_item_status`, `order_item_type`, `order_time_delivered`, `order_time_ordered`, `order_time_ready`, `servo_departments_department_id`, `servo_orders_order_id`, `servo_products_product_id`, `servo_user_user_prepared_id`, `servo_users_user_ordered`) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
           "params": [
             {
               "name": ":P1",

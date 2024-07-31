@@ -109,7 +109,7 @@ $app->define(<<<'JSON'
         "options": {
           "connection": "servodb",
           "sql": {
-            "query": "SELECT *, sum(order_item_quantity) as Volume, sum(order_item_price) as Total\nFROM servo_order_items\nLEFT JOIN servo_products ON servo_products.product_id = servo_order_items.servo_products_product_id \n\nLEFT JOIN servo_product_categories ON servo_product_categories.product_categories_id = servo_products.servo_product_category_product_category_id \n\nLEFT JOIN servo_orders ON servo_orders.order_id = servo_order_items.servo_orders_order_id\nWHERE servo_orders.servo_shift_shift_id LIKE :P1 /* {{$_GET.shift_id}} */ AND servo_orders.servo_service_service_id like :P2 /* {{$_GET.service_id}} */ and servo_user_user_id like :P3 and order_time between :P4 and :P5\n\ngroup by product_id\n",
+            "query": "SELECT *, sum(order_item_quantity) as Volume, sum(order_item_price) as Total\nFROM servo_order_items\nLEFT JOIN servo_products ON servo_products.product_id = servo_order_items.servo_products_product_id \n\nLEFT JOIN servo_product_categories ON servo_product_categories.product_categories_id = servo_products.servo_product_category_product_category_id \n\nLEFT JOIN servo_orders ON servo_orders.order_id = servo_order_items.servo_orders_order_id\nWHERE \nservo_orders.servo_shift_shift_id LIKE :P1  \nAND servo_orders.servo_service_service_id like :P2 \nAND servo_user_user_id like :P3 \nAND order_time between :P4 and :P5\nAND order_status != 'Adjustment'\n\ngroup by product_id\n",
             "params": [
               {
                 "name": ":P1",
@@ -216,6 +216,18 @@ $app->define(<<<'JSON'
           {
             "name": "order_item_group_reference",
             "type": "text"
+          },
+          {
+            "name": "order_item_uom",
+            "type": "file"
+          },
+          {
+            "name": "order_item_uom_ref",
+            "type": "number"
+          },
+          {
+            "name": "order_item_uom_ref_multiple",
+            "type": "number"
           },
           {
             "name": "product_id",

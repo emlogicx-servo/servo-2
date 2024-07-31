@@ -32,7 +32,7 @@ function formatter_where($val, $prop, $operator, $value) {
 
     foreach ($val as $key => $obj) {
         $o = (array)$obj;
-        if (!isset($o[$prop])) continue;
+        if (!array_key_exists($prop, $o)) continue;
         $v = $o[$prop];
         $add = FALSE;
 
@@ -79,40 +79,6 @@ function formatter_where($val, $prop, $operator, $value) {
     }
 
     return $filtered;
-    /*
-    return array_filter($val, function($o) use ($prop, $operator, $value) {
-        $o = (array)$o;
-        $v = $o[$prop];
-
-        switch ($operator) {
-            case 'startsWith':
-                return strpos(strval($v), strval($value)) === 0;
-            case 'endsWith':
-                $value = strval($value);
-                return substr(strval($v), -strlen($value)) == $value;
-            case 'contains':
-                return strpos(strval($v), strval($value)) !== FALSE;
-            case '===':
-                return $v === $value;
-            case '==':
-                return $v == $value;
-            case '!==':
-                return $v !== $value;
-            case '!=':
-                return $v != $value;
-            case '<':
-                return $v < $value;
-            case '<=':
-                return $v <= $value;
-            case '>':
-                return $v > $value;
-            case '>=':
-                return $v >= $value;
-        }
-
-        return TRUE;
-    });
-    */
 }
 
 function formatter_unique($val, $prop = NULL) {

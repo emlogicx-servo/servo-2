@@ -279,6 +279,120 @@ $app->define(<<<'JSON'
             "name": "uom_reference_multiple"
           }
         ],
+        "outputType": "array",
+        "disabled": true
+      },
+      {
+        "name": "query_list_product_prices",
+        "module": "dbconnector",
+        "action": "select",
+        "options": {
+          "connection": "servodb",
+          "sql": {
+            "type": "select",
+            "columns": [],
+            "params": [
+              {
+                "operator": "equal",
+                "type": "expression",
+                "name": ":P1",
+                "value": "{{$_GET.product_id}}",
+                "test": "13"
+              }
+            ],
+            "table": {
+              "name": "servo_product_price"
+            },
+            "primary": "product_price_id",
+            "joins": [
+              {
+                "table": "servo_services",
+                "column": "*",
+                "type": "LEFT",
+                "clauses": {
+                  "condition": "AND",
+                  "rules": [
+                    {
+                      "table": "servo_services",
+                      "column": "service_id",
+                      "operator": "equal",
+                      "operation": "=",
+                      "value": {
+                        "table": "servo_product_price",
+                        "column": "servo_service_service_id"
+                      }
+                    }
+                  ]
+                },
+                "primary": "service_id"
+              }
+            ],
+            "query": "select * from `servo_product_price` left join `servo_services` on `servo_services`.`service_id` = `servo_product_price`.`servo_service_service_id` where `servo_product_price`.`product_price_product_id` = ?",
+            "wheres": {
+              "condition": "AND",
+              "rules": [
+                {
+                  "id": "servo_product_price.product_price_product_id",
+                  "field": "servo_product_price.product_price_product_id",
+                  "type": "double",
+                  "operator": "equal",
+                  "value": "{{$_GET.product_id}}",
+                  "data": {
+                    "table": "servo_product_price",
+                    "column": "product_price_product_id",
+                    "type": "number",
+                    "columnObj": {
+                      "type": "reference",
+                      "primary": false,
+                      "nullable": false,
+                      "references": "product_id",
+                      "inTable": "servo_products",
+                      "referenceType": "integer",
+                      "onUpdate": "RESTRICT",
+                      "onDelete": "RESTRICT",
+                      "name": "product_price_product_id"
+                    }
+                  },
+                  "operation": "=",
+                  "table": "servo_product_price"
+                }
+              ],
+              "conditional": null,
+              "valid": true
+            }
+          }
+        },
+        "output": true,
+        "meta": [
+          {
+            "type": "number",
+            "name": "product_price_id"
+          },
+          {
+            "type": "number",
+            "name": "product_price"
+          },
+          {
+            "type": "datetime",
+            "name": "product_price_date"
+          },
+          {
+            "type": "number",
+            "name": "product_price_product_id"
+          },
+          {
+            "type": "number",
+            "name": "servo_service_service_id"
+          },
+          {
+            "type": "text",
+            "name": "product_price_code"
+          },
+          {
+            "type": "number",
+            "name": "product_price_uom_service"
+          }
+        ],
         "outputType": "array"
       }
     ]

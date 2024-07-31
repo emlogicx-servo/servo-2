@@ -6,8 +6,10 @@ $CONFIG_DEBUG = FALSE;
 $CONFIG_TEMP_FOLDER = sys_get_temp_dir();
 $CONFIG_CORS_ORIGIN = FALSE;
 $CONFIG_CORS_METHODS = 'GET,POST';
-$CONFIG_CORS_ALLOWED_HEADERS = '*';
+$CONFIG_CORS_ALLOWED_HEADERS = '';
 $CONFIG_CORS_CREDENTIALS = TRUE;
+$CONFIG_CSRF_ENABLED = FALSE;
+$CONFIG_CSRF_EXCLUDE = 'GET,HEAD,OPTIONS';
 $CONFIG_ENV = FALSE;
 
 $configPath = BASE_URL . DIRECTORY_SEPARATOR . str_replace('/', DIRECTORY_SEPARATOR, '../dmxConnect/config.php');
@@ -114,6 +116,7 @@ spl_autoload_register(function($class) {
 });
 
 require(__DIR__ . '/portable-utf8.php');
+require(__DIR__ . '/templateFunctions.php');
 
 function option_require($options, $option) {
 	if (is_array($option)) {
@@ -143,11 +146,35 @@ function option_default(&$options, $option, $value) {
 	}
 }
 
+function checkCsrfToken() {
+	if (CONFIG('CSRF_ENABLED') !== TRUE) {
+		return;
+	}
+
+	$exclude = explode(',', CONFIG('CSRF_EXCLUDE'));
+	if (in_array($_SERVER['REQUEST_METHOD'], $exclude)) {
+		return;
+	}
+
+	if (session_status() == PHP_SESSION_NONE) {
+		session_start();
+	}
+
+	$token = $_SERVER['HTTP_X_CSRF_TOKEN'] ?: $_POST['_csrf'];
+
+	if (!isset($_SESSION['csrf_token']) || $_SESSION['csrf_token'] !== $token) {
+		header('Status: 403 Forbidden');
+		exit('Invalid CSRF token');
+	}
+}
+
+//checkCsrfToken();
+
 if (CONFIG('CORS_ORIGIN') !== FALSE) {
 	if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 		$origin = CONFIG('CORS_ORIGIN') ?: '*';
 		$methods = CONFIG('CORS_METHODS');
-		$allowedHeaders = CONFIG('CORS_ALLOWED_HEADERS');
+		$allowedHeaders = CONFIG('CORS_ALLOWED_HEADERS') ?: $_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS'];
 
 		if (isset($_SERVER['HTTP_ORIGIN'])) {
 			if ($origin == '*') {

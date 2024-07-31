@@ -1,0 +1,15 @@
+2023/03/05-07:27:43.941 | autorun.js           | Install Eaton UPS Companion v2.00.025 release
+2023/03/05-07:27:43.955 | autorun.js           | runAsAdmin adminRight = true
+2023/03/05-07:27:43.962 | Installer            | OSVersion: 6.2
+2023/03/05-07:27:43.970 | Installer            | Unpack 'C:\Users\Directoire\Downloads\euc_win_2_00_025.exe' temporary files to 'C:/Users/DIRECT~1/AppData/Local/Temp/emc2Install'
+2023/03/05-07:27:53.369 | Installer            | Create systray restarting batch file...
+2023/03/05-07:27:53.378 | Installer            | Extract files to 'C:\Program Files (x86)\Eaton\UPSCompanion'
+2023/03/05-07:27:53.735 | postInstall          | Install service
+2023/03/05-07:27:53.752 | postInstall          | Create shortcuts
+2023/03/05-07:27:53.911 | postInstall          | Switch from 'C:\Users\Directoire\Downloads' to 'C:\Program Files (x86)\Eaton\UPSCompanion'
+2023/03/05-07:27:53.913 | postInstall          | Install USB drivers...
+2023/03/05-07:27:56.802 | postInstall          | Install etoast notifier 'Eaton Notifier.lnk'...
+2023/03/05-07:28:03.809 | launch               | Remove 'updated' and 'restart_systray.bat' files
+2023/03/05-07:28:03.830 | launch               | Launch systray: '"C:\Program Files (x86)\Eaton\UPSCompanion\mc2.exe" -systray'
+2023/03/05-07:28:03.867 | launch               | Launch service
+2023/03/05-07:28:04.396 | Install              | Open Display: '"C:\Program Files (x86)\Eaton\UPSCompanion\mc2.exe" -open'

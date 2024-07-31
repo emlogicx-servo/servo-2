@@ -108,7 +108,7 @@ $app->define(<<<'JSON'
               "table": "servo_project_tasks",
               "column": "task_project",
               "type": "number",
-              "value": "{{$_POST.task_project}}"
+              "value": "{{$_POST.task_project.default(null))}}"
             }
           ],
           "table": "servo_project_tasks",
@@ -166,7 +166,7 @@ $app->define(<<<'JSON'
             {
               "name": ":P9",
               "type": "expression",
-              "value": "{{$_POST.task_project}}",
+              "value": "{{$_POST.task_project.default(null))}}",
               "test": ""
             }
           ]

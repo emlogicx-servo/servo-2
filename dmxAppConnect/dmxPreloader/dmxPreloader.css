@@ -1,8 +1,5 @@
-.dmxCloak {
-    display: none;
-}
-
 .dmxPreloader {
+    --size: 60px;
     --color: #333;
     --bgcolor: #fff;
     position: fixed;
@@ -13,26 +10,18 @@
     z-index: 1050;
     background-color: #fff;
     background-color: var(--bgcolor);
-    -webkit-transition: all 0.5s linear;
-    -moz-transition: all 0.5s linear;
-    -o-transition: all 0.5s linear;
-    -ms-transition: all 0.5s linear;
-    transition: all 0.5s linear;
+    transition: opacity 0.5s linear;
 }
 
 .dmxPreloader-spinner {
     position: absolute;
     top: 50%;
     left: 50%;
-    margin-top: -20px;
-    margin-left: -20px;
-    width: 40px;
-    height: 40px;
-
-    margin-top: calc(var(--size) / 2 * -1);
-    margin-left: calc(var(--size) / 2 * -1);
+    width: 60px;
     width: var(--size);
+    height: 60px;
     height: var(--size);
+    transform: translate(-50%, -50%);
 }
 
 /* rotatingPlane */
@@ -44,9 +33,9 @@
 }
 
 @keyframes rotatePlane {
-  0% { transform: perspective(200px) rotateX(0deg) rotateY(0deg); }
-  50% { transform: perspective(200px) rotateX(-180.1deg) rotateY(0deg); }
-  100% { transform: perspective(200px) rotateX(-180deg) rotateY(-179.9deg); }
+  0% { transform: perspective(200px) translate(-50%, -50%) rotateX(0deg) rotateY(0deg); }
+  50% { transform: perspective(200px) translate(-50%, -50%) rotateX(-180.1deg) rotateY(0deg); }
+  100% { transform: perspective(200px) translate(-50%, -50%) rotateX(-180deg) rotateY(-179.9deg); }
 }
 
 /* doubleBounce */
@@ -81,7 +70,6 @@
     height: 100%;
     width: 6px;
     width: calc((var(--size) / 5) - 6%);
-    margin: 0 3%;
     display: inline-block;
     animation: waveStretchDelay 1.2s infinite ease-in-out;
 }
@@ -145,8 +133,8 @@
 }
 
 @keyframes pulseScaleOut {
-    0% { transform: scale(0); }
-    100% { transform: scale(1); opacity: 0; }
+    0% { transform: translate(-50%, -50%) scale(0); }
+    100% { transform: translate(-50%, -50%) scale(1); opacity: 0; }
 }
 
 /* chasingDots */
@@ -175,7 +163,7 @@
 }
 
 @keyframes chasingDotsRotate {
-    100% { transform: rotate(360deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
 @keyframes chasingDotsBounce {
@@ -190,7 +178,6 @@
     background-color: var(--color);
     width: 25%;
     height: 25%;
-    margin: 37.5% 4%;
     border-radius: 50%;
     display: inline-block;
     animation: threeBounce 1.4s infinite ease-in-out both;

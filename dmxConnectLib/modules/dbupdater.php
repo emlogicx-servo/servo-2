@@ -437,36 +437,139 @@ class dbupdater extends Module
 		return $connection->execute($options->query, $options->params);
 	}
 
+	public function bulkinsert($options) {
+		option_require($options, 'connection');
+		option_require($options, 'source');
+		option_require($options, 'sql');
+		option_require($options->sql, 'table');
+		option_require($options->sql, 'values');
+		//option_default($options, 'batchsize', 100);
+
+		$options = $this->parseOptions($options);
+
+		$connection = Connection::get($this->app, $options->connection);
+
+		// change bulkinsert back to insert for SqlBuilder
+		$options->sql->type = 'insert';
+		
+		$sql = new SqlBuilder($this->app, $connection);
+		$sql->fromJSON($options->sql);
+		$sql->compile();
+
+		if ($connection === NULL) {
+				throw new \Exception('Connection "' . $options->connection . '" not found.');
+		}
+
+		$statement = $connection->pdo->prepare($sql->query);
+
+		try {
+			$connection->pdo->beginTransaction();
+
+			foreach ($options->source as $record) {
+				$record = (object)$record;
+				$values = array();
+
+				foreach ($options->sql->values as $key => $param) {
+					$value = isset($record->{$param->value}) ? $record->{$param->value} : NULL;
+
+					if (isset($param->type) && isset($value) && is_string($value)) {
+						switch (strtolower($param->type)) {
+							case 'date':
+								$value = date('Y-m-d', strtotime($value));
+								break;
+							case 'time':
+								$value = date('H:i:s', strtotime($value));
+								break;
+							case 'datetime':
+								$value = date('Y-m-d H:i:s', strtotime($value));
+								break;
+						}
+					}
+		
+					if (isset($param->type) && $param->type == 'json') {
+						$value = json_encode($value);
+					}
+		
+					$values[] = $value;
+				}
+
+				$statement->execute($values);
+			}
+
+			$connection->pdo->commit();
+		} catch (\Exception $e) {
+			$connection->pdo->rollBack();
+			throw $e;
+		}
+
+		return (object)array(
+			'affected' => count($options->source)
+		);
+	}
+
+	public function transaction($options) {
+		option_require($options, 'connection');
+		option_require($options, 'exec');
+
+		$connection = Connection::get($this->app, $options->connection);
+		$data = array();
+
+		if ($connection === NULL) {
+			throw new \Exception('Connection "' . $options->connection . '" not found.');
+		}
+
+		try {
+			$connection->pdo->beginTransaction();
+
+			if (!empty($name)) {
+				$appData = $this->app->data;
+				$this->app->data = array();
+				$this->app->exec($options->exec, TRUE);
+				$data = $this->app->data;
+				$this->app->data = $appData;
+			} else {
+				$this->app->exec($options->exec, TRUE);
+			}
+
+			$connection->pdo->commit();
+		} catch (\Exception $e) {
+			$connection->pdo->rollBack();
+			throw $e;
+		}
+
+		return $data;
+	}
+
 	protected function parseOptions($options) {
-        $props = array('values', 'wheres', 'orders');
+			$props = array('values', 'wheres', 'orders');
 
-        foreach ($props as $prop) {
-            if (isset($options->sql->{$prop}) && is_array($options->sql->{$prop})) {
-                $options->sql->{$prop} = array_filter($options->sql->{$prop}, array($this, 'filter'));
-            }
-        }
+			foreach ($props as $prop) {
+					if (isset($options->sql->{$prop}) && is_array($options->sql->{$prop})) {
+							$options->sql->{$prop} = array_filter($options->sql->{$prop}, array($this, 'filter'));
+					}
+			}
 
-        if (isset($options->sql->wheres) && isset($options->sql->wheres->rules)) {
-            if (!empty($options->sql->wheres->conditional) && !$this->app->parseObject($options->sql->wheres->conditional)) {
-                unset($options->sql->wheres);
-            } else {
-                $options->sql->wheres->rules = array_filter($options->sql->wheres->rules, array($this, 'filterRules'));
+			if (isset($options->sql->wheres) && isset($options->sql->wheres->rules)) {
+					if (!empty($options->sql->wheres->conditional) && !$this->app->parseObject($options->sql->wheres->conditional)) {
+							unset($options->sql->wheres);
+					} else {
+							$options->sql->wheres->rules = array_filter($options->sql->wheres->rules, array($this, 'filterRules'));
 
-                if (empty($options->sql->wheres->rules)) {
-                    unset($options->sql->wheres);
-                }
-            }
-        }
+							if (empty($options->sql->wheres->rules)) {
+									unset($options->sql->wheres);
+							}
+					}
+			}
 
-        return $this->app->parseObject($options);
-    }
+			return $this->app->parseObject($options);
+	}
 
-    protected function filterRules($rule) {
-        if (!isset($rule->rules)) return TRUE;
-        if (!empty($rule->conditional) && !$this->app->parseObject($rule->conditional)) return FALSE;
-        $rule->rules = array_filter($rule->rules, array($this, 'filterRules'));
-        return !empty($rule->rules);
-    }
+	protected function filterRules($rule) {
+			if (!isset($rule->rules)) return TRUE;
+			if (!empty($rule->conditional) && !$this->app->parseObject($rule->conditional)) return FALSE;
+			$rule->rules = array_filter($rule->rules, array($this, 'filterRules'));
+			return !empty($rule->rules);
+	}
 
 	protected function filter($val) {
 		if (!isset($val->condition)) return TRUE;

@@ -250,6 +250,25 @@ $app->define(<<<'JSON'
           }
         ],
         "output": true
+      },
+      {
+        "name": "get_last_insert_product",
+        "module": "dbupdater",
+        "action": "custom",
+        "options": {
+          "connection": "servodb",
+          "sql": {
+            "query": "select last_insert_id()",
+            "params": []
+          }
+        },
+        "output": true,
+        "meta": [
+          {
+            "name": "last_insert_id()",
+            "type": "text"
+          }
+        ]
       }
     ]
   }

@@ -73,7 +73,7 @@ $app->define(<<<'JSON'
           ],
           "table": "servo_product_price",
           "returning": "product_price_id",
-          "query": "INSERT INTO servo_product_price\n(product_price, product_price_date, product_price_product_id, servo_service_service_id, product_price_code) VALUES (:P1 /* {{$_POST.product_price}} */, :P2 /* {{$_POST.product_price_date}} */, :P3 /* {{$_POST.product_price_product_id}} */, :P4 /* {{$_POST.servo_service_service_id}} */, :P5 /* {{$_POST.product_price_code}} */)",
+          "query": "insert into `servo_product_price` (`product_price`, `product_price_code`, `product_price_date`, `product_price_product_id`, `servo_service_service_id`) values (?, ?, ?, ?, ?)",
           "params": [
             {
               "name": ":P1",

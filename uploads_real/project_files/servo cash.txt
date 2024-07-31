@@ -1,0 +1,17 @@
+cash management:
+
+- cash deposits 
+	- done by various staff into account
+	- purpose recorded
+	- expected deposits (from cashiers)
+	- cashier cash report - total cash receives vs total cash deposited and deposit report/
+
+- cash dispensation to various accounts
+	- bank account
+	- expense account
+	- petty cash accounts (specific cashier)
+	- purchase account
+	- customer refund account
+
+
+

@@ -30,7 +30,7 @@ $app->define(<<<'JSON'
       "options": {
         "connection": "servodb",
         "sql": {
-          "query": "select *, SUM(po_item_quantity * po_item_price) as AMOUNT\n\nfrom servo_purchase_order_items\n\ninner join\nservo_products on (servo_products.product_id = servo_purchase_order_items.po_product_id)\n\ninner join \nservo_purchase_orders on (servo_purchase_order_items.po_id = servo_purchase_orders.po_id)\n\nWHERE servo_purchase_orders.time_received between ? and ?\nand product_id = :P2\nand po_status = 'Received'\ngroup by servo_purchase_orders.time_received",
+          "query": "select *, SUM(po_item_quantity * po_item_price) as AMOUNT\n\nfrom servo_purchase_order_items\n\nleft join\nservo_products on (servo_products.product_id = servo_purchase_order_items.po_product_id)\n\nleft join \nservo_purchase_orders on (servo_purchase_order_items.po_id = servo_purchase_orders.po_id)\n\nleft join servo_vendors on vendor_id = servo_vendors_vendor_id\n\nWHERE servo_purchase_orders.time_received between ? and ?\nand product_id = :P2\nand po_status = 'Received'\ngroup by servo_purchase_orders.time_received",
           "params": [
             {
               "name": "?",
@@ -58,15 +58,15 @@ $app->define(<<<'JSON'
         },
         {
           "name": "po_item_quantity",
-          "type": "number"
+          "type": "text"
         },
         {
           "name": "po_item_price",
-          "type": "number"
+          "type": "text"
         },
         {
           "name": "po_item_notes",
-          "type": "text"
+          "type": "file"
         },
         {
           "name": "po_item_id",
@@ -74,6 +74,18 @@ $app->define(<<<'JSON'
         },
         {
           "name": "po_id",
+          "type": "number"
+        },
+        {
+          "name": "po_item_status",
+          "type": "file"
+        },
+        {
+          "name": "po_item_time_received",
+          "type": "datetime"
+        },
+        {
+          "name": "po_item_user_received",
           "type": "number"
         },
         {
@@ -94,7 +106,7 @@ $app->define(<<<'JSON'
         },
         {
           "name": "product_description",
-          "type": "text"
+          "type": "file"
         },
         {
           "name": "servo_product_category_product_category_id",
@@ -110,19 +122,35 @@ $app->define(<<<'JSON'
         },
         {
           "name": "product_type",
-          "type": "text"
+          "type": "file"
         },
         {
           "name": "product_stock_value",
-          "type": "text"
+          "type": "number"
         },
         {
           "name": "product_min_stock",
           "type": "number"
         },
         {
+          "name": "product_expiration_date",
+          "type": "datetime"
+        },
+        {
+          "name": "product_sub_category_sub_category_id",
+          "type": "number"
+        },
+        {
+          "name": "product_reference_uom",
+          "type": "file"
+        },
+        {
+          "name": "po_id",
+          "type": "number"
+        },
+        {
           "name": "servo_vendors_vendor_id",
-          "type": "text"
+          "type": "number"
         },
         {
           "name": "servo_users_user_ordered_id",
@@ -138,15 +166,15 @@ $app->define(<<<'JSON'
         },
         {
           "name": "time_ordered",
-          "type": "text"
+          "type": "datetime"
         },
         {
           "name": "time_approved",
-          "type": "text"
+          "type": "datetime"
         },
         {
           "name": "time_received",
-          "type": "text"
+          "type": "datetime"
         },
         {
           "name": "po_status",
@@ -154,7 +182,7 @@ $app->define(<<<'JSON'
         },
         {
           "name": "payment_method",
-          "type": "text"
+          "type": "number"
         },
         {
           "name": "payment_status",
@@ -162,7 +190,7 @@ $app->define(<<<'JSON'
         },
         {
           "name": "po_notes",
-          "type": "text"
+          "type": "file"
         },
         {
           "name": "servo_departments_department_id",
@@ -170,14 +198,81 @@ $app->define(<<<'JSON'
         },
         {
           "name": "po_need_by_date",
+          "type": "datetime"
+        },
+        {
+          "name": "transfer_source_department_id",
+          "type": "number"
+        },
+        {
+          "name": "po_type",
           "type": "text"
+        },
+        {
+          "name": "po_discount",
+          "type": "number"
+        },
+        {
+          "name": "po_payment_status",
+          "type": "text"
+        },
+        {
+          "name": "po_invoice_id",
+          "type": "text"
+        },
+        {
+          "name": "po_eta",
+          "type": "datetime"
+        },
+        {
+          "name": "po_goods_description",
+          "type": "file"
+        },
+        {
+          "name": "po_project_name",
+          "type": "text"
+        },
+        {
+          "name": "po_pr_number",
+          "type": "text"
+        },
+        {
+          "name": "po_importation_declaration_number",
+          "type": "text"
+        },
+        {
+          "name": "po_final_invoice_ref",
+          "type": "text"
+        },
+        {
+          "name": "po_agreed_advance_payment",
+          "type": "number"
+        },
+        {
+          "name": "po_agreed_balance",
+          "type": "number"
+        },
+        {
+          "name": "vendor_id",
+          "type": "number"
+        },
+        {
+          "name": "vendor_name",
+          "type": "file"
+        },
+        {
+          "name": "vendor_address",
+          "type": "text"
+        },
+        {
+          "name": "vendor_phone_number",
+          "type": "number"
         },
         {
           "name": "AMOUNT",
           "type": "text"
         }
-      ],
-      "outputType": "array"
+      ]
     }
   }
 }

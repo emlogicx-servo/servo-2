@@ -1,8 +1,8 @@
 /*!
  DMXzone Bootbox
- Version: 1.0.0
- (c) 2020 DMXzone.com
- @build 2020-03-18 17:12:21
+ Version: 2.0.0
+ (c) 2024 Wappler.io
+ @build 2024-04-15 17:48:46
  */
-dmx.Actions({"bootbox.alert":function(t){var o=this;return new Promise(function(e){t.callback=e,bootbox.alert(o.parse(t))})},"bootbox.confirm":function(e){var n=this;return new Promise(function(t){var o={then:(e=Object.assign({},e)).then,else:e.else};delete e.then,delete e.else,e.callback=function(e){if(e){if(o.then)return t(n._exec(o.then).then(function(){return e}))}else if(o.else)return t(n._exec(o.else).then(function(){return e}));t(e)},bootbox.confirm(n.parse(e))})},"bootbox.prompt":function(o){var n=this;return new Promise(function(t,e){o.callback=function(e){t(e)},bootbox.prompt(n.parse(o))})}}),dmx.Component("bootbox",{methods:{alert:function(e){bootbox.alert(e)}}});
-//# sourceMappingURL=../maps/dmxBootbox.js.map
+dmx.Actions({"bootbox.alert":function(e){return new Promise((t=>{bootbox.alert({...this.parse(e),callback:t})}))},"bootbox.prompt":function(e){return new Promise((t=>{bootbox.prompt({...this.parse(e),callback:t})}))},"bootbox.confirm":function(e){const t={then:(e=Object.assign({},e)).then,else:e.else};return delete e.then,delete e.else,new Promise((o=>{bootbox.confirm({...this.parse(e),callback:e=>{if(e){if(t.then)return o(this._exec(t.then).then((()=>e)))}else if(t.else)return o(this._exec(t.else).then((()=>e)));o(e)}})}))}}),dmx.Component("bootbox",{methods:{alert:e=>new Promise((t=>{bootbox.alert({...e,callback:t})}))}});
+//# sourceMappingURL=dmxBootbox.js.map

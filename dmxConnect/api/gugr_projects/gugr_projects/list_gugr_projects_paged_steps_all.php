@@ -15,6 +15,18 @@ $app->define(<<<'JSON'
       {
         "type": "text",
         "name": "dir"
+      },
+      {
+        "type": "text",
+        "name": "offset"
+      },
+      {
+        "type": "text",
+        "name": "limit"
+      },
+      {
+        "type": "text",
+        "name": "project_step_status"
       }
     ]
   },
@@ -27,7 +39,7 @@ $app->define(<<<'JSON'
         "options": {
           "connection": "servodb",
           "sql": {
-            "query": "SELECT\n\n(select count(*) from servo_projects where project_status = 'Active') as Active,\n\n(select count(*) from servo_projects where project_status = 'Pending') as Pending,\n\n(select count(*) from servo_projects where project_status = 'Completed') as Completed",
+            "query": "SELECT\n\n(select count(*) from servo_project_step where step_status = 'Active') as Active,\n\n(select count(*) from servo_project_step where step_status = 'Pending') as Pending,\n\n(select count(*) from servo_project_step where step_status = 'Completed') as Completed",
             "params": []
           }
         },
@@ -55,63 +67,55 @@ $app->define(<<<'JSON'
           "connection": "servodb",
           "sql": {
             "type": "SELECT",
+            "distinct": false,
             "columns": [
               {
-                "table": "servo_projects",
+                "table": "servo_project_step",
+                "column": "project_step_id",
+                "field": "servo_project_step.project_step_id"
+              },
+              {
+                "table": "servo_project_step",
+                "column": "step_status",
+                "field": "servo_project_step.step_status"
+              },
+              {
+                "table": "servo_project_step",
+                "column": "step_end_date",
+                "field": "servo_project_step.step_end_date"
+              },
+              {
+                "table": "servo_project_step",
+                "column": "step_description",
+                "field": "servo_project_step.step_description"
+              },
+              {
+                "table": "servo_user",
+                "column": "user_fname",
+                "field": "servo_user.user_fname"
+              },
+              {
+                "table": "servo_user",
+                "column": "user_lname",
+                "field": "servo_user.user_lname"
+              },
+              {
+                "table": "servo_projectS",
                 "column": "project_id"
               },
               {
-                "table": "servo_projects",
+                "table": "servo_projectS",
                 "column": "project_code"
-              },
-              {
-                "table": "servo_projects",
-                "column": "project_user_created"
-              },
-              {
-                "table": "servo_projects",
-                "column": "project_status"
-              },
-              {
-                "table": "servo_projects",
-                "column": "project_date_created"
-              },
-              {
-                "table": "servo_projects",
-                "column": "project_date_due"
-              },
-              {
-                "table": "servo_project_step",
-                "column": "project_step_id"
-              },
-              {
-                "table": "servo_project_step",
-                "column": "step_status"
-              },
-              {
-                "table": "servo_project_step",
-                "column": "step_end_date"
-              },
-              {
-                "table": "servo_project_step",
-                "column": "step_description"
-              },
-              {
-                "table": "servo_user",
-                "column": "user_fname"
-              },
-              {
-                "table": "servo_user",
-                "column": "user_lname"
               }
             ],
             "table": {
-              "name": "servo_projects"
+              "name": "servo_project_step"
             },
             "joins": [
               {
-                "table": "servo_project_step",
+                "table": "servo_projects",
                 "column": "*",
+                "alias": "servo_projectS",
                 "type": "LEFT",
                 "clauses": {
                   "condition": "AND",
@@ -119,16 +123,18 @@ $app->define(<<<'JSON'
                     {
                       "table": "servo_project_step",
                       "column": "step_project",
+                      "field": "servo_project_step.step_project",
+                      "operation": "=",
                       "operator": "equal",
                       "value": {
                         "table": "servo_projects",
-                        "column": "project_id"
-                      },
-                      "operation": "="
+                        "column": "project_id",
+                        "field": "servo_projects.project_id"
+                      }
                     }
                   ]
                 },
-                "primary": "project_step_id"
+                "primary": "project_id"
               },
               {
                 "table": "servo_user",
@@ -140,11 +146,13 @@ $app->define(<<<'JSON'
                     {
                       "table": "servo_user",
                       "column": "user_id",
-                      "operator": "equal",
+                      "field": "servo_user.user_id",
                       "operation": "=",
+                      "operator": "equal",
                       "value": {
                         "table": "servo_project_step",
-                        "column": "step_users_concerned"
+                        "column": "step_users_concerned",
+                        "field": "servo_project_step.step_users_concerned"
                       }
                     }
                   ]
@@ -152,29 +160,88 @@ $app->define(<<<'JSON'
                 "primary": "user_id"
               }
             ],
-            "query": "select `servo_projects`.`project_id`, `servo_projects`.`project_code`, `servo_projects`.`project_user_created`, `servo_projects`.`project_status`, `servo_projects`.`project_date_created`, `servo_projects`.`project_date_due`, `servo_project_step`.`project_step_id`, `servo_project_step`.`step_status`, `servo_project_step`.`step_end_date`, `servo_project_step`.`step_description`, `servo_user`.`user_fname`, `servo_user`.`user_lname` from `servo_projects` left join `servo_project_step` on `servo_project_step`.`step_project` = `servo_projects`.`project_id` left join `servo_user` on `servo_user`.`user_id` = `servo_project_step`.`step_users_concerned` order by `servo_projects`.`project_status` DESC, `servo_projects`.`project_date_created` DESC, `servo_projects`.`project_code` DESC",
-            "params": [],
+            "wheres": {
+              "condition": "AND",
+              "rules": [
+                {
+                  "id": "servo_project_step.step_status",
+                  "field": "servo_project_step.step_status",
+                  "type": "string",
+                  "operator": "equal",
+                  "value": "{{$_GET.project_step_status}}",
+                  "data": {
+                    "table": "servo_project_step",
+                    "column": "step_status",
+                    "type": "text",
+                    "columnObj": {
+                      "type": "enum",
+                      "enumValues": [
+                        "Active",
+                        "Pending",
+                        "Suspended",
+                        "Completed"
+                      ],
+                      "default": "",
+                      "maxLength": 9,
+                      "primary": false,
+                      "nullable": true,
+                      "name": "step_status"
+                    }
+                  },
+                  "operation": "="
+                }
+              ],
+              "conditional": "{{$_GET.project_step_status}}",
+              "valid": true
+            },
             "orders": [
               {
                 "table": "servo_projects",
-                "column": "project_status",
+                "column": "project_id",
+                "field": "servo_projects.project_id",
                 "direction": "DESC",
                 "recid": 1
               },
               {
                 "table": "servo_projects",
-                "column": "project_date_created",
+                "column": "project_start",
+                "field": "servo_projects.project_start",
                 "direction": "DESC",
                 "recid": 2
               },
               {
                 "table": "servo_projects",
-                "column": "project_code",
+                "column": "project_stop",
+                "field": "servo_projects.project_stop",
                 "direction": "DESC",
                 "recid": 3
+              },
+              {
+                "table": "servo_user",
+                "column": "user_fname",
+                "field": "servo_user.user_fname",
+                "direction": "DESC",
+                "recid": 4
+              },
+              {
+                "table": "servo_projects",
+                "column": "project_status",
+                "field": "servo_projects.project_status",
+                "direction": "DESC",
+                "recid": 5
               }
             ],
-            "primary": "project_id"
+            "params": [
+              {
+                "operator": "equal",
+                "type": "expression",
+                "name": ":P1",
+                "value": "{{$_GET.project_step_status}}",
+                "test": ""
+              }
+            ],
+            "primary": "project_step_id",
+            "query": "select `servo_project_step`.`project_step_id`, `servo_project_step`.`step_status`, `servo_project_step`.`step_end_date`, `servo_project_step`.`step_description`, `servo_user`.`user_fname`, `servo_user`.`user_lname`, `servo_projectS`.`project_id`, `servo_projectS`.`project_code` from `servo_project_step` left join `servo_projects` as `servo_projectS` on `servo_project_step`.`step_project` = `servo_projects`.`project_id` left join `servo_user` on `servo_user`.`user_id` = `servo_project_step`.`step_users_concerned` where `servo_project_step`.`step_status` = ? order by `servo_projects`.`project_id` DESC, `servo_projects`.`project_start` DESC, `servo_projects`.`project_stop` DESC, `servo_user`.`user_fname` DESC, `servo_projects`.`project_status` DESC"
           }
         },
         "meta": [
@@ -232,30 +299,6 @@ $app->define(<<<'JSON'
             "sub": [
               {
                 "type": "number",
-                "name": "project_id"
-              },
-              {
-                "type": "text",
-                "name": "project_code"
-              },
-              {
-                "type": "number",
-                "name": "project_user_created"
-              },
-              {
-                "type": "text",
-                "name": "project_status"
-              },
-              {
-                "type": "datetime",
-                "name": "project_date_created"
-              },
-              {
-                "type": "datetime",
-                "name": "project_date_due"
-              },
-              {
-                "type": "number",
                 "name": "project_step_id"
               },
               {
@@ -277,6 +320,14 @@ $app->define(<<<'JSON'
               {
                 "type": "text",
                 "name": "user_lname"
+              },
+              {
+                "type": "number",
+                "name": "project_id"
+              },
+              {
+                "type": "text",
+                "name": "project_code"
               }
             ]
           }

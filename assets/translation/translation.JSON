@@ -641,6 +641,11 @@
                 "en-US": "My Assignments",
                 "fr-FR": "Mes Assignations"
             },
+    "assignments": 
+            {
+                "en-US": "Assignments",
+                "fr-FR": "Assignations"
+            },
     "allAssignments": 
             {
                 "en-US": "All Assignments",
@@ -679,7 +684,7 @@
     "register": 
             {
                 "en-US": "Register",
-                "fr-FR": "Enrégistrer"
+                "fr-FR": "Enregistrer"
             },
     "hello": 
             {
@@ -780,6 +785,11 @@
             {
                 "en-US": "Vendors",
                 "fr-FR": "Fournisseurs"
+            },
+    "allVendors": 
+            {
+                "en-US": "All Vendors",
+                "fr-FR": "Tout Fournisseurs"
             },
     "vendor": 
             {
@@ -1273,6 +1283,21 @@
                 "en-US": "Add",
                 "fr-FR": "Ajoutez"
             },
+    "getDirections": 
+            {
+                "en-US": "Directions",
+                "fr-FR": "Naviguez"
+            },
+    "addOperator": 
+            {
+                "en-US": "Add Operator",
+                "fr-FR": "Ajoutez Opérateur"
+            },
+    "generatePlaque": 
+            {
+                "en-US": "Generate Plaque",
+                "fr-FR": "Générez Plaque"
+            },
    "addToWallet": 
             {
                 "en-US": "Add User To Wallet",
@@ -1401,12 +1426,12 @@
     "dateCreated": 
             {
                 "en-US": "Date Created",
-                "fr-FR": "Date de Creation"
+                "fr-FR": "Date de Création"
             },
     "newQuery": 
             {
                 "en-US": "New Query",
-                "fr-FR": "Nouvelle Requette"
+                "fr-FR": "Nouvelle Requête"
             },
     "creator": 
             {
@@ -1733,6 +1758,11 @@
                 "en-US": "Project Status",
                 "fr-FR": "Statut du Projet"
             },
+    "projectType": 
+            {
+                "en-US": "Project Type (Floors)",
+                "fr-FR": "Type de Projet (R+)"
+            },
     "projectAlertStatus": 
             {
                 "en-US": "Alerted",
@@ -1742,6 +1772,26 @@
             {
                 "en-US": "Title Deed Number",
                 "fr-FR": "N° Titre Foncier"
+            },
+    "floor": 
+            {
+                "en-US": "Floor",
+                "fr-FR": "Niveau"
+            },
+    "floors": 
+            {
+                "en-US": "Floors",
+                "fr-FR": "Niveaux"
+            },
+    "addFloor": 
+            {
+                "en-US": "Add Floor",
+                "fr-FR": "Ajouter Niveau"
+            },
+    "editFloors": 
+            {
+                "en-US": "Edit Floors",
+                "fr-FR": "Modifier Niveaux"
             },
     "plotNumber": 
             {
@@ -1756,7 +1806,7 @@
     "surfaceArea": 
             {
                 "en-US": "Surface Area(m2)",
-                "fr-FR": "Superficie (m2)"
+                "fr-FR": "Superficie Parcelle(m2)"
             },
     "commentaireSurD": 
             {
@@ -1790,8 +1840,8 @@
             },
     "cumulDePlancees": 
             {
-                "en-US": "Cumul De Plancher (m2)",
-                "fr-FR": "Cumul De Plancher (m2)"
+                "en-US": "Cumul De Planchers (m2)",
+                "fr-FR": "Cumul De Planchers (m2)"
             },
     "observations": 
             {
@@ -1802,6 +1852,11 @@
             {
                 "en-US": "Permit Number",
                 "fr-FR": "Numéro de Permis"
+            },
+    "uploading": 
+            {
+                "en-US": "Uploading",
+                "fr-FR": "Téléversement"
             },
     "maitreDoeuvre": 
             {
@@ -2218,7 +2273,7 @@
     "object": 
             {
                 "en-US": "Object",
-                "fr-FR": "Object"
+                "fr-FR": "Objet"
             },
     "old": 
             {

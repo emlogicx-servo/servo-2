@@ -173,7 +173,7 @@ button:focus {
 .red-state
 {
     background: #ff00000c !important;
-    color: #ff0000;
+    color: #ff7777;
     border-radius: 13px;
 }
 
@@ -194,13 +194,40 @@ background: #11d3bc1c  !important;
     color: #8c942f;
 }
 
+
 .grey-state
 {
     background: #c7c7c7;
     color: #353535;
     border-radius: 13px; 
 }
+.red-state2
+{
+    background: #ff00000c !important;
+    border-radius: 13px;
+}
 
+
+.green-state2
+{
+
+background: #11d3bc1c  !important;
+    border-radius: 13px;
+}
+
+.yellow-state2
+{
+
+    background: #8d8d8c1c !important;
+    color: #8c942f;
+}
+
+
+.grey-state2
+{
+    background: #c7c7c7;
+    border-radius: 13px; 
+}
 .show-print
 {
     display:contents !important;

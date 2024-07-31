@@ -172,6 +172,7 @@ JSON
 
     <link rel="stylesheet" href="css/bootstrap-icons.css" />
     <link rel="stylesheet" href="bootstrap/5/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/bootstrap-icons.min.css" />
 </head>
 
 <body is="dmx-app" id="ServoCashier">
@@ -318,21 +319,21 @@ JSON
                                         </div>
                                         <div class="rounded align-items-center h-auto mt-2 me-2 pt-4 pb-4 ps-4 pe-4 col justify-content-center text-center bg-danger text-danger bg-opacity-25">
                                             <h4 class="text-start"><i class="fas fa-exchange-alt" style="/* color: #F3426C !important */"></i></h4>
-                                            <h2 class="ms-2 text-danger" dmx-text="shiftData.data.shift_sales_data[0].TotalAdjustments.toNumber().formatNumber('5','.',',').default(0)" style="/* color: #89F387 !important */"></h2>
+                                            <h2 class="ms-2 text-danger" dmx-text="shiftData.data.shift_sales_data[0].TotalAdjustments.toNumber().formatNumber('3','.',',').default(0)" style="/* color: #89F387 !important */"></h2>
                                             <h6>{{trans.data.adjustments[lang.value]}}</h6>
                                         </div>
                                     </div>
 
                                     <div class="row d-flex rounded-3 pt-md-2 row-cols-2 align-items-stretch">
                                         <div class="rounded bg-light scrollable-y col-12 col-md col-lg-5 col-xl-4 col-xxl-4 mt-2 me-2 pt-2 pb-2 ps-2 pe-2" style="height: 50vh !important;">
-                                            <h4>
+                                            <h4 class="text-center">
                                                 <i class="fas fa-hand-holding-usd" style="margin-right: 10px;"></i>{{trans.data.payments[lang.value]}}
                                             </h4>
                                             <dmx-chart id="chart4" dmx-bind:data="payentMethodsShift.data.payment_methods_report_shift" point-size="" type="pie" dataset-1:label="Total" dataset-1:value="TotalPayments" labels="TotalPayments.toNumber().formatNumber(3, '.', ',')+Method+' '" legend="bottom" width="300" height="300" colors="colors9"></dmx-chart>
                                         </div>
                                         <div class="rounded bg-light scrollable-y col-12 col-md mt-2 me-2 pt-3 pb-2 ps-3 pe-2">
 
-                                            <h4 class="text-start">
+                                            <h4 class="text-center">
                                                 <i class="far fa-chart-bar" style="margin-right: 5px;"></i>{{trans.data.sales[lang.value]}} | {{trans.data.products[lang.value]}}
                                             </h4>
                                             <dmx-chart id="chart3" dmx-bind:data="shiftData.data.shift_sales_products" dataset-1:label="Total" point-size="" type="bar" dataset-1:value="Total" labels="product_name" thickness="1" dataset-1:tooltip="" dataset-2:label="Volume" legend="top" dataset-2:value="Volume" width="1000" height="300" dataset-2:tooltip="" multicolor="true" stacked="true" nogrid="true"></dmx-chart>
@@ -378,7 +379,7 @@ JSON
                             <div class="row mt-2">
                                 <div class="rounded rounded-3 col bg-light" style="max-height: 83vh; overflow-y: scroll;">
                                     <div class="table-responsive">
-                                        <table class="table table-hover table-sm table-borderless" id="cashierorders">
+                                        <table class="table table-hover table-sm table-borderless text-primary" id="cashierorders">
                                             <thead>
                                                 <tr>
                                                     <th class="t_orderid">#</th>
@@ -425,6 +426,7 @@ JSON
                                                 <tr>
                                                     <th>#</th>
                                                     <th>{{trans.data.customer[lang.value]}}</th>
+                                                    <th>{{trans.data.contact[lang.value]}}</th>
                                                     <th class="text-end">{{trans.data.total[lang.value]}}</th>
                                                 </tr>
                                             </thead>
@@ -432,6 +434,7 @@ JSON
                                                 <tr>
                                                     <td dmx-text="customer_id"></td>
                                                     <td dmx-text="customer_first_name+' '+customer_last_name"></td>
+                                                    <td dmx-text="customer_phone_number+' '+customer_address"></td>
                                                     <td dmx-text="TotalDebt.toNumber().formatNumber('0',',',',')" class="text-end"></td>
                                                 </tr>
                                             </tbody>
@@ -496,9 +499,9 @@ JSON
                                                 <td dmx-text="transaction_date"></td>
                                                 <td dmx-text="user_username"></td>
                                                 <td dmx-text="customer_first_name+' '+customer_last_name"></td>
-                                                <td dmx-text="transaction_amount_tendered.formatNumber('0',',',',')"></td>
-                                                <td dmx-text="transaction_balance"></td>
-                                                <td dmx-text="transaction_amount.formatNumber('0',',',',')"></td>
+                                                <td dmx-text="transaction_amount_tendered.toNumber().formatNumber('3','.',',')"></td>
+                                                <td dmx-text="transaction_balance.toNumber().formatNumber('3','.',',')"></td>
+                                                <td dmx-text="transaction_amount.toNumber().formatNumber('3','.',',')"></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -723,8 +726,9 @@ JSON
 
 
 
-                        <div class="d-block">
-                            <h5>{{trans.data.orderDetails[lang.value]}}</h5>
+                        <div class="d-block d-flex align-items-center">
+                            <h6 class="me-2">{{trans.data.orderDetails[lang.value]}}</h6>
+                            <h6 class="text-info bg-info bg-opacity-10 rounded pt-2 pb-2 ps-3 pe-3" dmx-text="read_item_order.data.query.order_id">Fancy display heading</h6>
                         </div><button id="btn13" class="btn float-end text-warning ms-4 visually-hidden" data-bs-toggle="modal" data-bs-target="#printReceipt" dmx-on:click="" dmx-animate-enter.duration:20000.delay:100="pulse" dmx-class:show-print-2="(read_item_order.data.query.order_status == 'Paid')">
                             <i class="fas fa-receipt fa-2x"></i>
                         </button>
@@ -1089,7 +1093,9 @@ JSON
                                                                 <thead>
                                                                     <tr>
                                                                         <th>{{trans.data.product[lang.value]}}</th>
+
                                                                         <th>{{trans.data.quantity[lang.value]}}</th>
+                                                                        <th>{{trans.data.unitPrice[lang.value]}}</th>
                                                                         <th>{{trans.data.status[lang.value]}}</th>
                                                                         <th>{{trans.data.order[lang.value]}}</th>
                                                                         <th>{{trans.data.department[lang.value]}}</th>
@@ -1112,7 +1118,9 @@ JSON
                                                                 <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="product_report_shift_department_admin.data.product_report" id="tableRepeat8">
                                                                     <tr dmx-class:group-main="(order_item_group_type)=='Main'" dmx-class:group-accessory="(order_item_group_type)=='Accessory'">
                                                                         <td dmx-text="product_name"></td>
+
                                                                         <td dmx-text="order_item_quantity"></td>
+                                                                        <td dmx-text="order_item_price.toNumber().formatNumber('3','.',',')"></td>
                                                                         <td dmx-text="trans.data.getValueOrKey(order_item_status)[lang.value]" dmx-class:order-paid="(order_item_status == 'Delivered')" dmx-class:order-ordered="(order_item_status == 'Processing')" dmx-class:order-credit="(order_item_status)=='Ordered'"></td>
                                                                         <td dmx-text="order_id"></td>
                                                                         <td dmx-text="department_name"></td>
@@ -1162,6 +1170,7 @@ JSON
 
 
     <script src="bootstrap/5/js/bootstrap.min.js"></script>
+    <script src="bootstrap/5/js/bootstrap.bundle.min.js"></script>
 </body>
 
 

@@ -1,33 +1,20 @@
-// Bootstrap 5 Tooltips
-dmx.Attribute('bs-tooltip', 'mounted', function (node, attr) {
-  this.$addBinding(attr.value, function (value) {
-    new bootstrap.Tooltip(node, {
-      trigger: node.getAttribute('data-bs-trigger') || 'hover',
-      placement: function(tip, elm) {
-        var pexpression = elm.getAttribute('dmx-bs-placement') || '';
-        return dmx.parse(pexpression) || elm.getAttribute('data-bs-placement') || 'auto';
-      },
-      title: function() {
-        var expression = this.getAttribute('dmx-bs-tooltip') || '';
-        return dmx.parse(expression) || this.getAttribute('tooltip-title') || this.getAttribute('title') || '';
-      }
+dmx.Attribute('bs-tooltip', 'mounted', function(node, attr) {
+  let tooltip = bootstrap.Tooltip.getInstance(node);
+
+  this.$watch(attr.value, function(value) {
+    node.setAttribute('data-bs-title', value || '');
+  });
+
+  if (!tooltip) {
+    tooltip = new bootstrap.Tooltip(node, {
+      placement: () => node.getAttribute('data-bs-placement') || 'auto',
+      title: () => node.getAttribute('data-bs-title') || '',
     });
+  }
 
-    node.setAttribute('tooltip-title', value || '');
-  });
-});
-
-document.addEventListener('DOMContentLoaded', function(event) {
-  new bootstrap.Tooltip(document.body, {
-    selector: '[tooltip-title]:not([data-bs-trigger])',
-    trigger: 'hover',
-    placement: function(tip, elm) {
-      var pexpression = elm.getAttribute('dmx-bs-placement') || '';
-      return dmx.parse(pexpression) || elm.getAttribute('data-bs-placement') || 'auto';
-    },
-    title: function() {
-      var expression = this.getAttribute('dmx-bs-tooltip') || '';
-      return dmx.parse(expression) || this.getAttribute('tooltip-title') || this.getAttribute('title') || '';
+  return () => {
+    if (tooltip) {
+      tooltip.dispose();
     }
-  });
+  };
 });

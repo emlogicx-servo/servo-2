@@ -43,6 +43,7 @@ class api extends Module
         option_default($options, 'username', '');
         option_default($options, 'password', '');
         option_default($options, 'oauth', NULL);
+        option_default($options, 'throwErrors', FALSE);
         option_default($options, 'passErrors', TRUE);
 
         $options = $this->app->parseObject($options);
@@ -51,25 +52,30 @@ class api extends Module
         $method = $options->method;
         $headers = (array)$options->headers;
         $data = NULL;
-
+        
         $handle = curl_init();
-
+        
         if ($method != 'GET') {
             $data = $options->data;
+            $dataType = $options->dataType;
 
-            if ($options->dataType != 'auto') {
-                if (!isset($headers['Content-Type'])) {
-                    $headers['Content-Type'] = 'application/' . $options->dataType;
-                }
+            if ($dataType == 'auto' && $method == 'POST') {
+                $dataType = 'x-www-form-urlencoded';
+            }
 
-                if (!empty($data)) {
-                    if ($options->dataType == 'x-www-form-urlencoded') {
-                        $data = http_build_query($options->data);
-                    } else {
-                        $data = json_encode($options->data);
-                    }
+            if ($dataType != 'auto' && !isset($headers['Content-Type'])) {
+                $headers['Content-Type'] = 'application/' . $dataType;
+            }
+
+            if (!empty($data)) {
+                if ($dataType == 'x-www-form-urlencoded') {
+                    $data = http_build_query($options->data);
+                } else {
+                    $data = json_encode($options->data);
                 }
-            } elseif ($method == 'POST') {
+            }
+            
+            if ($method == 'POST') {
                 curl_setopt($handle, CURLOPT_POST, TRUE);
             }
 
@@ -92,7 +98,7 @@ class api extends Module
                 $url .= '?';
             }
 
-            $url .= curl_escape($handle, $name) . '=' . curl_escape($handle, $value);
+            $url .= curl_escape($handle, (string)$name) . '=' . curl_escape($handle, (string)$value);
         }
 
         curl_setopt_array($handle, [
@@ -213,8 +219,14 @@ class api extends Module
         $rawBody = substr($response, $headerSize);
         $status = $info['http_code'];
 
-        if ($options->passErrors && $status >= 400) {
-            $this->app->response->end($status, $this->parseBody($rawBody));
+        if ($status >= 400) {
+            if ($options->throwErrors) {
+                throw new \Exception($status . ' ' . $this->parseBody($rawBody));
+            }
+
+            if ($options->passErrors) {
+                $this->app->response->end($status, $this->parseBody($rawBody));
+            }
         }
 
         return (object)[

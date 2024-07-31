@@ -14,11 +14,19 @@ $app->define(<<<'JSON'
       },
       {
         "type": "text",
-        "name": "dir"
+        "name": "user_concerned"
       },
       {
         "type": "text",
-        "name": "user_concerned"
+        "name": "step_status"
+      },
+      {
+        "type": "text",
+        "name": "offset"
+      },
+      {
+        "type": "text",
+        "name": "limit"
       }
     ]
   },
@@ -31,22 +39,28 @@ $app->define(<<<'JSON'
         "options": {
           "connection": "servodb",
           "sql": {
-            "query": "SELECT\n\n(select count(*) from servo_projects where project_status = 'Active') as Active,\n\n(select count(*) from servo_projects where project_status = 'Pending') as Pending,\n\n(select count(*) from servo_projects where project_status = 'Completed') as Completed",
-            "params": []
+            "query": "SELECT\n\n(select count(*) from servo_project_step where step_status = 'Active' and step_users_concerned = :P1) as StepActive,\n\n(select count(*) from servo_project_step where step_status = 'Pending' and step_users_concerned = :P1) as StepPending,\n\n(select count(*) from servo_project_step where step_status = 'Completed' and step_users_concerned = :P1) as StepCompleted",
+            "params": [
+              {
+                "name": ":P1",
+                "value": "{{$_GET.user_concerned}}",
+                "test": "1"
+              }
+            ]
           }
         },
         "output": true,
         "meta": [
           {
-            "name": "Active",
+            "name": "StepActive",
             "type": "text"
           },
           {
-            "name": "Pending",
+            "name": "StepPending",
             "type": "text"
           },
           {
-            "name": "Completed",
+            "name": "StepCompleted",
             "type": "text"
           }
         ]
@@ -127,104 +141,34 @@ $app->define(<<<'JSON'
                 "primary": "project_step_id"
               }
             ],
-            "query": "SELECT servo_projects.project_id, servo_projects.project_code, servo_projects.project_user_created, servo_projects.project_status, servo_projects.project_date_created, servo_projects.project_date_due, servo_project_step.project_step_id, servo_project_step.step_status, servo_project_step.step_end_date, servo_project_step.step_description\nFROM servo_projects\nLEFT JOIN servo_project_step ON servo_project_step.step_project = servo_projects.project_id\nWHERE servo_projects.project_status LIKE :P1 /* {{$_GET.gugr_project_status}} */ AND servo_projects.project_code LIKE :P2 /* {{$_GET.gugr_project_filter}} */ AND servo_project_step.step_users_concerned = :P3 /* {{$_GET.user_concerned}} */\nORDER BY servo_projects.project_status DESC, servo_projects.project_date_created DESC, servo_projects.project_code DESC",
+            "query": "select `servo_projects`.`project_id`, `servo_projects`.`project_code`, `servo_projects`.`project_user_created`, `servo_projects`.`project_status`, `servo_projects`.`project_date_created`, `servo_projects`.`project_date_due`, `servo_project_step`.`project_step_id`, `servo_project_step`.`step_status`, `servo_project_step`.`step_end_date`, `servo_project_step`.`step_description` from `servo_projects` left join `servo_project_step` on `servo_project_step`.`step_project` = `servo_projects`.`project_id` where `servo_project_step`.`step_users_concerned` = ? and (`servo_project_step`.`step_status` = ?) order by `servo_project_step`.`project_step_id` DESC",
             "params": [
               {
-                "operator": "contains",
+                "operator": "equal",
                 "type": "expression",
                 "name": ":P1",
-                "value": "{{$_GET.gugr_project_status}}",
-                "test": "%"
-              },
-              {
-                "operator": "contains",
-                "type": "expression",
-                "name": ":P2",
-                "value": "{{$_GET.gugr_project_filter}}",
-                "test": "%"
+                "value": "{{$_GET.user_concerned}}",
+                "test": "1"
               },
               {
                 "operator": "equal",
                 "type": "expression",
-                "name": ":P3",
-                "value": "{{$_GET.user_concerned}}",
-                "test": "5"
+                "name": ":P2",
+                "value": "{{$_GET.step_status}}",
+                "test": ""
               }
             ],
             "orders": [
               {
-                "table": "servo_projects",
-                "column": "project_status",
-                "direction": "DESC",
-                "recid": 1
-              },
-              {
-                "table": "servo_projects",
-                "column": "project_date_created",
-                "direction": "DESC",
-                "recid": 2
-              },
-              {
-                "table": "servo_projects",
-                "column": "project_code",
-                "direction": "DESC",
-                "recid": 3
+                "table": "servo_project_step",
+                "column": "project_step_id",
+                "direction": "DESC"
               }
             ],
             "primary": "project_id",
             "wheres": {
               "condition": "AND",
               "rules": [
-                {
-                  "id": "servo_projects.project_status",
-                  "field": "servo_projects.project_status",
-                  "type": "string",
-                  "operator": "contains",
-                  "value": "{{$_GET.gugr_project_status}}",
-                  "data": {
-                    "table": "servo_projects",
-                    "column": "project_status",
-                    "type": "text",
-                    "columnObj": {
-                      "type": "enum",
-                      "enumValues": [
-                        "Pending",
-                        "Active",
-                        "Completed",
-                        "Suspended",
-                        "Cancelled",
-                        "Paused"
-                      ],
-                      "maxLength": 9,
-                      "primary": false,
-                      "nullable": true,
-                      "name": "project_status"
-                    }
-                  },
-                  "operation": "LIKE",
-                  "table": "servo_projects"
-                },
-                {
-                  "id": "servo_projects.project_code",
-                  "field": "servo_projects.project_code",
-                  "type": "string",
-                  "operator": "contains",
-                  "value": "{{$_GET.gugr_project_filter}}",
-                  "data": {
-                    "table": "servo_projects",
-                    "column": "project_code",
-                    "type": "text",
-                    "columnObj": {
-                      "type": "string",
-                      "maxLength": 128,
-                      "primary": false,
-                      "nullable": true,
-                      "name": "project_code"
-                    }
-                  },
-                  "operation": "LIKE",
-                  "table": "servo_projects"
-                },
                 {
                   "id": "servo_project_step.step_users_concerned",
                   "field": "servo_project_step.step_users_concerned",
@@ -237,6 +181,7 @@ $app->define(<<<'JSON'
                     "type": "number",
                     "columnObj": {
                       "type": "reference",
+                      "default": "",
                       "primary": false,
                       "nullable": true,
                       "references": "user_id",
@@ -249,6 +194,42 @@ $app->define(<<<'JSON'
                   },
                   "operation": "=",
                   "table": "servo_projects"
+                },
+                {
+                  "condition": "AND",
+                  "rules": [
+                    {
+                      "id": "servo_project_step.step_status",
+                      "field": "servo_project_step.step_status",
+                      "type": "string",
+                      "operator": "equal",
+                      "value": "{{$_GET.step_status}}",
+                      "data": {
+                        "table": "servo_project_step",
+                        "column": "step_status",
+                        "type": "text",
+                        "columnObj": {
+                          "type": "enum",
+                          "enumValues": [
+                            "Active",
+                            "Pending",
+                            "Suspended",
+                            "Completed"
+                          ],
+                          "default": "",
+                          "maxLength": 9,
+                          "primary": false,
+                          "nullable": true,
+                          "name": "step_status"
+                        }
+                      },
+                      "operation": "=",
+                      "table": "servo_projects"
+                    }
+                  ],
+                  "conditional": "{{$_GET.step_status}}",
+                  "table": "servo_projects",
+                  "id": "servo_projects.undefined"
                 }
               ],
               "conditional": null,

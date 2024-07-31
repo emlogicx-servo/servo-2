@@ -88,66 +88,20 @@ JSON
   <div is="dmx-browser" id="browser1"></div>
   <dmx-notifications id="assetNotification" align="full" timeout="500" closable="true"></dmx-notifications>
   <?php include 'cc-header.php'; ?>
-  <main class="mt-4" id="plaque">
-
-    <div class="modal readitem" id="printPlaque" is="dmx-bs5-modal" tabindex="-1">
-      <div class="modal-dialog modal-xl" role="document" style="margin: 0px !important; width: 100% !important; height: 99% !important; max-width: 100% !important; max-height: 99% !important;">
-        <div class="modal-content" style="max-height: 100% !important; height: 100% !important;">
-          <div class="modal-header text-sm-start">
-
-
-            <div class="d-block">
-              <h4 class="modal-title mt-2 text-white">{{read_customer.data.query_read_customer.customer_first_name+' '+read_customer.data.query_read_customer.customer_last_name}}</h4>
-            </div>
-            <div class="d-block visually-hidden">
-
-            </div>
-            <div class="d-block">
-
-            </div>
-
-            <div class="d-block">
-
-            </div>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <div class="row">
-              <div class="col">
-
-
-              </div>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <div id="conditional2" is="dmx-if" dmx-bind:condition="(profile_privileges.data.profile_privileges[0].delete_customer == 'Yes')">
-              <form id="deleteCustomer" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_customers/delete_customer.php" dmx-on:success="notifies1.success('Success');list_customers.load({});readItemModal.hide()" onsubmit=" return confirm('CONFIRM DELETE?');" dmx-on:error="notifies1.warning('Error!')">
-
-                <input id="text1" name="customer_id" type="hidden" class="form-control" dmx-bind:value="read_customer.data.query_read_customer.customer_id">
-
-                <button id="btn6" class="btn text-secondary" type="submit">
-                  <i class="far fa-trash-alt fa-lg"></i>
-                </button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-  </main>
   <main>
     <div class="mt-auto ms-3 me-3">
       <dmx-value id="assetId" dmx-bind:value="list_user_info.data.query_list_user_info.user_id"></dmx-value>
 
-      <div class="row servo-page-header justify-content-start rounded rounded-3 ms-0 me-0 pt-1 pb-1 ps-1 pe-1 bg-info">
+      <div class="row servo-page-header justify-content-start rounded rounded-3 text-body pt-1 pb-1 ps-1 pe-1">
         <div class="col-auto d-flex pt-2 pb-1 ps-3 pe-2 border-secondary rounded-pill" dmx-animate-enter="slideInLeft">
-          <i class="fas fa-map-marker-alt fa-lg text-bg" style="/* color: #fcff18 !important */"></i>
-          <h6 class="servo-page-heading fw-lighter ms-2 text-white">{{trans.data.constructionProjectDashboard[lang.value]}}: {{read_asset.data.query_read_customer_asset.asset_id}}</h6>
+          <i class="far fa-building fa-lg" style="/* color: #fcff18 !important */"></i>
+          <h6 class="servo-page-heading ms-2 text-body">{{trans.data.constructionProjectDashboard[lang.value]}}: {{read_asset.data.query_read_customer_asset.asset_id}}</h6>
         </div>
-        <div class="col-auto d-flex rounded-pill ms-1 pt-2 ps-1 pe-2" dmx-animate-enter="slideInLeft">
-          <h6 class="servo-page-heading fw-lighter ms-1 text-white">{{read_asset.data.query_read_customer_asset.permit_number}}</h6>
+        <div class="col-auto d-flex rounded-pill ms-1 pt-2 ps-3 pe-3 bg-light" dmx-animate-enter="slideInLeft">
+          <h6 class="servo-page-heading ms-1 text-body">{{read_asset.data.query_read_customer_asset.permit_number}}</h6>
         </div>
-        <div class="col-auto d-flex rounded-pill ms-1 pt-2 ps-1 pe-2" dmx-animate-enter="slideInLeft">
-          <h6 class="servo-page-heading fw-lighter ms-1 text-white">{{read_asset.data.query_read_customer_asset.customer_first_name}} {{read_asset.data.query_read_customer_asset.customer_last_name}}</h6>
+        <div class="col-auto d-flex rounded-pill ms-1 pt-2 ps-3 pe-3 bg-light" dmx-animate-enter="slideInLeft">
+          <h6 class="servo-page-heading ms-1 text-body">{{read_asset.data.query_read_customer_asset.customer_first_name}} {{read_asset.data.query_read_customer_asset.customer_last_name}}</h6>
         </div>
 
       </div>
@@ -155,11 +109,11 @@ JSON
         <div class="col mt-2">
           <ul class="nav nav-tabs nav-justified" id="navTabs1_tabs" role="tablist">
             <li class="nav-item">
-              <a class="nav-link active fw-bold" id="navTabs1_2_tab" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_21" role="tab" aria-controls="navTabs1_2" aria-selected="false"><i class="fas fa-info" style="margin-right: 5px"></i>
+              <a class="nav-link active" id="navTabs1_2_tab" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_21" role="tab" aria-controls="navTabs1_2" aria-selected="false"><i class="fas fa-info" style="margin-right: 5px"></i>
                 {{trans.data.info[lang.value]}}</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link fw-bold" id="navTabs1_3_tab" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_31" role="tab" aria-controls="navTabs1_3" aria-selected="false"><i class="far fa-file" style="margin-right:5px;"></i>
+              <a class="nav-link" id="navTabs1_3_tab" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_31" role="tab" aria-controls="navTabs1_3" aria-selected="false"><i class="far fa-file" style="margin-right:5px;"></i>
                 {{trans.data.documents[lang.value]}}</a>
             </li>
           </ul>
@@ -170,9 +124,11 @@ JSON
                 <div class="rounded-2 rounded col-md-auto col-12 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xxl col-xxl-5 mt-3 me-2 pt-3 pb-2 ps-3 pe-3 bg-light">
                   <div class="row justify-content-between">
                     <div class="col d-flex justify-content-between">
-                      <h4 wappler-command="editContent" class="text-body">{{trans.data.assetGeolocation[lang.value]}}</h4>
+                      <h5 wappler-command="editContent" class="text-body">
+                        <i class="fas fa-map-marker-alt" style="margin-right: 10px;"></i>{{trans.data.assetGeolocation[lang.value]}}
+                      </h5>
 
-                      <a href="" dmx-bind:href="'https://maps.google.com/?q='+read_asset.data.query_read_customer_asset.asset_lat+','+read_asset.data.query_read_customer_asset.asset_long" target="_blank" id="goToMaps" dmx-bs-tooltip="'Google Maps (External)'" data-bs-trigger="hover focus" data-bs-placement="right"><button id="btn7" class="btn text-info" wappler-command="editContent"><i class="fas fa-directions fa-3x"></i></button></a>
+                      <a href="" dmx-bind:href="'https://maps.google.com/?q='+read_asset.data.query_read_customer_asset.asset_lat+','+read_asset.data.query_read_customer_asset.asset_long" target="_blank" id="goToMaps" dmx-bs-tooltip="'Google Maps (External)'" data-bs-trigger="hover focus" data-bs-placement="right"><button id="btn7" class="btn text-white bg-danger" wappler-command="editContent"><i class="fas fa-directions fa-lg" style="margin-right: 5px;"></i>{{trans.data.getDirections[lang.value]}}</button></a>
                     </div>
                   </div>
                   <form is="dmx-serverconnect-form" id="updateAssetGeo" method="post" action="dmxConnect/api/servo_assets/update_customer_asset_municipality_main.php" dmx-generator="bootstrap5" dmx-form-type="horizontal" dmx-populate="read_asset.data.query_read_customer_asset" dmx-on:success="assetNotification.success(trans.data.assetUpdated[lang.value]);read_asset.load({asset_id: read_asset.data.query_read_customer_asset.asset_id})">
@@ -198,6 +154,14 @@ JSON
                       <label for="inp_asset_long" class="col-sm-2 col-form-label" wappler-command="editContent">{{trans.data.longitude[lang.value]}}</label>
                       <div class="col-sm-10">
                         <input type="text" class="form-control" id="inp_asset_long" name="asset_long" dmx-bind:value="read_asset.data.query_read_customer_asset.asset_long" aria-describedby="inp_asset_long_help">
+                      </div>
+                    </div>
+                    <div class="form-group mb-3 row">
+
+                      <div class="col">
+                        <button type="submit" class="btn text-white bg-info w-25" dmx-bind:value="read_asset.data.query_read_customer_asset.Save" wappler-command="editContent">
+                          <i class="fas fa-check" style="margin-right: 5px;"></i> {{trans.data.update[lang.value]}}
+                        </button>
                       </div>
                     </div>
                     <div class="row"><input type="number" class="form-control visually-hidden" id="inp_asset_owner" name="asset_owner" dmx-bind:value="read_asset.data.query_read_customer_asset.asset_owner" aria-describedby="inp_asset_owner_help" placeholder="Enter Asset owner"><input type="number" class="form-control visually-hidden" id="inp_user_created" name="user_created" dmx-bind:value="read_asset.data.query_read_customer_asset.user_created" aria-describedby="inp_user_created_help" placeholder="Enter User created"><input type="date" class="form-control visually-hidden" id="inp_date_created" name="date_created" dmx-bind:value="read_asset.data.query_read_customer_asset.date_created" aria-describedby="inp_date_created_help" placeholder="Enter Date created"></div>
@@ -226,14 +190,7 @@ JSON
                       </div>
                     </div>
 
-                    <div class="form-group mb-3 row">
 
-                      <div class="col-sm-10 mt-2">
-                        <button type="submit" class="btn text-white bg-info" dmx-bind:value="read_asset.data.query_read_customer_asset.Save" wappler-command="editContent">
-                          <i class="fas fa-check fa-2x"></i>
-                        </button>
-                      </div>
-                    </div>
                   </form>
                   <div class="row justify-content-sm-between justify-content-md-between justify-content-lg-between justify-content-xl-between justify-content-xxl-between mt-2 sorter shadow-none bg-transparent">
                     <div class="col-lg-3 col-12 col-sm-12 pb-2" id="qr">
@@ -245,18 +202,18 @@ JSON
                 <div class="col mt-3 rounded bg-light">
                   <div class="row mt-3 justify-content-end">
                     <div class="style13 page-button w-auto offset-9 col-12" id="pagebuttons">
-                      <a href="" target="_blank" dmx-bind:href="'printplaque.php?asset='+read_asset.data.query_read_customer_asset.asset_id"><button id="printPlaqueButton" class="btn style12 fw-light add-button w-auto text-info" data-bs-target="#printPlaque" style="float: right;"><i class="fas fa-print fa-2x"></i></button></a>
+                      <a href="" target="_blank" dmx-bind:href="'printplaque.php?asset='+read_asset.data.query_read_customer_asset.asset_id"><button id="printPlaqueButton" class="btn style12 fw-light add-button w-auto pt-2 pb-2 ps-3 pe-3 text-white bg-info" data-bs-target="#printPlaque" style="float: right;"><i class="fas fa-file-pdf fa-lg" style="margin-right: 5px;"></i>{{trans.data.generatePlaque[lang.value]}}</button></a>
 
                     </div>
                   </div>
                   <ul class="nav nav-tabs mt-3" id="navTabs1_tabs" role="tablist">
                     <li class="nav-item flex-shrink-1 w-50 text-start">
-                      <a class="nav-link active fw-bolder ms-1 w-auto text-center" id="assetData1Tab" data-bs-toggle="tab" href="#" data-bs-target="#assatDataTab1Cotent" role="tab" aria-controls="navTabs1_1" aria-selected="true" wappler-command="editContent"><i class="fas fa-info" style="margin-right: 5px;"></i>
+                      <a class="nav-link active ms-1 w-auto text-center" id="assetData1Tab" data-bs-toggle="tab" href="#" data-bs-target="#assatDataTab1Cotent" role="tab" aria-controls="navTabs1_1" aria-selected="true" wappler-command="editContent"><i class="fas fa-drafting-compass fa-lg" style="margin-right: 5px;"></i>
                         {{trans.data.technicalInformation[lang.value]}}</a>
 
                     </li>
                     <li class="nav-item flex-shrink-1 w-50">
-                      <a class="nav-link fw-bolder w-auto text-center" id="assetData2Tab" data-bs-toggle="tab" href="#" data-bs-target="#assatDataTab2Cotent" role="tab" aria-controls="navTabs1_2" aria-selected="false" wappler-command="editContent"><i class="fas fa-map-signs" style="margin-right:5px"></i>
+                      <a class="nav-link w-auto text-center" id="assetData2Tab" data-bs-toggle="tab" href="#" data-bs-target="#assatDataTab2Cotent" role="tab" aria-controls="navTabs1_2" aria-selected="false" wappler-command="editContent"><i class="fas fa-qrcode fa-lg" style="margin-right:5px"></i>
                         {{trans.data.plaqueInformation[lang.value]}}</a>
                     </li>
                   </ul>
@@ -267,7 +224,7 @@ JSON
                           <form id="updateAssetMuicipalityTechnicalData" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_assets/update_customer_asset_municipality_additional.php" dmx-on:success="assetNotification.success('Success!');read_asset.load({asset_id: read_asset.data.query_read_customer_asset.asset_id})" dmx-on:error="assetNotification.danger('Error')" dmx-on:start="preloader1.show()" dmx-on:done="preloader1.hide()">
                             <div class="form-group mb-3 row" id="paymentStatus">
                               <label for="paymentStatus1" class="col-form-label col-sm-4 col-xxl col-4 col-md-4 col-lg-4" wappler-command="editContent">{{trans.data.paymentStatus[lang.value]}}</label>
-                              <div class="col-sm-6 offset-sm-1 col-md-7 col-xxl col-lg-6 col-6">
+                              <div class="col-sm-6 offset-sm-1 col-md-7 col-lg-6 col-6 col-xxl">
                                 <select id="paymentStatus1" class="form-select" name="payment_status" dmx-bind:value="read_asset.data.query_read_customer_asset.payment_status.default(null)">
                                   <option value="yes">{{trans.data.yes[lang.value]}}</option>
                                   <option value="no">{{trans.data.no[lang.value]}}</option>
@@ -354,7 +311,7 @@ JSON
                               </div>
                             </div>
                             <div class="form-group mb-3 row" id="projectentitlement">
-                              <label for="projectId4" class="col-form-label col-sm-4 col-4 col-lg-4 col-md-4" wappler-command="editContent">{{trans.data.projectEntitlement[lang.value]}}</label>
+                              <label for="projectId4" class="col-form-label col-sm-4 col-4 col-lg-4 col-md-4" wappler-command="editContent">{{trans.data.projectType[lang.value]}}</label>
                               <div class="col-sm-6 offset-sm-1 col-6">
                                 <input type="number" class="form-control" id="projectEntitlement" name="project_entitlement" aria-describedby="input1_help" dmx-bind:value="read_asset.data.query_read_customer_asset.project_entitlement">
                               </div>
@@ -368,8 +325,31 @@ JSON
                             <div class="form-group mb-3 row" id="projectId6">
                               <label for="projectId6" class="col-form-label col-sm-4 col-4 col-lg-4 col-md-4" wappler-command="editContent">{{trans.data.cumulDePlancees[lang.value]}}</label>
                               <div class="col-sm-6 offset-sm-1 col-6">
-                                <input type="number" class="form-control" id="cumulDePlancees1" name="cumul_de_plancees" aria-describedby="input1_help" dmx-bind:value="read_asset.data.query_read_customer_asset.cumul_de_plancees">
+                                <input type="number" class="form-control visually-hidden" id="cumulDePlancees1" name="cumul_de_plancees" aria-describedby="input1_help" dmx-bind:value="read_asset.data.query_read_customer_asset.cumul_de_plancees">
+                                <button id="btn1" class="btn text-white bg-info mt-2" data-bs-toggle="modal" data-bs-target="#createFloor"><i class="fas fa-building" style="margin-right: 5px;"></i>{{trans.data.editFloors[lang.value]}}</button>
                               </div>
+                            </div>
+                            <div class="row">
+                              <div class="col bg-secondary rounded mt-2 mb-2 ms-1 me-1">
+                                <div class="table-responsive">
+                                  <table class="table table-striped table-sm">
+                                    <thead class="text-center">
+                                      <tr>
+                                        <th>{{trans.data.floor[lang.value]}}</th>
+                                        <th>{{trans.data.surfaceArea[lang.value]}}</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="read_asset.data.query_read_asset_floors" id="tableRepeat2">
+                                      <tr>
+                                        <td dmx-text="asset_floor_number" class="text-center"></td>
+                                        <td dmx-text="asset_floor_surface_area" class="text-end"></td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </div>
+                                <h5 dmx-text="read_asset.data.TotalFloorArea[0].TotalFloorArea.toNumber().formatNumber('5', '.', ',')" class="text-end">Fancy display heading</h5>
+                              </div>
+
                             </div>
                             <div class="form-group mb-3 row" id="observations"><label for="servitudePublique" class="col-form-label col-sm-4 col-4 col-lg-4 col-md-4" wappler-command="editContent">{{trans.data.observations[lang.value]}}</label>
                               <div class="col-sm-6 offset-sm-1 col-6">
@@ -383,8 +363,8 @@ JSON
                             </div>
 
                             <div class="row">
-                              <div class="col text-center"><button id="updateAssetTechnicalData" class="btn btn-info" type="submit" wappler-empty="Editable" wappler-command="editContent">
-                                  <i class="fas fa-check fa-2x"></i>
+                              <div class="col text-center"><button id="updateAssetTechnicalData" class="btn text-white bg-info w-25" type="submit" wappler-empty="Editable" wappler-command="editContent">
+                                  <i class="fas fa-check" style="margin-right: 5px;"></i>{{trans.data.update[lang.value]}}
                                 </button></div>
                             </div>
                           </form>
@@ -476,9 +456,13 @@ JSON
                             </div>
 
                             <div class="row">
-                              <div class="text-center col-2 offset-4 col-xxl-5"><button id="updateAssetPlaqueData" class="btn btn-info" type="submit" wappler-empty="Editable" wappler-command="editContent">
-                                  <i class="fas fa-check fa-2x"></i>
-                                </button></div>
+                              <div class="col-xxl-5 offset-0 col">
+
+                                <div class="row"><button id="updateAssetPlaqueData" class="btn text-white bg-info w-50" type="submit" wappler-empty="Editable" wappler-command="editContent">
+                                    <i class="fas fa-check" style="margin-right: 5px;"></i> {{trans.data.update[lang.value]}}
+                                  </button></div>
+
+                              </div>
                             </div>
                           </form>
 
@@ -535,6 +519,9 @@ JSON
                           </div>
                         </div>
                       </form>
+                      <div class="progress" dmx-show="uploadAssetfile.state.executing">
+                        <div class="progress-bar bg-info progress-bar-animated" role="progressbar" style="width: 0%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" dmx-style:width="uploadAssetfile.uploadProgress.percent+'%'">{{trans.data.uploading[lang.value]}}</div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -589,6 +576,145 @@ JSON
       </div>
     </div>
   </main>
+  <main class="mt-4" id="plaque">
+
+    <div class="modal" id="createFloor" is="dmx-bs5-modal" tabindex="-1">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">
+              <i class="fas fa-building" style="margin-right: 5px;"></i>{{trans.data.editFloors[lang.value]}}
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="row pe-3">
+              <div class="rounded bg-primary bg-opacity-10 col-12 ms-2 me-2 pt-3 pb-2 ps-2 pe-2">
+                <h5>{{trans.data.addFloor[lang.value]}}</h5>
+                <form is="dmx-serverconnect-form" id="createAssetFloor" method="post" action="dmxConnect/api/servo_assets/create_asset_floor.php" dmx-generator="bootstrap5" dmx-form-type="horizontal" dmx-on:success="assetNotification.success('Success!');read_asset.load({asset_id: read_asset.data.query_read_customer_asset.asset_id});createAssetFloor.reset()" dmx-on:error="assetNotification.danger('Error!')"><input type="number" class="form-control visually-hidden" id="inp_asset_id1" name="asset_id" aria-describedby="inp_asset_id_help" placeholder="Enter Asset" dmx-bind:value="read_asset.data.query_read_customer_asset.asset_id">
+                  <div class="form-group mb-3 row">
+                    <label for="inp_asset_floor_number" class="col-sm-2 col-form-label">{{trans.data.floor[lang.value]}}</label>
+                    <div class="col-sm-10">
+                      <input type="number" class="form-control" id="inp_asset_floor_number" name="asset_floor_number" aria-describedby="inp_asset_floor_number_help">
+                    </div>
+                  </div>
+                  <div class="form-group mb-3 row">
+                    <label for="inp_asset_floor_surface_area" class="col-sm-2 col-form-label">{{trans.data.surfaceArea[lang.value]}}</label>
+                    <div class="col-sm-10">
+                      <input type="number" class="form-control" id="inp_asset_floor_surface_area" name="asset_floor_surface_area" aria-describedby="inp_asset_floor_surface_area_help">
+                    </div>
+                  </div>
+
+                  <div class="form-group mb-3 row">
+                    <div class="col-sm-2">&nbsp;</div>
+                    <div class="col-sm-10">
+                      <button type="submit" class="btn btn-primary" dmx-bind:disabled="state.executing">{{trans.data.create[lang.value]}} <span class="spinner-border spinner-border-sm" role="status" dmx-show="state.executing"></span></button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div class="row mt-1 pe-3">
+              <div class="rounded bg-primary bg-opacity-10 ms-2 me-2 pt-3 pb-2 ps-2 pe-2 col-12">
+                <h5>{{trans.data.floors[lang.value]}}</h5>
+
+                <div class="table-responsive">
+                  <table class="table table-sm">
+                    <thead class="text-center">
+                      <tr class="align-middle">
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="read_asset.data.query_read_asset_floors" id="tableRepeat23" class="align-top">
+                      <tr class="align-top">
+                        <td class="text-end">
+                          <form id="updateAssetFloor" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_assets/update_asset_floor.php" class="d-flex" dmx-on:success="read_asset.load({asset_id: read_asset.data.query_read_customer_asset.asset_id});assetNotification.success('Success!')">
+                            <input id="assetFloorAssetId" name="asset_floor_id" type="text" class="form-control visually-hidden" dmx-bind:value="asset_floor_id">
+
+                            <div class="form-group mb-3 row">
+                              <div class="col-sm-10">
+                                <input id="assetFloorFloor" name="asset_floor_number" type="number" class="form-control me-1" dmx-bind:value="asset_floor_number"><small id="input1_help" class="form-text text-muted">{{trans.data.floor[lang.value]}}</small>
+                              </div>
+                            </div>
+                            <div class="form-group mb-3 row">
+                              <div class="col-sm-10">
+                                <input id="assetFloorArea" name="asset_floor_surface_area" type="number" class="form-control me-1" dmx-bind:value="asset_floor_surface_area"><small id="input1_help1" class="form-text text-muted">{{trans.data.surfaceArea[lang.value]}}</small>
+                              </div>
+                            </div>
+
+                            <button id="btn8" class="btn text-success" type="submit">
+                              <i class="fas fa-check"></i></button>
+                          </form>
+                        </td>
+                        <td class="text-end">
+                          <form id="deleteAssetFloor" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_assets/delete_asset_floor.php" class="d-flex" dmx-on:success="read_asset.load({asset_id: read_asset.data.query_read_customer_asset.asset_id});assetNotification.success('Success!')">
+                            <input id="assetFloorAssetId1" name="asset_floor_id" type="text" class="form-control visually-hidden" dmx-bind:value="asset_floor_id">
+                            <button id="btn9" class="btn text-danger" type="submit">
+                              <i class="far fa-trash-alt fa-sm"></i></button>
+                          </form>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal readitem" id="printPlaque" is="dmx-bs5-modal" tabindex="-1">
+      <div class="modal-dialog modal-xl" role="document" style="margin: 0px !important; width: 100% !important; height: 99% !important; max-width: 100% !important; max-height: 99% !important;">
+        <div class="modal-content" style="max-height: 100% !important; height: 100% !important;">
+          <div class="modal-header text-sm-start">
+
+
+            <div class="d-block">
+              <h4 class="modal-title mt-2 text-white">{{read_customer.data.query_read_customer.customer_first_name+' '+read_customer.data.query_read_customer.customer_last_name}}</h4>
+            </div>
+            <div class="d-block visually-hidden">
+
+            </div>
+            <div class="d-block">
+
+            </div>
+
+            <div class="d-block">
+
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col">
+
+
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <div id="conditional2" is="dmx-if" dmx-bind:condition="(profile_privileges.data.profile_privileges[0].delete_customer == 'Yes')">
+              <form id="deleteCustomer" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_customers/delete_customer.php" dmx-on:success="notifies1.success('Success');list_customers.load({});readItemModal.hide()" onsubmit=" return confirm('CONFIRM DELETE?');" dmx-on:error="notifies1.warning('Error!')">
+
+                <input id="text1" name="customer_id" type="hidden" class="form-control" dmx-bind:value="read_customer.data.query_read_customer.customer_id">
+
+                <button id="btn6" class="btn text-secondary" type="submit">
+                  <i class="far fa-trash-alt fa-lg"></i>
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+  </main>
+
 
   <script src="bootstrap/5/js/bootstrap.bundle.min.js"></script>
   <script>

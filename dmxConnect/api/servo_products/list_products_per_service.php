@@ -27,6 +27,14 @@ $app->define(<<<'JSON'
       {
         "type": "text",
         "name": "product_category"
+      },
+      {
+        "type": "text",
+        "name": "limit"
+      },
+      {
+        "type": "text",
+        "name": "offset"
       }
     ]
   },
@@ -39,11 +47,12 @@ $app->define(<<<'JSON'
         "options": {
           "connection": "servodb",
           "sql": {
-            "query": "select * from servo_products\n\nleft join servo_product_categories on servo_product_category_product_category_id = product_categories_id\n\nleft join servo_product_sub_category on product_sub_category_sub_category_id = product_sub_category_id\n\nleft join servo_product_price\non product_price_product_id = product_id\n\nleft join \nservo_service_department_category\non sdc_category_id = servo_products.servo_product_category_product_category_id\nwhere \nsdc_service_id = :P1\nAND\nservo_products.product_name LIKE :P3\nAND\nservo_product_price.servo_service_service_id = :P1\nAND (product_type = 'Service' OR product_type = 'Store')\n\nAND product_categories_id LIKE :P2\n\nlimit 50\n",
+            "query": "select * from servo_products\n\nleft join servo_product_categories on servo_product_category_product_category_id = product_categories_id\n\nleft join servo_product_sub_category on product_sub_category_sub_category_id = product_sub_category_id\n\nleft join servo_product_price\non product_price_product_id = product_id\n\nleft join \nservo_service_department_category\non sdc_category_id = servo_products.servo_product_category_product_category_id\nwhere \nsdc_service_id = :P1\nAND\nservo_products.product_name LIKE :P3\nAND\nservo_product_price.servo_service_service_id = :P1\nAND (product_type = 'Service' OR product_type = 'Store')\n\nAND product_categories_id LIKE :P2\n\ngroup by product_id\n\nlimit 50\n",
             "params": [
               {
                 "name": ":P3",
-                "value": "%{{$_GET.search}}%"
+                "value": "%{{$_GET.search}}%",
+                "test": "%"
               },
               {
                 "name": ":P1",
@@ -77,7 +86,7 @@ $app->define(<<<'JSON'
           },
           {
             "name": "product_description",
-            "type": "text"
+            "type": "file"
           },
           {
             "name": "servo_product_category_product_category_id",
@@ -93,15 +102,27 @@ $app->define(<<<'JSON'
           },
           {
             "name": "product_type",
-            "type": "text"
+            "type": "file"
           },
           {
             "name": "product_stock_value",
-            "type": "text"
+            "type": "number"
           },
           {
             "name": "product_min_stock",
             "type": "number"
+          },
+          {
+            "name": "product_expiration_date",
+            "type": "datetime"
+          },
+          {
+            "name": "product_sub_category_sub_category_id",
+            "type": "number"
+          },
+          {
+            "name": "product_reference_uom",
+            "type": "file"
           },
           {
             "name": "product_categories_id",
@@ -109,6 +130,18 @@ $app->define(<<<'JSON'
           },
           {
             "name": "product_category_name",
+            "type": "text"
+          },
+          {
+            "name": "product_sub_category_id",
+            "type": "number"
+          },
+          {
+            "name": "product_sub_category_category_id",
+            "type": "number"
+          },
+          {
+            "name": "product_sub_category_name",
             "type": "text"
           },
           {
@@ -121,7 +154,7 @@ $app->define(<<<'JSON'
           },
           {
             "name": "product_price_date",
-            "type": "text"
+            "type": "datetime"
           },
           {
             "name": "product_price_product_id",
@@ -134,6 +167,10 @@ $app->define(<<<'JSON'
           {
             "name": "product_price_code",
             "type": "text"
+          },
+          {
+            "name": "product_price_uom_service",
+            "type": "number"
           },
           {
             "name": "service_department_category_id",
@@ -155,8 +192,7 @@ $app->define(<<<'JSON'
             "name": "sdc_code",
             "type": "text"
           }
-        ],
-        "outputType": "array"
+        ]
       },
       {
         "name": "repeat",
@@ -293,6 +329,258 @@ $app->define(<<<'JSON'
                     "type": "text"
                   }
                 ]
+              },
+              {
+                "name": "query_list_product_prices_per_service",
+                "module": "dbconnector",
+                "action": "select",
+                "options": {
+                  "connection": "servodb",
+                  "sql": {
+                    "type": "select",
+                    "columns": [
+                      {
+                        "table": "servo_product_price",
+                        "column": "product_price_id"
+                      },
+                      {
+                        "table": "servo_product_price",
+                        "column": "product_price"
+                      },
+                      {
+                        "table": "servo_product_price",
+                        "column": "product_price_date"
+                      },
+                      {
+                        "table": "servo_product_price",
+                        "column": "product_price_product_id"
+                      },
+                      {
+                        "table": "servo_product_price",
+                        "column": "servo_service_service_id"
+                      },
+                      {
+                        "table": "servo_product_price",
+                        "column": "product_price_code"
+                      },
+                      {
+                        "table": "servo_product_price",
+                        "column": "product_price_uom_service"
+                      },
+                      {
+                        "table": "servo_product_uom_multiples",
+                        "column": "uom_multiple_id"
+                      },
+                      {
+                        "table": "servo_product_uom_multiples",
+                        "column": "uom_product_id"
+                      },
+                      {
+                        "table": "servo_product_uom_multiples",
+                        "column": "uom_name"
+                      },
+                      {
+                        "table": "servo_product_uom_multiples",
+                        "column": "uom_reference_multiple"
+                      }
+                    ],
+                    "params": [
+                      {
+                        "operator": "equal",
+                        "type": "expression",
+                        "name": ":P1",
+                        "value": "{{product_id}}",
+                        "test": "3"
+                      },
+                      {
+                        "operator": "equal",
+                        "type": "expression",
+                        "name": ":P2",
+                        "value": "{{$_GET.service_id}}",
+                        "test": "1"
+                      }
+                    ],
+                    "table": {
+                      "name": "servo_product_price"
+                    },
+                    "primary": "product_price_id",
+                    "joins": [
+                      {
+                        "table": "servo_product_uom_multiples",
+                        "column": "*",
+                        "type": "LEFT",
+                        "clauses": {
+                          "condition": "AND",
+                          "rules": [
+                            {
+                              "table": "servo_product_uom_multiples",
+                              "column": "uom_multiple_id",
+                              "operator": "equal",
+                              "operation": "=",
+                              "value": {
+                                "table": "servo_product_price",
+                                "column": "product_price_uom_service"
+                              }
+                            }
+                          ]
+                        },
+                        "primary": "uom_multiple_id",
+                        "sub": {
+                          "servo_product_price": {
+                            "table": {
+                              "name": "servo_product_price",
+                              "alias": "servo_product_price"
+                            },
+                            "key": "product_price_uom_service"
+                          }
+                        }
+                      }
+                    ],
+                    "query": "select `servo_product_price`.`product_price_id`, `servo_product_price`.`product_price`, `servo_product_price`.`product_price_date`, `servo_product_price`.`product_price_product_id`, `servo_product_price`.`servo_service_service_id`, `servo_product_price`.`product_price_code`, `servo_product_price`.`product_price_uom_service`, `servo_product_uom_multiples`.`uom_multiple_id`, `servo_product_uom_multiples`.`uom_product_id`, `servo_product_uom_multiples`.`uom_name`, `servo_product_uom_multiples`.`uom_reference_multiple` from `servo_product_price` left join `servo_product_uom_multiples` on `servo_product_uom_multiples`.`uom_multiple_id` = `servo_product_price`.`product_price_uom_service` where `servo_product_price`.`product_price_product_id` = ? and `servo_product_price`.`servo_service_service_id` = ?",
+                    "wheres": {
+                      "condition": "AND",
+                      "rules": [
+                        {
+                          "id": "servo_product_price.product_price_product_id",
+                          "field": "servo_product_price.product_price_product_id",
+                          "type": "double",
+                          "operator": "equal",
+                          "value": "{{product_id}}",
+                          "data": {
+                            "table": "servo_product_price",
+                            "column": "product_price_product_id",
+                            "type": "number",
+                            "columnObj": {
+                              "type": "reference",
+                              "primary": false,
+                              "nullable": false,
+                              "references": "product_id",
+                              "inTable": "servo_products",
+                              "referenceType": "integer",
+                              "onUpdate": "RESTRICT",
+                              "onDelete": "RESTRICT",
+                              "name": "product_price_product_id"
+                            }
+                          },
+                          "operation": "=",
+                          "table": "servo_product_price"
+                        },
+                        {
+                          "id": "servo_product_price.servo_service_service_id",
+                          "field": "servo_product_price.servo_service_service_id",
+                          "type": "double",
+                          "operator": "equal",
+                          "value": "{{$_GET.service_id}}",
+                          "data": {
+                            "table": "servo_product_price",
+                            "column": "servo_service_service_id",
+                            "type": "number",
+                            "columnObj": {
+                              "type": "reference",
+                              "default": "",
+                              "primary": false,
+                              "nullable": true,
+                              "references": "service_id",
+                              "inTable": "servo_services",
+                              "referenceType": "integer",
+                              "onUpdate": "RESTRICT",
+                              "onDelete": "RESTRICT",
+                              "name": "servo_service_service_id"
+                            }
+                          },
+                          "operation": "=",
+                          "table": "servo_product_price"
+                        }
+                      ],
+                      "conditional": null,
+                      "valid": true
+                    },
+                    "orders": []
+                  }
+                },
+                "output": true,
+                "meta": [
+                  {
+                    "type": "number",
+                    "name": "product_price_id"
+                  },
+                  {
+                    "type": "number",
+                    "name": "product_price"
+                  },
+                  {
+                    "type": "datetime",
+                    "name": "product_price_date"
+                  },
+                  {
+                    "type": "number",
+                    "name": "product_price_product_id"
+                  },
+                  {
+                    "type": "number",
+                    "name": "servo_service_service_id"
+                  },
+                  {
+                    "type": "text",
+                    "name": "product_price_code"
+                  },
+                  {
+                    "type": "number",
+                    "name": "product_price_uom_service"
+                  },
+                  {
+                    "type": "number",
+                    "name": "uom_multiple_id"
+                  },
+                  {
+                    "name": "servo_product_price",
+                    "type": "array",
+                    "sub": [
+                      {
+                        "type": "number",
+                        "name": "product_price_id"
+                      },
+                      {
+                        "type": "number",
+                        "name": "product_price"
+                      },
+                      {
+                        "type": "datetime",
+                        "name": "product_price_date"
+                      },
+                      {
+                        "type": "number",
+                        "name": "product_price_product_id"
+                      },
+                      {
+                        "type": "number",
+                        "name": "servo_service_service_id"
+                      },
+                      {
+                        "type": "text",
+                        "name": "product_price_code"
+                      },
+                      {
+                        "type": "number",
+                        "name": "product_price_uom_service"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "number",
+                    "name": "uom_product_id"
+                  },
+                  {
+                    "type": "text",
+                    "name": "uom_name"
+                  },
+                  {
+                    "type": "number",
+                    "name": "uom_reference_multiple"
+                  }
+                ],
+                "outputType": "array",
+                "disabled": true
               }
             ]
           }
@@ -333,7 +621,7 @@ $app->define(<<<'JSON'
           },
           {
             "name": "product_description",
-            "type": "text"
+            "type": "file"
           },
           {
             "name": "servo_product_category_product_category_id",
@@ -349,15 +637,27 @@ $app->define(<<<'JSON'
           },
           {
             "name": "product_type",
-            "type": "text"
+            "type": "file"
           },
           {
             "name": "product_stock_value",
-            "type": "text"
+            "type": "number"
           },
           {
             "name": "product_min_stock",
             "type": "number"
+          },
+          {
+            "name": "product_expiration_date",
+            "type": "datetime"
+          },
+          {
+            "name": "product_sub_category_sub_category_id",
+            "type": "number"
+          },
+          {
+            "name": "product_reference_uom",
+            "type": "file"
           },
           {
             "name": "product_categories_id",
@@ -365,6 +665,18 @@ $app->define(<<<'JSON'
           },
           {
             "name": "product_category_name",
+            "type": "text"
+          },
+          {
+            "name": "product_sub_category_id",
+            "type": "number"
+          },
+          {
+            "name": "product_sub_category_category_id",
+            "type": "number"
+          },
+          {
+            "name": "product_sub_category_name",
             "type": "text"
           },
           {
@@ -377,7 +689,7 @@ $app->define(<<<'JSON'
           },
           {
             "name": "product_price_date",
-            "type": "text"
+            "type": "datetime"
           },
           {
             "name": "product_price_product_id",
@@ -390,6 +702,10 @@ $app->define(<<<'JSON'
           {
             "name": "product_price_code",
             "type": "text"
+          },
+          {
+            "name": "product_price_uom_service",
+            "type": "number"
           },
           {
             "name": "service_department_category_id",
@@ -426,6 +742,104 @@ $app->define(<<<'JSON'
               {
                 "type": "text",
                 "name": "category_option_option"
+              }
+            ]
+          },
+          {
+            "name": "query_list_product_stock",
+            "type": "text",
+            "sub": [
+              {
+                "name": "product_name",
+                "type": "text"
+              },
+              {
+                "name": "TotalStock",
+                "type": "text"
+              }
+            ]
+          },
+          {
+            "name": "query_list_product_prices_per_service",
+            "type": "array",
+            "sub": [
+              {
+                "type": "number",
+                "name": "product_price_id"
+              },
+              {
+                "type": "number",
+                "name": "product_price"
+              },
+              {
+                "type": "datetime",
+                "name": "product_price_date"
+              },
+              {
+                "type": "number",
+                "name": "product_price_product_id"
+              },
+              {
+                "type": "number",
+                "name": "servo_service_service_id"
+              },
+              {
+                "type": "text",
+                "name": "product_price_code"
+              },
+              {
+                "type": "number",
+                "name": "product_price_uom_service"
+              },
+              {
+                "type": "number",
+                "name": "uom_multiple_id"
+              },
+              {
+                "name": "servo_product_price",
+                "type": "array",
+                "sub": [
+                  {
+                    "type": "number",
+                    "name": "product_price_id"
+                  },
+                  {
+                    "type": "number",
+                    "name": "product_price"
+                  },
+                  {
+                    "type": "datetime",
+                    "name": "product_price_date"
+                  },
+                  {
+                    "type": "number",
+                    "name": "product_price_product_id"
+                  },
+                  {
+                    "type": "number",
+                    "name": "servo_service_service_id"
+                  },
+                  {
+                    "type": "text",
+                    "name": "product_price_code"
+                  },
+                  {
+                    "type": "number",
+                    "name": "product_price_uom_service"
+                  }
+                ]
+              },
+              {
+                "type": "number",
+                "name": "uom_product_id"
+              },
+              {
+                "type": "text",
+                "name": "uom_name"
+              },
+              {
+                "type": "number",
+                "name": "uom_reference_multiple"
               }
             ]
           }

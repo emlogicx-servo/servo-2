@@ -96,10 +96,10 @@ JSON
   <dmx-serverconnect id="loadProductSubCategoriesPerCategory" url="dmxConnect/api/servo_product_categories/list_product_sub_categories_per_category.php" dmx-param:product_category_id="serverconnectFormCreateProduct.select3.selectedValue"></dmx-serverconnect>
   <dmx-serverconnect id="load_product_category_options" url="dmxConnect/api/servo_product_category_options/list_product_category_options.php"></dmx-serverconnect>
   <dmx-serverconnect id="load_brands" url="dmxConnect/api/servo_refered_fields_loading/load_brands.php"></dmx-serverconnect>
-  <dmx-serverconnect id="read_item_product" url="dmxConnect/api/servo_products/read_product.php" dmx-param:id="id" noload dmx-param:item_id="" dmx-param:branch_id="read_item_branch.data.queryReadBranch.branch_id"></dmx-serverconnect>
+  <dmx-serverconnect id="read_item_product" url="dmxConnect/api/servo_products/read_product.php" dmx-param:id="id" noload="" dmx-param:item_id="" dmx-param:branch_id="read_item_branch.data.queryReadBranch.branch_id" dmx-param:product_id="read_item_product.data.query_read_product.product_id"></dmx-serverconnect>
   <dmx-serverconnect id="read_item_product_group" url="dmxConnect/api/servo_product_groups/read_product_group.php" dmx-param:id="id" dmx-param:item_id="" dmx-param:branch_id="read_item_branch.data.queryReadBranch.branch_id" dmx-param:prduct_id="list_item_products.data.query_list_products[0].product_id" noload></dmx-serverconnect>
   <dmx-serverconnect id="delete_item_product" url="dmxConnect/api/servo_products/delete_product.php"></dmx-serverconnect>
-  <dmx-serverconnect id="list_item_products" url="dmxConnect/api/servo_products/list_products_paged.php" dmx-param:productfilter="productSearch.value" dmx-param:offset="query.offset" dmx-param:limit="product_sort_limit.value"></dmx-serverconnect>
+  <dmx-serverconnect id="list_item_products" url="dmxConnect/api/servo_products/list_products_paged.php" dmx-param:productfilter="productSearch.value" dmx-param:offset="query.offset" dmx-param:limit="product_sort_limit.value" dmx-param:category="productCategorySearch.value"></dmx-serverconnect>
   <dmx-serverconnect id="list_item_products_for_group" url="dmxConnect/api/servo_products/list_products_paged.php" dmx-param:productfilter="createproductGroupItem.groupProductSearch.value" dmx-param:offset="list_products_for_group.data.offset_group_product" dmx-param:limit="5"></dmx-serverconnect>
   <dmx-serverconnect id="list_products_simple" url="dmxConnect/api/servo_products/list_products.php" dmx-param:productfilter="productSearch.value" dmx-param:offset="query.offset" dmx-param:limit="product_sort_limit.value" noload></dmx-serverconnect>
 
@@ -110,7 +110,7 @@ JSON
   <dmx-serverconnect id="product_purchases_received_single" url="dmxConnect/api/servo_reporting/product_purchases_received_single.php" dmx-param:product_id="" dmx-param:date_start="formfilter.date_start.value" dmx-param:date_end=""></dmx-serverconnect>
   <div is="dmx-browser" id="browser1"></div>
   <dmx-notifications id="notifies1" position="bottom" timeout="50" extended-timeout="10"></dmx-notifications>
-  <?php require 'header.php'; ?><main class="bg-light rounded mt-2 ms-2 me-2 pt-3 pb-3 ps-2 pe-2" id="MainBody">
+  <?php require 'header.php'; ?><main class="rounded" id="MainBody">
     <div class="mt-auto ms-3 me-3">
 
 
@@ -124,77 +124,108 @@ JSON
       </div>
       <ul class="nav nav-tabs nav-justified" id="navTabs1_tabs" role="tablist">
         <li class="nav-item">
-          <a class="nav-link active fw-bold" id="navTabs1_1_tab" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_11" role="tab" aria-controls="navTabs1_1" aria-selected="true">{{trans.data.products[lang.value]}}</a>
+          <a class="nav-link active" id="navTabs1_1_tab" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_11" role="tab" aria-controls="navTabs1_1" aria-selected="true">{{trans.data.products[lang.value]}}</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link fw-bold" id="navTabs1_2_tab" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_21" role="tab" aria-controls="navTabs1_2" aria-selected="false">{{trans.data.groups[lang.value]}}</a>
+          <a class="nav-link" id="navTabs1_2_tab" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_21" role="tab" aria-controls="navTabs1_2" aria-selected="false">{{trans.data.groups[lang.value]}}</a>
         </li>
       </ul>
       <div class="tab-content" id="navTabs1_content">
 
-        <div class="tab-pane fade show active mt-3 ms-1 me-1 scrollable" id="navTabs1_11" role="tabpanel">
-
-          <div class="row justify-content-between justify-content-sm-between justify-content-md-between justify-content-lg-between justify-content-xl-between justify-content-xxl-between sorter shadow-none rounded bg-light row-cols-12">
-            <div class="col-lg-3 col-12 col-sm-12"><input id="productSearch" name="text13" type="text" class="form-control mb-2 form-control-sm" dmx-bind:placeholder="trans.data.search[lang.value]+'  '"></div>
-
-            <div class="d-flex flex-wrap flex-sm-wrap flex-md-wrap col-lg-6 flex-lg-wrap col-xl-7 justify-content-lg-end justify-content-xl-end justify-content-xxl-end col-sm-auto col-md-auto col">
-              <ul class="pagination flex-wrap" dmx-populate="list_item_products.data.query_list_products" dmx-state="list_products" dmx-offset="offset" dmx-generator="bs5paging">
-                <li class="page-item" dmx-class:disabled="list_item_products.data.query_list_products.page.current == 1" aria-label="First">
-                  <a href="javascript:void(0)" class="page-link" dmx-on:click="list_products.set('offset',list_item_products.data.query_list_products.page.offset.first)" wappler-command="editContent"><span aria-hidden="true">‹‹</span></a>
-                </li>
-                <li class="page-item" dmx-class:disabled="list_item_products.data.query_list_products.page.current == 1" aria-label="Previous">
-                  <a href="javascript:void(0)" class="page-link" dmx-on:click="list_products.set('offset',list_item_products.data.query_list_products.page.offset.prev)" wappler-command="editContent"><span aria-hidden="true">‹</span></a>
-                </li>
-                <li class="page-item" dmx-class:active="title == list_item_products.data.query_list_products.page.current" dmx-class:disabled="!active" dmx-repeat="list_item_products.data.query_list_products.getServerConnectPagination(2,1,'...')">
-                  <a href="javascript:void(0)" class="page-link" dmx-on:click="list_products.set('offset',(page-1)*list_item_products.data.query_list_products.limit)" wappler-command="editContent">{{title}}</a>
-                </li>
-                <li class="page-item" dmx-class:disabled="list_item_products.data.query_list_products.page.current ==  list_item_products.data.query_list_products.page.total" aria-label="Next">
-                  <a href="javascript:void(0)" class="page-link" dmx-on:click="list_products.set('offset',list_item_products.data.query_list_products.page.offset.next)" wappler-command="editContent"><span aria-hidden="true">›</span></a>
-                </li>
-                <li class="page-item" dmx-class:disabled="list_item_products.data.query_list_products.page.current ==  list_item_products.data.query_list_products.page.total" aria-label="Last">
-                  <a href="javascript:void(0)" class="page-link" dmx-on:click="list_products.set('offset',list_item_products.data.query_list_products.page.offset.last)" wappler-command="editContent"><span aria-hidden="true">››</span></a>
-                </li>
-              </ul>
-            </div>
-            <div class="col-lg-1 col-xl-1 col-md-2 col-sm-2 col-3 offset-lg-1 offset-xl-1 offset-md-2"><select id="product_sort_limit" class="form-select" name="product_category_sort_limit">
-                <option value="5">5</option>
-                <option selected="" value="25">25</option>
-                <option value="50">50</option>
-                <option value="100">100</option>
-              </select></div>
-          </div>
-          <div class="row">
-
-            <div class="col">
-
-              <h5>{{trans.data.total[lang.value]}} : {{list_item_products.data.query_list_products.total}}&nbsp;</h5>
-            </div>
-          </div>
-
-          <div class="row ms-0">
-            <div class="col bg-light rounded mt-2 ms-0 me-2">
+        <div class="tab-pane fade show active scrollable" id="navTabs1_11" role="tabpanel">
 
 
+
+
+
+
+
+          <div class="row mt-2 ms-0 me-0">
+            <div class="bg-light rounded col">
+
+
+              <div class="row   mt-3">
+                <div class="d-flex flex-wrap align-items-baseline col"><input id="productSearch" name="text13" type="search" class="form-control mb-2 me-2" dmx-bind:placeholder="trans.data.search[lang.value]+'  '">
+                  <input id="productCategorySearch" name="text1" type="text" class="form-control mb-2 me-2 visually-hidden" dmx-bind:placeholder="trans.data.search[lang.value]+'  '" dmx-bind:value="null">
+                  <button id="btn18" class="btn me-2 text-white bg-info" dmx-on:click="productCategoryList.toggle()">
+                    <i class="fas fa-tags" style="margin-right: 5px;"></i>{{trans.data.categories[lang.value]}}</button>
+                  <button id="btn19" class="btn me-2 bg-info text-white" dmx-on:click="productCategorySearch.setValue(NULL);productSearch.setValue(NULL);selectedCategory.setValue(null)"><i class="fas fa-backspace fa-sm" style="margin-right: 5px;"></i></button>
+                  <ul class="pagination bg-secondary rounded me-2" dmx-populate="list_item_products.data.query_list_products" dmx-state="list_products" dmx-offset="offset" dmx-generator="bs5paging">
+                    <li class="page-item" dmx-class:disabled="list_item_products.data.query_list_products.page.current == 1" aria-label="First">
+                      <a href="javascript:void(0)" class="page-link" dmx-on:click="list_products.set('offset',list_item_products.data.query_list_products.page.offset.first)" wappler-command="editContent"><span aria-hidden="true">‹‹</span></a>
+                    </li>
+                    <li class="page-item" dmx-class:disabled="list_item_products.data.query_list_products.page.current == 1" aria-label="Previous">
+                      <a href="javascript:void(0)" class="page-link" dmx-on:click="list_products.set('offset',list_item_products.data.query_list_products.page.offset.prev)" wappler-command="editContent"><span aria-hidden="true">‹</span></a>
+                    </li>
+                    <li class="page-item" dmx-class:active="title == list_item_products.data.query_list_products.page.current" dmx-class:disabled="!active" dmx-repeat="list_item_products.data.query_list_products.getServerConnectPagination(2,1,'...')">
+                      <a href="javascript:void(0)" class="page-link" dmx-on:click="list_products.set('offset',(page-1)*list_item_products.data.query_list_products.limit)" wappler-command="editContent">{{title}}</a>
+                    </li>
+                    <li class="page-item" dmx-class:disabled="list_item_products.data.query_list_products.page.current ==  list_item_products.data.query_list_products.page.total" aria-label="Next">
+                      <a href="javascript:void(0)" class="page-link" dmx-on:click="list_products.set('offset',list_item_products.data.query_list_products.page.offset.next)" wappler-command="editContent"><span aria-hidden="true">›</span></a>
+                    </li>
+                    <li class="page-item" dmx-class:disabled="list_item_products.data.query_list_products.page.current ==  list_item_products.data.query_list_products.page.total" aria-label="Last">
+                      <a href="javascript:void(0)" class="page-link" dmx-on:click="list_products.set('offset',list_item_products.data.query_list_products.page.offset.last)" wappler-command="editContent"><span aria-hidden="true">››</span></a>
+                    </li>
+                  </ul><select id="product_sort_limit" class="form-select" name="product_category_sort_limit" style="max-width: 100px;">
+                    <option value="5">5</option>
+                    <option selected="" value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                  </select>
+                </div>
+
+              </div>
+              <div class="collapse" id="productCategoryList" is="dmx-bs5-collapse">
+                <section>
+                  <div class="row mt-2">
+                    <div class="col">
+                      <div id="repeatProductCategories" is="dmx-repeat" dmx-bind:repeat="list_item_products.data.list_product_categories"><button id="btn11" class="btn mb-1 me-1 bg-info text-white" dmx-text="product_category_name" dmx-on:click="productCategorySearch.setValue(product_categories_id);productCategoryList.toggle();selectedCategory.setValue(product_category_name)"></button></div>
+
+                    </div>
+                  </div>
+                </section>
+              </div>
+              <div class="row">
+
+                <div class="col d-flex align-items-baseline">
+
+                  <h6 dmx-text="selectedCategory.value" class="rounded text-white bg-info me-2 pt-2 pb-2 ps-4 pe-4" dmx-hide="selectedCategory.value==null"></h6>
+                  <dmx-value id="selectedCategory" dmx-bind:value="{{trans.data.all[lang.value]}}"></dmx-value>
+                  <h5>{{trans.data.total[lang.value]}} : {{list_item_products.data.query_list_products.total}}&nbsp;</h5>
+                </div>
+              </div>
               <div class="table-responsive servo-shadow shadow-none">
                 <table class="table table-hover table-sm table-borderless">
                   <thead>
                     <tr>
                       <th class="text-start">#</th>
+                      <th class="text-center">
+                        <i class="fas fa-camera"></i>
+                      </th>
                       <th class="text-center">{{trans.data.name[lang.value]}}</th>
                       <th class="text-center">{{trans.data.category[lang.value]}}</th>
                       <th class="text-center">{{trans.data.subCategory[lang.value]}}</th>
 
                       <th class="text-center">{{trans.data.brandName[lang.value]}}</th>
+                      <th class="text-center">{{trans.data.price[lang.value]}}</th>
                       <th class="text-end"></th>
                     </tr>
                   </thead>
                   <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="list_item_products.data.query_list_products.data" id="tableRepeat2">
-                    <tr>
+                    <tr class="align-middle table-light" style="">
                       <td dmx-text="product_id" class="text-start"></td>
+                      <td class="text-center">
+                        <img width="100" height="100" dmx-bind:src="'/servo/uploads/product_pictures/'+product_picture">
+                      </td>
                       <td dmx-text="product_name" class="text-center"></td>
                       <td dmx-text="product_category_name" class="text-center"></td>
                       <td dmx-text="product_sub_category_name" class="text-center"></td>
                       <td dmx-text="product_brand_name" class="text-center"></td>
+                      <td class="text-center">
+                        <div dmx-repeat:repeat1="load_product_prices.data.query_list_product_prices.where('product_price_product_id', 30, '==')"><button id="btn21" class="btn bg-info text-white" dmx-text="product_price_uom_service+' : '+product_price"></button></div>
+
+
+                      </td>
                       <td class="text-end"><button id="btn2" class="btn  open" data-bs-target="#readItemModal" dmx-on:click="readItemModal.show();read_item_product.load({product_id: product_id});product_sales_single.load({product_id: product_id});getStockValuesProduct.load({product_id: read_item_product.data.query_read_product.product_id})" dmx-bind:value="product_id" wappler-empty="Editable" wappler-command="editContent"><i class="far fa-edit fa-sm"><br></i></button></td>
                     </tr>
                   </tbody>
@@ -203,12 +234,12 @@ JSON
             </div>
           </div>
         </div>
-        <div class="tab-pane fade mt-3 scrollable" id="navTabs1_21" role="tabpanel">
-          <div class="row justify-content-between justify-content-sm-between justify-content-md-between justify-content-lg-between justify-content-xl-between justify-content-xxl-between mb-xl-2 mb-2 sorter bg-light rounded">
-            <div class="col-xxl-3 col-12 col-sm-12 col-lg-3"><input id="groupFilter" name="text13" type="text" class="form-control mb-2 form-control-sm" dmx-bind:placeholder="trans.data.search[lang.value]+'  '"></div>
+        <div class="tab-pane fade scrollable mt-2 bg-light rounded" id="navTabs1_21" role="tabpanel">
+          <div class="row justify-content-sm-between justify-content-md-between justify-content-lg-between justify-content-xl-between justify-content-xxl-between mb-xl-2 mb-2 sorter rounded align-items-baseline justify-content-start bg-transparent">
+            <div class=" col-auto d-flex"><input id="groupFilter" name="text13" type="search" class="form-control mb-2" dmx-bind:placeholder="trans.data.search[lang.value]+'  '"></div>
 
-            <div class="col-xl-4 col-xxl-4 col-sm d-flex flex-sm-wrap col-md flex-md-wrap flex-lg-wrap col-lg col-lg-3 flex-wrap col" style="">
-              <ul class="pagination" dmx-populate="list_product_groups.data.list_product_groups" dmx-state="list_groups" dmx-offset="offset_groups" dmx-generator="bs5paging">
+            <div class="col-auto d-flex flex-wrap" style="">
+              <ul class="pagination bg-secondary rounded" dmx-populate="list_product_groups.data.list_product_groups" dmx-state="list_groups" dmx-offset="offset_groups" dmx-generator="bs5paging">
                 <li class="page-item" dmx-class:disabled="list_product_groups.data.list_product_groups.page.current == 1" aria-label="First">
                   <a href="javascript:void(0)" class="page-link" dmx-on:click="list_groups.set('offset_groups',list_product_groups.data.list_product_groups.page.offset.first)"><span aria-hidden="true">&lsaquo;&lsaquo;</span></a>
                 </li>
@@ -226,7 +257,7 @@ JSON
                 </li>
               </ul>
             </div>
-            <div class="col-lg-1 col-xl-1 col-md-2 col-sm-2 col-3 offset-sm-5 offset-md-6 offset-lg-1"><select id="group_sort_limit" class="form-select" name="product_category_sort_limit">
+            <div class="col-auto d-flex"><select id="group_sort_limit" class="form-select" name="product_category_sort_limit">
                 <option value="5">5</option>
                 <option value="25">25</option>
                 <option value="50">50</option>
@@ -459,13 +490,11 @@ JSON
       <div class="modal-dialog modal-xl modal-fullscreen-xxl-down modal-dialog-scrollable" role="document" style="margin: 0px !important; width: 100% !important; height: 99% !important; max-width: 100% !important; max-height: 99% !important;">
         <div class="modal-content" style="max-height: 100% !important; height: 100% !important;">
           <div class="modal-header ">
-            <div class="d-block d-flex float-start">
-
+            <div class="d-block d-flex float-start align-items-center">
               <h5 class="text-body float-start rounded mt-2 me-2 pt-2 pb-2 ps-3 pe-3 bg-light">{{read_item_product.data.query_read_product.product_name}}</h5>
-              <div class="d-block d-flex float-start">
-                <h5 class="mt-2 me-0 pt-2 pb-2 ps-3 pe-3">{{trans.data.currentStock[lang.value]}}</h5>
-                <h5 class="bg-secondary rounded float-start mt-2 pt-2 pb-2 ps-3 pe-3 text-white" dmx-text="((getStockValuesProduct.data.getStockValuesProduct[0].TotalPurchased - getStockValuesProduct.data.getStockValuesProduct.DeliveredStock) - getStockValuesProduct.data.getStockValuesProduct[0].TotalAdjusted)" dmx-class:bg-danger="((getStockValuesProduct.data.getStockValuesProduct[0].TotalPurchased)-(getStockValuesProduct.data.getStockValuesProduct[0].TotalSold)-(getStockValuesProduct.data.getStockValuesProduct[0].TotalAdjusted))&lt;=read_item_product.data.query_read_product.product_min_stock" dmx-class:bg-success="((getStockValuesProduct.data.getStockValuesProduct[0].TotalPurchased)-(getStockValuesProduct.data.getStockValuesProduct[0].TotalSold)-(getStockValuesProduct.data.getStockValuesProduct[0].TotalAdjusted))&gt;read_item_product.data.query_read_product.product_min_stock" id="currentProductStock">{{read_item_product.data.query_read_product.product_name}}</h5>
-              </div>
+              <h5 class="bg-secondary rounded float-start mt-2 pt-2 pb-2 ps-3 pe-3 text-white" dmx-text="(getStockValuesProduct.data.getStockValuesProduct[0].TotalPurchased - getStockValuesProduct.data.getStockValuesProduct[0].DeliveredStock - getStockValuesProduct.data.getStockValuesProduct[0].TotalAdjusted)" dmx-class:bg-danger="(getStockValuesProduct.data.getStockValuesProduct[0].TotalPurchased - getStockValuesProduct.data.getStockValuesProduct[0].TotalSold - getStockValuesProduct.data.getStockValuesProduct[0].TotalAdjusted)&lt;=read_item_product.data.query_read_product.product_min_stock" dmx-class:bg-success="(getStockValuesProduct.data.getStockValuesProduct[0].TotalPurchased - getStockValuesProduct.data.getStockValuesProduct[0].TotalSold -  getStockValuesProduct.data.getStockValuesProduct[0].TotalAdjusted)&gt;read_item_product.data.query_read_product.product_min_stock" id="currentProductStock">{{read_item_product.data.query_read_product.product_name}}</h5>
+
+
 
             </div>
 
@@ -477,7 +506,7 @@ JSON
 
             <div class="row">
               <div class="col">
-                <ul class="nav nav-tabs nav-justified fw-bold text-body" id="navTabs2_tabs" role="tablist">
+                <ul class="nav nav-tabs nav-justified fw-bold text-body text-nowrap scrollable-y flex-nowrap" id="navTabs2_tabs" role="tablist">
                   <li class="nav-item">
                     <a class="nav-link active" id="navTabs2_1_tab" data-bs-toggle="tab" href="#" data-bs-target="#navTabs2_1" role="tab" aria-controls="navTabs1_1" aria-selected="true"><i class="fas fa-info" style="margin-right: 2px"></i>
                       {{trans.data.info[lang.value]}}</a>
@@ -496,7 +525,7 @@ JSON
                 </ul>
                 <div class="tab-content" id="navTabs2_content">
                   <div class="tab-pane fade show active mt-2" id="navTabs2_1" role="tabpanel">
-                    <div class="row mt-2 mt-sm-2 mt-md-2 mt-lg-2 mt-xl-2 mt-xxl-2">
+                    <div class="row mt-sm-2 mt-md-2 mt-lg-2 mt-xl-2 mt-xxl-2 mt-2 me-2">
                       <div class="col-xl-4 col-12 text-sm-center text-center text-md-center rounded rounded-1 border-light pt-2 pb-2 col-lg-5 col-md-4"><img dmx-bind:src="'/servo/uploads/product_pictures/'+read_item_product.data.query_read_product.product_picture" class="img-fluid rounded-0" width="300" dmx-hide="(read_item_product.data.query_read_product.product_picture == null)" loading="lazy">
                         <img class="rounded-circle img-fluid" width="300" src="uploads/servo_no_image.jpg" dmx-show="(read_item_product.data.query_read_product.product_picture == null)">
                         <div class="row">
@@ -517,7 +546,7 @@ JSON
                           <div class="col text-xxl-center text-center">
                             <div class="row mt-2">
                               <form id="replaceProductPicture" class="d-flex" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_products/replace_product_picture.php" dmx-on:success="notifies1.success('Success!');read_item_product.load({product_id: read_item_product.data.query_read_product.product_id});replaceProductPicture.reset()"><input id="text4" name="product_picture" type="text" class="form-control visually-hidden">
-                                <input id="text5" name="product_id" type="text" class="form-control visually-hidden" dmx-bind:value="read_item_product.data.query_read_product.product_id"><input name="product_picture_file" type="file" class="form-control" required="" data-rule-maxfiles="1" accept=".jpg, .png">
+                                <input id="text5" name="product_id" type="text" class="form-control visually-hidden" dmx-bind:value="read_item_product.data.query_read_product.product_id"><input name="product_picture_file" type="file" class="form-control" required="" data-rule-maxfiles="1" accept=".jpg,.png">
                                 <button id="btn7" class="btn ms-xxl-2 ms-xl-2 ms-lg-2 ms-md-2 ms-sm-2 ms-2 text-white bg-info" type="submit" dmx-show="replaceProductPicture.product_picture_file.value+'!='+null">
                                   <i class="fas fa-upload"></i>
                                 </button>
@@ -555,14 +584,6 @@ JSON
                             <div class="col-sm-10">
                               <select id="select2" class="form-select" name="servo_product_category_product_category_id" dmx-bind:value="read_item_product.data.query_read_product.product_categories_id" dmx-bind:options="load_product_categories.data.query" optiontext="product_category_name" optionvalue="product_categories_id" dmx-on:changed="loadProductSubCategoriesPerCategory.load({product_category_id: readitem.select2.selectedValue})">
                                 <option value="{{null}}">----</option>
-                              </select>
-                            </div>
-                          </div>
-                          <div class="mb-3 row">
-                            <label for="produtSubCat1" class="col-sm-2 col-form-label">{{trans.data.category[lang.value]}}</label>
-                            <div class="col-sm-10">
-                              <select id="produtSubCat1" class="form-control" name="product_sub_category_sub_category_id" dmx-bind:options="loadProductSubCategoriesPerCategory.data.query_list_product_sub_categories" optionvalue="product_sub_category_id" dmx-bind:value="read_item_product.data.query_read_product.product_sub_category_sub_category_id" optiontext="product_sub_category_name">
-                                <option selected="" value="{{null}}">----</option>
                               </select>
                             </div>
                           </div>
@@ -608,31 +629,29 @@ JSON
                   <div class="tab-pane fade mt-2" id="navTabs2_2" role="tabpanel">
                     <h5 class="mt-2 mt-xxl-2 mt-xl-2 mt-lg-2 mt-md-2 mt-sm-2">{{trans.data.setPrice[lang.value]}}</h5>
                     <div class="row mt-3 justify-content-center">
-                      <form id="createServicePrice" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_product_prices/create_product_price.php" dmx-on:success="createServicePrice.reset();load_product_prices.load({});notifies1.success('Success')" dmx-on:error="notifies1.danger('Error!')" class="d-flex">
-                        <div class="row justify-content-end">
+                      <form id="createServicePrice" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_product_prices/create_product_price.php" dmx-on:success="createServicePrice.reset();notifies1.success('Success');read_item_product.load({product_id: read_item_product.data.query_read_product.product_id})" dmx-on:error="notifies1.danger('Error!')" class="d-flex">
+                        <div class="row justify-content-start">
 
-                          <div class="col">
-                            <div class="mb-3 row">
-                              <div class="col-sm-10">
-                                <select id="select5" class="form-select" dmx-bind:options="load_services.data.query_list_services" optiontext="service_name" optionvalue="service_id" name="servo_service_service_id" required="" data-msg-required="!">
-                                  <option selected="" value="">---</option>
-                                </select>
-                                <small id="select5Help" class="form-text text-muted">{{trans.data.service[lang.value]}}</small>
-                              </div>
-                            </div>
+                          <div class=" col-auto">
+                            <select id="select5" class="form-select" dmx-bind:options="load_services.data.query_list_services" optiontext="service_name" optionvalue="service_id" name="servo_service_service_id" required="" data-msg-required="!">
+                              <option selected="" value="">---</option>
+                            </select>
+                            <small id="select5Help" class="form-text text-muted">{{trans.data.service[lang.value]}}</small>
                           </div>
-                          <div class="col">
-                            <div class="mb-3 row">
-                              <div class="col-sm-10">
-                                <input type="number" class="form-control" id="input1" name="product_price" aria-describedby="input1_help" required="" data-msg-required="!" min="" data-rule-min="0">
-                                <small id="input1_help" class="form-text text-muted">{{trans.data.price[lang.value]}}</small>
-                              </div>
-                            </div>
+
+                          <div class="col-auto ">
+                            <input type="number" class="form-control" id="input1" name="product_price" aria-describedby="input1_help" required="" data-msg-required="!" min="" data-rule-min="0">
+                            <small id="input1_help" class="form-text text-muted">{{trans.data.price[lang.value]}}</small>
                           </div>
-                          <input id="productPriceProductId" name="product_price_product_id" type="text" class="form-control visually-hidden" dmx-bind:value="read_item_product.data.query_read_product.product_id">
+                          <div class="col-auto col-sm-3 visually-hidden">
+                            <select id="productPriceServiceUOM" class="form-select" dmx-bind:options="read_item_product.data.query_read_product_uoms" name="product_price_uom_service" optiontext="uom_name" optionvalue="uom_multiple_id">
+                              <option selected="" value="">---</option>
+                            </select>
+                            <small id="select5Help2" class="form-text text-muted">{{trans.data.uom[lang.value]}}</small>
+                          </div><input id="productPriceProductId" name="product_price_product_id" type="text" class="form-control visually-hidden" dmx-bind:value="read_item_product.data.query_read_product.product_id">
                           <input id="productPriceDate" name="product_price_date" type="datetime-local" class="form-control visually-hidden" dmx-bind:value="dateTime.datetime">
-                          <input id="productPriceCode" name="product_price_code" class="form-control visually-hidden" dmx-bind:value="read_item_product.data.query_read_product.product_id+'@'+createServicePrice.select5.value">
-                          <div class="col">
+                          <input id="productPriceCode" name="product_price_code" class="form-control visually-hidden" dmx-bind:value="read_item_product.data.query_read_product.product_id+'@'+createServicePrice.select5.value+'@'+productPriceServiceUOM.value">
+                          <div class="col-auto col-1">
                             <button id="btn4" class="btn text-white bg-info" type="submit">
                               <i class="fas fa-plus-circle"></i>
                             </button>
@@ -650,16 +669,18 @@ JSON
 
                                 <th>{{trans.data.dateTime[lang.value]}}</th>
                                 <th>{{trans.data.service[lang.value]}}</th>
+                                <th>{{trans.data.uom[lang.value]}}</th>
                                 <th>{{trans.data.price[lang.value]}}</th>
                                 <th></th>
                               </tr>
                             </thead>
-                            <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="load_product_prices.data.query_list_product_prices" id="productPricesTable">
+                            <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="read_item_product.data.query_list_product_prices" id="productPricesTable">
                               <tr>
                                 <td dmx-text="product_price_date"></td>
                                 <td dmx-text="service_name"></td>
+                                <td dmx-text="uom_name"></td>
                                 <td>
-                                  <form id="productPriceSet1" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_product_prices/update_product_price.php" dmx-on:success="productPriceSet.reset();notifies1.success('Success!');load_product_prices.load({});load_departments.load({})" class="d-flex">
+                                  <form id="productPriceSet1" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_product_prices/update_product_price.php" dmx-on:success="productPriceSet.reset();notifies1.success('Success!');load_departments.load({});read_item_product.load({product_id: read_item_product.data.query_read_product.product_id})" class="d-flex">
                                     <div class="row">
                                       <div class="col d-flex">
                                         <input id="productPriceUpdate" name="product_price" type="number" class="form-control" dmx-bind:value="product_price">
@@ -672,7 +693,7 @@ JSON
                                   </form>
                                 </td>
                                 <td class="text-center">
-                                  <form id="deletePrice" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_product_prices/delete_product_price.php" dmx-on:success="productPriceSet.reset();notifies1.success('Success!');load_product_prices.load({});load_departments.load({})">
+                                  <form id="deletePrice" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_product_prices/delete_product_price.php" dmx-on:success="productPriceSet.reset();notifies1.success('Success!');load_departments.load({});read_item_product.load({product_id: read_item_product.data.query_read_product.product_id})">
                                     <div class="row">
                                       <div class="col">
                                         <input id="productPriceId1" name="product_price_id" type="text" class="form-control visually-hidden" dmx-bind:value="product_price_id"><button id="btn8" class="btn text-muted ms-2" type="submit">
@@ -739,7 +760,7 @@ JSON
                               <tr>
 
                                 <td>
-                                  <form id="updateProductUOM" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_uom/update_product_uom.php" dmx-on:success="productPriceSet.reset();notifies1.success('Success!');load_product_prices.load({});load_departments.load({})" class="d-flex">
+                                  <form id="updateProductUOM" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_uom/update_product_uom.php" dmx-on:success="productPriceSet.reset();notifies1.success('Success!');load_departments.load({});read_item_product.load({})" class="d-flex">
                                     <div class="row">
                                       <div class="col d-flex">
                                         <input id="productUOMName" name="uom_name" class="form-control me-2" dmx-bind:value="uom_name" style="width: 500px !important;">
@@ -752,10 +773,10 @@ JSON
                                   </form>
                                 </td>
                                 <td class="text-center">
-                                  <form id="deletePrice1" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_product_prices/delete_product_price.php" dmx-on:success="productPriceSet.reset();notifies1.success('Success!');load_product_prices.load({});load_departments.load({})">
+                                  <form id="deleteProductUOM" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_uom/delete_product_uom.php" dmx-on:success="notifies1.success('Success!');read_item_product.load({})" dmx-on:error="notifies1.danger('Error!')">
                                     <div class="row">
                                       <div class="col">
-                                        <input id="productPriceId2" name="product_price_id1" type="text" class="form-control visually-hidden" dmx-bind:value="product_price_id"><button id="btn17" class="btn text-muted ms-2" type="submit">
+                                        <input id="productPriceId2" name="uom_multiple_id" type="text" class="form-control visually-hidden" dmx-bind:value="uom_multiple_id"><button id="btn17" class="btn text-muted ms-2" type="submit">
                                           <i class="far fa-trash-alt fa-sm"></i>
                                         </button>
                                       </div>
@@ -931,6 +952,7 @@ JSON
                             <thead>
                               <tr>
                                 <th>#</th>
+                                <th>{{trans.data.vendor[lang.value]}}</th>
                                 <th>{{trans.data.quantity[lang.value]}}</th>
                                 <th>{{trans.data.price[lang.value]}}</th>
                                 <th>{{trans.data.note[lang.value]}}</th>
@@ -943,6 +965,7 @@ JSON
                             <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="product_purchases_received_single.data.product_purchases_received_single" id="tableRepeat5">
                               <tr>
                                 <td dmx-text="po_id"></td>
+                                <td dmx-text="vendor_name"></td>
                                 <td dmx-text="po_item_quantity"></td>
                                 <td dmx-text="po_item_price"></td>
                                 <td dmx-text="po_item_notes"></td>
@@ -989,7 +1012,7 @@ JSON
           </div>
         </div>
       </div>
-      <div class="modal-footer bg-body">
+      <div class="modal-footer bg-light">
         <form id="form1" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_products/delete_product.php" dmx-on:success="notifies1.success('Success');readItemModal.hide();list_item_products.load()" onsubmit=" return confirm('CONFIRM DELETE?');">
           <input id="text1" name="product_id" type="hidden" class="form-control" dmx-bind:value="read_item_product.data.query_read_product.product_id">
 
@@ -997,6 +1020,24 @@ JSON
             <i class="far fa-trash-alt fa-lg"></i>
           </button>
         </form>
+      </div>
+    </div>
+    <div class="modal" id="createCategoryModal" is="dmx-bs5-modal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">{{trans.data.createCategory[lang.value]}}</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form is="dmx-serverconnect-form" id="createCategoryForm" method="post" action="dmxConnect/api/servo_product_categories/create_product_category.php" class="d-flex">
+              <label for="productCategoryNameCreate" class="me-2">{{trans.data.name[lang.value]}}</label><input id="productCategoryNameCreate" class="form-control me-2" name="product_category_name" type="text" value=""><button type="submit" class="btn btn-primary">{{trans.data.ok[lang.value]}}</button>
+            </form>
+          </div>
+          <div class="modal-footer">
+
+          </div>
+        </div>
       </div>
     </div>
     <div class="modal create-modal" id="createItemModal" is="dmx-bs5-modal" tabindex="-1">
@@ -1019,7 +1060,7 @@ JSON
                 </ul>
                 <div class="tab-content" id="navTabs1_content">
                   <div class="tab-pane fade show active mt-2" id="navTabs1_1" role="tabpanel">
-                    <form is="dmx-serverconnect-form" id="serverconnectFormCreateProduct" method="post" action="dmxConnect/api/servo_products/create_product.php" dmx-generator="bootstrap5" dmx-form-type="horizontal" dmx-on:success="notifies1.success('Success');serverconnectFormCreateProduct.reset();list_item_products.load({productfilter: productSearch.value, offset: list_products.data.offset, limit: product_sort_limit.value});createItemModal.hide()" dmx-on:error="notifies1.danger('Error!')">
+                    <form is="dmx-serverconnect-form" id="serverconnectFormCreateProduct" method="post" action="dmxConnect/api/servo_products/create_product.php" dmx-generator="bootstrap5" dmx-form-type="horizontal" dmx-on:success="notifies1.success('Success');read_item_product.load({product_id: serverconnectFormCreateProduct.data.get_last_insert_product[0]['last_insert_id()']});serverconnectFormCreateProduct.reset();list_item_products.load({productfilter: productSearch.value, offset: list_products.data.offset, limit: product_sort_limit.value});createItemModal.hide();createItemModal.hide();readItemModal.show()" dmx-on:error="notifies1.danger('Error!')" dmx-on:submit="">
                       <div class="mb-3 row">
                         <label for="inp_product_name" class="col-sm-2 col-form-label"><b>{{trans.data.name[lang.value]}}</b></label>
                         <div class="col-sm-10">
@@ -1040,6 +1081,8 @@ JSON
                           <select id="inp_servo_product_categories" class="form-control" name="servo_product_category_product_category_id" dmx-bind:options="load_product_categories.data.query" optiontext="product_category_name" optionvalue="product_categories_id" dmx-on:updated="loadProductSubCategoriesPerCategory.load({product_category_id: serverconnectFormCreateProduct.inp_servo_product_categories.selectedValue})">
                             <option selected="" value="{{null}}">----</option>
                           </select>
+                          <button id="btn20" class="btn bg-info text-white" data-bs-toggle="modal" data-bs-target="#createCategoryModal">{{trans.data.new[lang.value]}}}}</button>
+
                         </div>
                       </div>
                       <div class="mb-3 row">

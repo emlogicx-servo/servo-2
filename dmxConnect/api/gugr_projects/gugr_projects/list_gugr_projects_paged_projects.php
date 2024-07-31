@@ -43,7 +43,7 @@ $app->define(<<<'JSON'
         "options": {
           "connection": "servodb",
           "sql": {
-            "query": "SELECT\n\n(select count(*) from servo_projects where project_status = 'Active') as Active,\n\n(select count(*) from servo_projects where project_status = 'Pending') as Pending,\n\n(select count(*) from servo_projects where project_status = 'Completed') as Completed",
+            "query": "SELECT\n\n(select count(*) from servo_projects where project_status = 'Active' and project_type = 'Work Order') as Active,\n\n(select count(*) from servo_projects where project_status = 'Pending' and project_type = 'Work Order') as Pending,\n\n(select count(*) from servo_projects where project_status = 'Completed' and project_type = 'Work Order') as Completed",
             "params": []
           }
         },
@@ -61,7 +61,8 @@ $app->define(<<<'JSON'
             "name": "Completed",
             "type": "text"
           }
-        ]
+        ],
+        "outputType": "array"
       },
       {
         "name": "query_list_gugr_projects",
@@ -184,7 +185,7 @@ $app->define(<<<'JSON'
                 "primary": "user_id"
               }
             ],
-            "query": "select `servo_projects`.`project_id`, `servo_projects`.`project_user_created`, `userConcerned`.`user_profile`, `servo_projects`.`project_status`, `servo_projects`.`project_date_created`, `servo_projects`.`project_date_due`, `servo_projects`.`project_notes`, `servo_projects`.`project_code`, `userConcerned`.`user_fname` as `userConcerned_fname`, `userConcerned`.`user_lname` as `userConcerned_lname`, `userConcerned`.`user_username` as `userConcerned_username`, `servo_user`.`user_fname`, `servo_user`.`user_lname`, `servo_user`.`user_username`, `servo_projects`.`project_type` from `servo_projects` left join `servo_user` on `servo_user`.`user_id` = `servo_projects`.`project_user_created` left join `servo_user` as `userConcerned` on `userConcerned`.`user_id` = `servo_projects`.`project_user_concerned` where `servo_projects`.`project_status` like ? and `servo_projects`.`project_code` like ? and `servo_projects`.`project_type` = ? order by `servo_projects`.`project_status` DESC, `servo_projects`.`project_date_created` DESC, `servo_projects`.`project_code` DESC",
+            "query": "select `servo_projects`.`project_id`, `servo_projects`.`project_user_created`, `userConcerned`.`user_profile`, `servo_projects`.`project_status`, `servo_projects`.`project_date_created`, `servo_projects`.`project_date_due`, `servo_projects`.`project_notes`, `servo_projects`.`project_code`, `userConcerned`.`user_fname` as `userConcerned_fname`, `userConcerned`.`user_lname` as `userConcerned_lname`, `userConcerned`.`user_username` as `userConcerned_username`, `servo_user`.`user_fname`, `servo_user`.`user_lname`, `servo_user`.`user_username`, `servo_projects`.`project_type` from `servo_projects` left join `servo_user` on `servo_user`.`user_id` = `servo_projects`.`project_user_created` left join `servo_user` as `userConcerned` on `userConcerned`.`user_id` = `servo_projects`.`project_user_concerned` where `servo_projects`.`project_status` like ? and `servo_projects`.`project_code` like ? and `servo_projects`.`project_type` = ? order by `servo_projects`.`project_status` DESC, `servo_projects`.`project_date_created` DESC, `servo_projects`.`project_code` DESC, `servo_projects`.`project_id` DESC, `servo_projects`.`project_start` DESC",
             "params": [
               {
                 "operator": "contains",
@@ -205,20 +206,27 @@ $app->define(<<<'JSON'
               {
                 "table": "servo_projects",
                 "column": "project_status",
-                "direction": "DESC",
-                "recid": 1
+                "direction": "DESC"
               },
               {
                 "table": "servo_projects",
                 "column": "project_date_created",
-                "direction": "DESC",
-                "recid": 2
+                "direction": "DESC"
               },
               {
                 "table": "servo_projects",
                 "column": "project_code",
-                "direction": "DESC",
-                "recid": 3
+                "direction": "DESC"
+              },
+              {
+                "table": "servo_projects",
+                "column": "project_id",
+                "direction": "DESC"
+              },
+              {
+                "table": "servo_projects",
+                "column": "project_start",
+                "direction": "DESC"
               }
             ],
             "primary": "project_id",
@@ -252,7 +260,8 @@ $app->define(<<<'JSON'
                       "name": "project_status"
                     }
                   },
-                  "operation": "LIKE"
+                  "operation": "LIKE",
+                  "table": "servo_projects"
                 },
                 {
                   "id": "servo_projects.project_code",
@@ -273,7 +282,8 @@ $app->define(<<<'JSON'
                       "name": "project_code"
                     }
                   },
-                  "operation": "LIKE"
+                  "operation": "LIKE",
+                  "table": "servo_projects"
                 },
                 {
                   "id": "servo_projects.project_type",
@@ -299,7 +309,8 @@ $app->define(<<<'JSON'
                       "name": "project_type"
                     }
                   },
-                  "operation": "="
+                  "operation": "=",
+                  "table": "servo_projects"
                 }
               ],
               "conditional": null,

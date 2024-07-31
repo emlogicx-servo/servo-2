@@ -45,7 +45,7 @@ class import extends Module
                     throw new \Exception('Error parsing CSV. ' + $options->path);
                 }
 
-                $data[] = $o;
+                $data[] = (object)$o;
             }
 
             fclose($fp);
