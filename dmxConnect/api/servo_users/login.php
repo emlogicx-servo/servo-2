@@ -180,6 +180,43 @@ $app->define(<<<'JSON'
         "output": true
       },
       {
+        "name": "user_permission",
+        "module": "dbupdater",
+        "action": "custom",
+        "options": {
+          "connection": "servodb",
+          "sql": {
+            "query": "SELECT servo_permissions.name\nFROM servo_permissions\nINNER JOIN servo_permissions_role\nON servo_permissions.id = servo_permissions_role.permission_id\nWHERE servo_permissions_role.role_id \nIN (SELECT servo_role_user.role_id\n        FROM servo_role_user\n        WHERE servo_role_user.user_id = ?\n        GROUP BY servo_role_user.role_id\n        )\nGROUP BY servo_permissions.id",
+            "params": [
+              {
+                "name": "?",
+                "value": "{{query_get_user_role[0].user_id}}",
+                "test": "1",
+                "recid": 1
+              }
+            ]
+          }
+        },
+        "output": true,
+        "meta": [
+          {
+            "name": "name",
+            "type": "text"
+          }
+        ],
+        "outputType": "array",
+        "disabled": true
+      },
+      {
+        "name": "user_permissions",
+        "module": "core",
+        "action": "setsession",
+        "options": {
+          "value": "{{user_permission}}"
+        },
+        "disabled": true
+      },
+      {
         "name": "userloginInfo",
         "module": "core",
         "action": "setsession",

@@ -205,7 +205,7 @@ class Response
         }
     }
 
-    public function error($error) {
+    public function error($errror) {
         throw new \Exception($error);
     }
 

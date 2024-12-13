@@ -17,7 +17,9 @@
       "db_port": "3306",
       "db_user": "root",
       "db_password": "root",
-      "db_database": "servodb"
+      "db_database": "servodb",
+      "databaseType": "mysql",
+      "localFolder": ""
     }
   ],
   "frameworks": [
@@ -39,7 +41,11 @@
     },
     {
       "name": "bootstrap5",
-      "type": "local"
+      "type": "custom",
+      "options": {
+        "jsIncludePath": "/bootstrap/5/js/bootstrap.min.js",
+        "cssIncludePath": "/bootstrap/5/css/bootstrap.min.css"
+      }
     }
   ],
   "extensions": [],

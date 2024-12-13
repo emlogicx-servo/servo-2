@@ -51,7 +51,7 @@ $app->define(<<<'JSON'
             "name": "servo_customers"
           },
           "joins": [],
-          "query": "select * from `servo_customers` where `servo_customers`.`customer_first_name` like ? and `servo_customers`.`customer_last_name` like ? order by `customer_id` DESC",
+          "query": "select * from `servo_customers` where `servo_customers`.`customer_first_name` like ? and `servo_customers`.`customer_last_name` like ? order by `customer_id` DESC limit ? offset ?",
           "params": [
             {
               "operator": "contains",
@@ -90,7 +90,8 @@ $app->define(<<<'JSON'
                     "name": "customer_first_name"
                   }
                 },
-                "operation": "LIKE"
+                "operation": "LIKE",
+                "table": "servo_customers"
               },
               {
                 "id": "servo_customers.customer_last_name",
@@ -110,7 +111,8 @@ $app->define(<<<'JSON'
                     "name": "customer_last_name"
                   }
                 },
-                "operation": "LIKE"
+                "operation": "LIKE",
+                "table": "servo_customers"
               }
             ],
             "conditional": null,
@@ -120,9 +122,12 @@ $app->define(<<<'JSON'
             {
               "table": "servo_customers",
               "column": "customer_id",
-              "direction": "DESC"
+              "direction": "DESC",
+              "recid": 1
             }
-          ]
+          ],
+          "limitTest": "23",
+          "offsetTest": "1"
         },
         "connection": "servodb"
       },
@@ -221,7 +226,7 @@ $app->define(<<<'JSON'
               "name": "customer_address"
             },
             {
-              "type": "number",
+              "type": "text",
               "name": "id_card_number"
             },
             {

@@ -59,7 +59,8 @@ $app->define(<<<'JSON'
           "name": "Total",
           "type": "text"
         }
-      ]
+      ],
+      "outputType": "array"
     }
   }
 }

@@ -2,6 +2,8 @@
 <html>
 
 <head>
+    <link rel="stylesheet" href="css/bootstrap-icons.min.css" />
+
     <link rel="stylesheet" href="dmxAppConnect/dmxAnimateCSS/animate.min.css" />
 
     <script src="dmxAppConnect/dmxAppConnect.js"></script>
@@ -57,6 +59,7 @@
                 <div class="col d-flex justify-content-center flex-wrap">
                     <div class="d-block pt-4 pb-4 ps-4 pe-4 bg-secondary rounded" dmx-animate-inview.delay:500="pulse">
                         <form id="servo_login_form" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_users/login.php" dmx-on:success="servo_login_form.reset();notifies1.success('Success');login_session.removeAll();login_session.set('current_user',servo_login_form.data.query_get_user_role[0].user_username);login_session.set('user_profile',servo_login_form.data.query_get_user_role[0].user_profile);login_session.set('user_id',servo_login_form.data.query_get_user_role[0].user_id);login_session.set('user_department',servo_login_form.data.query_get_user_role[0].department_name);login_session.set('user_department_id',servo_login_form.data.query_get_user_role[0].servo_user_departments_department_id);browser1.goto('shift-select.php?department='+servo_login_form.data.query_get_user_role[0].department_name)" dmx-on:error="servo_login_form.reset();notifies1.danger('Error')" dmx-on:unauthorized="servo_login_form.reset();browser1.alert('UNAUTHORISED')">
+
 
                             <input id="username" name="user_username" type="text" class="form-control mt-2" placeholder="Enter Username">
                             <input id="password" name="password" type="password" class="form-control mt-2 mb-2" placeholder="Enter Password">

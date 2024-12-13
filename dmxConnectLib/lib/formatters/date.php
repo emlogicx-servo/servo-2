@@ -36,9 +36,8 @@ function formatter_formatDate($val, $format, $utc = FALSE) {
     return $date->format($format);
 }
 
-function formatter_dateAdd($val, $interval, $num = 0) {
+function formatter_dateAdd($val, $interval, $num) {
     if ($val == NULL) return NULL;
-    if ($num == NULL) $num = 0;
 
     $date = new \DateTime((is_numeric($val) ? '@' : '') . $val);
     $add = $num > 0;

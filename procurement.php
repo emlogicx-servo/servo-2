@@ -104,6 +104,10 @@
   <script src="dmxAppConnect/dmxPreloader/dmxPreloader.js" defer></script>
   <link rel="stylesheet" href="bootstrap/5/css/bootstrap.min.css" />
   <script src="dmxAppConnect/dmxDownload/dmxDownload.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/pdfmake@0.2.9/build/pdfmake.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/pdfmake@0.2.9/build/vfs_fonts.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/html-to-pdfmake@2.5.2/browser.min.js" defer></script>
+  <script src="dmxAppConnect/dmxPdfCreator/dmxPdfCreator.js" defer></script>
 </head>
 
 <body id="procurement" is="dmx-app" dmx-on:ready="preloader.hide();readItemModal.preloader1.hide()">
@@ -111,6 +115,10 @@
   <div style="z-index: 1000000000 !important;">
   </div>
 
+  <dmx-pdf-creator id="pdfcreator_po" content="#po_pdf">
+
+    <dmx-pdf-style id="pdfstyle1" color="#000" name="po_pdf_font" font-size="12"></dmx-pdf-style>
+  </dmx-pdf-creator>
   <dmx-value id="pageName" dmx-bind:value="trans.data.procurement[lang.value]"></dmx-value>
   <dmx-data-iterator id="iterator1"></dmx-data-iterator>
 
@@ -585,7 +593,7 @@
       <div class="tab-pane fade" id="navTabs1_3" role="tabpanel" aria-labelledby="navTabs1_2_tab1">
         <div class="row">
           <div class="col" id="dflex">
-            <button id="btn8" class="btn bg-info" data-bs-toggle="modal" data-bs-target="#CreateAOModal">
+            <button id="btn8" class="btn bg-info text-secondary" data-bs-toggle="modal" data-bs-target="#CreateAOModal">
               <i class="fas fa-plus" style="margin-right: 5px;"></i>{{trans.data.new[lang.value]}}</button>
           </div>
         </div>
@@ -1969,12 +1977,13 @@
     <div class="modal readitem " id="printInvoiceModal" is="dmx-bs5-modal" tabindex="-1" dmx-on:hidden-bs-modal="readItemModal.show()" style="z-index: 9000000000000; background: white !important;">
       <div class="modal-dialog modal-xl" role="document" style="margin: 0px !important; width: 100% !important; height: auto !important; max-width: 100% !important; max-height: auto !important; boder: none !important;">
         <div class="modal-content" style="max-height: auto !important; height: auto !important; border: none !important;">
+
           <dmx-value id="InvoiceTitleContent" dmx-bind:value="trans.data.receipt[lang.value]"></dmx-value>
           <div class="modal-header bg-white text-black-50" id="invoiceHead">
-            <div class="d-block "><button id="proFormaButton" class="btn me-2 text-body bg-secondary" dmx-on:click="InvoiceTitleContent.setValue(trans.data.proFormaInvoice[lang.value])">{{trans.data.proFormaInvoice[lang.value]}}
-              </button><button id="invoiceButton" class="btn me-2 text-body bg-secondary" dmx-on:click="InvoiceTitleContent.setValue(trans.data.invoice[lang.value])">{{trans.data.invoice[lang.value]}}
-              </button><button id="printInvoiceButton3" class="btn me-2 text-body bg-secondary" dmx-on:click="InvoiceTitleContent.setValue(trans.data.receipt[lang.value])">{{trans.data.receipt[lang.value]}}
-              </button><button id="printInvoiceButton2" class="btn text-body bg-secondary" onclick="window.print()"><i class="fas fa-print fa-sm"></i>
+            <div class="d-block "><button id="proFormaButton" class="btn me-2 text-body bg-secondary visually-hidden" dmx-on:click="InvoiceTitleContent.setValue(trans.data.proFormaInvoice[lang.value])">{{trans.data.proFormaInvoice[lang.value]}}
+              </button><button id="invoiceButton" class="btn me-2 text-body bg-secondary visually-hidden" dmx-on:click="InvoiceTitleContent.setValue(trans.data.invoice[lang.value])">{{trans.data.invoice[lang.value]}}
+              </button><button id="printInvoiceButton3" class="btn me-2 text-body bg-secondary visually-hidden" dmx-on:click="InvoiceTitleContent.setValue(trans.data.receipt[lang.value])">{{trans.data.receipt[lang.value]}}
+              </button><button id="printInvoiceButton2" class="btn text-body bg-secondary" dmx-on:click="pdfcreator_po.open()"><i class="fas fa-print fa-sm"></i>
               </button></div>
 
 
@@ -1982,81 +1991,92 @@
           </div>
           <div class="modal-body" id="invoice" style="background: white; overflow: visible;">
             <div class="container" id="poContent">
-              <div class="row justify-content-between" id="invoiceHeader">
-                <div class="col">
-                  <img dmx-bind:src="'uploads/'+companyInfo.data.query.company_logo" width="100">
-                </div>
-                <div class="col">
-                </div>
-                <div class="col">
-                  <h5 class="fw-bolder text-primary" dmx-text="companyInfo.data.query.company_address"></h5>
-                </div>
-              </div>
-              <div class="row justify-content-center row-cols-1" id="receiptNumber">
+              <div class="row">
+                <div class="col-12 po_pdf_font" id="po_pdf" is="dmx-pdf-content" remove-extra-blanks="true" remove-tag-classes="true">
+                  <div class="row justify-content-between row-cols-12 align-items-center" id="invoiceHeader">
+                    <div class="col-6">
+                      <img dmx-bind:src="'uploads/'+companyInfo.data.query.company_logo" width="200">
+                    </div>
+                    <div class="col-6 text-end ">
+                      <p class="text-primary po_pdf_font fw-bold" dmx-text="companyInfo.data.query.company_address"></p>
+                    </div>
+                  </div>
+                  <div class="row justify-content-center row-cols-1 mt-2" id="receiptNumber">
 
-                <div class="col">
-                  <h4 class="fw-bolder text-center text-primary" dmx-text="trans.data.purchaseOrder[lang.value]+' : '+read_purchase_order.data.query.po_id" id="poTitle" dmx-show="read_purchase_order.data.query.po_type=='Purchase'"></h4>
-                  <h4 class="fw-bolder text-center text-primary" dmx-text="trans.data.transferOrder[lang.value]+' : '+read_purchase_order.data.query.po_id" id="toTitle" dmx-show="read_purchase_order.data.query.po_type=='Transfer'"></h4>
-                </div>
-              </div>
-              <div class="row justify-content-center row-cols-1" id="receiptInformation">
+                    <div class="col">
+                      <h6 class="fw-bolder text-center" dmx-text="trans.data.purchaseOrder[lang.value]+' : '+read_purchase_order.data.query.po_id" id="poTitle" dmx-show="read_purchase_order.data.query.po_type=='Purchase'"></h6>
+                      <h6 class="fw-bolder text-center" dmx-text="trans.data.transferOrder[lang.value]+' : '+read_purchase_order.data.query.po_id" id="toTitle" dmx-show="read_purchase_order.data.query.po_type=='Transfer'"></h6>
+                    </div>
+                  </div>
 
-                <div class="col" dmx-hide="read_purchase_order.data.query.po_type=='Transfer'">
-                  <h6 class="fw-bolder text-start text-primary" dmx-text="trans.data.vendor[lang.value]+' : '"></h6>
-                  <p dmx-html="read_purchase_order.data.query.vendor_name+' &lt;br&gt;'+read_purchase_order.data.query.vendor_address+'&lt;br&gt;'+read_purchase_order.data.query.vendor_phone_number" dmx-hide="read_purchase_order.data.query.po_type=='Transfer'"></p>
-                  <h5 class="fw-bolder text-start text-primary" dmx-text="trans.data.name[lang.value]+' : '+read_customer.data.query_read_customer.customer_first_name+' '+read_customer.data.query_read_customer.customer_last_name"></h5>
-                </div>
-              </div>
-              <div class="row justify-content-center row-cols-1" id="transferInformation" dmx-show="read_purchase_order.data.query.po_type=='Transfer'">
+                  <div class="row justify-content-center row-cols-1" id="receiptInformation">
 
-                <div class="col d-flex">
-                  <p dmx-html="trans.data.source[lang.value]+' : '+read_purchase_order.data.query.department_source"></p>
-                </div>
-                <div class="col d-flex">
-                  <p dmx-html="trans.data.destination[lang.value]+' : '+read_purchase_order.data.query.department_destination"></p>
-                </div>
-              </div>
-              <div class="row justify-content-center row-cols-1" id="receiptTable">
+                    <div class="col" dmx-hide="read_purchase_order.data.query.po_type=='Transfer'">
+                      <h6 class="fw-bolder text-start" dmx-text="trans.data.vendor[lang.value]+' : '"></h6>
+                      <h6 dmx-html="read_purchase_order.data.query.vendor_name+' '" dmx-hide="read_purchase_order.data.query.po_type=='Transfer'"></h6>
+                      <h6 dmx-html="' '+read_purchase_order.data.query.vendor_address" dmx-hide="read_purchase_order.data.query.po_type=='Transfer'"></h6>
+                      <h6 dmx-html="' '+read_purchase_order.data.query.vendor_phone_number" dmx-hide="read_purchase_order.data.query.po_type=='Transfer'"></h6>
+                    </div>
+                  </div>
+                  <div class="row justify-content-center row-cols-1" id="transferInformation" dmx-show="read_purchase_order.data.query.po_type=='Transfer'">
 
-                <div class="col">
-                  <div class="bg-white" id="ReceiptOrderDetails" style="overflow: visible; color: black !important;">
-                    <table class="table" style="background: white;">
-                      <thead style="background: #b0b0b0 !important;">
-                        <tr style="color: black !important;">
-                          <th>{{trans.data.product[lang.value]}}</th>
-                          <th>{{trans.data.note[lang.value]}}</th>
-                          <th class="text-end">{{trans.data.quantity[lang.value]}}</th>
-                          <th dmx-hide="read_purchase_order.data.query.po_type=='Transfer'" class="text-end">{{trans.data.price[lang.value]}}</th>
-                          <th dmx-hide="read_purchase_order.data.query.po_type=='Transfer'" class="text-end">{{trans.data.total[lang.value]}}</th>
-                        </tr>
-                      </thead>
-                      <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="list_purchase_order_items.data.query" id="receiptDetails">
-                        <tr style="color: black !important;" class="fw-bold">
-                          <td dmx-text="product_name"></td>
-                          <td dmx-text="po_item_notes"></td>
-                          <td dmx-text="po_item_quantity" class="text-end">
+                    <div class="col d-flex">
+                      <p dmx-html="trans.data.source[lang.value]+' : '+read_purchase_order.data.query.department_source"></p>
+                    </div>
+                    <div class="col d-flex">
+                      <p dmx-html="trans.data.destination[lang.value]+' : '+read_purchase_order.data.query.department_destination"></p>
+                    </div>
+                  </div>
+                  <div class="row justify-content-center row-cols-1" id="receiptTable">
 
-                          </td>
-                          <td dmx-text="po_item_price" dmx-hide="read_purchase_order.data.query.po_type=='Transfer'" class="text-end">
+                    <div class="col">
+                      <div class="bg-white" id="ReceiptOrderDetails" style="overflow: visible; color: black !important;">
 
-                          </td>
-                          <td dmx-text="(po_item_quantity * po_item_price).formatNumber('O', ',', ',')" dmx-hide="read_purchase_order.data.query.po_type=='Transfer'" class="text-end">
+                      </div>
+                    </div>
+                  </div>
+                  <table class="table  po_pdf_font">
+                    <thead>
+                      <tr>
+                        <th>{{trans.data.product[lang.value]}}</th>
+                        <th>{{trans.data.note[lang.value]}}</th>
+                        <th class="text-end">{{trans.data.quantity[lang.value]}}</th>
+                        <th dmx-hide="read_purchase_order.data.query.po_type=='Transfer'" class="text-end">{{trans.data.price[lang.value]}}</th>
+                        <th dmx-hide="read_purchase_order.data.query.po_type=='Transfer'" class="text-end">{{trans.data.total[lang.value]}}</th>
+                      </tr>
+                    </thead>
+                    <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="list_purchase_order_items.data.query" id="receiptDetails" class="po_pdf_font">
+                      <tr style="/* color: black !important */" class="fw-bold">
+                        <td dmx-text="product_name"></td>
+                        <td dmx-text="po_item_notes"></td>
+                        <td dmx-text="po_item_quantity" class="text-end">
 
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
+                        </td>
+                        <td dmx-text="po_item_price" dmx-hide="read_purchase_order.data.query.po_type=='Transfer'" class="text-end">
+
+                        </td>
+                        <td dmx-text="(po_item_quantity * po_item_price).formatNumber('O', ',', ',')" dmx-hide="read_purchase_order.data.query.po_type=='Transfer'" class="text-end">
+
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="row justify-content-between">
+                    <div class="col-auto">
+                      <h5 dmx-text="trans.data.total[lang.value]"></h5>
+                    </div>
+                    <div class="col-auto">
+                      <h5 dmx-text="read_purchase_order.data.read_po_totals[0].POTotal.toNumber().formatNumber('3','.',',')" class="text-end"></h5>
+                    </div>
                   </div>
                 </div>
               </div>
-              <div class="row justify-content-end">
-                <div class="col">
-                  <h5 dmx-text="trans.data.total[lang.value]" class="text-primary">Fancy display heading</h5>
-                </div>
-                <div class="col">
-                  <h5 dmx-text="" class="text-primary">Fancy display heading</h5>
-                </div>
-              </div>
+
+
+
+
+
+
             </div>
             <div class="modal-footer">
             </div>

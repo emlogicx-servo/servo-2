@@ -13,9 +13,9 @@ dmx.Attribute('bs-popover', 'mounted', function(node, attr) {
     });
   }
 
-  return () => {
+  this.addEventListener('destroy', () => {
     if (popover) {
       popover.dispose();
     }
-  };
+  });
 });

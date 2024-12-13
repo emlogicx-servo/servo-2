@@ -171,11 +171,14 @@ JSON
     <script src="dmxAppConnect/dmxPreloader/dmxPreloader.js" defer></script>
 
     <link rel="stylesheet" href="css/bootstrap-icons.css" />
-    <link rel="stylesheet" href="bootstrap/5/css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="bootstrap/5/css/bootstrap.min.css" />
+    <script src="dmxAppConnect/dmxBootbox5/bootstrap-modbox.min.js" defer></script>
+    <script src="dmxAppConnect/dmxBootbox5/dmxBootbox5.js" defer></script>
 </head>
 
 <body is="dmx-app" id="ServoCashier">
+
 
     <dmx-query-manager id="sales_report"></dmx-query-manager>
     <dmx-serverconnect id="list_expenses" url="dmxConnect/api/servo_expenses/list_expenses_shift.php" dmx-param:shift="list_user_shift_info.data.query_list_user_shift[0].servo_shifts_shift_id"></dmx-serverconnect>
@@ -183,13 +186,17 @@ JSON
     <dmx-value id="amountTendered" dmx-bind:value="updateOrderCashier.inp_order_amount_tendered.value"></dmx-value>
     <dmx-serverconnect id="payentMethodsShift" url="dmxConnect/api/servo_reporting/payment_methods_report_shift.php" dmx-param:shift="session_variables.data.current_shift"></dmx-serverconnect>
     <dmx-serverconnect id="paymentsShift" url="dmxConnect/api/servo_customer_cash_transactions/list_transactions_shift.php" dmx-param:shift="session_variables.data.current_shift" dmx-param:shift_id="session_variables.data.current_shift"></dmx-serverconnect>
-    <dmx-serverconnect id="product_report_shift_department_admin" url="dmxConnect/api/servo_reporting/product_report_shift_department_admin.php" dmx-param:shift="session_variables.data.current_shift" dmx-param:department="reportModal.departentReportSelect.selectDepartment.value" dmx-param:status="reportModal.departentReportSelect.selectOrderItemStatus.value"></dmx-serverconnect>
+
     <dmx-serverconnect id="SalesReportShift" url="dmxConnect/api/servo_reporting/product_report_shift.php" dmx-param:shift="session_variables.data.current_shift" dmx-param:department="departentReportSelect1.selectDepartment1.selectedValue"></dmx-serverconnect>
+    <dmx-serverconnect id="product_report_shift_ingredients" url="dmxConnect/api/servo_reporting/product_report_shift_ingredients.php" dmx-param:department="reportModal.departentReportSelect.selectDepartment.selectedValue" dmx-param:shift="session_variables.data.current_shift"></dmx-serverconnect>
+    <dmx-serverconnect id="SalesReportShiftAccessories" url="dmxConnect/api/servo_reporting/product_report_shift_accessories.php" dmx-param:shift="session_variables.data.current_shift" dmx-param:department="reportModal.departentReportSelect.selectDepartment.selectedValue"></dmx-serverconnect>
+    <dmx-serverconnect id="product_report_shift_department_admin" url="dmxConnect/api/servo_reporting/product_report_shift_department_admin.php" dmx-param:shift="session_variables.data.current_shift" dmx-param:department="reportModal.departentReportSelect.selectDepartment.value" dmx-param:status="reportModal.departentReportSelect.selectOrderItemStatus.value"></dmx-serverconnect>
     <dmx-serverconnect id="SalesReportShiftCustomers"></dmx-serverconnect>
-    <dmx-serverconnect id="SalesReportShiftAccessories" url="dmxConnect/api/servo_reporting/product_report_shift_accessories.php" dmx-param:shift="session_variables.data.current_shift" dmx-param:department="departentReportSelect1.selectDepartment1.selectedValue"></dmx-serverconnect>
+
     <dmx-serverconnect id="SalesReportTimeSeries" url="dmxConnect/api/servo_reporting/product_report_shift_by_date.php" dmx-param:shift="session_variables.data.current_shift"></dmx-serverconnect>
     <dmx-serverconnect id="SalesReportCategoriesShift" url="dmxConnect/api/servo_reporting/product_category_report_shift.php" dmx-param:shift="session_variables.data.current_shift" dmx-param:departmet="departentReportSelect1.selectDepartment1.selectedValue" dmx-param:department="departentReportSelect1.selectDepartment1.selectedValue"></dmx-serverconnect>
     <dmx-serverconnect id="list_orders_credit" url="dmxConnect/api/servo_orders/list_orders_all_credit.php"></dmx-serverconnect>
+
     <dmx-serverconnect id="update_order_credit" url="dmxConnect/api/servo_orders/update_order_credit.php"></dmx-serverconnect>
     <dmx-serverconnect id="list_departments" url="dmxConnect/api/servo_departments/list_departments.php"></dmx-serverconnect>
     <dmx-serverconnect id="listServices" url="dmxConnect/api/servo_services/list_services.php"></dmx-serverconnect>
@@ -964,6 +971,7 @@ JSON
                     <div class="modal-body bg-light">
                         <div class="row">
                             <div class="col">
+
                                 <ul class="nav nav-tabs nav-fill" id="navTabs1_tabs2" role="tablist">
                                     <li class="nav-item">
                                         <a class="nav-link active text-primary" id="navTabs1_1_tab1" data-bs-toggle="tab" href="#" data-bs-target="#navTabs1_2" role="tab" aria-controls="navTabs1_1" aria-selected="true">
@@ -1042,7 +1050,7 @@ JSON
                                                                                 <th>{{trans.data.total[lang.value]}}</th>
                                                                             </tr>
                                                                         </thead>
-                                                                        <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="SalesReportShiftAccessories.data.product_report" id="tableRepeat4">
+                                                                        <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="shiftData.data.shift_sales_products_accessories" id="tableRepeat10">
                                                                             <tr>
                                                                                 <td dmx-text="product_name"></td>
                                                                                 <td dmx-text="product_category_name"></td>
@@ -1054,16 +1062,39 @@ JSON
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                        <div class="row">
 
+                                                            <h4>{{trans.data.Ingredients[lang.value]}}</h4>
 
+                                                            <div class="col">
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-sm">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>{{trans.data.product[lang.value]}}</th>
+                                                                                <th>{{trans.data.category[lang.value]}}</th>
+                                                                                <th>{{trans.data.volume[lang.value]}}</th>
+                                                                                <th>{{trans.data.total[lang.value]}}</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="shiftData.data.shift_sales_products_ingredients" id="tableRepeat11">
+                                                                            <tr>
+                                                                                <td dmx-text="product_name"></td>
+                                                                                <td dmx-text="product_category_name"></td>
+                                                                                <td dmx-text="Volume"></td>
+                                                                                <td dmx-text="Total"></td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                                </table>
+                                                            </div>
+                                                            </table>
+                                                        </div>
                                                     </div>
-
                                                 </div>
+                                                </table>
                                             </div>
-
-
-
-
                                         </div>
                                     </div>
                                     <div class="tab-pane fade mt-3" id="navTabs1_4" role="tabpanel" aria-labelledby="navTabs1_1_tab">
@@ -1071,9 +1102,10 @@ JSON
                                         <div class="row row-cols-xxl-12 row-cols-12 row-cols-lg-12 justify-content-lg-between mt-3 mb-4 ms-0 me-2">
 
                                             <div class="rounded rounded-3 col-auto bg-secondary ms-2 me-2 pt-2">
+
                                                 <form id="departentReportSelect">
                                                     <div class="row">
-                                                        <div class="col d-flex"><select id="selectDepartment" class="form-select me-2" dmx-bind:options="list_departments.data.query_list_departments" optiontext="department_name" optionvalue="department_id">
+                                                        <div class="col d-flex"><select id="selectDepartment" class="form-select me-2" dmx-bind:options="list_departments.data.query_list_departments" optiontext="department_name" optionvalue="department_id" dmx-on:changed="run([{run:{outputType:'text',action:`SalesReportShiftAccessories.load({})`}},{run:{outputType:'text',action:`product_report_shift_ingredients.load({})`}}])">
                                                                 <option selected="" value="%">----</option>
                                                             </select><select id="selectOrderItemStatus" class="form-select">
                                                                 <option selected="" value="%">----</option>
@@ -1159,10 +1191,23 @@ JSON
 
 
                     </div>
-                    <div class="modal-footer bg-light border-0">
-                    </div>
                 </div>
+
+
+
             </div>
+
+        </div>
+        </div>
+
+
+
+
+        </div>
+        <div class="modal-footer bg-light border-0">
+        </div>
+        </div>
+        </div>
         </div>
     </main>
 

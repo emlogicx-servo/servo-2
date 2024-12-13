@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="fontawesome5/css/all.min.css" />
     <script src="dmxAppConnect/dmxFormatter/dmxFormatter.js" defer=""></script>
     <link rel="stylesheet" href="bootstrap/5/cerulean/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/bootstrap-icons.min.css" />
 </head>
 
 <body id="gugrLogin" is="dmx-app" dmx-on:load="login_session.removeAll();local1.removeAll()" dmx-on:ready="login_session.removeAll();local1.removeAll()">
@@ -52,8 +53,8 @@
                     <div class="d-block">
                         <form id="servo_login_form" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/servo_users/login.php" dmx-on:success="run([{run:{action:`servo_login_form.reset()`}},{run:{action:`notifies1.success(\'Success\')`}},{run:{action:`login_session.removeAll()`}},{run:{action:`login_session.set(\'current_user\',servo_login_form.data.query_get_user_role[0].user_username)`}},{run:{action:`login_session.set(\'user_profile\',servo_login_form.data.query_get_user_role[0].user_profile)`}},{run:{action:`login_session.set(\'user_id\',servo_login_form.data.query_get_user_role[0].user_id)`}},{run:{action:`login_session.set(\'user_department\',servo_login_form.data.query_get_user_role[0].department_name)`}},{run:{action:`login_session.set(\'user_department_id\',servo_login_form.data.query_get_user_role[0].servo_user_departments_department_id)`}},{run:{action:`browser1.goto(servo_login_form.data.query_get_user_role[0].user_profile+\'.php\')`}}])" dmx-on:error="servo_login_form.reset();notifies1.danger('Error')" dmx-on:unauthorized="servo_login_form.reset();browser1.alert('UNAUTHORISED')">
 
-                            <input id="username" name="user_username" type="text" class="form-control mt-2" placeholder="Enter Username">
-                            <input id="password" name="password" type="password" class="form-control mt-2 mb-2" placeholder="Enter Password">
+                            <input id="username" name="user_username" type="text" class="form-control mt-2" dmx-bind:placeholder="trans.data.username[lang.value]">
+                            <input id="password" name="password" type="password" class="form-control mt-2 mb-2" dmx-bind:placeholder="trans.data.password[lang.value]">
                             <button id="btn2" class="btn btn-primary" type="submit" dmx-on:click="username.setValue(username.value.lowercase())">
                                 <i class="fas fa-sign-in-alt fa-lg"></i>
                             </button>

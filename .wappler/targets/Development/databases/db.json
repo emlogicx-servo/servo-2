@@ -1,0 +1,1077 @@
+{
+  "direct": true,
+  "type": "mysql2",
+  "connection": {
+    "host": "localhost",
+    "port": 3306,
+    "user": "root",
+    "password": "root",
+    "database": "servodb"
+  },
+  "schema": {
+    "tables": {
+      "servo_shifts": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "refs": {
+          "servo_login_session": "servo_shift_shift_id",
+          "servo_orders": "servo_shift_shift_id",
+          "servo_user_shifts": "servo_shifts_shift_id"
+        }
+      },
+      "servo_order_items": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "parent": "servo_orders"
+      },
+      "servo_asset_special_fields_municipality": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "parent": "servo_assets"
+      },
+      "servo_product_uom_multiples": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_mysql500_ci",
+          "system_versioned": false
+        },
+        "parent": "servo_products",
+        "refs": {
+          "servo_product_price": "product_price_uom_service"
+        }
+      },
+      "servo_login_session": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        }
+      },
+      "servo_services": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "refs": {
+          "servo_product_price": "servo_service_service_id",
+          "servo_orders": "servo_service_service_id",
+          "servo_user_shifts": "servo_service_service_id"
+        },
+        "sub": {
+          "servo_service_department_category": "sdc_service_id"
+        }
+      },
+      "servo_product_price": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "parent": "servo_products"
+      },
+      "servo_asset_files": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "parent": "servo_assets"
+      },
+      "servo_expenses": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        }
+      },
+      "servo_sales_point": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "refs": {
+          "servo_services": "servo_service_sales_point",
+          "servo_orders": "order_pos",
+          "servo_user_shifts": "servo_sales_point_sales_point_id"
+        },
+        "sub": {
+          "servo_sales_point_departments": "servo_sales_point_sales_point_id"
+        }
+      },
+      "servo_product_groups": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "refs": {
+          "servo_order_items": "order_item_group_id",
+          "servo_product_group_items": "product_group_product_group_id"
+        }
+      },
+      "servo_department": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "refs": {
+          "servo_order_items": "servo_departments_department_id",
+          "servo_expenses": "expense_department",
+          "servo_product_groups": "group_product_department",
+          "servo_vendor_cash_transaction": "transaction_department_received",
+          "servo_user_tenure": "servo_department_department_id",
+          "servo_service_department_category": "sdc_department_id",
+          "servo_sales_point_departments": "servo_departments_department_id",
+          "servo_purchase_orders": "servo_departments_department_id",
+          "servo_customer_cash_transaction": "transaction_department_received",
+          "servo_project_step": "step_department_concerned",
+          "servo_user": "servo_user_departments_department_id"
+        },
+        "sub": {
+          "servo_department_categories": "department_id"
+        }
+      },
+      "servo_wallet_privileges": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "parent": "servo_wallets"
+      },
+      "servo_product_category_options": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "parent": "servo_product_categories"
+      },
+      "servo_data_field_readings": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "parent": "servo_data_fields"
+      },
+      "servo_purchase_order_items": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "parent": "servo_purchase_orders"
+      },
+      "servo_product_brands": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "refs": {
+          "servo_products": "servo_product_brands_product_brand_id"
+        }
+      },
+      "servo_vendor_cash_transaction": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "parent": "servo_vendors"
+      },
+      "servo_project_tasks": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "parent": "servo_projects"
+      },
+      "servo_customer_table": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "refs": {
+          "servo_orders": "servo_customer_table_table_id",
+          "servo_data_reading_session": "data_reading_session_asset"
+        }
+      },
+      "servo_products": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "refs": {
+          "servo_order_items": "servo_products_product_id",
+          "servo_purchase_order_items": "po_product_id",
+          "servo_stock_movement": "stock_product_id",
+          "servo_order_item_deletes": "deleted_product_id",
+          "servo_purchase_order_item_deletes": "po_item_deleted_product_id"
+        },
+        "sub": {
+          "servo_product_uom_multiples": "uom_product_id",
+          "servo_product_price": "product_price_product_id",
+          "servo_product_group_items": "product_group_product_id",
+          "servo_products_has_servo_product_categories": "servo_products_product_id"
+        }
+      },
+      "servo_user_tenure": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        }
+      },
+      "servo_customers": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "refs": {
+          "servo_sales_point": "sales_point_customer_id",
+          "servo_projects": "project_customer",
+          "servo_orders": "order_customer",
+          "servo_files": "file_customer_id",
+          "servo_assets": "asset_owner",
+          "servo_data_reading_session": "data_reading_session_customer"
+        },
+        "sub": {
+          "servo_customer_cash_transaction": "customer_id"
+        }
+      },
+      "servo_project_notes": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "parent": "servo_projects"
+      },
+      "servo_user_profile": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        }
+      },
+      "servo_company_info": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        }
+      },
+      "servo_projects": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "sub": {
+          "servo_project_tasks": "task_project",
+          "servo_project_notes": "project_note_project_id",
+          "servo_project_step": "step_project",
+          "servo_project_files": "project_file_project_id"
+        },
+        "refs": {
+          "servo_files": "file_project_id"
+        }
+      },
+      "servo_stock_movement": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        }
+      },
+      "servo_order_item_deletes": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "parent": "servo_orders"
+      },
+      "servo_branches": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "refs": {
+          "servo_shifts": "servo_branches_branch_id",
+          "servo_user_tenure": "servo_branches_branch_id"
+        }
+      },
+      "servo_orders": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "sub": {
+          "servo_order_items": "servo_orders_order_id",
+          "servo_order_item_deletes": "order_id"
+        },
+        "refs": {
+          "servo_stock_movement": "stock_order_id",
+          "servo_wallet_transactions": "transaction_order",
+          "servo_customer_cash_transaction": "transaction_order"
+        }
+      },
+      "servo_service_department_category": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "parent": "servo_services"
+      },
+      "servo_product_sub_category": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "refs": {
+          "servo_products": "product_sub_category_sub_category_id"
+        }
+      },
+      "servo_asset_floors_cc": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_mysql500_ci",
+          "system_versioned": false
+        },
+        "parent": "servo_assets"
+      },
+      "servo_files": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        }
+      },
+      "servo_sales_point_departments": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "parent": "servo_sales_point"
+      },
+      "servo_product_group_items": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "parent": "servo_products"
+      },
+      "servo_assets": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "sub": {
+          "servo_asset_special_fields_municipality": "asset",
+          "servo_asset_files": "asset_file_asset_id",
+          "servo_asset_floors_cc": "asset_id"
+        },
+        "refs": {
+          "servo_project_tasks": "task_asset",
+          "servo_projects": "project_asset"
+        }
+      },
+      "servo_department_categories": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "parent": "servo_department"
+      },
+      "servo_wallet_transactions": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "parent": "servo_wallets"
+      },
+      "servo_product_discount": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        }
+      },
+      "servo_data_reading_session": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "refs": {
+          "servo_data_field_readings": "data_reading_session_id"
+        }
+      },
+      "servo_purchase_order_item_deletes": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        }
+      },
+      "servo_product_categories": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "sub": {
+          "servo_product_category_options": "category_option_category_id"
+        },
+        "refs": {
+          "servo_products": "servo_product_category_product_category_id",
+          "servo_service_department_category": "sdc_category_id",
+          "servo_product_sub_category": "product_sub_category_category_id",
+          "servo_department_categories": "category_id",
+          "servo_products_has_servo_product_categories": "servo_product_categories_product_categories_id"
+        }
+      },
+      "servo_wallets": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "sub": {
+          "servo_wallet_privileges": "wallet_privilege_wallet_id",
+          "servo_wallet_transactions": "transaction_originating_wallet"
+        },
+        "refs": {
+          "servo_wallet_transactions": "transaction_destination_wallet"
+        }
+      },
+      "servo_purchase_orders": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "sub": {
+          "servo_purchase_order_items": "po_id"
+        },
+        "refs": {
+          "servo_stock_movement": "stock_po_id",
+          "servo_files": "file_po_id"
+        }
+      },
+      "servo_data_fields": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "sub": {
+          "servo_data_field_readings": "data_field_reading_data_field"
+        }
+      },
+      "servo_products_has_servo_product_categories": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "parent": "servo_products"
+      },
+      "servo_vendors": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "refs": {
+          "servo_expenses": "expense_vendor",
+          "servo_purchase_orders": "servo_vendors_vendor_id"
+        },
+        "sub": {
+          "servo_vendor_cash_transaction": "transaction_vendor_id"
+        }
+      },
+      "servo_customer_cash_transaction": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "parent": "servo_customers"
+      },
+      "servo_project_step": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "refs": {
+          "servo_project_notes": "project_step"
+        },
+        "parent": "servo_projects"
+      },
+      "servo_user_shifts": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "parent": "servo_user"
+      },
+      "servo_currencies": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "refs": {
+          "servo_wallets": "wallet_currency"
+        }
+      },
+      "servo_project_files": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "parent": "servo_projects"
+      },
+      "servo_payment_methods": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "refs": {
+          "servo_expenses": "expense_payment_method",
+          "servo_vendor_cash_transaction": "transaction_payment_method",
+          "servo_orders": "servo_payment_methods_payment_method",
+          "servo_wallet_transactions": "transaction_payment_method",
+          "servo_wallets": "wallet_format",
+          "servo_purchase_orders": "payment_method"
+        }
+      },
+      "servo_user": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        },
+        "columns": {
+          "user_id": {
+            "db": {
+              "type": "increments",
+              "primary": true,
+              "nullable": false
+            }
+          },
+          "user_fname": {
+            "db": {
+              "type": "string",
+              "default": "",
+              "maxLength": 45,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "user_lname": {
+            "db": {
+              "type": "string",
+              "default": "",
+              "maxLength": 45,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "user_username": {
+            "db": {
+              "type": "string",
+              "maxLength": 45,
+              "primary": false,
+              "nullable": false
+            }
+          },
+          "password": {
+            "db": {
+              "type": "string",
+              "maxLength": 45,
+              "primary": false,
+              "nullable": false
+            }
+          },
+          "servo_user_departments_department_id": {
+            "db": {
+              "type": "reference",
+              "default": "",
+              "primary": false,
+              "nullable": true,
+              "references": "department_id",
+              "inTable": "servo_department",
+              "referenceType": "integer",
+              "onUpdate": "NO ACTION",
+              "onDelete": "NO ACTION"
+            }
+          },
+          "user_profile": {
+            "db": {
+              "type": "enum",
+              "enumValues": [
+                "Waiter",
+                "Cashier",
+                "Manager",
+                "Service",
+                "Admin",
+                "Support",
+                "cc-admin",
+                "cc-gu",
+                "cc-pm",
+                "cc-rm",
+                "gugr-cordo",
+                "gugr-personnel",
+                "gugr-reception",
+                "gugr-admin",
+                "smanager",
+                "jmanager",
+                "pmanager",
+                "fmanager",
+                "dmanager"
+              ],
+              "maxLength": 14,
+              "primary": false,
+              "nullable": false
+            }
+          }
+        },
+        "refs": {
+          "servo_order_items": "servo_users_user_ordered",
+          "servo_login_session": "servo_user_user_id",
+          "servo_expenses": "expense_user_paid",
+          "servo_wallet_privileges": "wallet_privilege_user_id",
+          "servo_data_field_readings": "data_field_reading_user",
+          "servo_purchase_order_items": "po_item_user_received",
+          "servo_vendor_cash_transaction": "user_approved_id",
+          "servo_project_tasks": "task_user_created",
+          "servo_project_notes": "project_note_user_created",
+          "servo_projects": "project_user_created",
+          "servo_order_item_deletes": "user_deleted",
+          "servo_orders": "servo_user_user_id",
+          "servo_wallet_transactions": "transaction_user_initiated_id",
+          "servo_data_reading_session": "data_reading_session_user",
+          "servo_purchase_order_item_deletes": "po_user_deleted",
+          "servo_purchase_orders": "servo_users_user_ordered_id",
+          "servo_customer_cash_transaction": "user_approved_id",
+          "servo_project_step": "step_user_created",
+          "servo_project_files": "project_file_creator",
+          "servo_changes_updates": "user_updated",
+          "servo_role_user": "user_id"
+        },
+        "sub": {
+          "servo_user_shifts": "servo_user_user_id"
+        }
+      },
+      "servo_changes_updates": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        }
+      },
+      "servo_profile_settings": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8_general_ci",
+          "system_versioned": false
+        }
+      },
+      "servo_permissions_role": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8mb4_general_ci",
+          "system_versioned": false
+        },
+        "columns": {
+          "id": {
+            "db": {
+              "type": "increments",
+              "primary": true,
+              "nullable": false
+            }
+          },
+          "role_id": {
+            "db": {
+              "type": "reference",
+              "default": "",
+              "primary": false,
+              "nullable": true,
+              "references": "id",
+              "inTable": "servo_roles",
+              "referenceType": "integer",
+              "onUpdate": "RESTRICT",
+              "onDelete": "RESTRICT"
+            }
+          },
+          "permission_id": {
+            "db": {
+              "type": "reference",
+              "default": "",
+              "primary": false,
+              "nullable": true,
+              "references": "id",
+              "inTable": "servo_permissions",
+              "referenceType": "integer",
+              "onUpdate": "RESTRICT",
+              "onDelete": "RESTRICT"
+            }
+          }
+        },
+        "parent": "servo_permissions"
+      },
+      "role_user": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8mb4_general_ci",
+          "system_versioned": false
+        }
+      },
+      "servo_role_user": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8mb4_general_ci",
+          "system_versioned": false
+        },
+        "columns": {
+          "id": {
+            "db": {
+              "type": "increments",
+              "primary": true,
+              "nullable": false
+            }
+          },
+          "user_id": {
+            "db": {
+              "type": "reference",
+              "default": "",
+              "primary": false,
+              "nullable": true,
+              "references": "user_id",
+              "inTable": "servo_user",
+              "referenceType": "integer",
+              "onUpdate": "RESTRICT",
+              "onDelete": "RESTRICT"
+            }
+          },
+          "role_id": {
+            "db": {
+              "type": "reference",
+              "default": "",
+              "primary": false,
+              "nullable": true,
+              "references": "id",
+              "inTable": "servo_roles",
+              "referenceType": "integer",
+              "onUpdate": "RESTRICT",
+              "onDelete": "RESTRICT"
+            }
+          }
+        },
+        "parent": "servo_roles"
+      },
+      "servo_permissions": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8mb4_general_ci",
+          "system_versioned": false
+        },
+        "columns": {
+          "id": {
+            "db": {
+              "type": "increments",
+              "primary": true,
+              "nullable": false
+            }
+          },
+          "name": {
+            "db": {
+              "type": "string",
+              "default": "",
+              "maxLength": 255,
+              "primary": false,
+              "nullable": true
+            }
+          }
+        },
+        "sub": {
+          "servo_permissions_role": "permission_id"
+        }
+      },
+      "servo_roles": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "servodb",
+          "collation": "utf8mb4_general_ci",
+          "system_versioned": false
+        },
+        "columns": {
+          "id": {
+            "db": {
+              "type": "increments",
+              "primary": true,
+              "nullable": false
+            }
+          },
+          "name": {
+            "db": {
+              "type": "string",
+              "maxLength": 255,
+              "primary": false,
+              "nullable": false
+            }
+          }
+        },
+        "refs": {
+          "servo_permissions_role": "role_id"
+        },
+        "sub": {
+          "servo_role_user": "role_id"
+        }
+      }
+    },
+    "views": {},
+    "collations": [
+      {
+        "collation": "utf8_general_ci",
+        "charset": "utf8"
+      },
+      {
+        "collation": "utf8_general_mysql500_ci",
+        "charset": "utf8"
+      },
+      {
+        "collation": "utf8_general_nopad_ci",
+        "charset": "utf8"
+      },
+      {
+        "collation": "utf8mb4_general_ci",
+        "charset": "utf8mb4"
+      },
+      {
+        "collation": "utf8mb4_bin",
+        "charset": "utf8mb4"
+      },
+      {
+        "collation": "utf8mb4_unicode_ci",
+        "charset": "utf8mb4"
+      },
+      {
+        "collation": "utf8mb4_icelandic_ci",
+        "charset": "utf8mb4"
+      },
+      {
+        "collation": "utf8mb4_latvian_ci",
+        "charset": "utf8mb4"
+      },
+      {
+        "collation": "utf8mb4_romanian_ci",
+        "charset": "utf8mb4"
+      },
+      {
+        "collation": "utf8mb4_slovenian_ci",
+        "charset": "utf8mb4"
+      },
+      {
+        "collation": "utf8mb4_polish_ci",
+        "charset": "utf8mb4"
+      },
+      {
+        "collation": "utf8mb4_estonian_ci",
+        "charset": "utf8mb4"
+      },
+      {
+        "collation": "utf8mb4_spanish_ci",
+        "charset": "utf8mb4"
+      },
+      {
+        "collation": "utf8mb4_swedish_ci",
+        "charset": "utf8mb4"
+      },
+      {
+        "collation": "utf8mb4_turkish_ci",
+        "charset": "utf8mb4"
+      },
+      {
+        "collation": "utf8mb4_czech_ci",
+        "charset": "utf8mb4"
+      },
+      {
+        "collation": "utf8mb4_danish_ci",
+        "charset": "utf8mb4"
+      },
+      {
+        "collation": "utf8mb4_lithuanian_ci",
+        "charset": "utf8mb4"
+      },
+      {
+        "collation": "utf8mb4_slovak_ci",
+        "charset": "utf8mb4"
+      },
+      {
+        "collation": "utf8mb4_spanish2_ci",
+        "charset": "utf8mb4"
+      },
+      {
+        "collation": "utf8mb4_roman_ci",
+        "charset": "utf8mb4"
+      },
+      {
+        "collation": "utf8mb4_persian_ci",
+        "charset": "utf8mb4"
+      },
+      {
+        "collation": "utf8mb4_esperanto_ci",
+        "charset": "utf8mb4"
+      },
+      {
+        "collation": "utf8mb4_hungarian_ci",
+        "charset": "utf8mb4"
+      },
+      {
+        "collation": "utf8mb4_sinhala_ci",
+        "charset": "utf8mb4"
+      },
+      {
+        "collation": "utf8mb4_german2_ci",
+        "charset": "utf8mb4"
+      },
+      {
+        "collation": "utf8mb4_croatian_mysql561_ci",
+        "charset": "utf8mb4"
+      },
+      {
+        "collation": "utf8mb4_unicode_520_ci",
+        "charset": "utf8mb4"
+      },
+      {
+        "collation": "utf8mb4_vietnamese_ci",
+        "charset": "utf8mb4"
+      },
+      {
+        "collation": "utf8mb4_croatian_ci",
+        "charset": "utf8mb4"
+      },
+      {
+        "collation": "utf8mb4_myanmar_ci",
+        "charset": "utf8mb4"
+      },
+      {
+        "collation": "utf8mb4_thai_520_w2",
+        "charset": "utf8mb4"
+      },
+      {
+        "collation": "utf8mb4_general_nopad_ci",
+        "charset": "utf8mb4"
+      },
+      {
+        "collation": "utf8mb4_nopad_bin",
+        "charset": "utf8mb4"
+      },
+      {
+        "collation": "utf8mb4_unicode_nopad_ci",
+        "charset": "utf8mb4"
+      },
+      {
+        "collation": "utf8mb4_unicode_520_nopad_ci",
+        "charset": "utf8mb4"
+      }
+    ]
+  }
+}

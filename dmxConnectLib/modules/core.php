@@ -177,15 +177,10 @@ class core extends Module
         $this->app->response->end($options->status, $options->data);
     }
 
-    public function end($options) {
-        $this->app->response->json($this->app->data);
-    }
-
     public function error($options) {
 		option_require($options, 'message');
 
-        //$this->app->response->error($options->message);
-        throw new \Exception($options->message);
+        $this->app->response->error($options->message);
     }
 
     public function redirect($options) {

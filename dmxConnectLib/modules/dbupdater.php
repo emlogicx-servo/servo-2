@@ -466,7 +466,6 @@ class dbupdater extends Module
 			$connection->pdo->beginTransaction();
 
 			foreach ($options->source as $record) {
-				$record = (object)$record;
 				$values = array();
 
 				foreach ($options->sql->values as $key => $param) {

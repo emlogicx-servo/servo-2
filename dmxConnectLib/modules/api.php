@@ -43,7 +43,6 @@ class api extends Module
         option_default($options, 'username', '');
         option_default($options, 'password', '');
         option_default($options, 'oauth', NULL);
-        option_default($options, 'throwErrors', FALSE);
         option_default($options, 'passErrors', TRUE);
 
         $options = $this->app->parseObject($options);
@@ -98,7 +97,7 @@ class api extends Module
                 $url .= '?';
             }
 
-            $url .= curl_escape($handle, (string)$name) . '=' . curl_escape($handle, (string)$value);
+            $url .= curl_escape($handle, $name) . '=' . curl_escape($handle, $value);
         }
 
         curl_setopt_array($handle, [
@@ -219,14 +218,8 @@ class api extends Module
         $rawBody = substr($response, $headerSize);
         $status = $info['http_code'];
 
-        if ($status >= 400) {
-            if ($options->throwErrors) {
-                throw new \Exception($status . ' ' . $this->parseBody($rawBody));
-            }
-
-            if ($options->passErrors) {
-                $this->app->response->end($status, $this->parseBody($rawBody));
-            }
+        if ($options->passErrors && $status >= 400) {
+            $this->app->response->end($status, $this->parseBody($rawBody));
         }
 
         return (object)[

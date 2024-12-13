@@ -2,5 +2,17 @@
   "headerx.php": {
     "layoutPage": "",
     "description": ""
+  },
+  "customers_copy.php": {
+    "layoutPage": "",
+    "description": "dup cust page"
+  },
+  "roles.php": {
+    "layoutPage": "",
+    "description": "roles page"
+  },
+  "ProdUpload.php": {
+    "layoutPage": "",
+    "description": ""
   }
 }

@@ -334,7 +334,7 @@ JSON
                       <thead>
                         <tr>
                           <th>#</th>
-                          <th>{{trans.data.code[lang.value]}}</th>
+                          <th>{{trans.data.object[lang.value]}}</th>
                           <th>{{trans.data.status[lang.value]}}</th>
                           <th>{{trans.data.dateDue[lang.value]}}</th>
                           <th>{{trans.data.note[lang.value]}}</th>
@@ -416,9 +416,9 @@ JSON
                 </div>
                 <div class="col-auto col-md-4 col-lg-3 col-4 col-sm-2 col-xl-auto col-xxl-auto"><select id="gugrAssignmenttStatusFilterAll" class="form-select" name="gugrProjectStatusFilter">
                     <option selected="" value="">-----</option>
-                    <option value="Pending">Registered</option>
-                    <option value="Active">Active</option>
-                    <option value="Completed">Closed</option>
+                    <option value="Pending">{{trans.data.Pending[lang.value]}}</option>
+                    <option value="Active">{{trans.data.Active[lang.value]}}</option>
+                    <option value="Completed">{{trans.data.Completed[lang.value]}}</option>
                   </select></div>
                 <div class="col-md-2 col-sm-2 col-auto col-lg-auto col-xl-auto col-xxl-auto"><select id="gugrAssignmentLimitAll" class="form-select" name="product_assignment_limit">
                     <option value="5">5</option>
@@ -1674,7 +1674,7 @@ JSON
                               <input id="text2" name="project_id" type="text" class="form-control visually-hidden" dmx-bind:value="readGuGrProject.data.query_read_gugr_project.project_id">
                               <div class="form-group mb-3 row">
 
-                                <label for="inp_project_code" class="col-sm-2 col-form-label col">{{trans.data.code[lang.value]}}</label>
+                                <label for="inp_project_code" class="col-sm-2 col-form-label col">{{trans.data.object[lang.value]}}</label>
                                 <div class="col-sm-10">
                                   <input type="text" class="form-control" id="inp_project_code" name="project_code" dmx-bind:value="readGuGrProject.data.query_read_gugr_project.project_code" aria-describedby="inp_project_code_help" dmx-bind:readonly="(list_user_info.data.query_list_user_info.user_profile!=='gugr-reception')&amp;&amp;(list_user_info.data.query_list_user_info.user_profile!=='gugr-cordo')">
                                 </div>
@@ -1687,7 +1687,7 @@ JSON
                                 </div>
                               </div>
                               <div class="form-group mb-3 row">
-                                <label for="inp_project_description" class="col-sm-2 col-form-label">{{trans.data.object[lang.value]}}</label>
+                                <label for="inp_project_description" class="col-sm-2 col-form-label">{{trans.data.note[lang.value]}}</label>
                                 <div class="col-sm-10">
                                   <textarea type="text" class="form-control" id="inp_project_description" name="project_description" dmx-bind:value="readGuGrProject.data.query_read_gugr_project.project_description" aria-describedby="inp_project_description_help" style="height: 150px;" dmx-bind:readonly="(list_user_info.data.query_list_user_info.user_profile!=='gugr-reception')&amp;&amp;(list_user_info.data.query_list_user_info.user_profile!=='gugr-cordo')"></textarea>
                                 </div>
